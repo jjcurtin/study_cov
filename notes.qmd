@@ -4,6 +4,7 @@ Simulate across
 - different n_obs
 - n_covs
 - beta_covs (vary number of 0 and size of non-zero) 
+- sigma_covs (uncorrelated, small, medium - among all or some or only ones related to y?)
 
 
 1. function to generate data for x, covs, and y
