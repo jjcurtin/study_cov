@@ -1,6 +1,6 @@
 Simulate across
 
-- beta_x (0, small, medium, large)
+- beta_x (0, small, medium, large.)
 - different n_obs
 - n_covs
 - beta_covs (vary number of 0 and size of non-zero) 
@@ -8,7 +8,8 @@ Simulate across
 
 1. function to generate data for x, covs, and y
 
-dichotomous x
+use mvrnorm() from MASS for covs
+dichotomous x, equal n
 mean_covs = 0
 sd_covs = 1
 
@@ -34,3 +35,13 @@ functions return
 - b_x
 - se_x
 - p_x
+
+
+
+Issues
+
+- need to consider how to handle effect sizes of x and covs across settings
+
+Maybe always have the same covs generate Y but only some are available?  But if we vary magnitude of their effects, that will still affect sd of Y
+
+Maybe generate Y first based on covs but then set its SD back to 1?  That would allow for the same x effect - RE cohen's d.
