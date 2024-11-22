@@ -1,0 +1,36 @@
+Simulate across
+
+- beta_x (0, small, medium, large)
+- different n_obs
+- n_covs
+- beta_covs (vary number of 0 and size of non-zero) 
+
+
+1. function to generate data for x, covs, and y
+
+dichotomous x
+mean_covs = 0
+sd_covs = 1
+
+parameters for 
+
+- n_obs
+- n_covs
+- sigma_covs
+- beta_x
+- beta_covs 
+
+ 
+2. Functions for each analysis method
+
+- no_covariates
+- all_covariates
+- lasso 
+- partial_r
+- p_hack
+
+functions return
+
+- b_x
+- se_x
+- p_x
