@@ -11,11 +11,12 @@ library(MASS)
 
 # generating data functions
 
-```{r generate covs}
+```{r}
+#| label: generate_covs
 
-generate_covs <- function(n_obs, n_covs, mean_covs = 0, sd_covs = 1, sigma_covs) {
-  covs = mvrnorm(n_obs, mu = rep(mean_covs, n_covs), Sigma = sigma_covs)
-  return(covs)
+generate_x <- function(n_obs, n_covs, sigma_covs, mean_covs = 0, sd_covs = 1) {
+  MASS::mvrnorm(n_obs, mu = rep(mean_covs, n_covs), Sigma = sigma_covs) |> 
+    dplyr::mutate(x = rep(c(-.5, .5), nobs/2))
 }
 
 ```
@@ -92,18 +93,23 @@ generate_y_2 <- function(n_obs, n_covs, mean_covs, sd_covs, sigma_covs) {
 
 ```{r model no covs}
 
-model_no_covs <- function(x, beta_x, covs = 0, beta_covs = 0) {
-  y = generate_y_1(x, beta_x, 0, 0)
-  x1 = beta_x * x
-  lm1 = lm(y ~ x1)
-  tidy1 = broom::tidy(lm1)
-  return(tidy1[2,-4])
+model_no_covs <- function(d) {
+  lm(y ~ x, data = d) |> 
+    broom::tidy() |> 
+    dplyr::filter(term == "x") |> 
+    dplyr::select(-statistic)
 }
-
 ```
 
 
 
+```{r}
+d <- d[ , c(1,2, 5)]
+
+
+
+d <- d[ , c(1,2, 5)]
+```
 
 
 
