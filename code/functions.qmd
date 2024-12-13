@@ -1,0 +1,121 @@
+
+FUNCTIONS
+
+# imports
+
+```{r packages}
+
+library(MASS)
+
+```
+
+# generating data functions
+
+```{r}
+#| label: generate_covs
+
+generate_x <- function(n_obs, n_covs, sigma_covs, mean_covs = 0, sd_covs = 1) {
+  MASS::mvrnorm(n_obs, mu = rep(mean_covs, n_covs), Sigma = sigma_covs) |> 
+    dplyr::mutate(x = rep(c(-.5, .5), nobs/2))
+}
+
+```
+
+```{r generate x}
+
+generate_x <- function(n_obs, prop_1 = 0.5) {
+  ones = round(n_obs * prop_1)
+  x = c(rep(1, ones), rep(0, n_obs - ones)) |> sample()
+  return(x)
+}
+
+```
+
+```{r generate beta x}
+
+generate_beta_x <- function(n_obs, prop_0 = 0.25) {
+  zeros = round(n_obs * prop_0)
+  small = round((n_obs - zeros)/3)
+  medium = round((n_obs - zeros - small)/2)
+  large = n_obs - zeros - small - medium
+  beta_x = c(rep(0, zeros),
+             rep(0.2, small),
+             rep(0.5, medium),
+             rep(0.8, large)) |> sample()
+  return(beta_x)
+}
+
+```
+
+```{r generate beta covs}
+
+generate_beta_covs <- function(n_covs, prop_0 = 0.25) {
+  zeros = round(n_covs * prop_0)
+  small = round((n_covs - zeros)/3)
+  medium = round((n_covs - zeros - small)/2)
+  large = n_covs - zeros - small - medium
+  beta_covs = c(rep(0, zeros),
+                rep(0.2, small),
+                rep(0.5, medium),
+                rep(0.8, large)) |> sample()
+  return(beta_covs)
+}
+
+```
+
+```{r generate y}
+
+x <- generate_x(n_obs = 10)
+beta_x <- generate_beta_x(n_obs = 10)
+covs <- generate_covs(10, 3, 0, 1, sigma_covs = sigma_covs)
+beta_covs <- generate_beta_covs(n_covs = 3)
+
+generate_y_1 <- function(x, beta_x, covs, beta_covs) {
+  error <- mvrnorm(n = length(x), mu = 0, Sigma = 1)
+  y = beta_x * x + beta_covs * covs + error
+  return(y)
+}
+
+generate_y_2 <- function(n_obs, n_covs, mean_covs, sd_covs, sigma_covs) {
+  x <- generate_x(n_obs)
+  beta_x <- generate_beta_x(n_obs)
+  covs <- generate_covs(n_obs, n_covs, mean_covs, sd_covs, sigma_covs)
+  beta_covs <- generate_beta_covs(n_covs)
+  error <- mvrnorm(n = length(x), mu = 0, Sigma = 1)
+  
+  y = beta_x * x + beta_covs * covs + error
+  return(y)
+}
+
+```
+
+# model analysis functions
+
+```{r model no covs}
+
+model_no_covs <- function(d) {
+  lm(y ~ x, data = d) |> 
+    broom::tidy() |> 
+    dplyr::filter(term == "x") |> 
+    dplyr::select(-statistic)
+}
+```
+
+
+
+```{r}
+d <- d[ , c(1,2, 5)]
+
+
+
+d <- d[ , c(1,2, 5)]
+```
+
+
+
+
+
+
+
+
+
