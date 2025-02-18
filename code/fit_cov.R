@@ -27,12 +27,15 @@ setwd("./code")
 
 
 library(tidyverse)
-source("functions_data.R")
+source("fun_cov.R")
 
 # make beta_covs
 
 
 # generate data
+
+# START LOOP
+
 
 d <- generate_data(beta_covs = c(0.5, 0.5), beta_x = 0, n_obs = 100)
 
@@ -52,3 +55,7 @@ results <- bind_rows(get_results(lm_model = lm_no_covs, model_name = "lm no covs
                              get_results(lm_model = lm_all_covs, model_name = "lm all covs"),
                              get_results(lm_model = lm_p_hack, model_name = "lm p-hacked"),
                              get_results(lm_model = lm_partial_r, model_name = "lm partial r"))
+
+
+
+results |> write_csv(str_c("results_", job_num, ".csv"))
