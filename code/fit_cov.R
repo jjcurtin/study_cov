@@ -11,51 +11,63 @@
 
 args <- commandArgs(trailingOnly = TRUE) 
 
-beta_x <- as.numeric(args[1])
-n_obs <- as.numeric(args[2])
-n_covs <- as.numeric(args[3])
-beta_cov <- as.numeric(args[4])
-p_sigcovs <- as.numeric(args[5])
+job_num <- as.numeric(args[1])
+n_sims <- as.numeric(args[2])
+n_obs <- as.numeric(args[3])
+beta_x <- as.numeric(args[4])
+n_covs <- as.numeric(args[5])
+b_cov <- as.numeric(args[6])
+p_good_covs <- as.numeric(args[7])
+r_cov <- as.numeric(args[8])
 
 # for testing
 # comment out for use on CHTC
-beta_x <- .5
+job_num <- 1
+n_sims <- 3
 n_obs <- 100
+beta_x <- .5
 n_covs <- 2
-p_sigcovs <- .5
-setwd("./code") 
+b_cov <- 2
+p_good_covs <- .5
+r_cov <- 0
 
+setwd("./code") 
 
 library(tidyverse)
 source("fun_cov.R")
 
-# make beta_covs
-
-
-# generate data
 
 # START LOOP
 
+full_results <- tibble()
 
-d <- generate_data(beta_covs = c(0.5, 0.5), beta_x = 0, n_obs = 100)
+for(i in 1:n_sims) {
+  
+  di <- generate_data(n_obs, beta_x, n_covs, b_cov, p_good_covs)
+  
+  results <- bind_rows(get_results(lm_model = get_no_covs_lm(data = di), model_name = "lm no covs", sim = i),
+                       get_results(lm_model = get_all_covs_lm(data = di), model_name = "lm all covs", sim = i),
+                       get_results(lm_model = get_p_hacked_lm(data = di), model_name = "lm p-hacked", sim = i),
+                       get_results(lm_model = get_partial_r_lm(data = di), model_name = "lm partial r", sim = i))
+  
+  full_results <- bind_rows(full_results, results)
+  
+}
 
+# tibble of research setting info
 
+research_setting <- tibble(n_sims = n_sims,
+                           n = n_obs,
+                           b_x = beta_x,
+                           n_covs = n_covs,
+                           b_cov = b_cov, 
+                           p_good_covs = p_good_covs,
+                           r_cov = r_cov)
 
-lm_no_covs <- get_no_covs_lm(data = d)
-lm_all_covs <- get_all_covs_lm(data = d)
-lm_p_hack <- get_p_hacked_lm(data = d)
-lm_partial_r <- get_partial_r_lm(data = d, alpha = 0.05)
+# add on to full results
 
-get_results(lm_model = lm_no_covs, model_name = "lm no covs")
-get_results(lm_model = lm_all_covs, model_name = "lm all covs")
-get_results(lm_model = lm_p_hack, model_name = "lm p-hacked")
-get_results(lm_model = lm_partial_r, model_name = "lm partial r")
+full_results <- cbind(full_results, research_setting[rep(1, nrow(full_results)),])
 
-results <- bind_rows(get_results(lm_model = lm_no_covs, model_name = "lm no covs"),
-                             get_results(lm_model = lm_all_covs, model_name = "lm all covs"),
-                             get_results(lm_model = lm_p_hack, model_name = "lm p-hacked"),
-                             get_results(lm_model = lm_partial_r, model_name = "lm partial r"))
+# results to csv
 
-
-
-results |> write_csv(str_c("results_", job_num, ".csv"))
+full_results |> write_csv(str_c("results_", job_num, ".csv"))

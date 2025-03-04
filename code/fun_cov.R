@@ -2,7 +2,7 @@
 # function to generate data 
 
 # NOTE:  THINK ABOUT HOW BETA INTERACTS WITH ERROR FOR EFFECT SIZES FOR X AND COVS
-generate_data <- function(beta_x, beta_covs, n_obs) {
+generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs) {
 
   # constants
   mean_covs <- 0
@@ -11,6 +11,9 @@ generate_data <- function(beta_x, beta_covs, n_obs) {
  
   # make x 
   x <- c(rep(0, n_obs*0.5), rep(1, n_obs*0.5))
+  
+  # make beta covs
+  beta_covs <- c(rep(b_cov, n_covs*p_good_covs), rep(0, n_covs*(1-p_good_covs)))
  
   # make covs 
   n_covs <- length(beta_covs) 
@@ -25,36 +28,26 @@ generate_data <- function(beta_x, beta_covs, n_obs) {
  
   # combine all into tibble 
   covs <- covs |>  
-    tibble::as_tibble(.name_repair = "universal")
+    tibble::as_tibble(.name_repair = "minimal")
+  
   names(covs) <- paste0("c", 1:n_covs)
- tibble::tibble(x = x, y = y) |> 
+  
+  tibble::tibble(x = x, y = y) |> 
    dplyr::bind_cols(covs)
 }
-
-
-
-
-
-
 
 
 # fit no covariate model
 
 get_no_covs_lm <- function(data) {
-  
   lm(y ~ x, data = data)
-  
 }
 
 
 # fit all covariate model
 
-lm(y ~ ., data = da)
-
-
-
 get_all_covs_lm <- function(data) {
-  lm(y ~ ., data = da)
+  lm(y ~ ., data = data)
 }
 
 
@@ -135,14 +128,14 @@ get_partial_r_lm <- function(data, alpha = 0.05) {
 
 # -- hold --
 
-# make results tibble
-# b, SE, p-value
+# make results tibble : b, SE, p-value
 
-get_results <- function(lm_model, model_name) {
+get_results <- function(lm_model, model_name, sim) {
   
   # make empty results tibble
   
   lm_results <- tibble(model = character(),
+                       simulation_id = numeric(),
                        term = character(),
                        estimate = numeric(),
                        SE = numeric(),
@@ -156,6 +149,7 @@ get_results <- function(lm_model, model_name) {
   
   lm_results <- bind_rows(lm_results, 
                           tibble(model = model_name, 
+                                 simulation_id = sim,
                                  term = "x",
                                  estimate = tidy_lm_model_x$estimate,
                                  SE = tidy_lm_model_x$std.error,
