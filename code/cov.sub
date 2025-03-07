@@ -2,7 +2,7 @@
 container_image = train.sif
 
 executable = fit_cov.sh
-arguments = $(job_num) $(config_start) $(config_end)
+arguments = $(job_num) $(n_sims) $(n_obs) $(beta_x) $(n_covs) $(b_cov) $(p_good_covs) $(r_cov)
 
 log = $(Cluster).log
 error = error/error_$(job_num).err
