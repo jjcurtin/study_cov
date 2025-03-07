@@ -13,6 +13,7 @@ use mvrnorm() from MASS for covs
 dichotomous x, equal n
 mean_covs = 0
 sd_covs = 1
+y as function of x, covs, betas, and e
 
 parameters for 
 
@@ -37,6 +38,26 @@ functions return
 - se_x
 - p_x
 
+
+# write a function that generates multivariate normal data for 3 variable
+```{r}
+library(MASS)
+n_obs = 100
+n_covs = 3
+mean_covs = 0
+sd_covs = 1
+sigma_covs = diag(n_covs)
+set.seed(01271969)
+covs = mvrnorm(n_obs, mu = rep(mean_covs, n_covs), Sigma = sigma_covs)
+covs
+
+```
+# put all of the above code in a function that has parameters for n_obs, n_covs, mean_covs, sd_covs, sigma_covs`
+```{r}
+generate_covs <- function(n_obs, n_covs, mean_covs, sd_covs, sigma_covs){
+  covs = mvrnorm(n_obs, mu = rep(mean_covs, n_covs), Sigma = sigma_covs)
+  return(covs)
+}
 
 
 Issues

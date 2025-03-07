@@ -1,0 +1,73 @@
+# This is the script that will fit our several approaches to the data to evaluate the effect of x
+# It will 
+# 1. generate the data
+# fit the models
+# extract parameter estimate, SE, p-value for X
+# extract other info??? (e.g., about covariate effects maybe)
+# save the results in a tibble that has separate rows for each approach and columns for the above info
+
+# This script will be run across jobs where each job will have a different dataset that varies on
+# the population effect size for x, the sample size, the number of covariates, the size of the covariate effects etc.
+
+args <- commandArgs(trailingOnly = TRUE) 
+
+job_num <- as.numeric(args[1])
+n_sims <- as.numeric(args[2])
+n_obs <- as.numeric(args[3])
+beta_x <- as.numeric(args[4])
+n_covs <- as.numeric(args[5])
+b_cov <- as.numeric(args[6])
+p_good_covs <- as.numeric(args[7])
+r_cov <- as.numeric(args[8])
+
+# for testing
+# comment out for use on CHTC
+job_num <- 1
+n_sims <- 3
+n_obs <- 100
+beta_x <- .5
+n_covs <- 2
+b_cov <- 2
+p_good_covs <- .5
+r_cov <- 0
+
+setwd("./code") 
+
+library(tidyverse)
+source("fun_cov.R")
+
+
+# START LOOP
+
+full_results <- tibble()
+
+for(i in 1:n_sims) {
+  
+  di <- generate_data(n_obs, beta_x, n_covs, b_cov, p_good_covs)
+  
+  results <- bind_rows(get_results(lm_model = get_no_covs_lm(data = di), model_name = "lm no covs", sim = i),
+                       get_results(lm_model = get_all_covs_lm(data = di), model_name = "lm all covs", sim = i),
+                       get_results(lm_model = get_p_hacked_lm(data = di), model_name = "lm p-hacked", sim = i),
+                       get_results(lm_model = get_partial_r_lm(data = di), model_name = "lm partial r", sim = i))
+  
+  full_results <- bind_rows(full_results, results)
+  
+}
+
+# tibble of research setting info
+
+research_setting <- tibble(n_sims = n_sims,
+                           n = n_obs,
+                           b_x = beta_x,
+                           n_covs = n_covs,
+                           b_cov = b_cov, 
+                           p_good_covs = p_good_covs,
+                           r_cov = r_cov)
+
+# add on to full results
+
+full_results <- cbind(full_results, research_setting[rep(1, nrow(full_results)),])
+
+# results to csv
+
+full_results |> write_csv(str_c("results_", job_num, ".csv"))
