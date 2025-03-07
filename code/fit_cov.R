@@ -31,9 +31,10 @@ b_cov <- 2
 p_good_covs <- .5
 r_cov <- 0
 
-setwd("./code") 
 
-library(tidyverse)
+library(dplyr)
+library(readr)
+library(stringr)
 source("fun_cov.R")
 
 
@@ -43,7 +44,7 @@ full_results <- tibble()
 
 for(i in 1:n_sims) {
   
-  di <- generate_data(n_obs, beta_x, n_covs, b_cov, p_good_covs)
+  di <- generate_data(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov)
   
   results <- bind_rows(get_results(lm_model = get_no_covs_lm(data = di), model_name = "lm no covs", sim = i),
                        get_results(lm_model = get_all_covs_lm(data = di), model_name = "lm all covs", sim = i),
@@ -54,9 +55,13 @@ for(i in 1:n_sims) {
   
 }
 
-# tibble of research setting info
+# add job_num
+full_results <- full_results |> 
+  mutate(job_num = job_num) |> 
+  relocate(job_num)
 
-research_setting <- tibble(n_sims = n_sims,
+# tibble of research setting info
+research_setting <- tibble(job_num = job_num,
                            n = n_obs,
                            b_x = beta_x,
                            n_covs = n_covs,
@@ -64,10 +69,7 @@ research_setting <- tibble(n_sims = n_sims,
                            p_good_covs = p_good_covs,
                            r_cov = r_cov)
 
-# add on to full results
-
-full_results <- cbind(full_results, research_setting[rep(1, nrow(full_results)),])
-
-# results to csv
-
-full_results |> write_csv(str_c("results_", job_num, ".csv"))
+# join full results and write to file
+full_results |>
+  left_join(research_setting, by = "job_num") |> 
+  write_csv(str_c("results_", job_num, ".csv"))

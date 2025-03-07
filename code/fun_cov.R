@@ -2,8 +2,10 @@
 # function to generate data 
 
 # NOTE:  THINK ABOUT HOW BETA INTERACTS WITH ERROR FOR EFFECT SIZES FOR X AND COVS
-generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs) {
+generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
 
+  # Currently not using r_cov
+  
   # constants
   mean_covs <- 0
   sd_covs <- 1
