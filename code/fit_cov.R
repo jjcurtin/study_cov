@@ -14,7 +14,7 @@ args <- commandArgs(trailingOnly = TRUE)
 job_num <- as.numeric(args[1])
 n_sims <- as.numeric(args[2])
 n_obs <- as.numeric(args[3])
-beta_x <- as.numeric(args[4])
+b_x <- as.numeric(args[4])
 n_covs <- as.numeric(args[5])
 b_cov <- as.numeric(args[6])
 p_good_covs <- as.numeric(args[7])
@@ -25,7 +25,7 @@ r_cov <- as.numeric(args[8])
 job_num <- 1
 n_sims <- 3
 n_obs <- 100
-beta_x <- .5
+b_x <- .5
 n_covs <- 2
 b_cov <- 2
 p_good_covs <- .5
@@ -44,7 +44,7 @@ full_results <- tibble()
 
 for(i in 1:n_sims) {
   
-  di <- generate_data(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov)
+  di <- generate_data(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov)
   
   results <- bind_rows(get_results(lm_model = get_no_covs_lm(data = di), model_name = "lm no covs", sim = i),
                        get_results(lm_model = get_all_covs_lm(data = di), model_name = "lm all covs", sim = i),
@@ -63,7 +63,7 @@ full_results <- full_results |>
 # tibble of research setting info
 research_setting <- tibble(job_num = job_num,
                            n = n_obs,
-                           b_x = beta_x,
+                           b_x = b_x,
                            n_covs = n_covs,
                            b_cov = b_cov, 
                            p_good_covs = p_good_covs,
