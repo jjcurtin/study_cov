@@ -73,4 +73,3 @@ research_setting <- tibble(job_num = job_num,
 full_results |>
   left_join(research_setting, by = "job_num") |> 
   write_csv(str_c("results_", job_num, ".csv"))
-t 

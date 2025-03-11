@@ -2,7 +2,7 @@
 container_image = train.sif
 +SingularityImage = "train.sif"
 
-executable = fit_cov.sh
+executable = cov.sh
 arguments = $(job_num) $(n_sims) $(n_obs) $(b_x) $(n_covs) $(b_cov) $(p_good_covs) $(r_cov)
 
 log = $(Cluster).log
@@ -16,8 +16,8 @@ max_retries = 1
 transfer_input_files = train.sif, fun_cov.R, fit_cov.R, jobs.csv
 materialize_max_idle = 1000
 request_cpus = 1
-request_memory = 3000MB
-request_disk = 1600MB
+request_memory = 1000MB
+request_disk = 1000MB
 want_campus_pools = false
 want_ospool = false
-queue job_num n_sims n b_x n_covs b_cov p_good_covs r_cov
+queue job_num n_sims n_obs b_x n_covs b_cov p_good_covs r_cov
