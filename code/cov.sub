@@ -20,4 +20,4 @@ request_memory = 1000MB
 request_disk = 1000MB
 want_campus_pools = false
 want_ospool = false
-queue job_num n_sims n_obs b_x n_covs b_cov p_good_covs r_cov
+queue job_num n_sims n_obs b_x n_covs b_cov p_good_covs r_cov from jobs.csv

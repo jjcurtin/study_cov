@@ -32,9 +32,9 @@ p_good_covs <- .5
 r_cov <- 0
 
 
-library(dplyr)
-library(readr)
-library(stringr)
+suppressMessages(library(dplyr)) 
+suppressMessages(library(readr))
+suppressMessages(library(stringr))
 source("fun_cov.R")
 
 
@@ -62,7 +62,7 @@ full_results <- full_results |>
 
 # tibble of research setting info
 research_setting <- tibble(job_num = job_num,
-                           n = n_obs,
+                           n_obs = n_obs,
                            b_x = b_x,
                            n_covs = n_covs,
                            b_cov = b_cov, 
