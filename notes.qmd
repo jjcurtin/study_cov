@@ -40,6 +40,9 @@ functions return
 - p_x
 
 
+
+
+
 # write a function that generates multivariate normal data for 3 variable
 ```{r}
 library(MASS)
@@ -60,6 +63,7 @@ generate_covs <- function(n_obs, n_covs, mean_covs, sd_covs, sigma_covs){
   return(covs)
 }
 
+```
 
 Issues
 
@@ -68,3 +72,12 @@ Issues
 Maybe always have the same covs generate Y but only some are available?  But if we vary magnitude of their effects, that will still affect sd of Y
 
 Maybe generate Y first based on covs but then set its SD back to 1?  That would allow for the same x effect - RE cohen's d.
+
+
+
+JJC update to data generation
+
+- use rmvnorm() to generate covs and y.   Can set sd for all to 1
+- can set correlation between covs and y to different sizes
+- can set correlation between covs to 0 or non zero (or different sizes).  Can do this within the "good" covs such that they are related but not related to the other covs.  More likely to generate reasonable cov structure
+- Can add the X effect into Y after generating covs and Y.  Do that such that X has 0, small or medium effect size in cohen's d terms.
