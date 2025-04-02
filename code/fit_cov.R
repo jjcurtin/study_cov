@@ -41,7 +41,7 @@ source("fun_cov.R")
 # START LOOP
 
 full_results <- tibble()
-
+set.seed(123456)
 for(i in 1:n_sims) {
   
   di <- generate_data(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov)

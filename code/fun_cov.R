@@ -7,6 +7,7 @@ generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
   # Currently not using r_cov
   
   # constants
+  mean_y
   mean_covs <- 0
   sd_covs <- 1
   sd_error <- 1
@@ -16,15 +17,18 @@ generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
   
   # make beta covs
   beta_covs <- c(rep(b_cov, n_covs*p_good_covs), rep(0, n_covs*(1-p_good_covs)))
- 
-  # make covs 
-  covs <- MASS::mvrnorm(n_obs, mu = rep(mean_covs, n_covs), Sigma = diag(n_covs))
+
+  # make sigma
+  sigma = diag(n_covs + 1)
   
-  # error
-  error <- rnorm(n = n_obs, mean = 0, sd = sd_error)
+  # make covs 
+  ycovs <- MASS::mvrnorm(n_obs, mu = c(mean_y, rep(mean_covs, n_covs)), Sigma = sigma)
+  y <- ycovs[,1]
+  covs <- ycovs[,-1]
+  
   
   # make y
-  y <- beta_x * x + covs %*% beta_covs + error
+  y <- beta_x * x 
   y <- drop(y)
  
   # combine all into tibble and relocate y to first column
@@ -132,11 +136,9 @@ get_partial_r_lm <- function(data, alpha = 0.05) {
 
 get_lasso_lm <- function(data) {
   
-  set.seed(42)
-  
   splits_boot <- data |> rsample::bootstraps(times = 100)
   
-  grid_penalty <- tidyr::expand_grid(penalty = exp(seq(-8, 8, length.out = 500)))
+  grid_penalty <- tidyr::expand_grid(penalty = exp(seq(-8, 8, length.out = 1000)))
   
   # tune lasso
   
