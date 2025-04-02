@@ -1,11 +1,11 @@
 Simulate across
 
-- beta_x (0, small, medium, large.) - NEED TO DECIDE ON NON-zero effect sizes
-- different n_obs  -  100, 200, 400, 1000
-- n_covs - 4, 8, 16
-- propotion good covs - .25, .5, .75
-- beta_covs (vary number of 0 and size of non-zero) - NEED TO CONSIDER THIS EFFECT SIZE
-- sigma_covs (uncorrelated, small, medium - among all or some or only ones related to y?) - KEEP AT 0 for now. Need to consider non-zero values
+- n_obs: 100, 200, 400, 1000
+- b_x (0, small, medium, large.): NEED TO DECIDE ON NON-zero effect sizes
+- n_covs: 4, 8, 16
+- b_cov (vary number of 0 and size of non-zero): NEED TO CONSIDER THIS EFFECT SIZE
+- p_good_covs: .25, .5, .75
+- r_cov (uncorrelated, small, medium - among all or some or only ones related to y?): KEEP AT 0 for now. Need to consider non-zero values
 
 
 1. function to generate data for x, covs, and y

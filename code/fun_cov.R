@@ -18,7 +18,6 @@ generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
   beta_covs <- c(rep(b_cov, n_covs*p_good_covs), rep(0, n_covs*(1-p_good_covs)))
  
   # make covs 
-  n_covs <- length(beta_covs) 
   covs <- MASS::mvrnorm(n_obs, mu = rep(mean_covs, n_covs), Sigma = diag(n_covs))
   
   # error
@@ -28,14 +27,15 @@ generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
   y <- beta_x * x + covs %*% beta_covs + error
   y <- drop(y)
  
-  # combine all into tibble 
+  # combine all into tibble and relocate y to first column
   covs <- covs |>  
     tibble::as_tibble(.name_repair = "minimal")
   
   names(covs) <- paste0("c", 1:n_covs)
   
   tibble::tibble(x = x, y = y) |> 
-   dplyr::bind_cols(covs)
+   dplyr::bind_cols(covs) |> 
+    dplyr::relocate(y)
 }
 
 
@@ -125,10 +125,55 @@ get_partial_r_lm <- function(data, alpha = 0.05) {
   return(lm_final)
 }
 
-
 # fit LASSO model
 
-# -- hold --
+# packages needed:
+# rsample, tidyr, tune, yardstick, parsnip (all in train.sif)
+
+get_lasso_lm <- function(data) {
+  
+  set.seed(42)
+  
+  splits_boot <- data |> rsample::bootstraps(times = 100)
+  
+  grid_penalty <- tidyr::expand_grid(penalty = exp(seq(-8, 8, length.out = 500)))
+  
+  # tune lasso
+  
+  fits_lasso <-
+    parsnip::linear_reg(penalty = tune(), mixture = 1) |> 
+    parsnip::set_engine("glmnet",
+                        penalty.factor = c(0, rep(1, n_covs))) |> 
+    tune::tune_grid(preprocessor = recipes::recipe(y ~ ., data = data),
+                    resamples = splits_boot, 
+                    grid = grid_penalty, 
+                    metrics = yardstick::metric_set(yardstick::rmse))
+  
+  # select best lasso
+  
+  fit_best_lasso <-
+    parsnip::linear_reg(penalty = tune::select_best(fits_lasso, metric = "rmse")$penalty, 
+                        mixture = 1) |> 
+    parsnip::set_engine("glmnet",
+                        penalty.factor = c(0, rep(1, n_covs))) |> 
+    parsnip::fit(y ~ ., data = data)
+  
+  # select nonzero covariates
+  
+  nz_covs <- fit_best_lasso |> 
+    broom::tidy() |> 
+    filter(estimate != 0) |> 
+    filter(stringr::str_starts(term, "c")) |> 
+    pull(term)
+  
+  # build formula with nonzero covs and return model
+  
+  lm_formula <- reformulate(termlabels = c("x", nz_covs), response = "y")
+  
+  lm(formula = lm_formula, data = data)
+  
+}
+
 
 # make results tibble : b, SE, p-value
 
@@ -159,6 +204,7 @@ get_results <- function(lm_model, model_name, sim) {
   
   return(lm_results)
 }
+
 
 
 

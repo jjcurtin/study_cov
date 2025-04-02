@@ -22,14 +22,14 @@ r_cov <- as.numeric(args[8])
 
 # for testing
 # comment out for use on CHTC
-job_num <- 1
-n_sims <- 3
-n_obs <- 100
-b_x <- .5
-n_covs <- 2
-b_cov <- 2
-p_good_covs <- .5
-r_cov <- 0
+# job_num <- 1
+# n_sims <- 3
+# n_obs <- 100
+# b_x <- .5
+# n_covs <- 2
+# b_cov <- 2
+# p_good_covs <- .5
+# r_cov <- 0
 
 
 suppressMessages(library(dplyr)) 
@@ -49,13 +49,14 @@ for(i in 1:n_sims) {
   results <- bind_rows(get_results(lm_model = get_no_covs_lm(data = di), model_name = "lm no covs", sim = i),
                        get_results(lm_model = get_all_covs_lm(data = di), model_name = "lm all covs", sim = i),
                        get_results(lm_model = get_p_hacked_lm(data = di), model_name = "lm p-hacked", sim = i),
-                       get_results(lm_model = get_partial_r_lm(data = di), model_name = "lm partial r", sim = i))
+                       get_results(lm_model = get_partial_r_lm(data = di), model_name = "lm partial r", sim = i),
+                       get_results(lm_model = get_lasso_lm(data = di), model_name = "lm lasso", sim = i))
   
   full_results <- bind_rows(full_results, results)
   
 }
 
-# add job_num
+# add job_num as first column
 full_results <- full_results |> 
   mutate(job_num = job_num) |> 
   relocate(job_num)
@@ -69,7 +70,7 @@ research_setting <- tibble(job_num = job_num,
                            p_good_covs = p_good_covs,
                            r_cov = r_cov)
 
-# join full results and write to file
+# join full results and write to csv file
 full_results |>
   left_join(research_setting, by = "job_num") |> 
   write_csv(str_c("results_", job_num, ".csv"))
