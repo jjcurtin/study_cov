@@ -7,6 +7,7 @@ arguments = $(job_num) $(n_sims) $(n_obs) $(b_x) $(n_covs) $(b_cov) $(p_good_cov
 
 log = $(Cluster).log
 error = error/error_$(job_num).err
+notification = Error
 
 should_transfer_files = YES
 when_to_transfer_output = ON_EXIT
@@ -18,6 +19,6 @@ materialize_max_idle = 1000
 request_cpus = 1
 request_memory = 2000MB
 request_disk = 1000MB
-want_campus_pools = false
-want_ospool = false
+want_campus_pools = true
+want_ospool = true
 queue job_num n_sims n_obs b_x n_covs b_cov p_good_covs r_cov from jobs.csv

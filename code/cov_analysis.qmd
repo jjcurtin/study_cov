@@ -11,19 +11,13 @@ editor_options:
   chunk_output_type: console
 ---
 
-R script for analysis
-this script will:
-  - concatenate all results csv files saved from CHTC into one dataframe
-  - calculate what percentage of results has p < 0.05
-  - group data by research setting
-  - calculate the type I and type II error rates for when b_x is zero vs nonzero
-  - visualize the sampling distribution of X effect
+Set up.
 
 ```{r set up}
 
 # load packages + set ggplot theme
 
-library(dplyr)
+library(dplyr) |> suppressMessages()
 library(skimr)
 library(purrr)
 library(ggplot2)
@@ -32,17 +26,15 @@ theme_set(theme_classic())
 
 # format path 
 
-devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true")
+devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
+
 rdrive_path <- format_path("cov/raw_data")
 
 ```
 
-```{r read in data}
+Read in data.
 
-jobs <- read.csv("jobs.csv", header = FALSE,
-                 col.names = c("job_num", "n_sims", "n_obs", "b_x", 
-                               "n_covs", "b_cov", "p_good_covs", "r_cov")) |> 
-  glimpse()
+```{r read in data}
 
 data <- read.csv(here::here(rdrive_path, "batch_results.csv")) |> 
   mutate(model = gsub("[ -]", "_", model)) |> 
@@ -50,11 +42,29 @@ data <- read.csv(here::here(rdrive_path, "batch_results.csv")) |>
 
 ```
 
-```{r prop sig}
+Look at proportion significaint ($p < 0.05$) by model.
 
-data |> group_by(model) |> summarise(prop_sig = mean(p_value < 0.05))
+```{r p val by model}
+
+data |> 
+  group_by(model) |> 
+  summarise(prop_sig = mean(p_value < 0.05))
 
 ```
+
+Look at proportion significaint ($p < 0.05$) by model and research setting.
+
+```{r p val res setting}
+
+data |> 
+  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  View()
+
+```
+
+Function to plot combined histogram and density plot.
 
 ```{r function plot hist dens}
 
@@ -62,10 +72,13 @@ plot_hist_density <- function(data, model_name) {
   ggplot(data |> filter(model == model_name), aes(x = estimate)) +
     geom_histogram(aes(y = after_stat(density)), bins = 10, fill = "grey", color = "black") +
     geom_density(fill = "blue", alpha = 0.25, lwd = 1) + 
-    labs(title = paste("Density Plot:", model_name), x = "Beta_X Estimate", y = "Density")
+    labs(title = paste("Density Plot:", model_name), 
+         x = "Beta_X Estimate", y = "Density")
 }
 
 ```
+
+Plotting for all 5 models.
 
 ```{r plot hist dens}
 
@@ -73,5 +86,6 @@ plot_hist_density(data, "lm_no_covs")
 plot_hist_density(data, "lm_all_covs")
 plot_hist_density(data, "lm_p_hacked")
 plot_hist_density(data, "lm_partial_r")
+plot_hist_density(data, "lm_lasso")
 
 ```

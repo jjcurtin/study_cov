@@ -23,25 +23,26 @@ r_cov <- as.numeric(args[8])
 # for testing
 # comment out for use on CHTC
 # job_num <- 1
-# n_sims <- 3
+# n_sims <- 10
 # n_obs <- 100
-# b_x <- .5
-# n_covs <- 2
+# b_x <- 0
+# n_covs <- 4
 # b_cov <- 2
 # p_good_covs <- .5
 # r_cov <- 0
 
-
 suppressMessages(library(dplyr)) 
 suppressMessages(library(readr))
 suppressMessages(library(stringr))
-source("fun_cov.R")
+source("code/fun_cov.R")
 
 
 # START LOOP
 
 full_results <- tibble()
-set.seed(123456)
+
+set.seed(job_num)
+
 for(i in 1:n_sims) {
   
   di <- generate_data(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov)
