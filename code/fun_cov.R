@@ -59,7 +59,18 @@ generate_data_correlated <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_c
   beta_covs <- c(rep(b_cov, n_covs*p_good_covs), rep(0, n_covs*(1-p_good_covs)))
 
   # make sigma
-  sigma = diag(n_covs + 1)
+  sigma <- diag(n_covs + 1)
+  
+  # make correlation matrix of good predictors
+  corr_matrix <- matrix(r_cov, 
+                        nrow = n_covs*p_good_covs, 
+                        ncol = n_covs*p_good_covs)
+  
+  diag(corr_matrix) <- 1
+ 
+  # transpose corr_matrix onto sigma - skipping first column for intercept
+  sigma[1:(nrow(corr_matrix)), 2:(ncol(corr_matrix) + 1)] <- corr_matrix
+  
   
   # make covs + initial y
   ycovs <- MASS::mvrnorm(n_obs, mu = c(mean_y, rep(mean_covs, n_covs)), Sigma = sigma)
