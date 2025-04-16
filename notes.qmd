@@ -81,3 +81,23 @@ JJC update to data generation
 - can set correlation between covs and y to different sizes
 - can set correlation between covs to 0 or non zero (or different sizes).  Can do this within the "good" covs such that they are related but not related to the other covs.  More likely to generate reasonable cov structure
 - Can add the X effect into Y after generating covs and Y.  Do that such that X has 0, small or medium effect size in cohen's d terms.
+
+
+
+Next steps
+
+1.  redo with on chtc
+  - b = 0 and 0.5
+  - 20,000 sim
+
+2.  plots of the changes in type 1 or 2 error propotion across methds (in same plot) but each dimension research setting (eg. n_os)s
+
+
+3.  tablular summary of mean, and range of type 1 and 2 across methods (aggregated across dimension)
+
+4.  Plots of sampling distribution, superimposed by method
+
+5.  tabular summary of mean b and se by method (aggregated across dimensions)
+
+
+6.  generate nnew function that handled correlated covariates (correlations within sets of "good" covs. bad covs are uncorrelated with everyting)

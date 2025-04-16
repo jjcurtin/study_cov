@@ -7,26 +7,29 @@ generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
   # Currently not using r_cov
   
   # constants
+  mean_y <- 0
   mean_covs <- 0
   sd_covs <- 1
-  sd_error <- 1
+  # sd_error <- 1
  
   # make x 
   x <- c(rep(0, n_obs*0.5), rep(1, n_obs*0.5))
   
   # make beta covs
   beta_covs <- c(rep(b_cov, n_covs*p_good_covs), rep(0, n_covs*(1-p_good_covs)))
- 
-  # make covs 
-  n_covs <- length(beta_covs)
-  covs <- MASS::mvrnorm(n_obs, mu = rep(mean_covs, n_covs), Sigma = diag(n_covs))
+
+  # make sigma
+  sigma = diag(n_covs + 1)
   
-  # error
-  error <- rnorm(n = n_obs, mean = 0, sd = sd_error)
+  # make covs + initial y
+  ycovs <- MASS::mvrnorm(n_obs, mu = c(mean_y, rep(mean_covs, n_covs)), Sigma = sigma)
+  y <- ycovs[,1]
+  # y <- drop(y) # not sure this is needed anymore
+  covs <- ycovs[,-1]
   
-  # make y
-  y <- beta_x * x + covs %*% beta_covs + error
-  y <- drop(y)
+  
+  # Add x variance into y
+  y <- y + beta_x * x 
  
   # combine all into tibble and relocate y to first column
   covs <- covs |>  
@@ -39,6 +42,45 @@ generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
     dplyr::relocate(y)
 }
 
+generate_data_correlated <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
+
+  # Currently not using r_cov
+  
+  # constants
+  mean_y <- 0
+  mean_covs <- 0
+  sd_covs <- 1
+  # sd_error <- 1
+ 
+  # make x 
+  x <- c(rep(0, n_obs*0.5), rep(1, n_obs*0.5))
+  
+  # make beta covs
+  beta_covs <- c(rep(b_cov, n_covs*p_good_covs), rep(0, n_covs*(1-p_good_covs)))
+
+  # make sigma
+  sigma = diag(n_covs + 1)
+  
+  # make covs + initial y
+  ycovs <- MASS::mvrnorm(n_obs, mu = c(mean_y, rep(mean_covs, n_covs)), Sigma = sigma)
+  y <- ycovs[,1]
+  # y <- drop(y) # not sure this is needed anymore
+  covs <- ycovs[,-1]
+  
+  
+  # Add x variance into y
+  y <- y + beta_x * x 
+ 
+  # combine all into tibble and relocate y to first column
+  covs <- covs |>  
+    tibble::as_tibble(.name_repair = "minimal")
+  
+  names(covs) <- paste0("c", 1:n_covs)
+  
+  tibble::tibble(x = x, y = y) |> 
+   dplyr::bind_cols(covs) |> 
+    dplyr::relocate(y)
+}
 
 # fit no covariate model
 
@@ -135,7 +177,7 @@ get_lasso_lm <- function(data) {
   
   splits_boot <- data |> rsample::bootstraps(times = 100)
   
-  grid_penalty <- tidyr::expand_grid(penalty = exp(seq(-8, 8, length.out = 500)))
+  grid_penalty <- tidyr::expand_grid(penalty = exp(seq(-8, 8, length.out = 1000)))
   
   # tune lasso
   
