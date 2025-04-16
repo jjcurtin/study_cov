@@ -11,7 +11,11 @@ editor_options:
   chunk_output_type: console
 ---
 
+### Load Packages, Read in Data
+
+
 Set up.
+
 
 ```{r set up}
 
@@ -21,6 +25,7 @@ library(dplyr) |> suppressMessages()
 library(skimr)
 library(purrr)
 library(ggplot2)
+library(kableExtra, exclude = ("group_rows"))
 
 theme_set(theme_classic())
 
@@ -28,11 +33,13 @@ theme_set(theme_classic())
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
-rdrive_path <- format_path("cov/raw_data")
+rdrive_path <- format_path("studydata/cov/raw_data")
 
 ```
 
+
 Read in data.
+
 
 ```{r read in data}
 
@@ -42,29 +49,85 @@ data <- read.csv(here::here(rdrive_path, "batch_results.csv")) |>
 
 ```
 
+
+### Data Analysis
+
+
 Look at proportion significaint ($p < 0.05$) by model.
+
 
 ```{r p val by model}
 
 data |> 
   group_by(model) |> 
-  summarise(prop_sig = mean(p_value < 0.05))
+  summarise(prop_sig = mean(p_value < 0.05)) |> 
+  arrange(desc(prop_sig)) |> 
+  kbl()
 
 ```
 
+<br>
 Look at proportion significaint ($p < 0.05$) by model and research setting.
 
-```{r p val res setting}
+
+```{r}
 
 data |> 
-  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+  filter(model == "lm_no_covs") |> 
+  group_by(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  View()
+  kbl(caption = "lm_no_covs")
 
 ```
 
+```{r}
+
+data |> 
+  filter(model == "lm_all_covs") |> 
+  group_by(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  kbl(caption = "lm_all_covs")
+
+```
+
+```{r}
+
+data |> 
+  filter(model == "lm_p_hacked") |> 
+  group_by(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  kbl(caption = "lm_p_hacked")
+
+```
+
+```{r}
+
+data |> 
+  filter(model == "lm_partial_r") |> 
+  group_by(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  kbl(caption = "lm_partial_r")
+
+```
+
+```{r}
+
+data |> 
+  filter(model == "lm_lasso") |> 
+  group_by(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  kbl(caption = "lm_lasso")
+
+```
+
+<br>
 Function to plot combined histogram and density plot.
+
 
 ```{r function plot hist dens}
 
@@ -78,7 +141,9 @@ plot_hist_density <- function(data, model_name) {
 
 ```
 
+
 Plotting for all 5 models.
+
 
 ```{r plot hist dens}
 
