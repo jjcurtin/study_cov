@@ -2,7 +2,7 @@
 # function to generate data 
 
 # NOTE:  THINK ABOUT HOW BETA INTERACTS WITH ERROR FOR EFFECT SIZES FOR X AND COVS
-generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
+generate_data <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) {
 
   # Currently not using r_cov
   
@@ -29,7 +29,7 @@ generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
   
   
   # Add x variance into y
-  y <- y + beta_x * x 
+  y <- y + b_x * x 
  
   # combine all into tibble and relocate y to first column
   covs <- covs |>  
@@ -42,7 +42,7 @@ generate_data <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
     dplyr::relocate(y)
 }
 
-generate_data_correlated <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, r_cov) {
+generate_data_correlated <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) {
 
   # Currently not using r_cov
   
@@ -69,7 +69,7 @@ generate_data_correlated <- function(n_obs, beta_x, n_covs, b_cov, p_good_covs, 
   
   
   # Add x variance into y
-  y <- y + beta_x * x 
+  y <- y + b_x * x 
  
   # combine all into tibble and relocate y to first column
   covs <- covs |>  
