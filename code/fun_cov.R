@@ -44,7 +44,6 @@ generate_data <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) {
 
 generate_data_correlated <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) {
 
-  # Currently not using r_cov
   
   # constants
   mean_y <- 0
@@ -68,7 +67,7 @@ generate_data_correlated <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_c
   
   diag(corr_matrix) <- 1
  
-  # transpose corr_matrix onto sigma - skipping first column for intercept
+  # transpose corr_matrix onto sigma 
   sigma[2:(nrow(corr_matrix) + 1), 2:(ncol(corr_matrix) + 1)] <- corr_matrix
   
   
