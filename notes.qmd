@@ -90,8 +90,7 @@ Next steps
   - b = 0 and 0.5
   - 20,000 sim
 
-2.  plots of the changes in type 1 or 2 error propotion across methds (in same plot) but each dimension research setting (eg. n_os)s
-
+2.  plots of the changes in type 1 or 2 error propotion across methods (in same plot) but each dimension research setting (eg. n_obs)
 
 3.  tablular summary of mean, and range of type 1 and 2 across methods (aggregated across dimension)
 
@@ -99,5 +98,4 @@ Next steps
 
 5.  tabular summary of mean b and se by method (aggregated across dimensions)
 
-
-6.  generate nnew function that handled correlated covariates (correlations within sets of "good" covs. bad covs are uncorrelated with everyting)
+6.  generate new function that handled correlated covariates (correlations within sets of "good" covs. bad covs are uncorrelated with everyting)

@@ -6,16 +6,12 @@ format:
   html: 
     embed-resources: true
     toc: true 
-    toc_depth: 4
+    toc_depth: 5
 editor_options: 
   chunk_output_type: console
 ---
 
-### Load Packages, Read in Data
-
-
-Set up.
-
+### Set up
 
 ```{r set up}
 
@@ -25,6 +21,7 @@ library(dplyr) |> suppressMessages()
 library(skimr)
 library(purrr)
 library(ggplot2)
+library(cowplot)
 library(kableExtra, exclude = ("group_rows"))
 
 theme_set(theme_classic())
@@ -37,120 +34,319 @@ rdrive_path <- format_path("studydata/cov/raw_data")
 
 ```
 
-
-Read in data.
-
+<br>
+Read in data for $b_x = 0$ (y & covs generated separately) <br>
+720 jobs $\times$ 500 simulations each $\times$ 5 models = 1,800,000 observations.
 
 ```{r read in data}
 
-data <- read.csv(here::here(rdrive_path, "batch_results.csv")) |> 
-  mutate(model = gsub("[ -]", "_", model)) |> 
+data <- read.csv(here::here(rdrive_path, "batch_results_old.csv")) |> 
+  mutate(model = gsub("[ -]", "_", model),
+         model = factor(model, c("lm_no_covs",
+                                 "lm_all_covs",
+                                 "lm_p_hacked",
+                                 "lm_partial_r",
+                                 "lm_lasso"))) |> 
   glimpse()
 
 ```
 
+<br>
+Read in data for $b_x = 0$. <br>
+1440 jobs $\times$ 500 simulations each $\times$ 5 models = 3,600,000 observations.
 
-### Data Analysis
+```{r read in data b0}
 
+data0 <- read.csv(here::here(rdrive_path, "batch_results_b0.csv")) |> 
+  mutate(model = gsub("[ -]", "_", model),
+         model = factor(model, c("lm_no_covs",
+                                 "lm_all_covs",
+                                 "lm_p_hacked",
+                                 "lm_partial_r",
+                                 "lm_lasso"))) |> 
+  glimpse()
 
-Look at proportion significaint ($p < 0.05$) by model.
+```
 
+<br>
+Read in data for $b_x = 0.5$. <br>
+1440 jobs $\times$ 500 simulations each $\times$ 5 models = 3,600,000 observations.
 
-```{r p val by model}
+```{r read in data b05}
 
-data |> 
+data05 <- data.table::fread(here::here(rdrive_path, "batch_results_b05.csv")) |> 
+  mutate(model = gsub("[ -]", "_", model),
+         model = factor(model, c("lm_no_covs",
+                                 "lm_all_covs",
+                                 "lm_p_hacked",
+                                 "lm_partial_r",
+                                 "lm_lasso"))) |> 
+  glimpse()
+
+```
+
+# Data Analysis
+
+## Type I and Type II error
+
+### by model
+
+Overall proportion significaint ($p < 0.05$) by model; the Type I error.
+
+```{r type I by model}
+
+data0 |> 
   group_by(model) |> 
   summarise(prop_sig = mean(p_value < 0.05)) |> 
-  arrange(desc(prop_sig)) |> 
   kbl()
 
 ```
 
 <br>
-Look at proportion significaint ($p < 0.05$) by model and research setting.
+Overall proportion not significaint ($p >= 0.05$) by model; the Type II error.
 
+```{r type II by model}
 
-```{r}
+data05 |> 
+  group_by(model) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05)) |> 
+  kbl()
 
-data |> 
-  filter(model == "lm_no_covs") |> 
-  group_by(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+```
+
+### by n_obs
+
+#### type I error
+
+```{r type I n obs}
+
+data0 |> 
+  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  kbl(caption = "lm_no_covs")
+  group_by(model, n_obs) |> 
+  summarise(typeI_min = min(prop_sig),
+            typeI_mean = mean(prop_sig),
+            typeI_max = max(prop_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type I by n_obs")
 
 ```
 
-```{r}
+#### type II error
 
-data |> 
-  filter(model == "lm_all_covs") |> 
-  group_by(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+```{r type II n obs}
+
+data05 |> 
+  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(model, n_obs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II by n_obs")
+
+```
+
+#### plots 
+
+```{r plot type I II n obs}
+
+p0_nobs <- data0 |> 
+  group_by(model, n_obs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  kbl(caption = "lm_all_covs")
+  ggplot(aes(x = n_obs, y = prop_sig, color = model)) + 
+  geom_line() +
+  labs(y = "Type I error")
+
+p05_nobs <- data05 |> 
+  group_by(model, n_obs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_obs, y = prop_not_sig, color = model)) + 
+  geom_line() +
+  labs(y = "Type II error") +
+  theme(legend.position = "none")
+
+plot_grid(p0_nobs + theme(legend.position = "none"), 
+          p05_nobs,
+          get_legend(p0_nobs),
+          ncol = 3)
 
 ```
 
-```{r}
+### by n_covs
 
-data |> 
-  filter(model == "lm_p_hacked") |> 
-  group_by(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+#### type I error
+
+```{r pval n covs}
+
+data0 |> 
+  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  kbl(caption = "lm_p_hacked")
+  group_by(model, n_covs) |> 
+  summarise(typeI_min = min(prop_sig),
+            typeI_mean = mean(prop_sig),
+            typeI_max = max(prop_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type I by n_covs")
 
 ```
 
-```{r}
+#### type II error
 
-data |> 
-  filter(model == "lm_partial_r") |> 
-  group_by(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+```{r type II n covs}
+
+data05 |> 
+  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(model, n_covs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II by n_covs")
+
+```
+
+#### plots 
+
+```{r plot type I II n covs}
+
+p0_ncovs <- data0 |> 
+  group_by(model, n_covs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  kbl(caption = "lm_partial_r")
+  ggplot(aes(x = n_covs, y = prop_sig, color = model)) + 
+  geom_line()
+
+p05_ncovs <- data05 |> 
+  group_by(model, n_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_covs, y = prop_not_sig, color = model)) + 
+  geom_line() +
+  theme(legend.position = "none")
+
+plot_grid(p0_ncovs + theme(legend.position = "none"), 
+          p05_ncovs,
+          get_legend(p0_ncovs),
+          ncol = 3)
 
 ```
 
-```{r}
+### by p_good_covs
 
-data |> 
-  filter(model == "lm_lasso") |> 
-  group_by(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+#### type I error
+
+```{r pval p good covs}
+
+data0 |> 
+  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  kbl(caption = "lm_lasso")
+  group_by(model, p_good_covs) |> 
+  summarise(typeI_min = min(prop_sig),
+            typeI_mean = mean(prop_sig),
+            typeI_max = max(prop_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type I by p_good_covs")
 
 ```
 
-<br>
-Function to plot combined histogram and density plot.
+#### type II error
 
+```{r type II p good covs}
 
-```{r function plot hist dens}
-
-plot_hist_density <- function(data, model_name) {
-  ggplot(data |> filter(model == model_name), aes(x = estimate)) +
-    geom_histogram(aes(y = after_stat(density)), bins = 10, fill = "grey", color = "black") +
-    geom_density(fill = "blue", alpha = 0.25, lwd = 1) + 
-    labs(title = paste("Density Plot:", model_name), 
-         x = "Beta_X Estimate", y = "Density")
-}
+data05 |> 
+  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(model, p_good_covs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II by p_good_covs")
 
 ```
 
+#### plots 
 
-Plotting for all 5 models.
+```{r plot type I II p good covs}
 
+p0_pgood <- data0 |> 
+  group_by(model, p_good_covs) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = p_good_covs, y = prop_sig, color = model)) + 
+  geom_line()
 
-```{r plot hist dens}
+p05_pgood <- data05 |> 
+  group_by(model, p_good_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = p_good_covs, y = prop_not_sig, color = model)) + 
+  geom_line() +
+  theme(legend.position = "none")
 
-plot_hist_density(data, "lm_no_covs")
-plot_hist_density(data, "lm_all_covs")
-plot_hist_density(data, "lm_p_hacked")
-plot_hist_density(data, "lm_partial_r")
-plot_hist_density(data, "lm_lasso")
+plot_grid(p0_pgood + theme(legend.position = "none"), 
+          p05_pgood,
+          get_legend(p0_pgood),
+          ncol = 3)
+
+```
+
+## Sampling Distributions
+
+```{r combined hist}
+
+data |> 
+  ggplot(aes(x = estimate, color = model, fill = model)) +
+  geom_density(alpha = 0.5) +
+  scale_x_continuous(limits = c(-3, 3), breaks = seq(-3, 3, by = 1)) +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d()
+
+data0 |> 
+  ggplot(aes(x = estimate, color = model, fill = model)) +
+  geom_density(alpha = 0.5) +
+  scale_x_continuous(limits = c(-1.5, 1.5), breaks = seq(-1.5, 1.5, by = 0.5)) +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d() +
+  labs(title = "Sampling Distribution for b_x = 0")
+
+data05 |> 
+  ggplot(aes(x = estimate, color = model, fill = model)) +
+  geom_density(alpha = 0.5) +
+  scale_x_continuous(limits = c(-1.5, 1.5), breaks = seq(-1.5, 1.5, by = 0.5)) +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d() +
+  labs(title = "Sampling Distribution for b_x = 0.5")
+
+```
+
+## Average Estimate and SE
+
+```{r b se by model}
+
+data0 |> 
+  group_by(model) |> 
+  summarise(mean_estimate = mean(estimate),
+            SD_estimate = sd(estimate),
+            mean_SE = sqrt(mean(SE^2))) |> 
+  kbl(caption = "b_x = 0")
+
+data05 |> 
+  group_by(model) |> 
+  summarise(mean_estimate = mean(estimate),
+            SD_estimate = sd(estimate),
+            mean_SE = sqrt(mean(SE^2))) |> 
+  kbl(caption = "b_x = 0.5")
 
 ```

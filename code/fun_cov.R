@@ -42,6 +42,7 @@ generate_data <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) {
     dplyr::relocate(y)
 }
 
+
 generate_data_correlated <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) {
 
   # Currently not using r_cov

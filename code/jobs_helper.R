@@ -9,12 +9,12 @@ p_good_covs_lvls <- c(0.25, 0.5, 0.75)
 
 jobs <- expand_grid(n_sims = 500,
                     n_obs = n_obs_lvls,
-                    b_x = 0,
+                    b_x = 0.5,
                     n_covs = n_covs_lvls,
                     b_cov = 2,
                     p_good_covs = p_good_covs_lvls,
                     rcov = 0) |> 
-  slice(rep(1:n(), each = 20)) |> 
+  slice(rep(1:n(), each = 40)) |> 
   mutate(job_num = row_number()) |> 
   relocate(job_num)
 
