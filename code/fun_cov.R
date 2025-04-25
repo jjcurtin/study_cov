@@ -2,84 +2,87 @@
 # function to generate data 
 
 # NOTE:  THINK ABOUT HOW BETA INTERACTS WITH ERROR FOR EFFECT SIZES FOR X AND COVS
-generate_data <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) {
 
-  # Currently not using r_cov
-  
-  # constants
-  mean_y <- 0
-  mean_covs <- 0
-  sd_covs <- 1
-  # sd_error <- 1
+
+# generate_data <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) {
+# 
+#   # Currently not using r_cov
+#   
+#   # constants
+#   mean_y <- 0
+#   mean_covs <- 0
+#   sd_covs <- 1
+#   # sd_error <- 1
+#  
+#   # make x 
+#   x <- c(rep(0, n_obs*0.5), rep(1, n_obs*0.5))
+#   
+#   # make beta covs
+#   beta_covs <- c(rep(b_cov, n_covs*p_good_covs), rep(0, n_covs*(1-p_good_covs)))
+# 
+#   # make sigma
+#   sigma = diag(n_covs + 1)
+#   
+#   # make covs + initial y
+#   ycovs <- MASS::mvrnorm(n_obs, mu = c(mean_y, rep(mean_covs, n_covs)), Sigma = sigma)
+#   y <- ycovs[,1]
+#   # y <- drop(y) # not sure this is needed anymore
+#   covs <- ycovs[,-1]
+#   
+#   
+#   # Add x variance into y
+#   y <- y + b_x * x 
+#  
+#   # combine all into tibble and relocate y to first column
+#   covs <- covs |>  
+#     tibble::as_tibble(.name_repair = "minimal")
+#   
+#   names(covs) <- paste0("c", 1:n_covs)
+#   
+#   tibble::tibble(x = x, y = y) |> 
+#    dplyr::bind_cols(covs) |> 
+#     dplyr::relocate(y)
+# }
+
+generate_data <- function(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) {
+
+  # generates y and covs with mean=0, var=1 
+  # generates dichotomous x coded -.5, .5
+  # n_obs = sample size
+  # b_x = x effect
+  # n_covs = number of covariates
+  # r_ycov = correlation between y and covariates
+  # p_good_covs = proportion of "good" covariates (nonzero effect)
+  # r_cov = correlation among "good" covariates
  
   # make x 
   x <- c(rep(0, n_obs*0.5), rep(1, n_obs*0.5))
-  
-  # make beta covs
-  beta_covs <- c(rep(b_cov, n_covs*p_good_covs), rep(0, n_covs*(1-p_good_covs)))
-
-  # make sigma
-  sigma = diag(n_covs + 1)
-  
-  # make covs + initial y
-  ycovs <- MASS::mvrnorm(n_obs, mu = c(mean_y, rep(mean_covs, n_covs)), Sigma = sigma)
-  y <- ycovs[,1]
-  # y <- drop(y) # not sure this is needed anymore
-  covs <- ycovs[,-1]
-  
-  
-  # Add x variance into y
-  y <- y + b_x * x 
- 
-  # combine all into tibble and relocate y to first column
-  covs <- covs |>  
-    tibble::as_tibble(.name_repair = "minimal")
-  
-  names(covs) <- paste0("c", 1:n_covs)
-  
-  tibble::tibble(x = x, y = y) |> 
-   dplyr::bind_cols(covs) |> 
-    dplyr::relocate(y)
-}
-
-
-generate_data_correlated <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) {
-
-  
-  # constants
-  mean_y <- 0
-  mean_covs <- 0
-  sd_covs <- 1
-  # sd_error <- 1
- 
-  # make x 
-  x <- c(rep(0, n_obs*0.5), rep(1, n_obs*0.5))
-  
-  # make beta covs
-  beta_covs <- c(rep(b_cov, n_covs*p_good_covs), rep(0, n_covs*(1-p_good_covs)))
 
   # make sigma
   sigma <- diag(n_covs + 1)
   
+  # make n good covs
+  n_good_covs <- n_covs*p_good_covs
+  
   # make correlation matrix of good predictors
   corr_matrix <- matrix(r_cov, 
-                        nrow = n_covs*p_good_covs, 
-                        ncol = n_covs*p_good_covs)
-  
+                        nrow = n_good_covs, 
+                        ncol = n_good_covs)
   diag(corr_matrix) <- 1
  
-  # transpose corr_matrix onto sigma 
+  # superimpose corr_matrix onto sigma 
   sigma[2:(nrow(corr_matrix) + 1), 2:(ncol(corr_matrix) + 1)] <- corr_matrix
   
+  # add correlations between y and good covs
+  sigma[1, 2:(n_good_covs + 1)] <- rep(r_ycov, n_good_covs)
+  sigma[2:(n_good_covs + 1), 1] <- rep(r_ycov, n_good_covs)
   
   # make covs + initial y
-  ycovs <- MASS::mvrnorm(n_obs, mu = c(mean_y, rep(mean_covs, n_covs)), Sigma = sigma)
+  ycovs <- MASS::mvrnorm(n_obs, mu = rep(0, n_covs + 1), Sigma = sigma)
   y <- ycovs[,1]
-  # y <- drop(y) # not sure this is needed anymore
   covs <- ycovs[,-1]
   
-  
-  # Add x variance into y
+  # Add x effect into y
   y <- y + b_x * x 
  
   # combine all into tibble and relocate y to first column

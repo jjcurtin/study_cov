@@ -16,7 +16,7 @@ n_sims <- as.numeric(args[2])
 n_obs <- as.numeric(args[3])
 b_x <- as.numeric(args[4])
 n_covs <- as.numeric(args[5])
-b_cov <- as.numeric(args[6])
+r_ycov <- as.numeric(args[6])
 p_good_covs <- as.numeric(args[7])
 r_cov <- as.numeric(args[8])
 
@@ -27,7 +27,7 @@ r_cov <- as.numeric(args[8])
 # n_obs <- 100
 # b_x <- 0
 # n_covs <- 4
-# b_cov <- 2
+# r_ycov <- 2 (previous b_cov)
 # p_good_covs <- .5
 # r_cov <- 0
 
@@ -45,7 +45,7 @@ set.seed(job_num)
 
 for(i in 1:n_sims) {
   
-  di <- generate_data(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov)
+  di <- generate_data(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov)
   
   results <- bind_rows(get_results(lm_model = get_no_covs_lm(data = di), model_name = "lm no covs", sim = i),
                        get_results(lm_model = get_all_covs_lm(data = di), model_name = "lm all covs", sim = i),
@@ -67,7 +67,7 @@ research_setting <- tibble(job_num = job_num,
                            n_obs = n_obs,
                            b_x = b_x,
                            n_covs = n_covs,
-                           b_cov = b_cov, 
+                           r_ycov = r_ycov, 
                            p_good_covs = p_good_covs,
                            r_cov = r_cov)
 
