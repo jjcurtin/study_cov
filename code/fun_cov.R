@@ -44,13 +44,6 @@
 #     dplyr::relocate(y)
 # }
 
-n_obs <- 100
-b_x <- 0.5
-n_covs <- 12
-r_ycov <- 0.3
-p_good_covs <- 0.75
-r_cov <- 0
-
 generate_data <- function(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) {
 
   # generates y and covs with mean=0, variance=1 
