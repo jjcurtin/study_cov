@@ -2,7 +2,7 @@ Simulate across
 
 - n_obs: 100, 200, 400, 1000
 - b_x: (0, 0.5)
-- n_covs: 4, 8, 16
+- n_covs: 4, 8, 12; CHANGED due to issues with positive definite matrices
 - r_ycov: (0.3); NEED TO CONSIDER THIS EFFECT SIZE; consider if we need to vary this
 - p_good_covs: .25, .5, .75
 - r_cov: (0, 0.3); consider if we need other correlations 
