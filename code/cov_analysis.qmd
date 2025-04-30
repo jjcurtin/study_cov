@@ -7,13 +7,17 @@ format:
     embed-resources: true
     toc: true 
     toc_depth: 5
+    fig-width: 9
+    fig-height: 7
 editor_options: 
   chunk_output_type: console
 ---
 
-### Set up
+## Set up
 
-```{r set up}
+### load packages, set path
+
+```{r packages}
 
 # load packages + set ggplot theme
 
@@ -34,13 +38,15 @@ rdrive_path <- format_path("studydata/cov/raw_data")
 
 ```
 
-<br>
-Read in data for $b_x = 0$ (y & covs generated separately) <br>
-720 jobs $\times$ 500 simulations each $\times$ 5 models = 1,800,000 observations.
+### read in data
 
-```{r read in data}
+All data has: 1440 jobs $\times$ 500 simulations each $\times$ 5 models = 3,600,000 observations. <br>
 
-data <- read.csv(here::here(rdrive_path, "batch_results_old.csv")) |> 
+Read in data for $b_x = 0$ & uncorrelated covariates.
+
+```{r read in data uncorr b0}
+
+d_uncorr_0 <- read.csv(here::here(rdrive_path, "batch_results_uncorrelated_0.csv")) |> 
   mutate(model = gsub("[ -]", "_", model),
          model = factor(model, c("lm_no_covs",
                                  "lm_all_covs",
@@ -52,12 +58,11 @@ data <- read.csv(here::here(rdrive_path, "batch_results_old.csv")) |>
 ```
 
 <br>
-Read in data for $b_x = 0$. <br>
-1440 jobs $\times$ 500 simulations each $\times$ 5 models = 3,600,000 observations.
+Read in data for $b_x = 0$ & correlated covariates.
 
-```{r read in data b0}
+```{r read in data corr b0}
 
-data0 <- read.csv(here::here(rdrive_path, "batch_results_b0.csv")) |> 
+d_corr_0 <- read.csv(here::here(rdrive_path, "batch_results_correlated_0.csv")) |> 
   mutate(model = gsub("[ -]", "_", model),
          model = factor(model, c("lm_no_covs",
                                  "lm_all_covs",
@@ -69,12 +74,11 @@ data0 <- read.csv(here::here(rdrive_path, "batch_results_b0.csv")) |>
 ```
 
 <br>
-Read in data for $b_x = 0.5$. <br>
-1440 jobs $\times$ 500 simulations each $\times$ 5 models = 3,600,000 observations.
+Read in data for $b_x = 0.5$ & uncorrelated covariates.
 
-```{r read in data b05}
+```{r read in data uncorr b05}
 
-data05 <- data.table::fread(here::here(rdrive_path, "batch_results_b05.csv")) |> 
+d_uncorr_05 <- read.csv(here::here(rdrive_path, "batch_results_uncorrelated_05.csv")) |> 
   mutate(model = gsub("[ -]", "_", model),
          model = factor(model, c("lm_no_covs",
                                  "lm_all_covs",
@@ -84,6 +88,23 @@ data05 <- data.table::fread(here::here(rdrive_path, "batch_results_b05.csv")) |>
   glimpse()
 
 ```
+
+<br>
+Read in data for $b_x = 0.5$ & correlated covariates. <br>
+
+```{r read in data corr b05}
+
+d_corr_05 <- read.csv(here::here(rdrive_path, "batch_results_correlated_05.csv")) |> 
+  mutate(model = gsub("[ -]", "_", model),
+         model = factor(model, c("lm_no_covs",
+                                 "lm_all_covs",
+                                 "lm_p_hacked",
+                                 "lm_partial_r",
+                                 "lm_lasso"))) |> 
+  glimpse()
+
+```
+
 
 # Data Analysis
 
@@ -93,24 +114,42 @@ data05 <- data.table::fread(here::here(rdrive_path, "batch_results_b05.csv")) |>
 
 Overall proportion significaint ($p < 0.05$) by model; the Type I error.
 
-```{r type I by model}
+```{r type I by model uncorr}
 
-data0 |> 
+d_uncorr_0 |> 
   group_by(model) |> 
-  summarise(prop_sig = mean(p_value < 0.05)) |> 
-  kbl()
+  summarise(proportion_significant = mean(p_value < 0.05)) |> 
+  kbl(caption = "uncorrelated, b_x = 0")
+
+```
+
+```{r type I by model corr}
+
+d_corr_0 |> 
+  group_by(model) |> 
+  summarise(proportion_significant = mean(p_value < 0.05)) |> 
+  kbl(caption = "correlated, b_x = 0")
 
 ```
 
 <br>
 Overall proportion not significaint ($p >= 0.05$) by model; the Type II error.
 
-```{r type II by model}
+```{r type II by model uncorr}
 
-data05 |> 
+d_uncorr_05 |> 
   group_by(model) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05)) |> 
-  kbl()
+  summarise(proportion_not_significant = mean(p_value >= 0.05)) |> 
+  kbl(caption = "uncorrelated, b_x = 0.5")
+
+```
+
+```{r type II by model corr}
+
+d_corr_05 |> 
+  group_by(model) |> 
+  summarise(proportion_not_significant = mean(p_value >= 0.05)) |> 
+  kbl(caption = "correlated, b_x = 0.5")
 
 ```
 
@@ -118,10 +157,10 @@ data05 |>
 
 #### type I error
 
-```{r type I n obs}
+```{r type I n obs uncorr}
 
-data0 |> 
-  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+d_uncorr_0 |> 
+  group_by(model, n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
   group_by(model, n_obs) |> 
@@ -129,16 +168,31 @@ data0 |>
             typeI_mean = mean(prop_sig),
             typeI_max = max(prop_sig),
             .groups = "drop") |> 
-  kbl(caption = "Type I by n_obs")
+  kbl(caption = "type I error by n_obs, uncorrelated")
+
+```
+
+```{r type I n obs corr}
+
+d_corr_0 |> 
+  group_by(model, n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  group_by(model, n_obs) |> 
+  summarise(typeI_min = min(prop_sig),
+            typeI_mean = mean(prop_sig),
+            typeI_max = max(prop_sig),
+            .groups = "drop") |> 
+  kbl(caption = "type I error by n_obs, correlated")
 
 ```
 
 #### type II error
 
-```{r type II n obs}
+```{r type II n obs uncorr}
 
-data05 |> 
-  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+d_uncorr_05 |> 
+  group_by(model, n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
   group_by(model, n_obs) |> 
@@ -146,159 +200,208 @@ data05 |>
             typeII_mean = mean(prop_not_sig),
             typeII_max = max(prop_not_sig),
             .groups = "drop") |> 
-  kbl(caption = "Type II by n_obs")
+  kbl(caption = "type II error by n_obs, uncorrelated")
+
+```
+
+```{r type II n obs corr}
+
+d_corr_05 |> 
+  group_by(model, n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(model, n_obs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "type II error by n_obs, correlated")
 
 ```
 
 #### plots 
 
-```{r plot type I II n obs}
+Uncorrelated.
 
-p0_nobs <- data0 |> 
+```{r plot type I II n obs uncorr}
+
+p0_nobs_uncorr <- d_uncorr_0 |> 
   group_by(model, n_obs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
   ggplot(aes(x = n_obs, y = prop_sig, color = model)) + 
   geom_line() +
+  scale_color_manual(values = c("dodgerblue", "deeppink", "chartreuse3", "mediumpurple2", "darkorange" )) +
   labs(y = "Type I error")
 
-p05_nobs <- data05 |> 
+p05_nobs_uncorr <- d_uncorr_05 |> 
   group_by(model, n_obs) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
   ggplot(aes(x = n_obs, y = prop_not_sig, color = model)) + 
   geom_line() +
+  scale_color_manual(values = c("dodgerblue", "deeppink", "chartreuse3", "mediumpurple2", "darkorange" )) +
   labs(y = "Type II error") +
   theme(legend.position = "none")
 
-plot_grid(p0_nobs + theme(legend.position = "none"), 
-          p05_nobs,
-          get_legend(p0_nobs),
+plot_grid(p0_nobs_uncorr + theme(legend.position = "none"), 
+          p05_nobs_uncorr,
+          get_legend(p0_nobs_uncorr),
           ncol = 3)
 
 ```
 
-### by n_covs
+Correlated.
+
+```{r plot type I II n obs corr}
+
+p0_nobs_corr <- d_corr_0 |> 
+  group_by(model, n_obs) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_obs, y = prop_sig, color = model)) + 
+  geom_line() +
+  scale_color_manual(values = c("dodgerblue", "deeppink", "chartreuse3", "mediumpurple2", "darkorange" )) +
+  labs(y = "Type I error")
+
+p05_nobs_corr <- d_corr_05 |> 
+  group_by(model, n_obs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_obs, y = prop_not_sig, color = model)) + 
+  geom_line() +
+  scale_color_manual(values = c("dodgerblue", "deeppink", "chartreuse3", "mediumpurple2", "darkorange" )) +
+  labs(y = "Type II error") +
+  theme(legend.position = "none")
+
+plot_grid(p0_nobs_corr + theme(legend.position = "none"), 
+          p05_nobs_corr,
+          get_legend(p0_nobs_corr),
+          ncol = 3)
+
+```
+
+### by n_covs and p_good_covs
 
 #### type I error
 
-```{r pval n covs}
+```{r type I n covs p covs uncorr}
 
-data0 |> 
-  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+d_uncorr_0 |> 
+  group_by(model, n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  group_by(model, n_covs) |> 
+  group_by(model, n_covs, p_good_covs) |> 
   summarise(typeI_min = min(prop_sig),
             typeI_mean = mean(prop_sig),
             typeI_max = max(prop_sig),
             .groups = "drop") |> 
-  kbl(caption = "Type I by n_covs")
+  kbl(caption = "type I error by n_covs and p_good_covs, uncorrelated")
+
+```
+
+```{r type I n covs p covs corr}
+
+d_corr_0 |> 
+  group_by(model, n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  group_by(model, n_covs, p_good_covs) |> 
+  summarise(typeI_min = min(prop_sig),
+            typeI_mean = mean(prop_sig),
+            typeI_max = max(prop_sig),
+            .groups = "drop") |> 
+  kbl(caption = "type I error by n_covs and p_good_covs, correlated")
 
 ```
 
 #### type II error
 
-```{r type II n covs}
+```{r type II n covs p covs uncorr}
 
-data05 |> 
-  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+d_uncorr_05 |> 
+  group_by(model, n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
-  group_by(model, n_covs) |> 
+  group_by(model, n_covs, p_good_covs) |> 
   summarise(typeII_min = min(prop_not_sig),
             typeII_mean = mean(prop_not_sig),
             typeII_max = max(prop_not_sig),
             .groups = "drop") |> 
-  kbl(caption = "Type II by n_covs")
+  kbl(caption = "type II error by n_covs and p_good_covs, uncorrelated")
+
+```
+
+```{r type II n covs p covs corr}
+
+d_corr_05 |> 
+  group_by(model, n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(model, n_covs, p_good_covs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "type II error by n_covs and p_good_covs, correlated")
 
 ```
 
 #### plots 
 
-```{r plot type I II n covs}
+```{r plot type I three way int}
 
-p0_ncovs <- data0 |> 
-  group_by(model, n_covs) |> 
+d_uncorr_0 |> 
+  group_by(model, n_covs, p_good_covs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  ggplot(aes(x = n_covs, y = prop_sig, color = model)) + 
-  geom_line()
-
-p05_ncovs <- data05 |> 
-  group_by(model, n_covs) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  ggplot(aes(x = n_covs, y = prop_not_sig, color = model)) + 
+  ggplot(aes(x = n_covs, y = prop_sig, color = factor(p_good_covs))) + 
   geom_line() +
-  theme(legend.position = "none")
+  facet_grid(~ model) +
+  labs(y = "type I error",
+       color = "p_good_covs", 
+       title = "Three-Way Interaction, uncorrelated") +
+  scale_color_manual(values = c("0.25" = "blue", "0.5" = "forestgreen", "0.75" = "orange"))
 
-plot_grid(p0_ncovs + theme(legend.position = "none"), 
-          p05_ncovs,
-          get_legend(p0_ncovs),
-          ncol = 3)
-
-```
-
-### by p_good_covs
-
-#### type I error
-
-```{r pval p good covs}
-
-data0 |> 
-  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
+d_corr_0 |> 
+  group_by(model, n_covs, p_good_covs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  group_by(model, p_good_covs) |> 
-  summarise(typeI_min = min(prop_sig),
-            typeI_mean = mean(prop_sig),
-            typeI_max = max(prop_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type I by p_good_covs")
-
-```
-
-#### type II error
-
-```{r type II p good covs}
-
-data05 |> 
-  group_by(model, n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(model, p_good_covs) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II by p_good_covs")
-
-```
-
-#### plots 
-
-```{r plot type I II p good covs}
-
-p0_pgood <- data0 |> 
-  group_by(model, p_good_covs) |> 
-  summarise(prop_sig = mean(p_value < 0.05),
-            .groups = "drop") |> 
-  ggplot(aes(x = p_good_covs, y = prop_sig, color = model)) + 
-  geom_line()
-
-p05_pgood <- data05 |> 
-  group_by(model, p_good_covs) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  ggplot(aes(x = p_good_covs, y = prop_not_sig, color = model)) + 
+  ggplot(aes(x = n_covs, y = prop_sig, color = factor(p_good_covs))) + 
   geom_line() +
-  theme(legend.position = "none")
+  facet_grid(~ model) +
+  labs(y = "type I error",
+       color = "p_good_covs",
+       title = "Three-Way Interaction, correlated") +
+  scale_color_manual(values = c("0.25" = "blue", "0.5" = "forestgreen", "0.75" = "orange"))
 
-plot_grid(p0_pgood + theme(legend.position = "none"), 
-          p05_pgood,
-          get_legend(p0_pgood),
-          ncol = 3)
+```
+
+```{r plot type II three way int}
+
+d_uncorr_05 |> 
+  group_by(model, n_covs, p_good_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_covs, y = prop_not_sig, color = factor(p_good_covs))) + 
+  geom_line() +
+  facet_grid(~ model) +
+  labs(y = "type II error",
+       color = "p_good_covs", 
+       title = "Three-Way Interaction, uncorrelated") +
+  scale_color_manual(values = c("0.25" = "blue", "0.5" = "forestgreen", "0.75" = "orange"))
+
+d_corr_05 |> 
+  group_by(model, n_covs, p_good_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_covs, y = prop_not_sig, color = factor(p_good_covs))) + 
+  geom_line() +
+  facet_grid(~ model) +
+  labs(y = "type II error",
+       color = "p_good_covs",
+       title = "Three-Way Interaction, correlated") +
+  scale_color_manual(values = c("0.25" = "blue", "0.5" = "forestgreen", "0.75" = "orange"))
 
 ```
 
@@ -306,28 +409,33 @@ plot_grid(p0_pgood + theme(legend.position = "none"),
 
 ```{r combined hist}
 
-data |> 
-  ggplot(aes(x = estimate, color = model, fill = model)) +
-  geom_density(alpha = 0.5) +
-  scale_x_continuous(limits = c(-3, 3), breaks = seq(-3, 3, by = 1)) +
-  scale_color_viridis_d() +
-  scale_fill_viridis_d()
-
-data0 |> 
-  ggplot(aes(x = estimate, color = model, fill = model)) +
+d_uncorr_0 |> 
+  ggplot(aes(x = estimate, color = model)) +
   geom_density(alpha = 0.5) +
   scale_x_continuous(limits = c(-1.5, 1.5), breaks = seq(-1.5, 1.5, by = 0.5)) +
-  scale_color_viridis_d() +
-  scale_fill_viridis_d() +
-  labs(title = "Sampling Distribution for b_x = 0")
+  scale_color_manual(values = c("dodgerblue", "deeppink", "chartreuse3", "mediumpurple2", "darkorange" )) +
+  labs(title = "Sampling Distribution for b_x = 0, uncorrelated")
 
-data05 |> 
-  ggplot(aes(x = estimate, color = model, fill = model)) +
+d_uncorr_05 |> 
+  ggplot(aes(x = estimate, color = model)) +
   geom_density(alpha = 0.5) +
   scale_x_continuous(limits = c(-1.5, 1.5), breaks = seq(-1.5, 1.5, by = 0.5)) +
-  scale_color_viridis_d() +
-  scale_fill_viridis_d() +
-  labs(title = "Sampling Distribution for b_x = 0.5")
+  scale_color_manual(values = c("dodgerblue", "deeppink", "chartreuse3", "mediumpurple2", "darkorange" )) +
+  labs(title = "Sampling Distribution for b_x = 0.5, uncorrelated")
+
+d_corr_0 |> 
+  ggplot(aes(x = estimate, color = model)) +
+  geom_density(alpha = 0.5) +
+  scale_x_continuous(limits = c(-1.5, 1.5), breaks = seq(-1.5, 1.5, by = 0.5)) +
+  scale_color_manual(values = c("dodgerblue", "deeppink", "chartreuse3", "mediumpurple2", "darkorange" )) +
+  labs(title = "Sampling Distribution for b_x = 0, correlated")
+
+d_corr_05 |> 
+  ggplot(aes(x = estimate, color = model)) +
+  geom_density(alpha = 0.5) +
+  scale_x_continuous(limits = c(-1.5, 1.5), breaks = seq(-1.5, 1.5, by = 0.5)) +
+  scale_color_manual(values = c("dodgerblue", "deeppink", "chartreuse3", "mediumpurple2", "darkorange" )) +
+  labs(title = "Sampling Distribution for b_x = 0.5, correlated")
 
 ```
 
@@ -335,18 +443,32 @@ data05 |>
 
 ```{r b se by model}
 
-data0 |> 
+d_uncorr_0 |> 
   group_by(model) |> 
   summarise(mean_estimate = mean(estimate),
             SD_estimate = sd(estimate),
             mean_SE = sqrt(mean(SE^2))) |> 
-  kbl(caption = "b_x = 0")
+  kbl(caption = "b_x = 0, uncorrelated")
 
-data05 |> 
+d_uncorr_05 |> 
   group_by(model) |> 
   summarise(mean_estimate = mean(estimate),
             SD_estimate = sd(estimate),
             mean_SE = sqrt(mean(SE^2))) |> 
-  kbl(caption = "b_x = 0.5")
+  kbl(caption = "b_x = 0.5, uncorrelated")
+
+d_corr_0 |> 
+  group_by(model) |> 
+  summarise(mean_estimate = mean(estimate),
+            SD_estimate = sd(estimate),
+            mean_SE = sqrt(mean(SE^2))) |> 
+  kbl(caption = "b_x = 0, correlated")
+
+d_corr_05 |> 
+  group_by(model) |> 
+  summarise(mean_estimate = mean(estimate),
+            SD_estimate = sd(estimate),
+            mean_SE = sqrt(mean(SE^2))) |> 
+  kbl(caption = "b_x = 0.5, correlated")
 
 ```
