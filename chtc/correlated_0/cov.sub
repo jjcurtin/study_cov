@@ -1,6 +1,6 @@
 # cov.sub 
-container_image = train.sif
-+SingularityImage = "train.sif"
++SingularityImage = "osdf:///chtc/staging/kpaquette2/train.sif"
+container_image = osdf:///chtc/staging/kpaquette2/train.sif
 
 executable = cov.sh
 arguments = $(job_num) $(n_sims) $(n_obs) $(b_x) $(n_covs) $(r_ycov) $(p_good_covs) $(r_cov)
