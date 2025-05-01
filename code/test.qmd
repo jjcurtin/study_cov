@@ -1,0 +1,36 @@
+---
+title: "Code tests"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+options(conflicts.policy = "depends.ok")
+source("./code/fun_cov.R", echo=FALSE)
+```
+
+
+Generate data and check sigma
+```{r}
+d <- generate_data(n_obs = 1000, b_x = 0, n_covs = 4, 
+                   r_ycov = .3, p_good_covs = 0.5, r_cov = 0.3)
+
+cor(d)
+```
+
+Test no covs
+```{r}
+fit_no_covs(d) |> 
+  get_results(method = "no_covs", sim = 1)
+```
+
+
+Test all covs
+```{r}
+fit_all_covs(d) |> 
+  get_results(method = "all_covs", sim = 1)
+```
+

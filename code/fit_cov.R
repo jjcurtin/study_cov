@@ -31,15 +31,15 @@ r_cov <- as.numeric(args[8])
 # p_good_covs <- .5
 # r_cov <- 0
 
-suppressMessages(library(dplyr)) 
-suppressMessages(library(readr))
-suppressMessages(library(stringr))
+#suppressMessages(library(dplyr)) 
+#suppressMessages(library(readr))
+#suppressMessages(library(stringr))
 source("fun_cov.R")
 
 
 # START LOOP
 
-full_results <- tibble()
+full_results <- tibble::tibble()
 
 set.seed(job_num)
 
@@ -47,23 +47,23 @@ for(i in 1:n_sims) {
   
   di <- generate_data(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov)
   
-  results <- bind_rows(get_results(lm_model = get_no_covs_lm(data = di), model_name = "lm no covs", sim = i),
-                       get_results(lm_model = get_all_covs_lm(data = di), model_name = "lm all covs", sim = i),
-                       get_results(lm_model = get_p_hacked_lm(data = di), model_name = "lm p-hacked", sim = i),
-                       get_results(lm_model = get_partial_r_lm(data = di), model_name = "lm partial r", sim = i),
-                       get_results(lm_model = get_lasso_lm(data = di), model_name = "lm lasso", sim = i))
+  results <- dplyr::bind_rows(get_results(model = fit_no_covs(d = di), method = "no_covs", sim = i),
+                       get_results(model = fit_all_covs(d = di), method = "all_covs", sim = i),
+                       get_results(model = fit_p_hacked(d = di), method = "p_hacked", sim = i),
+                       get_results(model = fit_partial_r(d = di), method = "partial_r", sim = i),
+                       get_results(model = fit_lasso(d = di), method = "lasso", sim = i))
   
-  full_results <- bind_rows(full_results, results)
+  full_results <- dplyr::bind_rows(full_results, results)
   
 }
 
 # add job_num as first column
 full_results <- full_results |> 
-  mutate(job_num = job_num) |> 
-  relocate(job_num)
+  dplyr::mutate(job_num = job_num) |> 
+  dplyr::relocate(job_num)
 
 # tibble of research setting info
-research_setting <- tibble(job_num = job_num,
+research_setting <- tibble::tibble(job_num = job_num,
                            n_obs = n_obs,
                            b_x = b_x,
                            n_covs = n_covs,
@@ -73,5 +73,5 @@ research_setting <- tibble(job_num = job_num,
 
 # join full results and write to csv file
 full_results |>
-  left_join(research_setting, by = "job_num") |> 
-  write_csv(str_c("results_", job_num, ".csv"))
+  dplyr::left_join(research_setting, by = "job_num") |> 
+  readr::write_csv(stringr::str_c("results_", job_num, ".csv"))

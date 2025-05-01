@@ -1,48 +1,8 @@
+################################################################################
+# General functions (across methods)
+################################################################################
 
 # function to generate data 
-
-# NOTE:  THINK ABOUT HOW BETA INTERACTS WITH ERROR FOR EFFECT SIZES FOR X AND COVS
-
-
-# generate_data <- function(n_obs, b_x, n_covs, b_cov, p_good_covs, r_cov) {
-# 
-#   # Currently not using r_cov
-#   
-#   # constants
-#   mean_y <- 0
-#   mean_covs <- 0
-#   sd_covs <- 1
-#   # sd_error <- 1
-#  
-#   # make x 
-#   x <- c(rep(0, n_obs*0.5), rep(1, n_obs*0.5))
-#   
-#   # make beta covs
-#   beta_covs <- c(rep(b_cov, n_covs*p_good_covs), rep(0, n_covs*(1-p_good_covs)))
-# 
-#   # make sigma
-#   sigma = diag(n_covs + 1)
-#   
-#   # make covs + initial y
-#   ycovs <- MASS::mvrnorm(n_obs, mu = c(mean_y, rep(mean_covs, n_covs)), Sigma = sigma)
-#   y <- ycovs[,1]
-#   # y <- drop(y) # not sure this is needed anymore
-#   covs <- ycovs[,-1]
-#   
-#   
-#   # Add x variance into y
-#   y <- y + b_x * x 
-#  
-#   # combine all into tibble and relocate y to first column
-#   covs <- covs |>  
-#     tibble::as_tibble(.name_repair = "minimal")
-#   
-#   names(covs) <- paste0("c", 1:n_covs)
-#   
-#   tibble::tibble(x = x, y = y) |> 
-#    dplyr::bind_cols(covs) |> 
-#     dplyr::relocate(y)
-# }
 
 generate_data <- function(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) {
 
@@ -89,179 +49,154 @@ generate_data <- function(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) {
   covs <- covs |>  
     tibble::as_tibble(.name_repair = "minimal")
   
-  names(covs) <- paste0("c", 1:n_covs)
+  names(covs) <- stringr::str_c("c", 1:n_covs)
   
   tibble::tibble(x = x, y = y) |> 
    dplyr::bind_cols(covs) |> 
     dplyr::relocate(y)
 }
 
-# fit no covariate model
 
-get_no_covs_lm <- function(data) {
-  lm(y ~ x, data = data)
+# LAUREN: Add in proportion of good covariates found (hits) and proportion 
+#   of bad covariates included (false alarms)
+# LAUREN: I renamed model to method both as the input to the function and in the 
+#   tibble that is returned to be clearer on what that string describes
+#   I fixed this in fit_cov.R but it likely will also affect affect your qmd.  
+#   You will need to update it there.
+
+# make results tibble : b, SE, p-value
+get_results <- function(model, method, sim) {
+  # model: an lm object
+  # method: The name of the method used to select covariates (e.g., ) 
+  # sim: simulation number
+
+  ndf <- model |> broom::glance() |> dplyr::pull(df)
+  ddf <- model |> broom::glance() |> dplyr::pull(df.residual)
+  output <- model |> broom::tidy() |> dplyr::filter(term == "x")
+  
+  tibble::tibble(method = method, 
+         simulation_id = sim,
+         estimate = output$estimate,
+         SE = output$std.error,
+         p_value = output$p.value,
+         ndf = ndf,
+         ddf = ddf) 
+}
+
+
+###############################################################################
+# Fit functions
+###############################################################################
+
+# fit no covariate model
+fit_no_covs <- function(d) {
+  lm(y ~ x, data = d)
 }
 
 
 # fit all covariate model
-
-get_all_covs_lm <- function(data) {
-  lm(y ~ ., data = data)
+fit_all_covs <- function(d) {
+  lm(y ~ ., data = d)
 }
 
 
 # fit p-hacked model
-
-get_p_hacked_lm <- function(data) {
+fit_p_hacked <- function(d) {
   
-  lm_base <- lm(y ~ x, data = data) # making base model
-  tidy_lm_base <- lm_base |> broom::tidy() |> filter(term == "x")
-  p_val_base <- tidy_lm_base$p.value
+  # making base model
+  lm_base <- lm(y ~ x, data = d) 
+  p_base <- lm_base |> 
+    broom::tidy() |> 
+    dplyr::filter(term == "x") |> 
+    dplyr::pull(p.value)
   
-  lm_final <- lm(y ~ x, data = data) # making final model 
+  # empty vector of covariates added to model
+  covs_added <- character(0) 
   
-  n_covs <- grep("^c", names(data), value = TRUE) |> length() # isolate names that start with c
-  
-  p_val_binary <- rep(0, n_covs) # empty vector of true/false if p-value is smaller
-  covs_added <- character(0) # empty vector of covariates added to model
-  
+  n_covs <- grep("^c", names(d), value = TRUE) |> length() 
   for(i in 1:n_covs) {
     
-    ci <- grep("^c", names(data), value = TRUE)[i]
+    ci <- grep("^c", names(d), value = TRUE)[i]
     
-    lm_formula <- reformulate(termlabels = c("x", ci), response = "y")
-    lm_model <- lm(formula = lm_formula, data = data)
-    tidy_lm_model_x <- lm_model |> broom::tidy() |> filter(term == "x")
+    formula_1cov <- reformulate(termlabels = c("x", ci), response = "y")
+    lm_1cov <- lm(formula = formula_1cov, data = d)
+    p_1cov <- lm_1cov |> 
+      broom::tidy() |> 
+      dplyr::filter(term == "x") |> 
+      dplyr::pull(p.value)
     
-    if(tidy_lm_model_x$p.value < p_val_base) {
-      
-      p_val_binary[i] <- 1
-      
-      if(!(ci %in% covs_added)) {
-        covs_added <- c(covs_added, ci)
-        lm_final <- update(lm_final, paste0(". ~ . + ", ci))
-        
-      }}
+    if(p_1cov < p_base) {
+      covs_added <- c(covs_added, ci)
+    }
   }
-  
-  return(lm_final)
+
+  # fit model with hacked covariates 
+  formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
+  lm(formula = formula_final, data = d)
 }
 
 
 # fit partial r
-
-get_partial_r_lm <- function(data, alpha = 0.05) {
+fit_partial_r <- function(d, alpha = 0.05) {
   
-  lm_final <- lm(y ~ x, data = data) # making final model 
+  # empty vector of covariates that are significant on y, controlling x
+  covs_added <- character(0) 
   
-  n_covs <- grep("^c", names(data), value = TRUE) |> length() # isolate names that start with c
-  
-  sig_covs <- character(0) # empty vector of covariates that are significant on y
-  
-  p_vals <- tibble(covariate = character(), 
-                   p_value = numeric())
-  
+  n_covs <- grep("^c", names(d), value = TRUE) |> length()
   for(i in 1:n_covs) {
+    ci <- grep("^c", names(d), value = TRUE)[i]
     
-    ci <- grep("^c", names(data), value = TRUE)[i]
+    formula_1cov <- reformulate(termlabels = c("x", ci), response = "y")
+    lm_1cov <- lm(formula = formula_1cov, data = d)
+    p_1cov <- lm_1cov |> 
+      broom::tidy() |> 
+      dplyr::filter(term == ci) |> 
+      dplyr::pull(p.value)
     
-    lm_formula <- reformulate(termlabels = c("x", ci), response = "y")
-    lm_model <- lm(formula = lm_formula, data = data)
-    tidy_lm_model_ci <- lm_model |> broom::tidy() |> filter(term == ci)
-    
-    p_vals <- add_row(p_vals, covariate = ci, p_value = tidy_lm_model_ci$p.value)
-    
-    if(tidy_lm_model_ci$p.value < alpha) {
-      
-      sig_covs <- c(sig_covs, ci)
-      lm_final <- update(lm_final, paste0(". ~ . + ", ci))
-      
-      }
+    if(p_1cov < alpha) {
+      covs_added <- c(covs_added, ci)
+    }
   }
   
-  return(lm_final)
+  # fit model with partial r covariates 
+  formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
+  lm(formula = formula_final, data = d)
 }
 
 # fit LASSO model
-
-# packages needed:
-# rsample, tidyr, tune, yardstick, parsnip (all in train.sif)
-
-get_lasso_lm <- function(data) {
+fit_lasso <- function(d) {
   
-  splits_boot <- data |> rsample::bootstraps(times = 100)
-  
+  n_covs <- grep("^c", names(d), value = TRUE) |> length()
+  splits_boot <- d |> rsample::bootstraps(times = 100)
   grid_penalty <- tidyr::expand_grid(penalty = exp(seq(-8, 8, length.out = 1000)))
   
   # tune lasso
-  
   fits_lasso <-
     parsnip::linear_reg(penalty = tune(), mixture = 1) |> 
     parsnip::set_engine("glmnet",
                         penalty.factor = c(0, rep(1, n_covs))) |> 
-    tune::tune_grid(preprocessor = recipes::recipe(y ~ ., data = data),
+    tune::tune_grid(preprocessor = recipes::recipe(y ~ ., data = d),
                     resamples = splits_boot, 
                     grid = grid_penalty, 
                     metrics = yardstick::metric_set(yardstick::rmse))
   
   # select best lasso
-  
   fit_best_lasso <-
     parsnip::linear_reg(penalty = tune::select_best(fits_lasso, metric = "rmse")$penalty, 
                         mixture = 1) |> 
     parsnip::set_engine("glmnet",
                         penalty.factor = c(0, rep(1, n_covs))) |> 
-    parsnip::fit(y ~ ., data = data)
+    parsnip::fit(y ~ ., data = d)
   
   # select nonzero covariates
-  
-  nz_covs <- fit_best_lasso |> 
+  covs_added <- fit_best_lasso |> 
     broom::tidy() |> 
-    filter(estimate != 0) |> 
-    filter(stringr::str_starts(term, "c")) |> 
-    pull(term)
+    dplyr::filter(estimate != 0) |> 
+    dplyr::filter(stringr::str_starts(term, "c")) |> 
+    dplyr::pull(term)
   
   # build formula with nonzero covs and return model
+  formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
   
-  lm_formula <- reformulate(termlabels = c("x", nz_covs), response = "y")
-  
-  lm(formula = lm_formula, data = data)
-  
+  lm(formula = formula_final, data = d)
 }
-
-
-# make results tibble : b, SE, p-value
-
-get_results <- function(lm_model, model_name, sim) {
-  
-  # make empty results tibble
-  
-  lm_results <- tibble(model = character(),
-                       simulation_id = numeric(),
-                       term = character(),
-                       estimate = numeric(),
-                       SE = numeric(),
-                       p_value = numeric())
-  
-  # tidy output for x
-  
-  tidy_lm_model_x <- lm_model |> broom::tidy() |> filter(term == "x")
-  
-  # extract values
-  
-  lm_results <- bind_rows(lm_results, 
-                          tibble(model = model_name, 
-                                 simulation_id = sim,
-                                 term = "x",
-                                 estimate = tidy_lm_model_x$estimate,
-                                 SE = tidy_lm_model_x$std.error,
-                                 p_value = tidy_lm_model_x$p.value))
-  
-  return(lm_results)
-}
-
-
-
-
-
-
