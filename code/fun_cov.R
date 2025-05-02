@@ -16,13 +16,13 @@ generate_data <- function(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) {
   # r_cov = correlation among "good" covariates
  
   # make x 
-  x <- c(rep(0, n_obs*0.5), rep(1, n_obs*0.5))
+  x <- c(rep(0, n_obs/2), rep(1, n_obs/2))
 
-  # make sigma
+  # make sigma for covs and y
   sigma <- diag(n_covs + 1)
   
   # make n good covs
-  n_good_covs <- n_covs*p_good_covs
+  n_good_covs <- n_covs * p_good_covs
   
   # make correlation matrix of good predictors
   corr_matrix <- matrix(r_cov, 
@@ -37,23 +37,23 @@ generate_data <- function(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov) {
   sigma[1, 2:(n_good_covs + 1)] <- rep(r_ycov, n_good_covs)
   sigma[2:(n_good_covs + 1), 1] <- rep(r_ycov, n_good_covs)
   
-  # make covs + initial y
+  # make covs + y pre-manipulation of x
+  # all with mean = 0 and variance = 1
   ycovs <- MASS::mvrnorm(n_obs, mu = rep(0, n_covs + 1), Sigma = sigma)
-  y <- ycovs[,1]
-  covs <- ycovs[,-1]
+  y <- ycovs[, 1]
+  covs <- ycovs[, -1]
   
   # Add x effect into y
   y <- y + b_x * x 
  
-  # combine all into tibble and relocate y to first column
+  # combine all into tibble
   covs <- covs |>  
     tibble::as_tibble(.name_repair = "minimal")
   
   names(covs) <- stringr::str_c("c", 1:n_covs)
   
-  tibble::tibble(x = x, y = y) |> 
-   dplyr::bind_cols(covs) |> 
-    dplyr::relocate(y)
+  tibble::tibble(y = y, x = x) |> 
+   dplyr::bind_cols(covs)
 }
 
 
@@ -101,7 +101,7 @@ fit_all_covs <- function(d) {
 
 
 # fit p-hacked model
-fit_p_hacked <- function(d) {
+fit_p_hacked <- function(d, n_covs) {
   
   # making base model
   lm_base <- lm(y ~ x, data = d) 
@@ -113,7 +113,6 @@ fit_p_hacked <- function(d) {
   # empty vector of covariates added to model
   covs_added <- character(0) 
   
-  n_covs <- grep("^c", names(d), value = TRUE) |> length() 
   for(i in 1:n_covs) {
     
     ci <- grep("^c", names(d), value = TRUE)[i]
@@ -137,12 +136,11 @@ fit_p_hacked <- function(d) {
 
 
 # fit partial r
-fit_partial_r <- function(d, alpha = 0.05) {
+fit_partial_r <- function(d, n_covs, alpha = 0.05) {
   
   # empty vector of covariates that are significant on y, controlling x
   covs_added <- character(0) 
   
-  n_covs <- grep("^c", names(d), value = TRUE) |> length()
   for(i in 1:n_covs) {
     ci <- grep("^c", names(d), value = TRUE)[i]
     
@@ -164,9 +162,8 @@ fit_partial_r <- function(d, alpha = 0.05) {
 }
 
 # fit LASSO model
-fit_lasso <- function(d) {
+fit_lasso <- function(d, n_covs) {
   
-  n_covs <- grep("^c", names(d), value = TRUE) |> length()
   splits_boot <- d |> rsample::bootstraps(times = 100)
   grid_penalty <- tidyr::expand_grid(penalty = exp(seq(-8, 8, length.out = 1000)))
   

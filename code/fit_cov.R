@@ -47,11 +47,16 @@ for(i in 1:n_sims) {
   
   di <- generate_data(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov)
   
-  results <- dplyr::bind_rows(get_results(model = fit_no_covs(d = di), method = "no_covs", sim = i),
-                       get_results(model = fit_all_covs(d = di), method = "all_covs", sim = i),
-                       get_results(model = fit_p_hacked(d = di), method = "p_hacked", sim = i),
-                       get_results(model = fit_partial_r(d = di), method = "partial_r", sim = i),
-                       get_results(model = fit_lasso(d = di), method = "lasso", sim = i))
+  results <- dplyr::bind_rows(get_results(model = fit_no_covs(di), 
+                                          method = "no_covs", sim = i),
+                       get_results(model = fit_all_covs(di), 
+                                   method = "all_covs", sim = i),
+                       get_results(model = fit_p_hacked(di, n_covs), 
+                                   method = "p_hacked", sim = i),
+                       get_results(model = fit_partial_r(di, n_covs), 
+                                   method = "partial_r", sim = i),
+                       get_results(model = fit_lasso(di, n_covs), 
+                                   method = "lasso", sim = i))
   
   full_results <- dplyr::bind_rows(full_results, results)
   
