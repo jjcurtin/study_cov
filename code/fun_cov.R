@@ -206,6 +206,11 @@ fit_partial_r <- function(d, alpha = 0.05) {
 #   with x.
 fit_lasso <- function(d) {
   
+  # calculate n_covs from data 
+  n_covs <- names(d) |> 
+    stringr::str_subset("^c") |> 
+    length()
+
   splits_boot <- d |> rsample::bootstraps(times = 100)
   
   # use a very wide set of penalties/lambda
