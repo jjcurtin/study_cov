@@ -7,30 +7,48 @@ editor_options:
 
 ```{r}
 library(tidyverse)
-library(tidymodels)
-options(conflicts.policy = "depends.ok")
 source("./code/fun_cov.R", echo=FALSE)
 ```
 
 
 Generate data and check sigma
 ```{r}
-d <- generate_data(n_obs = 1000, b_x = 0, n_covs = 4, 
-                   r_ycov = .3, p_good_covs = 0.5, r_cov = 0.3)
-
-cor(d)
+n_obs <- 100
+b_x <- 0
+n_covs <- 12
+r_ycov <- .3
+p_good_covs <- 0.25
+r_cov <- 0.3
+d <- generate_data(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov)
 ```
 
 Test no covs
 ```{r}
 fit_no_covs(d) |> 
-  get_results(method = "no_covs", sim = 1)
+  get_results(method = "no_covs", n_covs, p_good_covs, sim = 1)
 ```
 
 
 Test all covs
 ```{r}
 fit_all_covs(d) |> 
-  get_results(method = "all_covs", sim = 1)
+  get_results(method = "all_covs", n_covs, p_good_covs, sim = 1)
 ```
 
+Test p-hack 
+```{r}
+fit_p_hacked(d) |> 
+  get_results(method = "all_covs", n_covs, p_good_covs, sim = 1)
+```
+Test partial
+```{r}
+fit_partial_r(d, n_covs) |> 
+  get_results(method = "partial_r", n_covs, p_good_covs, sim = 1)
+```
+
+Test LASSO
+
+```{r}
+fit_lasso(d, n_covs) |> 
+  get_results(method = "lasso", n_covs, p_good_covs, sim = 1)
+```

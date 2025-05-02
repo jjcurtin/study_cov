@@ -1,13 +1,24 @@
-# This is the script that will fit our several approaches to the data to evaluate the effect of x
-# It will 
-# 1. generate the data
-# fit the models
-# extract parameter estimate, SE, p-value for X
-# extract other info??? (e.g., about covariate effects maybe)
-# save the results in a tibble that has separate rows for each approach and columns for the above info
+# This script fits linear models using our five covariate 
+#   selection methods in a simulated data set that varies characteristics of the research 
+#   setting (e.g., sample size, number of covariates, effect size for x; see below)
 
-# This script will be run across jobs where each job will have a different dataset that varies on
-# the population effect size for x, the sample size, the number of covariates, the size of the covariate effects etc.
+# It will 
+# - generate the data
+# - fit the models
+# - extract parameter estimate, SE, p-value for X 
+# - also extract true positive rate and false positive rate for selecting good covariates 
+# - save the results in a tibble that has separate rows for each approach and columns 
+#   for the above info
+
+# This script will be run across jobs where each job will have a different dataset that varies 
+# the research setting/characteristics of the dataset.  These include:
+# - n_obs.  number of observations in the dataset
+# - b_x.  The effect size for the x effect
+# - n_covs.  The number of covariates in the dataset
+# - r_ycov.  The correlation between good covariates and y 
+# - p_good_covs.  The proportion of covariates that are "good" (nonzero effect)
+# - r_cov.  The corrleations among the good covariates ("bad" covariates are 
+#      uncorrelated with y, x, good covariates and other bad covariates.)
 
 args <- commandArgs(trailingOnly = TRUE) 
 
@@ -21,45 +32,47 @@ p_good_covs <- as.numeric(args[7])
 r_cov <- as.numeric(args[8])
 
 # for testing
-# comment out for use on CHTC
 # job_num <- 1
 # n_sims <- 10
 # n_obs <- 100
 # b_x <- 0
 # n_covs <- 4
-# r_ycov <- 2 (previous b_cov)
+# r_ycov <- 2 
 # p_good_covs <- .5
 # r_cov <- 0
 
-#suppressMessages(library(dplyr)) 
-#suppressMessages(library(readr))
-#suppressMessages(library(stringr))
 source("fun_cov.R")
 
-
-# START LOOP
-
-full_results <- tibble::tibble()
-
+# Loop over sims
 set.seed(job_num)
+full_results <- tibble::tibble()
 
 for(i in 1:n_sims) {
   
   di <- generate_data(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov)
   
   results <- dplyr::bind_rows(get_results(model = fit_no_covs(di), 
-                                          method = "no_covs", sim = i),
+                                          method = "no_covs", 
+                                          n_covs, p_good_covs,
+                                          sim = i),
                        get_results(model = fit_all_covs(di), 
-                                   method = "all_covs", sim = i),
-                       get_results(model = fit_p_hacked(di, n_covs), 
-                                   method = "p_hacked", sim = i),
-                       get_results(model = fit_partial_r(di, n_covs), 
-                                   method = "partial_r", sim = i),
-                       get_results(model = fit_lasso(di, n_covs), 
-                                   method = "lasso", sim = i))
+                                   method = "all_covs", 
+                                   n_covs, p_good_covs,
+                                   sim = i),
+                       get_results(model = fit_p_hacked(di), 
+                                   method = "p_hacked", 
+                                   n_covs, p_good_covs,
+                                   sim = i),
+                       get_results(model = fit_partial_r(di), 
+                                   method = "partial_r", 
+                                   n_covs, p_good_covs,
+                                   sim = i),
+                       get_results(model = fit_lasso(di), 
+                                   method = "lasso", 
+                                   n_covs, p_good_covs,
+                                   sim = i))
   
   full_results <- dplyr::bind_rows(full_results, results)
-  
 }
 
 # add job_num as first column
