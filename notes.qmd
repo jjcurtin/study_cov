@@ -1,3 +1,10 @@
+# Updates
+
+- change N from 1000 to 800
+- Add research setting for bx = .3
+
+
+
 Simulate across
 
 - n_obs: 100, 200, 400, 1000
