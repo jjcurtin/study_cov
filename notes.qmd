@@ -1,111 +1,19 @@
-# Updates
+# Simulate across
 
-- change N from 1000 to 800
-- Add research setting for bx = .3
-
-
-
-Simulate across
-
-- n_obs: 100, 200, 400, 1000
-- b_x: (0, 0.5)
-- n_covs: 4, 8, 12; CHANGED due to issues with positive definite matrices
-- r_ycov: (0.3); NEED TO CONSIDER THIS EFFECT SIZE; consider if we need to vary this
+- n_obs: 100, 200, 300, 400
+- b_x: 0, 0.3, 0.5
+- n_covs: 4, 8, 12, 16 
+- r_ycov: 0.3, 0.5 
 - p_good_covs: .25, .5, .75
-- r_cov: (0, 0.3); consider if we need other correlations 
+- r_cov: 0.3 
 
 
-1. function to generate data for x, covs, and y
-
-use mvrnorm() from MASS for covs
-dichotomous x, equal n
-mean_covs = 0
-sd_covs = 1
-y as function of x, covs, betas, and e
-
-parameters for 
-
-- n_obs
-- n_covs
-- sigma_covs
-- beta_x
-- beta_covs 
-
- 
-2. Functions for each analysis method
+# Methods
 
 - no_covariates
 - all_covariates
-- lasso 
-- partial_r
 - p_hack
-
-functions return
-
-- b_x
-- se_x
-- p_x
-
-
-
-
-
-# write a function that generates multivariate normal data for 3 variable
-```{r}
-library(MASS)
-n_obs = 100
-n_covs = 3
-mean_covs = 0
-sd_covs = 1
-sigma_covs = diag(n_covs)
-set.seed(01271969)
-covs = mvrnorm(n_obs, mu = rep(mean_covs, n_covs), Sigma = sigma_covs)
-covs
-
-```
-# put all of the above code in a function that has parameters for n_obs, n_covs, mean_covs, sd_covs, sigma_covs`
-```{r}
-generate_covs <- function(n_obs, n_covs, mean_covs, sd_covs, sigma_covs){
-  covs = mvrnorm(n_obs, mu = rep(mean_covs, n_covs), Sigma = sigma_covs)
-  return(covs)
-}
-
-```
-
-Issues
-
-- need to consider how to handle effect sizes of x and covs across settings
-
-Maybe always have the same covs generate Y but only some are available?  But if we vary magnitude of their effects, that will still affect sd of Y
-
-Maybe generate Y first based on covs but then set its SD back to 1?  That would allow for the same x effect - RE cohen's d.
-
-
-
-JJC update to data generation
-
-- use rmvnorm() to generate covs and y.   Can set sd for all to 1
-- can set correlation between covs and y to different sizes
-- can set correlation between covs to 0 or non zero (or different sizes).  Can do this within the "good" covs such that they are related but not related to the other covs.  More likely to generate reasonable cov structure
-- Can add the X effect into Y after generating covs and Y.  Do that such that X has 0, small or medium effect size in cohen's d terms.
-
-
-
-Next steps
-
-1.  redo with on chtc
-  - b = 0 and 0.5
-  - 20,000 sim
-
-2.  plots of the changes in type 1 or 2 error propotion across methods (in same plot) but each dimension research setting (eg. n_obs)
-
-3.  tablular summary of mean, and range of type 1 and 2 across methods (aggregated across dimension)
-
-4.  Plots of sampling distribution, superimposed by method
-
-5.  tabular summary of mean b and se by method (aggregated across dimensions)
-
-6.  generate new function that handled correlated covariates (correlations within sets of "good" covs. bad covs are uncorrelated with everyting)
-
-
-
+- r
+- partial_r
+- full_lm (controlling x)
+- lasso (no penalty on x) 
