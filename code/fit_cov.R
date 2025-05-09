@@ -33,7 +33,7 @@ r_cov <- as.numeric(args[8])
 
 # for testing
 # job_num <- 1
-# n_sims <- 10
+# n_sims <- 3 
 # n_obs <- 100
 # b_x <- 0
 # n_covs <- 4
