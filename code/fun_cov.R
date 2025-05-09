@@ -240,7 +240,7 @@ fit_full_lm <- function(d, alpha = 0.05) {
   covs_added <- lm(y ~ ., data = d) |>  
     broom::tidy() |> 
     dplyr::filter(stringr::str_starts(term, "c")) |> 
-    dplyr::filter(p.value < .05) |> print() |> 
+    dplyr::filter(p.value < .05) |>
     dplyr::pull(term)
   
   # fit model with selected covariates 
