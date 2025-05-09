@@ -37,9 +37,9 @@ r_cov <- as.numeric(args[8])
 # n_obs <- 100
 # b_x <- 0
 # n_covs <- 4
-# r_ycov <- 2 
+# r_ycov <- .5 
 # p_good_covs <- .5
-# r_cov <- 0
+# r_cov <- .3 
 
 source("fun_cov.R")
 
@@ -51,10 +51,11 @@ for(i in 1:n_sims) {
   
   di <- generate_data(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov)
   
-  results <- dplyr::bind_rows(get_results(model = fit_no_covs(di), 
-                                          method = "no_covs", 
-                                          n_covs, p_good_covs,
-                                          sim = i),
+  results <- dplyr::bind_rows(
+                       get_results(model = fit_no_covs(di), 
+                                   method = "no_covs", 
+                                   n_covs, p_good_covs,
+                                   sim = i),
                        get_results(model = fit_all_covs(di), 
                                    method = "all_covs", 
                                    n_covs, p_good_covs,
@@ -63,14 +64,23 @@ for(i in 1:n_sims) {
                                    method = "p_hacked", 
                                    n_covs, p_good_covs,
                                    sim = i),
+                       get_results(model = fit_r(di), 
+                                   method = "r", 
+                                   n_covs, p_good_covs,
+                                   sim = i),
                        get_results(model = fit_partial_r(di), 
                                    method = "partial_r", 
+                                   n_covs, p_good_covs,
+                                   sim = i),
+                       get_results(model = fit_full_lm(di), 
+                                   method = "full_lm", 
                                    n_covs, p_good_covs,
                                    sim = i),
                        get_results(model = fit_lasso(di), 
                                    method = "lasso", 
                                    n_covs, p_good_covs,
-                                   sim = i))
+                                   sim = i)
+                       )
   
   full_results <- dplyr::bind_rows(full_results, results)
 }

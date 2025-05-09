@@ -159,11 +159,43 @@ fit_p_hacked <- function(d) {
     }
   }
 
-  # fit model with hacked covariates 
+  # fit model with selected covariates 
   formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
   lm(formula = formula_final, data = d)
 }
 
+# fit r
+# Fits linear model with covariates that are significant on y (overall).
+#   Considers each covariate one at at a time and includes it if it is significant
+#   in a linear model (i.e., if bivarte r is significant).
+fit_r <- function(d, alpha = 0.05) {
+  
+  # empty vector of covariates that are significant on y, controlling x
+  covs_added <- character(0) 
+  
+  # calculate n_covs from data 
+  n_covs <- names(d) |> 
+    stringr::str_subset("^c") |> 
+    length()
+  
+  for(i in 1:n_covs) {
+    ci <- grep("^c", names(d), value = TRUE)[i]
+    formula_1cov <- reformulate(termlabels = c(ci), response = "y")
+    lm_1cov <- lm(formula = formula_1cov, data = d)
+    p_1cov <- lm_1cov |> 
+      broom::tidy() |> 
+      dplyr::filter(term == ci) |> 
+      dplyr::pull(p.value)
+    
+    if(p_1cov < alpha) {
+      covs_added <- c(covs_added, ci)
+    }
+  }
+  
+  # fit model with selected covariates 
+  formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
+  lm(formula = formula_final, data = d)
+}
 
 # fit partial r
 # Fits linear model with covariates that are significant on y, controlling for x.
@@ -193,7 +225,25 @@ fit_partial_r <- function(d, alpha = 0.05) {
     }
   }
   
-  # fit model with partial r covariates 
+  # fit model with selected covariates 
+  formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
+  lm(formula = formula_final, data = d)
+}
+
+
+# fit full_lm 
+# Fits linear model with covariates that are significant on y, controlling for x 
+# and all other covariates.
+fit_full_lm <- function(d, alpha = 0.05) {
+ 
+  # get vector of sig covs from full model with x and all covs 
+  covs_added <- lm(y ~ ., data = d) |>  
+    broom::tidy() |> 
+    dplyr::filter(stringr::str_starts(term, "c")) |> 
+    dplyr::filter(p.value < .05) |> print() |> 
+    dplyr::pull(term)
+  
+  # fit model with selected covariates 
   formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
   lm(formula = formula_final, data = d)
 }
@@ -243,7 +293,7 @@ fit_lasso <- function(d) {
     dplyr::filter(stringr::str_starts(term, "c")) |> 
     dplyr::pull(term)
   
-  # build formula with nonzero covs and return model
+  # fit model with selected covariates 
   formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
   
   lm(formula = formula_final, data = d)
