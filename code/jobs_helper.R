@@ -3,11 +3,11 @@
 
 suppressMessages(library(tidyverse))
 
-n_obs_lvls <- c(100, 200, 400, 1000)
+n_obs_lvls <- c(100, 150, 200, 300, 400)
 n_covs_lvls <- c(4, 8, 12, 16)
 p_good_covs_lvls <- c(0.25, 0.5, 0.75)
 r_ycov_lvls <- c(0.3, 0.5)  # correlation between y and covs
-r_cov_lvls <- c(0.3, 0.5)   # correlation among good covs
+r_cov_lvls <- 0.3           # correlation among good covs
 
 jobs <- expand_grid(n_sims = 500,
                     n_obs = n_obs_lvls,
@@ -21,6 +21,6 @@ jobs <- expand_grid(n_sims = 500,
   relocate(job_num)
 
 
-jobs |> write_csv("chtc/corr0305_x05/jobs.csv", col_names = FALSE)
+jobs |> write_csv("chtc/new_methods_05/jobs.csv", col_names = FALSE)
 
 jobs |> select(-job_num) |> distinct() |> nrow()

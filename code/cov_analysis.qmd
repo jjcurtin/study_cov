@@ -79,7 +79,7 @@ Overall proportion significaint ($p < 0.05$) by method; the Type I error.
 
 d_corr_0 |> 
   group_by(method) |> 
-  summarise(proportion_significant = mean(p_value < 0.05)) |> 
+  summarise(type_I = mean(p_value < 0.05)) |> 
   kbl(caption = "b_x = 0")
 
 ```
@@ -219,7 +219,7 @@ d_corr_0 |>
 # drop p hack
 
 d_corr_0 |> 
-  filter(method != "lm_p_hacked") |> 
+  filter(method != "p_hacked") |> 
   group_by(method, n_covs, p_good_covs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
@@ -250,7 +250,7 @@ d_corr_05 |>
 # drop p hack
 
 d_corr_05 |> 
-  filter(method != "lm_p_hacked") |> 
+  filter(method != "p_hacked") |> 
   group_by(method, n_covs, p_good_covs) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
