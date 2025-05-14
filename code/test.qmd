@@ -7,27 +7,61 @@ editor_options:
 
 ```{r}
 library(tidyverse)
+library(matrixcalc)
 source("./code/fun_cov.R", echo=FALSE)
 ```
 
 
-Generate data and check sigma
+Generate data
 ```{r}
 n_obs <- 100
 b_x <- 0
-n_covs <- 12
-r_ycov <- .3
-p_good_covs <- 0.25
-r_cov <- 0.3
+n_covs <- 16
+r_ycov <- .5
+p_good_covs <- 0.75
+r_cov <- 0.1
 d <- generate_data(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov)
 ```
+
+
+## check positive definite
+
+Make Sigma
+```{r}
+
+sigma <- diag(n_covs + 1)
+n_good_covs <- n_covs * p_good_covs
+  
+corr_matrix <- matrix(r_cov, 
+                      nrow = n_good_covs, 
+                      ncol = n_good_covs)
+diag(corr_matrix) <- 1
+ 
+sigma[2:(nrow(corr_matrix) + 1), 2:(ncol(corr_matrix) + 1)] <- corr_matrix
+  
+sigma[1, 2:(n_good_covs + 1)] <- rep(r_ycov, n_good_covs)
+sigma[2:(n_good_covs + 1), 1] <- rep(r_ycov, n_good_covs)
+
+kable(sigma)
+
+```
+
+```{r}
+
+eigen(sigma)$values
+is.positive.definite(sigma)
+
+```
+
+
+
+## test methods
 
 Test no covs
 ```{r}
 fit_no_covs(d) |> 
   get_results(method = "no_covs", n_covs, p_good_covs, sim = 1)
 ```
-
 
 Test all covs
 ```{r}
@@ -40,6 +74,7 @@ Test p-hack
 fit_p_hacked(d) |> 
   get_results(method = "all_covs", n_covs, p_good_covs, sim = 1)
 ```
+
 Test partial
 ```{r}
 fit_partial_r(d, n_covs) |> 
@@ -47,7 +82,6 @@ fit_partial_r(d, n_covs) |>
 ```
 
 Test LASSO
-
 ```{r}
 fit_lasso(d, n_covs) |> 
   get_results(method = "lasso", n_covs, p_good_covs, sim = 1)
