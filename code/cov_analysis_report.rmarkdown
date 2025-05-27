@@ -1,0 +1,1213 @@
+---
+title: "Analysis of Covariate Results"
+author: "Lauren Khoury"
+date: "`r lubridate::today()`"
+execute:
+  echo: false
+format: 
+  html: 
+    embed-resources: true
+    toc: true 
+    toc_depth: 5
+    fig-width: 9
+    fig-height: 7
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+
+#| label: set up
+
+library(dplyr) |> suppressMessages()
+library(skimr)
+library(purrr)
+library(ggplot2)
+library(cowplot)
+library(kableExtra, exclude = ("group_rows"))
+
+theme_set(theme_classic())
+
+devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
+
+rdrive_path <- format_path("studydata/cov/raw_data")
+
+options(digits = 3)
+
+```
+
+
+
+# Background
+
+We ran batches of simulations to generate data, fit linear models, and extract the results. <br>
+
+In each simulation, we generated data with a dichotomous $X$. We ran three batches, each of which had a population parameter for $X$ set to 0, 0.3, or 0.5. <br>
+
+We manipulated the following variables:
+
+| Variable    | Description | Values            |
+|-------------|-------------|-------------------|
+| n_obs       | Number of observations in a sample | 100, 150, 200, 300, 400 |
+| n_covs      | Number of total available covariates | 4, 8, 12, 16 |
+| p_good_covs | Proportion of "good" covariates* | 0.25, 0.50, 0.75 |
+| r_ycov      | Correlation between $Y$ and covariates | 0.3, 0.5 |
+| r_cov       | Correlation between the "good" covariates* | 0.3 |
+
+* Note: here we define "good" covariates as ones that have a nonzero relationship with $Y$ 
+
+<br>
+We fully crossed all levels, yielding 120 unique research settings. <br>
+We used the following 7 methods to select covariates to include in a linear model:
+
+1. No covariates 
+2. All covariates
+3. P-hacking
+4. R
+5. Partial R
+6. Full lm
+7. LASSO
+
+We fit a linear model for each method and from the model output, extracted the estimate for $X$, standard error of this estimate, and p-value of this $X$ effect. <br>
+
+We repeated this 20,000 times for each research setting. <br>
+
+We present the results here.
+
+# Data Analysis
+
+## Glimpse data
+
+There is one dataset for $b_x = 0, 0.3, 0.5$. Each dataset has 16,800,000 observations = 120 unique settings $\times$ 20,000 simulations each $\times$ 7 methods <br>
+
+Data for $b_x = 0$, as an example, is shown below.
+
+
+
+```{r read in data 1}
+
+d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv")) |> 
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
+                                   "partial_r", "full_lm", "lasso"))) |> 
+  glimpse()
+
+beepr::beep()
+
+```
+
+```{r read in data 2}
+
+d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv")) |> 
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
+                                   "partial_r", "full_lm", "lasso")))
+
+beepr::beep()
+
+```
+
+```{r read in data 3}
+
+d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
+                                   "partial_r", "full_lm", "lasso")))
+
+beepr::beep()
+
+```
+
+
+
+
+## Zero $X$ Effect
+
+First, we look at the zero $X$ effect condition to compare the Type I errors across methods and research settings.
+
+### Type I error
+
+We will look at the overall Type I error across methods, then will compare the error of each method across each of the manipulated variables: n_obs, n_covs, p_good_covs, r_ycov, and r_cov.
+
+#### by method
+
+We will first consider the Type I error by the selection method. Here we calculate the proportion of significant effects ($p < 0.05$), the Type I error, displayed below as a bar plot.
+
+
+
+```{r}
+
+#| label: type I bar plot
+
+type_I_summary <- d_0 |>
+  group_by(method) |>
+  summarise(type_I = mean(p_value < 0.05))
+
+type_I_summary |> 
+ggplot(aes(x = method, y = type_I, fill = method)) +
+  geom_bar(stat = "identity") +
+  geom_hline(yintercept = 0.05, linetype = "dashed", color = "black") +
+  geom_text(aes(label = sprintf("%.3f", type_I)), vjust = -0.5) +
+  labs(title = "Type I Error by Method",
+       x = "Method",
+       y = "Type I Error",
+       fill = "Method") +
+  scale_y_continuous(limits = c(0, max(type_I_summary$type_I) * 1.2), 
+                     breaks = seq(0, max(type_I_summary$type_I) * 1.2, by = 0.05)) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+
+
+From this plot, we can see that the p-hacking method leads to inflated Type I error rates. The no covariates, all covariates, and r approaches are all at the expected 0.05 mark, while partial r, full lm, and lasso show slight inflation, but are still relatively close.
+
+
+
+```{r}
+
+#| label: distributions variable
+
+h0 <- d_0 |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(type_I = mean(p_value < 0.05),
+            .groups = "drop")
+
+```
+
+
+
+Here we view the distributions of the Type I error rate by method, beginning by isolating the p-hacked method.
+
+
+
+```{r}
+
+#| label: distributions phack
+
+h0 |>
+  filter(method == "p_hacked") |> 
+  ggplot(aes(x = type_I)) +
+  geom_histogram() +
+  facet_wrap(~ method) +
+  labs(x = "Type I Error",
+       title = "Distribution of Type I Error")
+
+```
+
+
+
+We see that while the average Type I error for the p-hacked method was `r type_I_summary$type_I[3]`, it reached as high as `r max(h0$type_I)`, further emphasizing the inflation of error. <br>
+
+Removing this invalid method, we can view the distributions of the remaining 6 methods.
+
+
+
+```{r}
+
+#| label: distributions all
+
+h0 |>
+  filter(method != "p_hacked") |> 
+  ggplot(aes(x = type_I)) +
+  geom_histogram() +
+  facet_wrap(~ method) +
+  labs(x = "Type I Error",
+       title = "Distribution of Type I Error")
+
+```
+
+
+
+We see that no covariates, all covariates, and r selection methods show normal distributions centered around 0.05, while partial r, full lm, and lasso are slightly right-skewed, with full lm having the greatest skew.
+
+#### by n_obs
+
+We will view the Type I error rates of each method for the different levels of the number of observations in a sample. In the table below, we see the minimum, maximum, and average Type I error for each level of n_obs by each method.
+
+
+
+```{r}
+
+#| label: typeI nobs table
+
+d_0 |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  group_by(method, n_obs) |> 
+  summarise(typeI_min = min(prop_sig),
+            typeI_max = max(prop_sig),
+            typeI_mean = mean(prop_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type I error by n_obs")
+
+```
+
+
+
+Looking at the average column, we see that the Type I error is not affected much for the no covariates, all covariates, r, and partial r approaches across different sample sizes. However, for p-hacked, full lm, and lasso, the Type I error does decrease as sample size increases. This can be visualized in the plot below.
+
+
+
+```{r}
+
+#| label: typeI nobs plot
+
+d_0 |> 
+  group_by(method, n_obs) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_obs, y = prop_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(100, 150, 200, 300, 400)) +
+  scale_y_continuous(breaks = c(0.05, 0.10, 0.15)) +
+  labs(y = "Type I error")
+
+```
+
+
+
+Again, we see the inflation of Type I error for p-hacking. We also see that lasso and full lm perform worse than the other methods for small sample sizes, but the methods become comparable as sample size increases. 
+
+#### by n_covs
+
+We will view the Type I error rates of each method for the different number of available covariates (*Note: this is not necessarily the number of covariates included in the model.*). In the table below, we see the minimum, maximum, and average Type I error for each level of n_covs by each method.
+
+
+
+```{r}
+
+#| label: typeI ncovs table
+
+d_0 |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  group_by(method, n_covs) |> 
+  summarise(typeI_min = min(prop_sig),
+            typeI_max = max(prop_sig),
+            typeI_mean = mean(prop_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type I error by n_covs")
+
+```
+
+
+
+Looking at the average column, we see that the Type I error is not affected much for the no covariates, all covariates, r, and partial r approaches across different amounts of available covariates. However, for p-hacked, full lm, and lasso, the Type I error increases as the number of covariates increases. This can be visualized in the plot below.
+
+
+
+```{r}
+
+#| label: typeI ncovs plot
+
+d_0 |> 
+  group_by(method, n_covs) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_covs, y = prop_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(4, 8, 12, 16)) +
+  labs(y = "Type I error")
+
+```
+
+
+
+We see the increase in error for p-hacked, full lm, and lasso methods as the number of covariates increases, while the other methods stay around 0.05.
+
+#### by p_good_covs
+
+We will view the Type I error rates of each method for the different proportions of "good" covariates. In the table below, we see the minimum, maximum, and average Type I error for each level of p_good_covs by each method.
+
+
+
+```{r}
+
+#| label: typeI pgoodcovs table
+
+d_0 |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  group_by(method, p_good_covs) |> 
+  summarise(typeI_min = min(prop_sig),
+            typeI_max = max(prop_sig),
+            typeI_mean = mean(prop_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type I error by p_good_covs")
+
+```
+
+
+
+Looking at the average column, we see that the Type I error is not affected for the no covariates, all covariates, and r approaches across different amounts of proportions. However, for p-hacked, partial r, full lm, and lasso, the Type I error changes as the number of covariates increases. This can be visualized in the plots below.
+
+
+
+```{r}
+
+#| label: typeI pgoodcovs plot1
+
+d_0 |> 
+  group_by(method, p_good_covs) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = p_good_covs, y = prop_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
+  labs(y = "Type I error")
+
+```
+
+
+
+In this plot, we mainly see the increase in Type I error for the p-hacking approach as the proportion of good covariates increases. However, we cannot see the trends of the other methods clearly, so we will plot this again without the p-hacked line. 
+
+
+
+```{r}
+
+#| label: typeI pgoodcovs plot2
+
+d_0 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, p_good_covs) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = p_good_covs, y = prop_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
+  labs(y = "Type I error")
+
+```
+
+
+
+In this plot, we see different trends across methods. As there are more good covariates, the Type I error decreases for lasso and partial r, but it increases for full lm.
+
+#### by correlations 
+
+In these batches of simulations, we did not vary the correlation among the good covariates. We will look at the Type I error rates of each method by the correlation between $Y$ and the good covariates.
+
+
+
+```{r}
+
+#| label: typeI rycov table
+
+d_0 |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  group_by(method, r_ycov) |> 
+  summarise(typeI_min = min(prop_sig),
+            typeI_max = max(prop_sig),
+            typeI_mean = mean(prop_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type I error by y-cov correlations")
+
+```
+
+
+
+Looking at the average column, we see that the error does not change across correlations for the no covariates, all covariates, r, and partial r approaches. It changes slightly for full lm and lasso. And it changes drastically when p-hacking, such that a higher correlation among good covariates increases the Type I error.
+
+
+
+```{r}
+
+#| label: typeI rycov plot
+
+d_0 |> 
+  group_by(method, r_ycov) |> 
+  summarise(prop_sig = mean(p_value < 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = method, y = prop_sig, fill = method)) + 
+  geom_bar(stat = "identity") +
+  geom_hline(yintercept = 0.05, linetype = "dashed", color = "black") +
+  geom_text(aes(label = sprintf("%.3f", prop_sig)), vjust = -0.5) +
+  facet_wrap(~ r_ycov) +
+  scale_y_continuous(limits = c(0, max(type_I_summary$type_I) * 1.5), 
+                     breaks = seq(0, max(type_I_summary$type_I) * 1.5, by = 0.05)) +
+  labs(y = "Type I error") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+
+
+In the bar plot, we see the Type I error for the p-hacking method increase as the correlation between $Y$ and the good covariates increases. We see the small fluctuations in Type I error for full lm and lasso and the larger increase in error for the p-hacking method. 
+
+### Estimate, SD, & SE
+
+Here we will compare, across methods, the estimate of $b_x$, the standard deviation of the estimate, and the average standard error of the estimate. The standard deviation is calculated as the SD of the sampling distribution of the estimates. The standard error is from the linear model output. Since the mean of standard errors would be biased, we calculate the average SE by taking the square root of the mean of the squared standard errors. We compare the differences by subtracting this average linear model SE from the calculated SD.
+
+
+
+```{r}
+
+#| label: table est sd se 0
+
+d_0 |> 
+  group_by(method) |> 
+  summarise(mean_estimate = mean(estimate),
+            SD_estimate = sd(estimate),
+            SE_mean = sqrt(mean(SE^2)),
+            difference = SD_estimate - SE_mean) |> 
+  kbl(caption = "b_x = 0")
+
+```
+
+
+
+We see that all methods have an average estimate of 0, as expected. We see that the standard deviation of the sampling distribution of the estimate equals the standard error for no covariates, all covariates, and r selection methods There are small differences between these values for partial r, full lm, and lasso methods. The p-hacking shows a large difference.
+
+### Sampling Distributions
+
+Here we view a sampling distribution of the estimate for $b_x$ for each method.
+
+
+
+```{r combined hist}
+
+d_0 |> 
+  ggplot(aes(x = estimate, color = method)) +
+  geom_density(alpha = 0.5) +
+  scale_x_continuous(limits = c(-0.5, 0.5), breaks = seq(-0.5, 0.5, by = 0.5)) +
+  labs(title = "Sampling Distribution for b_x = 0")
+
+```
+
+
+
+We see again that each method's distribution is centered around 0, but the p-hacked method is not normally distributed as it is biasing the parameter estimates. <br>
+
+From these primary analyses, we see that the p-hacked method leads to inflated Type I error rates and biased parameter estimates. For the following analyses, we will not include the p-hacked method. While partial r, full lm, and lasso selection methods showed slight inflation of Type I error, we might be willing to accept this for greater reductions in Type II error, which we will compare in the next section.
+
+## Nonzero $X$ Effect
+
+Next, we look at the nonzero $X$ effect condition to compare the Type II errors across methods and research settings. Recall that we set two values for $b_x$ of 0.3 and 0.5.
+
+### Type II Error
+
+We will look at the overall Type II error across methods (except p-hacked), then will again compare the error of each method across each of the manipulated variables: n_obs, n_covs, p_good_covs, r_ycov, and r_cov.
+
+#### by method
+
+We will first consider the Type II error by the selection method, for both $b_x = 0.3$ and $b_x = 0.5$. Here we calculate the proportion of non-significant effects ($p \geq 0.05$), the Type II error, displayed below as bar plots. 
+
+##### b_x = 0.3
+
+
+
+```{r}
+
+#| label: type II bar plot 03
+
+type_II_summary_03 <- d_03 |>
+  filter(method != "p_hacked") |> 
+  group_by(method) |>
+  summarise(type_II = mean(p_value >= 0.05))
+
+type_II_summary_03 |> 
+ggplot(aes(x = method, y = type_II, fill = method)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = sprintf("%.3f", type_II)), vjust = -0.5) +
+  labs(title = "Type II Error by Method, b_x = 0.3",
+       x = "Method",
+       y = "Type II Error",
+       fill = "Method") +
+  scale_y_continuous(limits = c(0, max(type_II_summary_03$type_II) * 1.2), 
+                     breaks = seq(0, max(type_II_summary_03$type_II) * 1.2, by = 0.05)) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+
+
+In this first plot for $b_x = 0.3$, we see that the Type II error is highest when no covariates are used in the model. There is a large reduction in Type II error when we include all covariates compared to no covariates, and a slight further reduction in Type II error when we use a selection method for covariates compared to including all.
+
+##### b_x = 0.5
+
+
+
+```{r}
+
+#| label: type II bar plot 05
+
+type_II_summary_05 <- d_05 |>
+  filter(method != "p_hacked") |> 
+  group_by(method) |>
+  summarise(type_II = mean(p_value >= 0.05))
+
+type_II_summary_05 |> 
+ggplot(aes(x = method, y = type_II, fill = method)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = sprintf("%.3f", type_II)), vjust = -0.5) +
+  labs(title = "Type II Error by Method, b_x = 0.5",
+       x = "Method",
+       y = "Type II Error",
+       fill = "Method") +
+  scale_y_continuous(limits = c(0, max(type_II_summary_05$type_II) * 1.2), 
+                     breaks = seq(0, max(type_II_summary_05$type_II) * 1.2, by = 0.05)) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+
+
+We see a similar trend here, with $b_x = 0.5$, of a large reduction in Type II error when including all covariates compared to none, and another small reduction when selecting covariates. <br>
+
+In both cases, we see that the full lm method has the highest Type II error.
+
+#### by n_obs
+
+We will view the Type II error rates of each method for the different levels of the number of observations in a sample. In the tables below, we see the minimum, maximum, and average Type II error for each level of n_obs by each method, for both $b_x = 0.3$ and $b_x = 0.5$.
+
+##### b_x = 0.3
+
+
+
+```{r}
+
+#| label: typeII nobs table 03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(method, n_obs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by n_obs, b_x = 0.3")
+
+```
+
+
+
+In this table, we see that for all methods, as the sample size increases, the Type II error decreases. This can be better seen in a plot below.
+
+
+
+```{r}
+
+#| label: typeII nobs plot 03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_obs, y = prop_not_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(100, 150, 200, 300, 400)) +
+  labs(y = "Type II error",
+       title = "Type II error by n_obs, b_x = 0.3")
+
+```
+
+
+
+Here, we see the decrease in Type II error for the increase in sample size. We see that the no covariates approach has the highest Type II error. From both the table and the plot, we see that for smaller sample sizes, including all covariates in the model yields higher Type II errors, but these become comparable for larger sample sizes. <br>
+
+##### b_x = 0.5
+
+
+
+```{r}
+
+#| label: typeII nobs table 05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(method, n_obs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by n_obs, b_x = 0.5")
+
+```
+
+
+
+We see lower overall Type II errors, but the same trend of decreasing errors for increasing sample sizes across all methods. We can view this in the plot below.
+
+
+
+```{r}
+
+#| label: typeII nobs plot 05
+
+d_05 |> 
+  filter(method != "p_hacked") |>
+  group_by(method, n_obs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_obs, y = prop_not_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(100, 150, 200, 300, 400)) +
+  labs(y = "Type II error",
+       title = "Type II error by n_obs, b_x = 0.5")
+
+```
+
+
+
+Similarly, the no covariates approach has the highest Type II error. For small sample sizes the all covariates approach has higher error which stabilizes with increasing sample size.
+
+#### by n_covs 
+
+We will view the Type II error rates of each method for the different number of available covariates. In the tables below, we see the minimum, maximum, and average Type II error for each level of n_covs by each method, for both $b_x = 0.3$ and $b_x = 0.5$.
+
+##### b_x = 0.3
+
+
+
+```{r}
+
+#| label: typeII ncovs table 03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(method, n_covs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by n_covs, b_x = 0.3")
+
+```
+
+
+
+From the average column, we can see that Type II error decreases as the number of covariates increases across all methods, except the no covariates method as this does not dependent on the number of covariates. We can see these trends in the plot below.
+
+
+
+```{r}
+
+#| label: typeII ncovs plot 03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_covs, y = prop_not_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(4, 8, 12, 16)) +
+  labs(y = "Type II error",
+       title = "Type II error by n_covs, b_x = 0.3")
+
+```
+
+
+
+In this plot, we see the decrease in Type II error for increases in number of covariates. As the number of covariates increases, we see larger reductions in Type II error when selecting the covariates compared to including all available covariates. Lasso performs the best with higher numbers of covariates, followe by partial r, r, and full lm.
+
+##### b_x = 0.5
+
+
+
+```{r}
+
+#| label: typeII ncovs table 05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(method, n_covs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by n_covs, b_x = 0.5")
+
+```
+
+
+
+We see the same decrease in Type II errors for increases in number of covariates. We can visualize this in the plot below.
+
+
+
+```{r}
+
+#| label: typeII ncovs plot 05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_covs, y = prop_not_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(4, 8, 12, 16)) +
+  labs(y = "Type II error",
+       title = "Type II error by n_covs, b_x = 0.5")
+
+```
+
+
+
+Similarly, we see the selection methods performing better than including all covariates. Again for higher numbers of covariates, we see lasso has the lowest Type II error, followed by partial r, r, and full lm.
+
+#### by p_good_covs
+
+We will view the Type II error rates of each method for the different proportions of "good" covariates. In the table below, we see the minimum, maximum, and average Type II error for each level of p_good_covs by each method, for both $b_x = 0.3$ and $b_x = 0.5$.
+
+##### b_x = 0.3
+
+
+
+```{r}
+
+#| label: typeII pgoodcovs table 03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(method, p_good_covs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by p_good_covs, b_x = 0.3")
+
+```
+
+
+
+From the average column, we see decreases in Type II error rates for increases in the proportion of good covariates across all methods -- except no covariates, as this is independent of the proportion of good covariates. We can visualize the trends more clearly in the plot below.
+
+
+
+```{r}
+
+#| label: typeII pgoodcovs plot 03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, p_good_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = p_good_covs, y = prop_not_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
+  labs(y = "Type II error",
+       title = "Type II error by p_good_covs, b_x = 0.3")
+
+```
+
+
+
+In addition to the decrease in error mentioned above, we see that including all covariates has a higher Type II error than selection the covariates, especially for lower proportions of good covariates. We see that lasso has the lowest Type II error rate, moreso again for lower proportions of good covariates.
+
+##### b_x = 0.5
+
+
+
+```{r}
+
+#| label: typeII pgoodcovs table 05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(method, p_good_covs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by p_good_covs, b_x = 0.5")
+
+```
+
+
+
+From the table, we see decreases in Type II error for higher proportions of good covariates for methods that do include covariates. We can see the details in the plot below.
+
+
+
+```{r}
+
+#| label: typeII pgoodcovs plot 05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, p_good_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = p_good_covs, y = prop_not_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
+  labs(y = "Type II error",
+       title = "Type II error by p_good_covs, b_x = 0.5")
+
+```
+
+
+
+We again see that including all covariates has a higher Type II error rate than selecting covariates to include, although this method improves for higher proportions of good covariates. Partial r performs best for a lower proportion of good covariates while lasso performs best for a higher proportion. 
+
+#### by n_good_covs
+
+We can look at the interaction between the number of covariates and the proportion of good covariates to calculate the number of good covariates: $n\_good\_covs = n\_covs * p\_good\_covs$. This represents the number of covariates in the model that have a nonzero relationship with $Y$.
+
+##### b_x = 0.3
+
+
+
+```{r}
+
+#| label: typeII ngoodcovs table 03
+
+d_03 |> 
+  mutate(n_good_covs = n_covs * p_good_covs) |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov, n_good_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(method, n_good_covs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by n_good_covs, b_x = 0.3")
+
+```
+
+
+
+In the table, we see decreases in Type II error rates as the number of good covariates increases across methods that include covariates. We can further visualize this in the plot.
+
+
+
+```{r}
+
+#| label: typeII ngoodcovs plot 03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  mutate(n_good_covs = n_covs * p_good_covs) |> 
+  group_by(method, n_good_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_good_covs, y = prop_not_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 6, 8, 9, 12)) +
+  labs(y = "Type II error",
+       title = "Type II error by n_good_covs, b_x = 0.3")
+
+```
+
+
+
+In the plot, we see the decreasing trend in Type II error. Including all covariates yields higher Type II error than selecting them. Lasso has the lowest Type II error, especially as the number of good covariates increases. 
+
+##### b_x = 0.5
+
+
+
+```{r}
+
+#| label: typeII ngoodcovs table 05
+
+d_05 |> 
+  mutate(n_good_covs = n_covs * p_good_covs) |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov, n_good_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(method, n_good_covs) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by n_good_covs, b_x = 0.5")
+
+```
+
+
+
+In the table, we see the Type II error decreasing as the number of good covariates increases. We can get a more nuanced view in the plot below.
+
+
+
+```{r}
+
+#| label: typeII ngoodcovs plot 05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  mutate(n_good_covs = n_covs * p_good_covs) |> 
+  group_by(method, n_good_covs) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = n_good_covs, y = prop_not_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 6, 8, 9, 12)) +
+  labs(y = "Type II error",
+       title = "Type II error by n_good_covs, b_x = 0.5")
+
+```
+
+
+
+Similarly, we see lasso performing best for higher numbers of good covariates. For smaller numbers of good covariates, partial r and lasso perform comparably well. 
+
+#### by correlations
+
+We will look at the Type II error rates of each method by the correlation between $Y$ and the good covariates, for both $b_x = 0.3$ and $b_x = 0.5$.
+
+##### b_x = 0.3
+
+
+
+```{r}
+
+#| label: typeII rycov table 03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(method, r_ycov, r_cov) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by correlations, b_x = 0.3")
+
+```
+
+
+
+In the table, we see that the Type II error decreases as the correlation between $Y$ and the good covariates increases. The Type II error is highest for including no covariates. We can visualize this below.
+
+
+
+```{r}
+
+#| label: typeII rycov plot 03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, r_ycov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = method, y = prop_not_sig, fill = method)) + 
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = sprintf("%.3f", prop_not_sig)), vjust = -0.5) +
+  facet_wrap(~ r_ycov) +
+  scale_y_continuous(limits = c(0, max(type_II_summary_03$type_II) * 1.2), 
+                     breaks = seq(0, max(type_II_summary_03$type_II) * 1.2, by = 0.05)) +
+  labs(y = "Type II error",
+       title = "Type II error by y-cov correlation, b_x = 0.3") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, r_ycov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = r_ycov, y = prop_not_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(0.3, 0.5)) +
+  labs(y = "Type II error",
+       title = "Type II error by y-cov correlation, b_x = 0.3")
+
+```
+
+
+
+In the plots, we see that the no covariates method has the highest Type II error across correlation levels. The Type II errors decrease for the higher correlation between $Y$ and the good covariates. We also see slight decreases in Type II error from including all covariates to selecting them.
+
+##### b_x = 0.5
+
+
+
+```{r}
+
+#| label: typeII rycov table 05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(method, r_ycov) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by correlations, b_x = 0.5")
+
+```
+
+
+
+From the table, we see that the Type II error decreases as the correlation between $Y$ and the good covariates increases. 
+
+
+
+```{r}
+
+#| label: typeII rycov plot 05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, r_ycov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = method, y = prop_not_sig, fill = method)) + 
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = sprintf("%.3f", prop_not_sig)), vjust = -0.5) +
+  facet_wrap(~ r_ycov) +
+  scale_y_continuous(limits = c(0, max(type_II_summary_05$type_II) * 1.2), 
+                     breaks = seq(0, max(type_II_summary_05$type_II) * 1.2, by = 0.05)) +
+  labs(y = "Type II error",
+       title = "Type II error by y-cov correlation, b_x = 0.5") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, r_ycov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  ggplot(aes(x = r_ycov, y = prop_not_sig, color = method)) + 
+  geom_line() +
+  scale_x_continuous(breaks = c(0.3, 0.5)) +
+  labs(y = "Type II error",
+       title = "Type II error by y-cov correlation, b_x = 0.5")
+
+```
+
+
+
+In the plots, we see again that the no covariates approach has the highest Type II error across correlations. There is a slight decrease in Type II error when selecting covariates instead of using all covariates. Among the selection methods, full lm has the higher Type II error, but only by a small amount. The Type II error rates are lower across all methods when the correlation between $Y$ and the good covariates is higher.
+
+### Estimate, SD, & SE
+
+Here we will compare, across methods, the estimate of $b_x$, the standard deviation of the estimate, and the average standard error of the estimate. The standard deviation is calculated as the SD of the sampling distribution of the estimates. The standard error is from the linear model output. Since the mean of standard errors would be biased, we calculate the average SE by taking the square root of the mean of the squared standard errors. We compare the differences by subtracting this average linear model SE from the calculated SD.
+
+#### b_x = 0.3
+
+
+
+```{r}
+
+#| label: table est sd se 03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method) |> 
+  summarise(mean_estimate = mean(estimate),
+            SD_estimate = sd(estimate),
+            mean_SE = sqrt(mean(SE^2)),
+            difference = SD_estimate - mean_SE) |> 
+  kbl(caption = "Estimate, SD, SE: b_x = 0.3")
+
+```
+
+
+
+Here we see that all methods correctly estimate $b_x$ to be 0.3, except the r approach which yielded a slightly lower average estimate. The no covariates, all covariates, and r approaches show no difference between the calculated SD and the linear model SE, while partial r, full lm, and lasso approaches show slight differences. 
+
+#### b_x = 0.5
+
+
+
+```{r}
+
+#| label: table est sd se 05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method) |> 
+  summarise(mean_estimate = mean(estimate),
+            SD_estimate = sd(estimate),
+            mean_SE = sqrt(mean(SE^2)),
+            difference = SD_estimate - mean_SE) |> 
+  kbl(caption = "Estimate, SD, SE: b_x = 0.5")
+
+```
+
+
+
+Similarly, we see all methods correctly estimate $b_x$ to be 0.5, except the r approach which again yielded a slightly lower estimate. The no covariates, all covariates, and r approaches show no difference between the calculated SD and the linear model SE, while partial r, full lm, and lasso approaches show slight differences.
+
+### Sampling Distributions
+
+Here we view sampling distributions of the estimate for $b_x$ for each method, for both $b_x = 0.3$ and $b_x = 0.5$.
+
+#### b_x = 0.3
+
+
+
+```{r}
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  ggplot(aes(x = estimate, color = method)) +
+  geom_density(alpha = 0.5) +
+  scale_x_continuous(limits = c(-0.2, 0.8), breaks = c(0, 0.3, 0.6)) +
+  labs(title = "Sampling Distribution for b_x = 0.3")
+
+```
+
+
+
+In the plot, we can see that the distributions for all methods are centered around 0.3. The no covariates approach has the widest distribution.
+
+#### b_x = 0.5
+
+
+
+```{r}
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  ggplot(aes(x = estimate, color = method)) +
+  geom_density(alpha = 0.5) +
+  scale_x_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) +
+  labs(title = "Sampling Distribution for b_x = 0.5")
+
+```
+
+
+
+In the plot, we can see that the distributions for all methods are centered around 0.5. The no covariates approach has the widest distribution.
+
+# Conclusions
+
+We compared 7 methods for selecting covariates to include in linear models. In the first section looking at Type I errors, we demonstrated that the p-hacking approach is not a statistically valid method as it led to inflated Type I error rates and biased parameter estimates. The remaining 6 methods were all shown to be statistically valid,  and can be further compared by their Type II error results. Overall, using no covariates performed the worst as it led to the highest Type II error. Including all covariates led to reductions in Type II error, and using one of the selection methods led to further reductions in Type II error. A comparison of the selection methods across different research settings, showed they yielded similar Type II errors. However, for larger numbers of covariates and larger proportions of good covariates, lasso and partial r did have the lowest Type II errors.
+
+
