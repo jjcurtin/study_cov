@@ -16,13 +16,12 @@ Generate data
 ```{r}
 n_obs <- 100
 b_x <- 0
-n_covs <- 12
-r_ycov <- .3
+n_covs <- 20
 p_good_covs <- 0.75
-r_cov <- 0.1
-d <- generate_data(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov)
+r_ycov <- 0.5
+r_cov <- 0.3
+# d <- generate_data(n_obs, b_x, n_covs, r_ycov, p_good_covs, r_cov)
 ```
-
 
 ## check positive definite
 
@@ -42,7 +41,7 @@ sigma[2:(nrow(corr_matrix) + 1), 2:(ncol(corr_matrix) + 1)] <- corr_matrix
 sigma[1, 2:(n_good_covs + 1)] <- rep(r_ycov, n_good_covs)
 sigma[2:(n_good_covs + 1), 1] <- rep(r_ycov, n_good_covs)
 
-kable(sigma)
+sigma
 
 ```
 
