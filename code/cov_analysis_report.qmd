@@ -98,8 +98,7 @@ d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv
                                    "partial_r", "full_lm", "lasso"))) |> 
   glimpse()
 
-beepr::beep()
-
+# beepr::beep()
 ```
 
 ```{r read in data 2}
@@ -107,8 +106,6 @@ beepr::beep()
 d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv")) |> 
   mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
                                    "partial_r", "full_lm", "lasso"))) 
-
-beepr::beep()
 
 ```
 
@@ -118,8 +115,6 @@ d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.c
   mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
                                    "partial_r", "full_lm", "lasso")))
 
-beepr::beep()
-
 ```
 
 ```{r read in data 4}
@@ -127,8 +122,6 @@ beepr::beep()
 d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv")) |>
   mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
                                    "partial_r", "full_lm", "lasso")))
-
-beepr::beep()
 
 ```
 
@@ -358,48 +351,6 @@ d_0 |>
 
 In this plot, we mainly see the increase in Type I error for the p-hacking approach as the proportion of good covariates increases. As there are more good covariates, the Type I error decreases for lasso and partial r, but it increases for full lm.
 
-#### by n_good_covs
-
-We can look at the interaction between the number of covariates and the proportion of good covariates by calculating the number of good covariates: $n\_good\_covs = n\_covs * p\_good\_covs$. This represents the number of covariates that have a nonzero relationship with $Y$.
-
-```{r}
-#| label: tbl-typeI-ngoodcovs
-
-d_0 |> 
-  mutate(n_good_covs = n_covs * p_good_covs) |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov, n_good_covs) |> 
-  summarise(prop_sig = mean(p_value < 0.05),
-            .groups = "drop") |> 
-  group_by(n_good_covs, method) |> 
-  summarise(typeII_min = min(prop_sig),
-            typeII_max = max(prop_sig),
-            typeII_mean = mean(prop_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type I error by n_good_covs")
-
-```
-
-```{r}
-#| label: fig-typeI-ngoodcovs 
-
-d_0 |> 
-  mutate(n_good_covs = n_covs * p_good_covs) |> 
-  group_by(method, n_good_covs) |> 
-  summarise(prop_sig = mean(p_value < 0.05),
-            .groups = "drop") |> 
-  ggplot(aes(x = n_good_covs, y = prop_sig, color = method, linetype = method)) + 
-  geom_line() +
-  geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
-  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15)) +
-  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25, 0.30)) +
-  labs(y = "Type I error",
-       title = "Type I error by n_good_covs") +
-  scale_linetype_manual(values = method_linetypes) +
-  scale_color_manual(values = method_colors)
-
-```
-
-We see the non-monotonic, but increasing trend for the p-hacked line. As the number of good covariates increases, lasso and full lm show inflation of Type I error, while the other methods remain at or around 0.05.
 
 #### by correlations
 
@@ -871,93 +822,6 @@ d_05 |>
 
 We again see that including all covariates has a higher Type II error rate than selecting covariates to include, although this method improves for higher proportions of good covariates. Partial r performs best for a lower proportion of good covariates while lasso performs best for a higher proportion. Similarly, full lm and all covariates approaches become comparable as the proportion increases.
 
-#### by n_good_covs
-
-We can look at the interaction between the number of covariates and the proportion of good covariates by calculating the number of good covariates: $n\_good\_covs = n\_covs * p\_good\_covs$. This represents the number of covariates that have a nonzero relationship with $Y$.
-
-##### b_x = 0.3
-
-```{r}
-#| label: tbl-typeII-ngoodcovs-03
-
-d_03 |> 
-  mutate(n_good_covs = n_covs * p_good_covs) |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov, n_good_covs) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(n_good_covs, method) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II error by n_good_covs, b_x = 0.3")
-
-```
-
-In the table, we see decreases in Type II error rates as the number of good covariates increases across methods that include covariates. We can further visualize this in the plot.
-
-```{r}
-#| label: fig-typeII-ngoodcovs-03
-
-d_03 |> 
-  filter(method != "p_hacked") |> 
-  mutate(n_good_covs = n_covs * p_good_covs) |> 
-  group_by(method, n_good_covs) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  ggplot(aes(x = n_good_covs, y = prop_not_sig, color = method, linetype = method)) + 
-  geom_line() +
-  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15)) +
-  labs(y = "Type II error",
-       title = "Type II error by n_good_covs, b_x = 0.3") +
-  scale_linetype_manual(values = method_linetypes) +
-  scale_color_manual(values = method_colors)
-
-```
-
-In the plot, we see the overall decreasing trend in Type II error (except for no covariates). Including all covariates yields higher Type II error than selecting them, although full lm performs worse than this for higher numbers of good covariates. Lasso has the lowest Type II error as the number of good covariates increases.
-
-##### b_x = 0.5
-
-```{r}
-#| label: tbl-typeII-ngoodcovs-05
-
-d_05 |> 
-  mutate(n_good_covs = n_covs * p_good_covs) |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov, n_good_covs) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(n_good_covs, method) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II error by n_good_covs, b_x = 0.5")
-
-```
-
-In the table, we see the Type II error decreasing as the number of good covariates increases. We can get a more nuanced view in the plot below.
-
-```{r}
-#| label: fig-typeII-ngoodcovs-05
-
-d_05 |> 
-  filter(method != "p_hacked") |> 
-  mutate(n_good_covs = n_covs * p_good_covs) |> 
-  group_by(method, n_good_covs) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  ggplot(aes(x = n_good_covs, y = prop_not_sig, color = method, linetype = method)) + 
-  geom_line() +
-  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15)) +
-  labs(y = "Type II error",
-       title = "Type II error by n_good_covs, b_x = 0.5") + 
-  scale_linetype_manual(values = method_linetypes) +
-  scale_color_manual(values = method_colors)
-
-```
-
-Similarly, we see lasso performing best for higher numbers of good covariates. Full lm and all covariates become comparable as the number of good covariates increases.
 
 #### by correlations
 
