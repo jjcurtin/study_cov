@@ -23,6 +23,7 @@ library(skimr)
 library(purrr)
 library(ggplot2)
 library(cowplot)
+library(forcats)
 library(kableExtra, exclude = ("group_rows"))
 
 theme_set(theme_classic())
