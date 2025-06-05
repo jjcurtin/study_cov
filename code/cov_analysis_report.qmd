@@ -639,7 +639,6 @@ d_03 |>
 In this table, we see that for all methods, as the sample size increases, the Type II error decreases. This can be better seen in a plot below.
 
 ```{r}
-
 #| label: fig-typeII-nobs-03
 
 d_03 |> 
