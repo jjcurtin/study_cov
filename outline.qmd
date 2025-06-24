@@ -1,0 +1,92 @@
+---
+title: "Outline for Covariate Paper"
+author: "Lauren Khoury"
+date: "`r lubridate::today()`"
+execute:
+  echo: false
+format: 
+  html: 
+    embed-resources: true
+    toc: true 
+    toc_depth: 5
+    fig-width: 9
+    fig-height: 7
+editor_options: 
+  chunk_output_type: console
+---
+
+Abstract
+
+I. Introduction
+
+  A. Motivation
+    1. what is a covariate
+      a. describe how it increases power 
+    2. prevalence of covariates in psych/social science research
+    3. what makes a covariate a "good" covariate
+    4. want to include "good" covariates in our models 
+  B. Current State of Research Practices 
+    1. history of p-hacking
+  C. Selection Methods
+    1. need valid method
+    2. describe the 7 we will compare
+
+II. Methods
+
+  A. R scripts
+    1. manipulated variables for different research settings
+    2. wrote functions to generate data, fit 7 linear models, get results
+  B. CHTC
+    1. describe high throughput computing
+    2. ran 20,000 simulations for each research setting
+
+III. Results
+
+  A. Zero $X$ Effect ($b_x = 0$)
+    1. Type I error
+      a. by method overall
+      b. by n_obs
+      c. by n_covs
+      d. by p_good_covs
+      e. by correlations
+    2. Estimate, SD, SE
+    3. Sampling Distributions 
+  B. Nonzero $X$ Effect ($b_x = 0.3, 0.5$)
+    1. Type II error
+      a. by method overall
+      b. by n_obs
+      c. by n_covs
+      d. by p_good_covs
+      e. by correlations
+    2. Estimate, SD, SE
+    3. Sampling Distributions
+  C. Covariates TPR & FPR
+
+IV. Discussion
+
+  A. Summary of Methods, Results
+    1. emphasize use of covariates over no covariates and in some cases, selection of covariate
+    2. recommend partial r or r as the top approaches
+  B. Limitations
+  C. Future Directions
+
+V. References
+
+VI. Appendix 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
