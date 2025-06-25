@@ -5,17 +5,15 @@ manuscript:
   article: index.qmd
 
 format:
-  html:
-    comments:
-      hypothesis: true
+  html: default
   docx: default
-  jats: default
+  # jats: default
 
   # (other formats)
   # pdf: default
 
 execute:
-  freeze: true
+  freeze: auto
 
 
 
