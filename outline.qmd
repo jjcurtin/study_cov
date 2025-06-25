@@ -21,15 +21,31 @@ I. Introduction
 
   A. Motivation
     1. what is a covariate
-      a. describe how it increases power 
+      a. baseline measures, measured before manipulations
+        (1) not correlated with $X$ (manipulation)
+      c. describe how it increases power 
+        (1) low-power studies don't replicate well
     2. prevalence of covariates in psych/social science research
     3. what makes a covariate a "good" covariate
     4. want to include "good" covariates in our models 
   B. Current State of Research Practices 
-    1. history of p-hacking
+    1. history of p-hacking, problematic, Simmons 
+    2. discomfort using covariates: need to select but people don't know how or don't want to be accused of p-hacking
   C. Selection Methods
-    1. need valid method
+    1. need statistically valid method that does not change Type I 
     2. describe the 7 we will compare
+      a. p-hacking
+      b. no covariates
+      c. all covariates (variables you collect)
+      d. bivariate correlation 
+      e. partial correlation
+      f. full lm
+      g. lasso 
+  D. Data Generation Process (or in Methods?)
+    1. correlated $Y$ and covs
+      a. Cohen's d effect size, pooled variance
+      b. additional variance from $X$
+    2. covs are typically correlated (psych)
 
 II. Methods
 
@@ -45,29 +61,45 @@ III. Results
   A. Zero $X$ Effect ($b_x = 0$)
     1. Type I error
       a. by method overall
+        (1) bar plot - PAPER
+        (2) histograms - APPENDIX
       b. by n_obs
+        (1) table - APPENDIX
+        (2) figure - PAPER
       c. by n_covs
       d. by p_good_covs
       e. by correlations
     2. Estimate, SD, SE
-    3. Sampling Distributions 
+    3. Sampling Distributions (appendix?)
   B. Nonzero $X$ Effect ($b_x = 0.3, 0.5$)
-    1. Type II error
+    1. Type II error 
       a. by method overall
+        (1) 2 panel - 0.3 and 0.5 (for whole section)
+        (2) histograms - appendix or gone 
       b. by n_obs
       c. by n_covs
-      d. by p_good_covs
-      e. by correlations
+      d. by p_good_covs (appendix)
+      e. by correlations (appendix)
+        (1) larger story for b-x = 0.5
     2. Estimate, SD, SE
-    3. Sampling Distributions
-  C. Covariates TPR & FPR
+    3. Sampling Distributions (appendix)
+  C. Covariates TPR & FPR (appendix, remove p-hacked)
 
 IV. Discussion
 
   A. Summary of Methods, Results
-    1. emphasize use of covariates over no covariates and in some cases, selection of covariate
-    2. recommend partial r or r as the top approaches
+    1. don't p-hack
+    2. emphasize use of covariates over no covariates
+    3. selection methods in certain cases
+      a. low n, better to select covs over all covs
+      b. large number of covs
+    4. recommend partial r or r as the top approaches for selection
+      a. valid method, pre-register 
+    
   B. Limitations
+    1. have to be reasonably sure that the covariates are not related to $X$
+    2. other case of covariates not measured before manipulation
+    3. covariates used to control for variance - debated
   C. Future Directions
 
 V. References
