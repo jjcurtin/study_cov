@@ -1,0 +1,18 @@
+---
+title: "Supplemental Material"
+date: last-modified
+number-sections: true
+format: 
+  html: 
+    embed-resources: true
+    toc: true 
+    toc_depth: 5
+execute:
+  echo: false
+editor_options: 
+  chunk_output_type: console
+---
+
+This file contains the supplemental materials for *Title of paper*. It includes all supplemental figures and tables. Additional materials are made available on our study's OSF page ([https://osf.io/zh5gn/](https://osf.io/zh5gn/)).   
+
+-----
