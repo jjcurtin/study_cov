@@ -91,7 +91,8 @@ The total amount of data simulated equals 63,000,000 observations = 450 unique r
 
 Data for $b_x = 0$, as an example, is shown below.
 
-```{r read in data 1}
+```{r}
+#| label: read in d0
 
 d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv")) |> 
   mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
@@ -101,7 +102,8 @@ d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv
 # beepr::beep()
 ```
 
-```{r read in data 2}
+```{r}
+#| label: read in d03
 
 d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv")) |> 
   mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
@@ -109,7 +111,8 @@ d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.c
 
 ```
 
-```{r read in data 3}
+```{r}
+#| label: read in d05
 
 d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv")) |>
   mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
@@ -117,9 +120,19 @@ d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.c
 
 ```
 
-```{r read in data 4}
+```{r}
+#| label: read in d20covs
 
 d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
+                                   "partial_r", "full_lm", "lasso")))
+
+```
+
+```{r}
+#| label: read in dn50
+
+d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv")) |>
   mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
                                    "partial_r", "full_lm", "lasso")))
 
@@ -131,6 +144,10 @@ d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.cs
 d_0 <- rbind(d_0, d_20_covs |> filter(b_x == 0))
 d_03 <- rbind(d_03, d_20_covs |> filter(b_x == 0.3))
 d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
+
+d_0 <- rbind(d_0, d_n50 |> filter(b_x == 0))
+d_03 <- rbind(d_03, d_n50 |> filter(b_x == 0.3))
+d_05 <- rbind(d_05, d_n50 |> filter(b_x == 0.5))
 
 ```
 
@@ -254,7 +271,7 @@ d_0 |>
   ggplot(aes(x = n_obs, y = prop_sig, color = method, linetype = method)) + 
   geom_line() +
   geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
-  scale_x_continuous(breaks = c(100, 150, 200, 300, 400)) +
+  scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
   scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20)) +
   labs(y = "Type I error",
        title = "Type I error by n_obs") +
@@ -599,7 +616,7 @@ d_03 |>
             .groups = "drop") |> 
   ggplot(aes(x = n_obs, y = prop_not_sig, color = method, linetype = method)) + 
   geom_line() +
-  scale_x_continuous(breaks = c(100, 150, 200, 300, 400)) +
+  scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
   labs(y = "Type II error",
        title = "Type II error by n_obs, b_x = 0.3") +
   scale_linetype_manual(values = method_linetypes) +
