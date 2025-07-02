@@ -28,8 +28,86 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r}
+#| label: set up
+
+library(dplyr) |> suppressMessages()
+library(skimr)
+library(purrr)
+library(ggplot2)
+library(cowplot)
+library(forcats)
+library(kableExtra, exclude = ("group_rows"))
+
+theme_set(theme_classic())
+method_colors <- c("no_covs" = "sienna",
+                   "all_covs" = "goldenrod2",
+                   "p_hacked" = "red2",
+                   "r" = "springgreen3",
+                   "partial_r" = "deepskyblue",
+                   "full_lm" = "mediumpurple1",
+                   "lasso" = "hotpink")
+method_linetypes <- c("no_covs" = "solid",
+                      "all_covs" = "solid",
+                      "p_hacked" = "longdash",
+                      "r" = "longdash",
+                      "partial_r" = "longdash",
+                      "full_lm" = "longdash",
+                      "lasso" = "longdash")
+
+devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
+
+rdrive_path <- format_path("studydata/cov/raw_data")
+
+options(digits = 3)
+
+```
+
 # Introduction
 This is how you cite a paper using the bibtex key in Zotero [@simmonsFalsepositivePsychologyUndisclosed2011].
 
-# Methods...
+# Method
+
+  There are seven methods for selecting covariates to include in linear models that were evaluated. The methods can best be broken down.
+
+  We manipulated the following variables as shown in [@tbl-dictionary] to create research settings that may be common in Psychology. We crossed all levels of each variable to create 540 unique research settings. For each unique research setting, we ran 40,000 simulations using the Center for High Throughput Computing (CHTC) at the University of Wisconsin, Madison. Within each simulation, we generated a dataset, fit a linear model according to each of the seven aforementioned methods, and extracted the results from these models.  
+
+```{r}
+#| label: tbl-dictionary
+
+data_tbl0 <- tibble(
+  variable = c("b_x", "n_obs", "n_covs", "r_ycov", "p_good_covs", "r_cov"),
+  description = c(
+    "the population parameter for X",
+    "number of observations in sample",
+    "number of covariates",
+    "correlation between Y and covariates",
+    "percentage of \"good\" covariates",
+    "correlation between \"good\" covariates"
+  ),
+  values = c("0, 0.3, 0.5",
+             "50, 100, 150, 200, 300, 400", 
+             "4, 8, 12, 16, 20", 
+             "0.3, 0.5", 
+             "0.25, 0.50, 0.75", 
+             "0.3")
+)
+
+data_tbl0 |>
+  kbl(col.names = c("Variable", "Description", "Values"), 
+      escape = FALSE) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), 
+                full_width = FALSE,
+                font_size = 20) |>
+  column_spec(1, width = "8em") |>
+  column_spec(2, width = "15em") |>
+  column_spec(3, width = "10em")
+
+```
+
+# Results
+
+# Discussion
+
+# References
 

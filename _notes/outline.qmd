@@ -54,7 +54,7 @@ II. Methods
     2. wrote functions to generate data, fit 7 linear models, get results
   B. CHTC
     1. describe high throughput computing
-    2. ran 20,000 simulations for each research setting
+    2. ran 20,000 (40K eventually) simulations for each research setting
 
 III. Results
 

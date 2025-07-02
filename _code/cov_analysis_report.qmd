@@ -59,7 +59,7 @@ We manipulated the following variables:
 | Variable | Description | Values |
 |--------------------|--------------------|--------------------------------|
 | b_x | The population parameter for $X$ | 0, 0.3, 0.5 |
-| n_obs | Number of observations in a sample | 100, 150, 200, 300, 400 |
+| n_obs | Number of observations in a sample | 50, 100, 150, 200, 300, 400 |
 | n_covs | Number of total available covariates | 4, 8, 12, 16, 20 |
 | p_good_covs | Proportion of "good" covariates\* | 0.25, 0.50, 0.75 |
 | r_ycov | Correlation between $Y$ and the "good" covariates | 0.3, 0.5 |
@@ -657,7 +657,7 @@ d_05 |>
             .groups = "drop") |> 
   ggplot(aes(x = n_obs, y = prop_not_sig, color = method, linetype = method)) + 
   geom_line() +
-  scale_x_continuous(breaks = c(100, 150, 200, 300, 400)) +
+  scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
   labs(y = "Type II error",
        title = "Type II error by n_obs, b_x = 0.5") +
   scale_linetype_manual(values = method_linetypes) +
