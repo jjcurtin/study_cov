@@ -1,0 +1,205 @@
+---
+title: "Make Tables for Main Manuscript"
+author: "Lauren Khoury"
+date: "`r lubridate::today()`"
+number-sections: true
+output: 
+  html_document:
+    toc: true 
+    toc_depth: 4
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-depth: 4
+editor_options: 
+  chunk_output_type: console
+html-table-processing: none
+---
+
+```{r}
+#| label: set up
+
+library(dplyr) |> suppressMessages()
+library(skimr)
+library(purrr)
+library(ggplot2)
+library(cowplot)
+library(forcats)
+library(kableExtra, exclude = ("group_rows"))
+
+theme_set(theme_classic())
+method_colors <- c("no_covs" = "sienna",
+                   "all_covs" = "goldenrod2",
+                   "p_hacked" = "red2",
+                   "r" = "springgreen3",
+                   "partial_r" = "deepskyblue",
+                   "full_lm" = "mediumpurple1",
+                   "lasso" = "hotpink")
+method_linetypes <- c("no_covs" = "solid",
+                      "all_covs" = "solid",
+                      "p_hacked" = "longdash",
+                      "r" = "longdash",
+                      "partial_r" = "longdash",
+                      "full_lm" = "longdash",
+                      "lasso" = "longdash")
+
+devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
+
+rdrive_path <- format_path("studydata/cov/raw_data")
+
+options(digits = 3)
+
+```
+
+```{r}
+#| label: read in data
+
+d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv")) |> 
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
+                                   "partial_r", "full_lm", "lasso")))
+
+d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv")) |> 
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
+                                   "partial_r", "full_lm", "lasso"))) 
+
+d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
+                                   "partial_r", "full_lm", "lasso")))
+
+d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
+                                   "partial_r", "full_lm", "lasso")))
+
+d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
+                                   "partial_r", "full_lm", "lasso")))
+
+```
+
+```{r}
+#| label: combine data
+
+d_0 <- rbind(d_0, d_20_covs |> filter(b_x == 0))
+d_03 <- rbind(d_03, d_20_covs |> filter(b_x == 0.3))
+d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
+
+d_0 <- rbind(d_0, d_n50 |> filter(b_x == 0))
+d_03 <- rbind(d_03, d_n50 |> filter(b_x == 0.3))
+d_05 <- rbind(d_05, d_n50 |> filter(b_x == 0.5))
+
+```
+
+```{r}
+#| label: tbl-dictionary
+
+data_tbl0 <- tibble(
+  variable = c("b_x", "n_obs", "n_covs", "r_ycov", "p_good_covs", "r_cov"),
+  description = c(
+    "the population parameter for X",
+    "number of observations in sample",
+    "number of covariates",
+    "correlation between Y and covariates",
+    "percentage of \"good\" covariates",
+    "correlation between \"good\" covariates"
+  ),
+  values = c("0, 0.3, 0.5",
+             "50, 100, 150, 200, 300, 400", 
+             "4, 8, 12, 16, 20", 
+             "0.3, 0.5", 
+             "0.25, 0.50, 0.75", 
+             "0.3")
+)
+
+data_tbl0 |>
+  kbl(col.names = c("Variable", "Description", "Values"), 
+      escape = FALSE) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), 
+                full_width = FALSE,
+                font_size = 20) |>
+  column_spec(1, width = "8em") |>
+  column_spec(2, width = "15em") |>
+  column_spec(3, width = "10em")
+
+```
+
+```{r}
+#| label: tbl-est-sd-se-0
+
+d_0 |> 
+  group_by(method) |> 
+  summarise(mean_estimate = sprintf("%.3f", mean(estimate)*-1),
+            SD_estimate = sd(estimate),
+            SE_mean = sqrt(mean(SE^2)),
+            difference = SD_estimate - SE_mean) |> 
+  kbl(caption = "b_x = 0")
+
+```
+
+```{r}
+#| label: tbl-typeII-nobs-03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(n_obs, method) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by n_obs, b_x = 0.3")
+
+```
+
+```{r}
+#| label: tbl-typeII-nobs-05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(n_obs, method) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by n_obs, b_x = 0.5")
+
+```
+
+```{r}
+#| label: tbl-est-sd-se-03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method) |> 
+  summarise(mean_estimate = mean(estimate),
+            SD_estimate = sd(estimate),
+            mean_SE = sqrt(mean(SE^2)),
+            difference = SD_estimate - mean_SE) |> 
+  kbl(caption = "Estimate, SD, SE: b_x = 0.3")
+
+```
+
+```{r}
+#| label: tbl-est-sd-se-05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method) |> 
+  summarise(mean_estimate = mean(estimate),
+            SD_estimate = sd(estimate),
+            mean_SE = sqrt(mean(SE^2)),
+            difference = SD_estimate - mean_SE) |> 
+  kbl(caption = "Estimate, SD, SE: b_x = 0.5")
+
+```
+
+
+
+
+
+

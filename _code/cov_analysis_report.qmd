@@ -99,7 +99,6 @@ d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv
                                    "partial_r", "full_lm", "lasso"))) |> 
   glimpse()
 
-# beepr::beep()
 ```
 
 ```{r}
