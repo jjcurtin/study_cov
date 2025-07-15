@@ -44,7 +44,7 @@ r_cov <- as.numeric(args[8])
 source("fun_cov.R")
 
 # Loop over sims
-set.seed(job_num)
+set.seed(job_num+100000)
 full_results <- tibble::tibble()
 
 for(i in 1:n_sims) {
