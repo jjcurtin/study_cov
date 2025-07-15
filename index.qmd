@@ -33,13 +33,54 @@ This is how you cite a paper using the bibtex key in Zotero [@simmonsFalsepositi
 
 # Method
 
-  There are seven methods for selecting covariates to include in linear models that we evaluated. The methods can best be broken down into two categories: those that do not involve systematically selecting covariates and those that do. For the former category, we explored inlcuding (1) no covariates in the linear models and including (2) all available covariates. Here, we consider all available covariates to mean all covariates that were measured prior to manipulation. For the latter category, we employed the method of (3) p-hacking to replicate that this is not a statistically valid method to use for covariate selection. 
-
-  We manipulated the following variables as shown in [@tbl-dictionary] to create research settings that may be common in Psychology. We crossed all levels of each variable to create 540 unique research settings. For each unique research setting, we ran 40,000 simulations using the Center for High Throughput Computing (CHTC) at the University of Wisconsin, Madison. Within each simulation, we generated a dataset, fit a linear model according to each of the seven aforementioned methods, and extracted the results from these models.  
+  In order to evaluate methods for covariate selection, we wrote R scripts to generate data, fit linear models, and extract model results. For the data generation process, we manipulated variables as shown in [@tbl-dictionary] with levels that may be common in Psychology. For example, we chose values for the number of observations that pertain to common sample sizes in experimental research. OTHER VARS. The crossing of all levels of each variable resulted in 540 unique research settings. We ran 40,000 simulations for each unique research setting using the Center for High Throughput Computing (CHTC) at the University of Wisconsin, Madison. Within each simulation, we generated a unique dataset, fit a linear model according to each of the seven aforementioned methods, and extracted the results from these models.  
 
 {{< embed notebooks/mak_tables.qmd#tbl-dictionary >}}
 
+  There are seven methods for selecting covariates to include in linear models that we evaluated. The methods can best be broken down into two categories: those that do not involve systematically selecting covariates and those that do. For the former category, we explored inlcuding (1) no covariates in the linear models and including (2) all available covariates. Here, we consider all available covariates to mean all covariates that were measured prior to manipulation. For the latter category, we employed the method of (3) p-hacking to replicate that this is not a statistically valid method to use for covariate selection. 
+
 # Results
+
+  We begin by considering the condition with a zero $X$ effect. In this case, we set the population parameter for $X$ to be zero (i.e., $b_x = 0$), so that any significant result found is a Type I error. 
+
+{{< embed notebooks/mak_figures.qmd#fig-typeI-bar >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeI-nobs >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeI-ncovs >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeI-pgoodcovs >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeI-rycov >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-0 >}}
+
+  We continue on to consider conditions with a nonzero $X$ effect. Here, we tested two nonzero values for the population parameter for $X$, 0.3 and 0.5 (i.e., $b_x = 0.3$ and $b_x = 0.5$). In this case, any non-significant result found is a Type II error. 
+
+{{< embed notebooks/mak_figures.qmd#fig-typeII-bar-03 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeII-bar-05 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeII-nobs-03 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeII-nobs-05 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeII-ncovs-03 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeII-ncovs-05 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeII-pgoodcovs-03 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeII-pgoodcovs-05 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeII-rycov-03 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-typeII-rycov-05 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-03 >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-05 >}}
+
 
 # Discussion
 

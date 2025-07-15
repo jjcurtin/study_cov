@@ -75,6 +75,18 @@ d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv")) |>
   mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
                                    "partial_r", "full_lm", "lasso")))
 
+d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
+                                   "partial_r", "full_lm", "lasso")))
+
+d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
+                                   "partial_r", "full_lm", "lasso")))
+
+d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
+                                   "partial_r", "full_lm", "lasso")))
+
 ```
 
 ```{r}
@@ -87,6 +99,10 @@ d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
 d_0 <- rbind(d_0, d_n50 |> filter(b_x == 0))
 d_03 <- rbind(d_03, d_n50 |> filter(b_x == 0.3))
 d_05 <- rbind(d_05, d_n50 |> filter(b_x == 0.5))
+
+d_0 <- rbind(d_0, d2_0)
+d_03 <- rbind(d_03, d2_03)
+d_05 <- rbind(d_05, d2_05)
 
 ```
 
@@ -237,6 +253,40 @@ h05 |>
   facet_wrap(~ method) +
   labs(x = "Type II Error",
        title = "Distribution of Type II error, b_x = 0.5")
+
+```
+
+```{r}
+#| label: tbl-typeII-nobs-03
+
+d_03 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(n_obs, method) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by n_obs, b_x = 0.3")
+
+```
+
+```{r}
+#| label: tbl-typeII-nobs-05
+
+d_05 |> 
+  filter(method != "p_hacked") |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
+  summarise(prop_not_sig = mean(p_value >= 0.05),
+            .groups = "drop") |> 
+  group_by(n_obs, method) |> 
+  summarise(typeII_min = min(prop_not_sig),
+            typeII_max = max(prop_not_sig),
+            typeII_mean = mean(prop_not_sig),
+            .groups = "drop") |> 
+  kbl(caption = "Type II error by n_obs, b_x = 0.5")
 
 ```
 

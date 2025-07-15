@@ -77,6 +77,18 @@ d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv")) |>
   mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
                                    "partial_r", "full_lm", "lasso")))
 
+d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
+                                   "partial_r", "full_lm", "lasso")))
+
+d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
+                                   "partial_r", "full_lm", "lasso")))
+
+d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv")) |>
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
+                                   "partial_r", "full_lm", "lasso")))
+
 ```
 
 ```{r}
@@ -89,6 +101,10 @@ d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
 d_0 <- rbind(d_0, d_n50 |> filter(b_x == 0))
 d_03 <- rbind(d_03, d_n50 |> filter(b_x == 0.3))
 d_05 <- rbind(d_05, d_n50 |> filter(b_x == 0.5))
+
+d_0 <- rbind(d_0, d2_0)
+d_03 <- rbind(d_03, d2_03)
+d_05 <- rbind(d_05, d2_05)
 
 ```
 
