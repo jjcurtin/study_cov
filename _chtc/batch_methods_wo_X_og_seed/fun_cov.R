@@ -271,7 +271,7 @@ fit_full_lm_wo_x <- function(d, alpha = 0.05) {
     dplyr::pull(term)
   
   # fit model with selected covariates 
-  formula_final <- reformulate(termlabels = covs_added, response = "y")
+  formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
   lm(formula = formula_final, data = d)
 }
 
@@ -323,7 +323,6 @@ fit_lasso <- function(d) {
   
   # fit model with selected covariates 
   formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
-  
   lm(formula = formula_final, data = d)
 }
 
@@ -373,8 +372,7 @@ fit_lasso_wo_x <- function(d) {
     dplyr::filter(stringr::str_starts(term, "c")) |> 
     dplyr::pull(term)
   
-  # fit model with selected covariates 
-  formula_final <- reformulate(termlabels = covs_added, response = "y")
-  
+  # fit model with selected covariates
+  formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
   lm(formula = formula_final, data = d)
 }
