@@ -33,14 +33,18 @@ method_colors <- c("no_covs" = "sienna",
                    "r" = "springgreen3",
                    "partial_r" = "deepskyblue",
                    "full_lm" = "mediumpurple1",
-                   "lasso" = "hotpink")
+                   "full_lm_wo_x" = "lavender",
+                   "lasso" = "hotpink",
+                   "lasso_wo_x" = "lightpink")
 method_linetypes <- c("no_covs" = "solid",
                       "all_covs" = "solid",
                       "p_hacked" = "longdash",
                       "r" = "longdash",
                       "partial_r" = "longdash",
                       "full_lm" = "longdash",
-                      "lasso" = "longdash")
+                      "full_lm_wo_x" = "longdash",
+                      "lasso" = "longdash",
+                      "lasso_wo_x" = "longdash")
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
@@ -75,7 +79,9 @@ We manipulated the following variables:
 4.  Bivariate correlation
 5.  Partial correlation (including $X$ in the model)
 6.  Full lm (including $X$ in the model)
-7.  LASSO (including $X$ in the model)
+7.  Full lm without $X$ in the model
+8.  LASSO (including $X$ in the model)
+9.  LASSO without $X$ in the model
 
 We fit a linear model for each method and from the model output, extracted the estimate for $X$, standard error of this estimate, and p-value of this $X$ effect. <br>
 
@@ -87,70 +93,33 @@ We present the results here.
 
 ## Preview data
 
-The total amount of data simulated equals 63,000,000 observations = 450 unique research settings $\times$ 20,000 simulations each $\times$ 7 methods. We will consider the data separated by the $X$ effect. <br>
+The total amount of data simulated equals 97,200,000 observations = 540 unique research settings $\times$ 20,000 simulations each $\times$ 9 methods. We will consider the data separated by the $X$ effect. <br>
 
 Data for $b_x = 0$, as an example, is shown below.
 
 ```{r}
-#| label: read in d0
+#| label: read in data
 
 d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv")) |> 
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
-                                   "partial_r", "full_lm", "lasso"))) |> 
   glimpse()
 
-```
+d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv"))
 
-```{r}
-#| label: read in d03
+d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv"))
 
-d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv")) |> 
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
-                                   "partial_r", "full_lm", "lasso"))) 
+d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv"))
 
-```
+d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv"))
 
-```{r}
-#| label: read in d05
+d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv"))
 
-d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
-                                   "partial_r", "full_lm", "lasso")))
+d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv"))
 
-```
+d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv"))
 
-```{r}
-#| label: read in d20covs
+d_wo_x_og <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_og_seed.csv"))
 
-d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
-                                   "partial_r", "full_lm", "lasso")))
-
-```
-
-```{r}
-#| label: read in dn50
-
-d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
-                                   "partial_r", "full_lm", "lasso")))
-
-```
-
-```{r}
-#| label: read in new 20K
-
-d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
-                                   "partial_r", "full_lm", "lasso")))
-
-d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
-                                   "partial_r", "full_lm", "lasso")))
-
-d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
-                                   "partial_r", "full_lm", "lasso")))
+d_wo_x_new <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_new_seed.csv"))
 
 ```
 
@@ -169,7 +138,33 @@ d_0 <- rbind(d_0, d2_0)
 d_03 <- rbind(d_03, d2_03)
 d_05 <- rbind(d_05, d2_05)
 
+d_0 <- rbind(d_0, d_wo_x_og |> filter(b_x == 0))
+d_0 <- rbind(d_0, d_wo_x_new |> filter(b_x == 0))
+d_03 <- rbind(d_03, d_wo_x_og |> filter(b_x == 0.3))
+d_03 <- rbind(d_03, d_wo_x_new |> filter(b_x == 0.3))
+d_05 <- rbind(d_05, d_wo_x_og |> filter(b_x == 0.5))
+d_05 <- rbind(d_05, d_wo_x_new |> filter(b_x == 0.5))
+
 ```
+
+```{r}
+#| label: factor levels
+
+d_0 <- d_0 |> 
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
+                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
+
+d_03 <- d_03 |> 
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
+                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
+
+d_05 <- d_05 |> 
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
+                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
+
+
+```
+
 
 ## Zero $X$ Effect
 
