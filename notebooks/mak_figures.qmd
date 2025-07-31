@@ -61,37 +61,19 @@ options(digits = 3)
 ```{r}
 #| label: read in data
 
-d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv")) |> 
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
-                                   "partial_r", "full_lm", "lasso")))
+d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv"))
+d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv"))
+d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv"))
 
-d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv")) |> 
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
-                                   "partial_r", "full_lm", "lasso"))) 
+d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv"))
+d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv"))
 
-d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", 
-                                   "partial_r", "full_lm", "lasso")))
+d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv"))
+d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv"))
+d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv"))
 
-d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
-                                   "partial_r", "full_lm", "lasso")))
-
-d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
-                                   "partial_r", "full_lm", "lasso")))
-
-d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
-                                   "partial_r", "full_lm", "lasso")))
-
-d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
-                                   "partial_r", "full_lm", "lasso")))
-
-d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv")) |>
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r",
-                                   "partial_r", "full_lm", "lasso")))
+d_wo_x_og <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_og_seed.csv"))
+d_wo_x_new <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_new_seed.csv"))
 
 ```
 
@@ -109,6 +91,31 @@ d_05 <- rbind(d_05, d_n50 |> filter(b_x == 0.5))
 d_0 <- rbind(d_0, d2_0)
 d_03 <- rbind(d_03, d2_03)
 d_05 <- rbind(d_05, d2_05)
+
+d_0 <- rbind(d_0, d_wo_x_og |> filter(b_x == 0))
+d_0 <- rbind(d_0, d_wo_x_new |> filter(b_x == 0))
+d_03 <- rbind(d_03, d_wo_x_og |> filter(b_x == 0.3))
+d_03 <- rbind(d_03, d_wo_x_new |> filter(b_x == 0.3))
+d_05 <- rbind(d_05, d_wo_x_og |> filter(b_x == 0.5))
+d_05 <- rbind(d_05, d_wo_x_new |> filter(b_x == 0.5))
+
+```
+
+```{r}
+#| label: factor levels
+
+d_0 <- d_0 |> 
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
+                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
+
+d_03 <- d_03 |> 
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
+                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
+
+d_05 <- d_05 |> 
+  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
+                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
+
 
 ```
 

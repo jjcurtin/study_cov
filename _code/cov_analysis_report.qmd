@@ -102,23 +102,17 @@ Data for $b_x = 0$, as an example, is shown below.
 
 d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv")) |> 
   glimpse()
-
 d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv"))
-
 d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv"))
 
 d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv"))
-
 d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv"))
 
 d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv"))
-
 d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv"))
-
 d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv"))
 
 d_wo_x_og <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_og_seed.csv"))
-
 d_wo_x_new <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_new_seed.csv"))
 
 ```
