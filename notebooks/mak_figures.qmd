@@ -37,14 +37,18 @@ method_colors <- c("no_covs" = "sienna",
                    "r" = "springgreen3",
                    "partial_r" = "deepskyblue",
                    "full_lm" = "mediumpurple1",
-                   "lasso" = "hotpink")
+                   "full_lm_wo_x" = "slateblue1",
+                   "lasso" = "hotpink",
+                   "lasso_wo_x" = "lightpink")
 method_linetypes <- c("no_covs" = "solid",
                       "all_covs" = "solid",
                       "p_hacked" = "longdash",
                       "r" = "longdash",
                       "partial_r" = "longdash",
                       "full_lm" = "longdash",
-                      "lasso" = "longdash")
+                      "full_lm_wo_x" = "longdash",
+                      "lasso" = "longdash",
+                      "lasso_wo_x" = "longdash")
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 

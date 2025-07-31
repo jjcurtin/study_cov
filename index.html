@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.6.40" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+<meta name="author" content="Lauren Khoury" />
+<meta name="author" content="Name 2" />
+<meta name="author" content="Name 3" />
+<meta name="author" content="John J. Curtin" />
+<meta name="dcterms.date" content="2025-07-30" />
+
+<title>Study cov</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<!-- htmldependencies:E3FAD763 -->
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <div id="quarto-toc-target"></div>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default toc-left">
+  <div class="quarto-title-banner">
+    <div class="quarto-title column-body">
+      <h1 class="title">Study cov</h1>
+          </div>
+
+    
+    <div class="quarto-title-meta-container">
+      <div class="quarto-title-meta-column-start">
+            <div class="quarto-title-meta-author">
+          <div class="quarto-title-meta-heading">Authors</div>
+          <div class="quarto-title-meta-heading">Affiliation</div>
+          
+                <div class="quarto-title-meta-contents">
+            <p class="author">Lauren Khoury </p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        Department of Psychology, University of Wisconsin-Madison
+                      </p>
+                  </div>
+                      <div class="quarto-title-meta-contents">
+            <p class="author">Name 2 </p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        Department of Psychology, University of Wisconsin-Madison
+                      </p>
+                  </div>
+                      <div class="quarto-title-meta-contents">
+            <p class="author">Name 3 </p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        Department of Psychology, University of Wisconsin-Madison
+                      </p>
+                  </div>
+                      <div class="quarto-title-meta-contents">
+            <p class="author">John J. Curtin <a href="mailto:jjcurtin@wisc.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        Department of Psychology, University of Wisconsin-Madison
+                      </p>
+                  </div>
+                    </div>
+        
+        <div class="quarto-title-meta">
+
+                      
+                <div>
+            <div class="quarto-title-meta-heading">Published</div>
+            <div class="quarto-title-meta-contents">
+              <p class="date">July 30, 2025</p>
+            </div>
+          </div>
+          
+                
+              </div>
+      </div>
+      <div class="quarto-title-meta-column-end quarto-other-formats-target">
+      </div>
+    </div>
+
+    <div>
+      <div class="abstract">
+        <div class="block-title">Abstract</div>
+        <p>Abstract of paper goes here and can span several lines.</p>
+      </div>
+    </div>
+
+
+    <div class="quarto-other-links-text-target">
+    </div>  </div>
+</header>
+
+  
+
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+  <li><a href="#method" id="toc-method">Method</a></li>
+  <li><a href="#results" id="toc-results">Results</a>
+  <ul>
+  <li><a href="#zero-x-effect" id="toc-zero-x-effect">Zero X Effect</a></li>
+  <li><a href="#nonzero-x-effect" id="toc-nonzero-x-effect">Nonzero X Effect</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion">Discussion</a></li>
+  <li><a href="#references" id="toc-references">References</a></li>
+  </ul>
+</nav>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This is how you cite a paper using the bibtex key in Zotero <span class="citation" data-cites="simmonsFalsepositivePsychologyUndisclosed2011">(<a href="#ref-simmonsFalsepositivePsychologyUndisclosed2011" role="doc-biblioref">Simmons, Nelson, and Simonsohn 2011</a>)</span>.</p>
+<p>There are nine methods for selecting covariates to include in linear models that we evaluated. The methods can best be broken down into two categories: those that do not involve systematically selecting covariates and those that do. For the former category, we explored inlcuding (1) no covariates in the linear models and including (2) all available covariates. Here, we consider all available covariates to mean all covariates that were measured prior to manipulation. For the latter category, we first employed the method of (3) p-hacking to replicate that this is not a statistically valid method to use for covariate selection. To accomplish this method, we include covariates that lower the p-value for <span class="math inline">\(X\)</span> when comparing it to the p-value from the model regressing <span class="math inline">\(Y\)</span> only on <span class="math inline">\(X\)</span>. This leaves six remaining methods that we predicted to be viable and successful methods for covariate selection. For this paper, a significance level of <span class="math inline">\(\alpha = 0.05\)</span> is used. We consider the Pearson correlation coefficient (<span class="math inline">\(r\)</span>) for both bivariate and partial correlations. In the (4) bivariate correlation model, we consider one covariate at a time and include it in the final model if it has a significant effect on <span class="math inline">\(Y\)</span>. In the (5) partial correlation model, we consider one covariate at a time and include it in the final model if it has a significant effect on <span class="math inline">\(Y\)</span> while also controlling for <span class="math inline">\(X\)</span>. We then fit full linear models in cases of including and excluding <span class="math inline">\(X\)</span>. We fit a (6) full linear model regressing <span class="math inline">\(Y\)</span> on all covariates, and we included all covariates in the final model that are significant on <span class="math inline">\(Y\)</span> when controlling for <span class="math inline">\(X\)</span>. Similarly, we fit a (7) full linear model without <span class="math inline">\(X\)</span>, where we include all covariates significant on <span class="math inline">\(Y\)</span> without controlling for <span class="math inline">\(X\)</span>. Finally, we considered a more complex approach of covariate selection by employing the least absolute shrinkage and selection operator (LASSO, also known as L1 regularization). We tuned the penalty value across 100 bootstraps, fit the best model with the penalty that yielded the lowest RMSE, and selected all covariates with nonzero coefficients for inclusion in the final linear model. This process was the same for a (8) LASSO model that had a zero penalty factor applied to <span class="math inline">\(X\)</span> (i.e., <span class="math inline">\(X\)</span> was retained in the model) and for a (9) LASSO model that did not contain <span class="math inline">\(X\)</span>. To summarize, these are the nine models compared in this paper used for covariate selection:</p>
+<ol type="1">
+<li>No covariates</li>
+<li>All covariates</li>
+<li>P-hacking</li>
+<li>Bivariate correlation</li>
+<li>Partial correlation</li>
+<li>Full linear model</li>
+<li>Full linear model without <span class="math inline">\(X\)</span></li>
+<li>LASSO</li>
+<li>LASSO without <span class="math inline">\(X\)</span></li>
+</ol>
+</section>
+<section id="method" class="level1">
+<h1>Method</h1>
+<p>In order to evaluate methods for covariate selection, we wrote R scripts to generate data, fit linear models, and extract results from these linear models. For the data generation process, we manipulated variables as shown in <strong>?@tbl-dictionary</strong> with levels chosen that are commonly found in Psychology researh. The population parameters for <span class="math inline">\(X\)</span> were chosen to cover both zero and nonzero effects, with the nonzero effects covering a medium and larger effect size. We chose values for the number of observations that pertain to common sample sizes in experimental research. The four variables handling the covariates were chosen with the plan of crossing all levels. Hence, the numbers of covariates had to be divisible by four to cross with the chosen levels of percentages. The values cover a range of amounts of covariates that researchers might have available to them. The percentages of “good” covariates represent the reality that while many might be available, there are varying strengths to which these covariates relate to the outcome. The number of total available covariates by the percentages of good covariates gives us the number of good covariates. This is factored into the data generating process in the covariance matrix, where there is a nonzero entry in the matrix intersection between <span class="math inline">\(Y\)</span> and each good covariate. The value for this is given by the <span class="math inline">\(Y\)</span>-covariate correlation (<code>r_ycov</code>). Since these good covariates are correlated with <span class="math inline">\(Y\)</span>, they must be correlated with each other. This gives a nonzero entries in the matrix intersections between the good covariates. This value is given by the covariate correlation (<code>r_cov</code>). The values for the two correlation variables (between <span class="math inline">\(Y\)</span> and the covariates and between the covariates themselves) were selected with what we feel is expected in social science contexts. These values also had to satisfy a positive-definite covariance matrix as <span class="math inline">\(Y\)</span> and the covariates were generated from a multivariate normal distribution. The <span class="math inline">\(X\)</span> variable was generated as a dichotomous variable representing an experimental manipulation (e.g., condition versus treatment). The final values for <span class="math inline">\(Y\)</span> was then calculated by adding the <span class="math inline">\(Y\)</span> generated with the covariates to the <span class="math inline">\(X\)</span> variable multiplied by the given population parameter for <span class="math inline">\(X\)</span>.</p>
+<p><code>{{&lt; embed notebooks/mak_tables.qmd#tbl-dictionary &gt;}}</code></p>
+<p>The crossing of all levels of each variable resulted in 540 unique research settings. We ran 40,000 simulations for each unique setting using the Center for High Throughput Computing (CHTC) at the University of Wisconsin, Madison. A seed was set for each simulation ran for the purpose of reproducibility. Within each simulation, the scripts first generated a unique dataset based on the variables and process discussed. Then, a linear model was fit according to each of the nine aforementioned methods for covariate selection. Finally, the results from these models were saved. These results include the corresponding parameter estimate, standard error, and p-value for <span class="math inline">\(X\)</span> from the linear model. The numerator and denominator degrees of freedom were also extracted from the model. We calculated true positive rates and false positive rates to identify the rates at which the different methods correctly selected covariates that did relate to <span class="math inline">\(Y\)</span> and incorrectly selected covariates that did not relate to <span class="math inline">\(Y\)</span>, respectively.</p>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<p>The product of the sizes of the unique research settings (540), simulations (40,000), and methods (9) yielded a total of 194,400,000 observations. A glimpse/head of the data is shown below:</p>
+<p><em>figure</em></p>
+<p>We will examine the results by zero and nonzero <span class="math inline">\(X\)</span> effects. The Type I and Type II errors will be compared across methods and across levels of the research setting variables. Note that for the line plots throughout this report, a solid line will indicate a method that does not involve performing selection of covariates (i.e., using no or all covariates). A dashed line will indicate a method that does involve performing a non-trivial selection of covariates. A dotted black line will indicate the expected value (if applicable). For example, there will be a dotted line at <span class="math inline">\(\alpha = 0.05\)</span>, the expected Type I error rate.</p>
+<section id="zero-x-effect" class="level2">
+<h2>Zero X Effect</h2>
+<p>We begin by considering the condition with a zero <span class="math inline">\(X\)</span> effect. In this case, we set the population parameter for <span class="math inline">\(X\)</span> to be zero (i.e., <span class="math inline">\(b_x = 0\)</span>), so that any significant result found is a Type I error. The first comparison will look at selection method overall, across all research settings. In this figure <span class="citation" data-cites="typeI-bar">(<a href="#ref-typeI-bar" role="doc-biblioref"><strong>typeI-bar?</strong></a>)</span>, the proportion of significant effects – the Type I error – is calculated and displayed.</p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeI-bar &gt;}}</code></p>
+<p>From this bar plot, we see that the p-hacking method for selecting covariates leads to highly inflated Type I error rates. In the remaining figures in this section, we will continue to see this inflation from p-hacking. Most of the approaches are at the expected 0.05 mark, while the partial correlation approach shows slight inflation, with the LASSO and full linear models showing further inflation of Type I error.</p>
+<p>We will now present the Type I error rates of each method for the different levels of the number of observations in a sample.</p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeI-nobs &gt;}}</code></p>
+<p>For smaller sample sizes, we see that partial correlation, LASSO, and full lm perform worse than the other methods, but they all become comparable as sample size increases.</p>
+<p>When comparing across the number of covariates, this is not necessarily the number of covariates included in the final model, but the amount of available ones.</p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeI-ncovs &gt;}}</code></p>
+<p>There is a slight increase for full lm and LASSO as the number of covariates increases, while the other methods stay around 0.05.</p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeI-pgoodcovs &gt;}}</code></p>
+<p>Most of the methods remain stagnant across the different percentages, except LASSO decreases slightly and full lm increases as the percentage of good covariates increases.</p>
+<p>The correlation among the good covariates did not vary, so only the <span class="math inline">\(Y\)</span>-covariate correlation will be compared.</p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeI-rycov &gt;}}</code></p>
+<p>All of the methods did not see a great change in Type I error as the correlation increased.</p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-distribution-bx-0 &gt;}}</code></p>
+<p>This distribution highlights another negative consequence of p-hacking. In addition to inflation of Type I error rates, it biases the parameter estimates. While its distribution is centered around zero, it has a bimodel distribution, emphasizing how it biases the estimates. The remaining distributions are centered around zero. The no covariates approach has the widest distribution, showing that is has more variability in its estimate.</p>
+</section>
+<section id="nonzero-x-effect" class="level2">
+<h2>Nonzero X Effect</h2>
+<p>We continue on to consider conditions with a nonzero <span class="math inline">\(X\)</span> effect. Here, we tested two nonzero values for the population parameter for <span class="math inline">\(X\)</span>, 0.3 and 0.5 (i.e., <span class="math inline">\(b_x = 0.3\)</span> and <span class="math inline">\(b_x = 0.5\)</span>). In this case, any non-significant result found is a Type II error.</p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-bar-03 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-bar-05 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-nobs-03 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-nobs-05 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-ncovs-03 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-ncovs-05 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-pgoodcovs-03 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-pgoodcovs-05 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-rycov-03 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-rycov-05 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-distribution-bx-03 &gt;}}</code></p>
+<p><code>{{&lt; embed notebooks/mak_figures.qmd#fig-distribution-bx-05 &gt;}}</code></p>
+</section>
+</section>
+<section id="discussion" class="level1">
+<h1>Discussion</h1>
+</section>
+<section id="references" class="level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-simmonsFalsepositivePsychologyUndisclosed2011" class="csl-entry" role="listitem">
+Simmons, Joseph P., Leif D. Nelson, and Uri Simonsohn. 2011. <span>“False-Positive Psychology: Undisclosed Flexibility in Data Collection and Analysis Allows Presenting Anything as Significant.”</span> <em>Psychological Science</em> 22 (11): 1359–66. <a href="https://doi.org/10.1177/0956797611417632">https://doi.org/10.1177/0956797611417632</a>.
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id = "quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+</body>
+
+</html>

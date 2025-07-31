@@ -48,7 +48,7 @@ This is how you cite a paper using the bibtex key in Zotero [@simmonsFalsepositi
 
   In order to evaluate methods for covariate selection, we wrote R scripts to generate data, fit linear models, and extract results from these linear models. For the data generation process, we manipulated variables as shown in [@tbl-dictionary] with levels chosen that are commonly found in Psychology researh. The population parameters for $X$ were chosen to cover both zero and nonzero effects, with the nonzero effects covering a medium and larger effect size. We chose values for the number of observations that pertain to common sample sizes in experimental research. The four variables handling the covariates were chosen with the plan of crossing all levels. Hence, the numbers of covariates had to be divisible by four to cross with the chosen levels of percentages. The values cover a range of amounts of covariates that researchers might have available to them. The percentages of "good" covariates represent the reality that while many might be available, there are varying strengths to which these covariates relate to the outcome. The number of total available covariates by the percentages of good covariates gives us the number of good covariates. This is factored into the data generating process in the covariance matrix, where there is a nonzero entry in the matrix intersection between $Y$ and each good covariate. The value for this is given by the $Y$-covariate correlation (`r_ycov`). Since these good covariates are correlated with $Y$, they must be correlated with each other. This gives a nonzero entries in the matrix intersections between the good covariates. This value is given by the covariate correlation (`r_cov`). The values for the two correlation variables (between $Y$ and the covariates and between the covariates themselves) were selected with what we feel is expected in social science contexts. These values also had to satisfy a positive-definite covariance matrix as $Y$ and the covariates were generated from a multivariate normal distribution. The $X$ variable was generated as a dichotomous variable representing an experimental manipulation (e.g., condition versus treatment). The final values for $Y$ was then calculated by adding the $Y$ generated with the covariates to the $X$ variable multiplied by the given population parameter for $X$.  
   
-{{< embed notebooks/mak_tables.qmd#tbl-dictionary >}}  
+`{{< embed notebooks/mak_tables.qmd#tbl-dictionary >}}` 
   
   The crossing of all levels of each variable resulted in 540 unique research settings. We ran 40,000 simulations for each unique setting using the Center for High Throughput Computing (CHTC) at the University of Wisconsin, Madison. A seed was set for each simulation ran for the purpose of reproducibility. Within each simulation, the scripts first generated a unique dataset based on the variables and process discussed. Then, a linear model was fit according to each of the nine aforementioned methods for covariate selection. Finally, the results from these models were saved. These results include the corresponding parameter estimate, standard error, and p-value for $X$ from the linear model. The numerator and denominator degrees of freedom were also extracted from the model. We calculated true positive rates and false positive rates to identify the rates at which the different methods correctly selected covariates that did relate to $Y$ and incorrectly selected covariates that did not relate to $Y$, respectively.   
 
@@ -67,33 +67,33 @@ This is how you cite a paper using the bibtex key in Zotero [@simmonsFalsepositi
 
   We begin by considering the condition with a zero $X$ effect. In this case, we set the population parameter for $X$ to be zero (i.e., $b_x = 0$), so that any significant result found is a Type I error. The first comparison will look at selection method overall, across all research settings. In this figure [@typeI-bar], the proportion of significant effects -- the Type I error -- is calculated and displayed. 
 
-{{< embed notebooks/mak_figures.qmd#fig-typeI-bar >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeI-bar >}}`
 
 From this bar plot, we see that the p-hacking method for selecting covariates leads to highly inflated Type I error rates. In the remaining figures in this section, we will continue to see this inflation from p-hacking. Most of the approaches are at the expected 0.05 mark, while the partial correlation approach shows slight inflation, with the LASSO and full linear models showing further inflation of Type I error.
 
 We will now present the Type I error rates of each method for the different levels of the number of observations in a sample.
 
-{{< embed notebooks/mak_figures.qmd#fig-typeI-nobs >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeI-nobs >}}`
 
 For smaller sample sizes, we see that partial correlation, LASSO, and full lm perform worse than the other methods, but they all become comparable as sample size increases.
 
 When comparing across the number of covariates, this is not necessarily the number of covariates included in the final model, but the amount of available ones.
 
-{{< embed notebooks/mak_figures.qmd#fig-typeI-ncovs >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeI-ncovs >}}`
 
 There is a slight increase for full lm and LASSO as the number of covariates increases, while the other methods stay around 0.05.
 
-{{< embed notebooks/mak_figures.qmd#fig-typeI-pgoodcovs >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeI-pgoodcovs >}}`
 
 Most of the methods remain stagnant across the different percentages, except LASSO decreases slightly and full lm increases as the percentage of good covariates increases.
 
 The correlation among the good covariates did not vary, so only the $Y$-covariate correlation will be compared.
 
-{{< embed notebooks/mak_figures.qmd#fig-typeI-rycov >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeI-rycov >}}`
 
 All of the methods did not see a great change in Type I error as the correlation increased. 
 
-{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-0 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-0 >}}`
 
 This distribution highlights another negative consequence of p-hacking. In addition to inflation of Type I error rates, it biases the parameter estimates. While its distribution is centered around zero, it has a bimodel distribution, emphasizing how it biases the estimates. The remaining distributions are centered around zero. The no covariates approach has the widest distribution, showing that is has more variability in its estimate.
 
@@ -101,29 +101,29 @@ This distribution highlights another negative consequence of p-hacking. In addit
 
   We continue on to consider conditions with a nonzero $X$ effect. Here, we tested two nonzero values for the population parameter for $X$, 0.3 and 0.5 (i.e., $b_x = 0.3$ and $b_x = 0.5$). In this case, any non-significant result found is a Type II error. 
 
-{{< embed notebooks/mak_figures.qmd#fig-typeII-bar-03 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeII-bar-03 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-typeII-bar-05 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeII-bar-05 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-typeII-nobs-03 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeII-nobs-03 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-typeII-nobs-05 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeII-nobs-05 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-typeII-ncovs-03 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeII-ncovs-03 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-typeII-ncovs-05 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeII-ncovs-05 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-typeII-pgoodcovs-03 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeII-pgoodcovs-03 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-typeII-pgoodcovs-05 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeII-pgoodcovs-05 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-typeII-rycov-03 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeII-rycov-03 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-typeII-rycov-05 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-typeII-rycov-05 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-03 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-03 >}}`
 
-{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-05 >}}
+`{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-05 >}}`
 
 
 # Discussion
