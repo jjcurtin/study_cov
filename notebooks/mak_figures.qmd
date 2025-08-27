@@ -123,6 +123,7 @@ d_05 <- d_05 |>
 
 ```{r}
 #| label: fig-typeI-bar
+#| fig-cap: "Type I Error by Method"
 
 type_I_summary <- d_0 |>
   group_by(method) |>
@@ -134,8 +135,7 @@ type_I_summary |>
   geom_bar(stat = "identity") +
   geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
   geom_text(aes(label = sprintf("%.3f", type_I)), vjust = -0.5) +
-  labs(title = "Type I error by method",
-       x = "Method",
+  labs(x = "Method",
        y = "Type I Error",
        fill = "Method") +
   scale_y_continuous(limits = c(0, max(type_I_summary$type_I) * 1.2), 
@@ -149,6 +149,7 @@ type_I_summary |>
 
 ```{r}
 #| label: fig-typeI-nobs
+#| fig-cap: "Type I Error by Number of Observations"
 
 d_0 |> 
   group_by(method, n_obs) |> 
@@ -159,8 +160,8 @@ d_0 |>
   geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
   scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
   scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20)) +
-  labs(y = "Type I error",
-       title = "Type I error by n_obs") +
+  labs(x = "Number of Observations",
+       y = "Type I Error") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -168,6 +169,7 @@ d_0 |>
 
 ```{r}
 #| label: fig-typeI-ncovs
+#| fig-cap: "Type I Error by Number of Covariates"
 
 d_0 |> 
   group_by(method, n_covs) |> 
@@ -178,8 +180,8 @@ d_0 |>
   geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
   scale_x_continuous(breaks = c(4, 8, 12, 16, 20)) +
   scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25)) +
-  labs(y = "Type I error",
-       title = "Type I error by n_covs") +
+  labs(y = "Type I Error",
+       x = "Number of Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -187,6 +189,7 @@ d_0 |>
 
 ```{r}
 #| label: fig-typeI-pgoodcovs
+#| fig-cap: "Type I Error by Proportion of Good Covariates"
 
 d_0 |> 
   group_by(method, p_good_covs) |> 
@@ -197,8 +200,8 @@ d_0 |>
   geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
   scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
   scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20)) +
-  labs(y = "Type I error",
-       title = "Type I error by p_good_covs") +
+  labs(y = "Type I Error",
+       x = "Proportion of Good Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -206,6 +209,7 @@ d_0 |>
 
 ```{r}
 #| label: fig-typeI-rycov
+#| fig-cap: "Type I Error by Y-Covariate Correlation"
 
 d_0 |> 
   group_by(method, r_ycov) |> 
@@ -216,8 +220,8 @@ d_0 |>
   geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
   scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25, 0.30)) +
-  labs(y = "Type I error",
-       title = "Type I error by y-cov correlation") +
+  labs(y = "Type I Error",
+       x = "Y-Covariate Correlation") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -225,13 +229,15 @@ d_0 |>
 
 ```{r}
 #| label: fig-distribution-bx-0
+#| fig-cap: "Sampling Distribution for b_x=0 Estimate"
 
 d_0 |> 
   ggplot(aes(x = estimate, color = method, linetype = method)) +
   geom_density(alpha = 0.5) +
   geom_vline(xintercept = 0, linetype = "dotted", color = "black") +
   scale_x_continuous(limits = c(-0.5, 0.5), breaks = seq(-0.5, 0.5, by = 0.5)) +
-  labs(title = "Sampling Distribution for b_x = 0") +
+  labs(y = "Density",
+       x = "Estimate") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -239,6 +245,7 @@ d_0 |>
 
 ```{r}
 #| label: fig-typeII-bar-03
+#| fig-cap: "Type II Error by Method, b_x=0.3"
 
 type_II_summary_03 <- d_03 |>
   filter(method != "p_hacked") |> 
@@ -249,8 +256,7 @@ type_II_summary_03 |>
 ggplot(aes(x = method, y = type_II, fill = method)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label = sprintf("%.3f", type_II)), vjust = -0.5) +
-  labs(title = "Type II error by method, b_x = 0.3",
-       x = "Method",
+  labs(x = "Method",
        y = "Type II Error",
        fill = "Method") +
   scale_y_continuous(limits = c(0, max(type_II_summary_03$type_II) * 1.2), 
@@ -264,6 +270,7 @@ ggplot(aes(x = method, y = type_II, fill = method)) +
 
 ```{r}
 #| label: fig-typeII-bar-05
+#| fig-cap: "Type II Error by Method, b_x=0.5"
 
 type_II_summary_05 <- d_05 |>
   filter(method != "p_hacked") |> 
@@ -274,8 +281,7 @@ type_II_summary_05 |>
 ggplot(aes(x = method, y = type_II, fill = method)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label = sprintf("%.3f", type_II)), vjust = -0.5) +
-  labs(title = "Type II error by method, b_x = 0.5",
-       x = "Method",
+  labs(x = "Method",
        y = "Type II Error",
        fill = "Method") +
   scale_y_continuous(limits = c(0, max(type_II_summary_05$type_II) * 1.2), 
@@ -289,6 +295,7 @@ ggplot(aes(x = method, y = type_II, fill = method)) +
 
 ```{r}
 #| label: fig-typeII-nobs-03
+#| fig-cap: "Type II Error by Number of Observations, b_x=0.3"
 
 d_03 |> 
   filter(method != "p_hacked") |> 
@@ -298,8 +305,8 @@ d_03 |>
   ggplot(aes(x = n_obs, y = prop_not_sig, color = method, linetype = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
-  labs(y = "Type II error",
-       title = "Type II error by n_obs, b_x = 0.3") +
+  labs(y = "Type II Error",
+       x = "Number of Observations") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -307,6 +314,7 @@ d_03 |>
 
 ```{r}
 #| label: fig-typeII-nobs-05
+#| fig-cap: "Type II Error by Number of Observations, b_x=0.5"
 
 d_05 |> 
   filter(method != "p_hacked") |>
@@ -316,8 +324,8 @@ d_05 |>
   ggplot(aes(x = n_obs, y = prop_not_sig, color = method, linetype = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
-  labs(y = "Type II error",
-       title = "Type II error by n_obs, b_x = 0.5") +
+  labs(y = "Type II Error",
+       x = "Number of Observations") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -325,6 +333,7 @@ d_05 |>
 
 ```{r}
 #| label: fig-typeII-ncovs-03
+#| fig-cap: "Type II Error by Number of Covariates, b_x=0.3"
 
 d_03 |> 
   filter(method != "p_hacked") |> 
@@ -334,8 +343,8 @@ d_03 |>
   ggplot(aes(x = n_covs, y = prop_not_sig, color = method, linetype = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(4, 8, 12, 16, 20)) +
-  labs(y = "Type II error",
-       title = "Type II error by n_covs, b_x = 0.3") +
+  labs(y = "Type II Error",
+       x = "Number of Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -343,6 +352,7 @@ d_03 |>
 
 ```{r}
 #| label: fig-typeII-ncovs-05
+#| fig-cap: "Type II Error by Number of Covariates, b_x=0.5"
 
 d_05 |> 
   filter(method != "p_hacked") |> 
@@ -352,8 +362,8 @@ d_05 |>
   ggplot(aes(x = n_covs, y = prop_not_sig, color = method, linetype = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(4, 8, 12, 16, 20)) +
-  labs(y = "Type II error",
-       title = "Type II error by n_covs, b_x = 0.5") +
+  labs(y = "Type II Error",
+       x = "Number of Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -361,6 +371,7 @@ d_05 |>
 
 ```{r}
 #| label: fig-typeII-pgoodcovs-03
+#| fig-cap: "Type II Error by Proportion of Good Covariates, b_x=0.3"
 
 d_03 |> 
   filter(method != "p_hacked") |> 
@@ -370,8 +381,8 @@ d_03 |>
   ggplot(aes(x = p_good_covs, y = prop_not_sig, color = method, linetype = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
-  labs(y = "Type II error",
-       title = "Type II error by p_good_covs, b_x = 0.3") +
+  labs(y = "Type II Error",
+       x = "Proportion of Good Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -379,6 +390,7 @@ d_03 |>
 
 ```{r}
 #| label: fig-typeII-pgoodcovs-05
+#| fig-cap: "Type II Error by Proportion of Good Covariates, b_x=0.5"
 
 d_05 |> 
   filter(method != "p_hacked") |> 
@@ -388,8 +400,8 @@ d_05 |>
   ggplot(aes(x = p_good_covs, y = prop_not_sig, color = method, linetype = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
-  labs(y = "Type II error",
-       title = "Type II error by p_good_covs, b_x = 0.5") +
+  labs(y = "Type II Error",
+       x = "Proportion of Good Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -397,6 +409,7 @@ d_05 |>
 
 ```{r}
 #| label: fig-typeII-rycov-03
+#| fig-cap: "Type II Error by Y-Covariate Correlation, b_x=0.3"
 
 d_03 |> 
   filter(method != "p_hacked") |> 
@@ -406,8 +419,8 @@ d_03 |>
   ggplot(aes(x = r_ycov, y = prop_not_sig, color = method, linetype = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
-  labs(y = "Type II error",
-       title = "Type II error by y-cov correlation, b_x = 0.3") +
+  labs(y = "Type II Error",
+       x = "Y-Covariate Correlation") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -415,6 +428,7 @@ d_03 |>
 
 ```{r}
 #| label: fig-typeII-rycov-05
+#| fig-cap: "Type II Error by Y-Covariate Correlation, b_x=0.5"
 
 d_05 |> 
   filter(method != "p_hacked") |> 
@@ -424,8 +438,8 @@ d_05 |>
   ggplot(aes(x = r_ycov, y = prop_not_sig, color = method, linetype = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
-  labs(y = "Type II error",
-       title = "Type II error by y-cov correlation, b_x = 0.5") +
+  labs(y = "Type II Error",
+       x = "Y-Covariate Correlation") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -433,6 +447,7 @@ d_05 |>
 
 ```{r}
 #| label: fig-distribution-bx-03
+#| fig-cap: "Sampling Distribution for b_x=0.3 Estimate"
 
 d_03 |> 
   filter(method != "p_hacked") |> 
@@ -440,7 +455,8 @@ d_03 |>
   geom_density(alpha = 0.5) +
   geom_vline(xintercept = 0.3, linetype = "dotted") +
   scale_x_continuous(limits = c(-0.2, 0.8), breaks = c(0, 0.3, 0.6)) +
-  labs(title = "Sampling Distribution for b_x = 0.3") +
+  labs(y = "Density",
+       x = "Estimate") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -448,6 +464,7 @@ d_03 |>
 
 ```{r}
 #| label: fig-distribution-bx-05
+#| fig-cap: "Sampling Distribution for b_x=0.5 Estimate"
 
 d_05 |> 
   filter(method != "p_hacked") |> 
@@ -455,7 +472,8 @@ d_05 |>
   geom_density(alpha = 0.5) +
   geom_vline(xintercept = 0.5, linetype = "dotted") +
   scale_x_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) +
-  labs(title = "Sampling Distribution for b_x = 0.5") + 
+  labs(y = "Density",
+       x = "Estimate") + 
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 

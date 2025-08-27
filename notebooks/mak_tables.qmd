@@ -50,6 +50,7 @@ options(digits = 3)
 
 ```{r}
 #| label: tbl-dictionary
+#| tbl-cap: "Data Dictionary"
 
 data_tbl0 <- tibble(
   variable = c("b_x", "n_obs", "n_covs", "r_ycov", "p_good_covs", "r_cov"),
