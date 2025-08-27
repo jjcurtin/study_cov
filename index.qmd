@@ -25,15 +25,20 @@ editor_options:
 ---
 
 # Introduction
-This is how you cite a paper using the bibtex key in Zotero [@simmonsFalsepositivePsychologyUndisclosed2011].
 
-  In Psychology research, we often use linear regression models to test if a focal variable has a significant effect on an outcome variable of interest. While we could fit a model regressing our dependent variable only on our independent variable, it would benefit us to include covariates. Covariates are variables that are not focal independent variables, but are added to a model to increase power and precision. Statistical power is the ability to find a significant effect when one truly does exist. Studies with low power do not replicate well (replication crisis). 
+  Linear regression models are a commonly used tool in the field of Psychology for researchers to test hypotheses. Namely, to test if a focal variable has a significant effect on an outcome variable of interest.
   
-  For the purposes of this paper, consider the case where our focal variable ($X$) is an experimental manipulation. In this context, covariates are baseline measures taken before the manipulation and are therefore uncorrelated with the manipulation. They increase power to detect effects of the manipulated variable of focus. For example, if researchers were interested in testing the effects of a new treatment technique on depression, variables such as age, sex, gender identity, socioeconomic status, and education could be measured at baseline. This would increase power to find if there is a true significant effect of the new treatment. The increase in power comes from a reduction in the error of the model. Covariates reduce the standard error of the $X$ effect which yields a more precise parameter estimate. 
+  While a simple model could be fit regressing the dependent variable solely on the focal variable, model performance can be improved by adding covariates. Covariates are variables that do not have focal hypotheses, but are added to increase statistical power and model precision of the focal parameter estimate. 
   
-  The prevalence of possible covariates to measure in the field of Psychology is high. Ideally, only the "good" covariates should be included in statistical models. By "good" we mean a couple of things: we want variables that are uncorrelated with the focal IV and variables that explain variance in the outcome. Again, in experimental work, variables measured at baseline are not correlated with the manipulated variable.
+  Statistical power is the ability to find a significant effect when one truly does exist. Studies with low power do not replicate well, which led to a replication crisis and an increased awareness of false-positive results. Including covariates increases detection of true effects of the manipulated variable of focus. For example, if researchers were testing the effects of a new treatment technique on depression, variables such as age, sex, gender identity, socioeconomic status, and education could be measured at baseline and included in the model as covariates. This would increase power to find if there is a true significant effect of the new treatment on depression. This increase in power comes from a reduction in the error of the model as covariates account for more unexplained variance in the outcome. This reduces the standard error of the $X$ effect which yields a more precise parameter estimate. 
   
-  Collecting data on many covariates is the simple part, but then selecting which covariates to include in models is less simple. Some measured covariates may be redundant (i.e., explain overlapping variance in the outcome) or are not related to the outcome. (p-hacking history).  
+  The prevalence of possible covariates to measure in the field of Psychology is high, making it difficult for researchers to know how many and which ones to add to a model. Ideally, only the "good" covariates should be included in statistical models. "Good" covariates are uncorrelated with the focal independent variable and explain variance in the outcome. In experimental work, covariates are measured at baseline before the manipulation and are, therefore, not correlated with the manipulated variable, so the first part is satisfied. The second part is less trivial and needs further exploration. 
+  
+  Collecting data on many covariates can be simple, but selecting which covariates to include in linear models is less so. Some measured covariates may be redundant as they explain overlapping variance in the outcome or they may not be related to the outcome at all. How can researchers decide which covariates to add to their models? 
+  
+  Previously, it was common practice to test multiple statistical analyses until statistical significance was reached with only the significant result being reported [@simmonsFalsepositivePsychologyUndisclosed2011]. This repeated testing and selective reporting of significant results came to be known as p-hacking [@urisimonsohnPCurveEffectSize2014]. This led to an increase in "false-positive psychology" where researchers were finding significant effects that did not truly exist. This was motivated by two factors: an inherent publication bias of journals to only publish significant results, leading to researchers striving to reach this result and an ambiguity in decision-making [@simmonsFalsepositivePsychologyUndisclosed2011]. Researchers have various decisions such as sample size of the study, handling of outliers, and including covariates in linear models. There are not always clear guidelines on how to make these decisions.
+  
+  Our research aims to provide clear and accessible methods for researchers to use to select among a set of collected covariates to include in a linear model in order to increase their ability to find a true significant effect. We replicate that p-hacking is not a statistically valid method and propose eight other methods for selecting covariates. The methods are tested and compared in systematically varied research settings accounting for different effect sizes, sample sizes, amounts of available covariates, proportions of good covariates, and correlations. The methods are compared by their Type I error rates (the probability of rejecting the null hypothesis when no effect exists) and Type II error rates (the probability of failing to reject the null hypothesis when an effect does exist).
 
 # Method
 
@@ -69,26 +74,27 @@ This is how you cite a paper using the bibtex key in Zotero [@simmonsFalsepositi
 
 ## Simulations
 
-  The crossing of all levels of each variable resulted in 540 unique research settings. We ran 40,000 simulations for each unique setting using the Center for High Throughput Computing (CHTC) at the University of Wisconsin, Madison. A seed was set for each simulation for the purpose of reproducibility. Within each simulation, the scripts first generated a unique dataset based on the variables and process discussed. Then, a linear model was fit according to each of the nine aforementioned methods for covariate selection. Finally, the results from these models were saved. These results include the corresponding parameter estimate, standard error, and p-value for $X$ from the linear model. The numerator and denominator degrees of freedom were also extracted from the model. We calculated true positive rates and false positive rates to identify the rates at which the different methods correctly selected covariates that did relate to $Y$ and incorrectly selected covariates that did not relate to $Y$, respectively.   
+  The crossing of all levels of each variable resulted in 540 unique research settings. We ran 40,000 simulations for each unique setting using the Center for High Throughput Computing (CHTC) at the University of Wisconsin, Madison [@chtc]. A seed was set for each simulation for the purpose of reproducibility. Within each simulation, the scripts first generated a unique dataset based on the variables and process discussed. Then, a linear model was fit according to each of the nine aforementioned methods for covariate selection. Finally, the results from these models were saved to a dataframe. 
+  
+  These results include the corresponding parameter estimate, standard error, and p-value for $X$ from the linear model. The numerator and denominator degrees of freedom were also extracted from the model. We calculated true positive rates and false positive rates to identify the rates at which the different methods correctly selected covariates that did relate to $Y$ and incorrectly selected covariates that did not relate to $Y$, respectively.   
 
 ## Data Analysis 
 
+  The nine methods will be compared in two separate conditions - zero and nonzero $X$ effects. In the former condition, the Type I error will be compared and in the latter condition, the Type II error will be compared. For both error rates, the overall error of each method will be considered in addition to examining the error at different levels of the research context variables. The sampling distributions of the parameter estimates for $X$ will also be presented.
 
 # Results
 
-  The product of the sizes of the unique research settings (540), simulations (40,000), and methods (9) yielded a total of 194,400,000 observations. 
+  The product of the sizes of the unique research settings (540), simulations (40,000), and methods (9) yielded a total of 194,400,000 observations. The data contained 16 columns, six of which were the variables indicating the research setting (see [@tbl-dictionary]) and one indicating the selection method applied. Five columns were values extracted from the linear model output: the  parameter estimate, standard error, and p-value for $X$ and the numerator and denominator degrees of freedom of the model. The true and false positive rates were also calculated. The remaining two columns held information about the simulations we were running including the job number and identification number of the simulation; these two columns were not part of the data analysis. 
 
-  The results will be considered first by the zero $X$ effect followed by the nonzero $X$ effects. The Type I and Type II errors will be compared across methods and across levels of research setting variables. Note that for the line plots throughout this report, a solid line will indicate a method that does not involve performing selection of covariates (i.e., using no or all covariates). A dashed line will indicate a method that does involve performing a non-trivial selection of covariates. A dotted black line will indicate the expected value (if applicable). For example, there will be a dotted line at $\alpha = 0.05$, the signifance level considered here and hence, the expected Type I error rate.
+  The results will be considered first by the zero $X$ effect followed by the nonzero $X$ effects. The Type I and Type II errors will be compared across methods and across levels of research setting variables. Figures will be used to visualize the error rates, but tables providing the minimum, maximum, and average error can be found in the Supplemental Material section. Note that for the line plots throughout this report, a solid line will indicate a method that does not involve performing selection of covariates (i.e., using no or all covariates). A dashed line will indicate a method that does involve performing a non-trivial selection of covariates. A dotted black line will indicate the expected value (if applicable). For example, there will be a dotted line at $\alpha = 0.05$, the signifance level considered here and hence, the expected Type I error rate.
 
 ## Type I Error
 
-  In the case of a zero $X$ effect, we set the population parameter for $X$ to be zero (i.e., $b_x = 0$), so that any significant result found is a Type I error. The first comparison will look at selection method overall, aggregated across all research settings. In Figure [@typeI-bar], the proportion of significant effects -- the Type I error -- is calculated and displayed. 
+  In the case of a zero $X$ effect, we set the population parameter for $X$ to be zero (i.e., $b_x = 0$), so that any significant result found is a Type I error. The first comparison will look at selection method overall, aggregated across all research settings. In Figure [@typeI-bar], the average proportion of significant effects -- the Type I error -- is calculated and displayed. Refer to the Supplemental Material section to see the distribution of Type I error of each method.
 
 {{< embed notebooks/mak_figures.qmd#fig-typeI-bar >}}
 
 Previous findings are replicated that using p-hacking for selecting covariates leads to a highly inflated Type I error rate (0.198). The p-hacked model consistently shows high Type I error, as is evident in the remaining figures in this section. Most methods are at the expected 0.050 mark, while the partial correlation approach shows slight inflation (0.052), with both LASSO and full linear model showing further inflation (0.057 and 0.060, respectively). These eight methods (excluding p-hacking) can be considered statistically valid as they show little to no inflation of Type I error rates.  
-
-*supplemental material*
 
 ### By Research Settings
 
@@ -120,19 +126,17 @@ All of the valid methods did not see a great change in Type I error as the corre
 
 ## Parameter Estimates
 
-*supplemental material*
-
-As mentioned, this section considers a population parameter of $X$ set to zero. Figure [@fig-distribution-bx-0] shows the sampling distribution for the parameter estimate of $X$ for all nine methods.
+As mentioned, this section considers a population parameter of $X$ set to zero. Figure [@fig-distribution-bx-0] shows the sampling distribution for the parameter estimate of $X$ for all nine methods. For further information about the average estimate, see the table in the Supplemental Material section. This table also displays the standard deviation of the estimates from the linear model, the average standard error of the model, and their difference. The standard error of the sampling distribution is expected to match the standard error of the parameter estimates. The table shows a large difference in these values for the p-hacked method and slight differences for LASSO, full linear model, and partial correlation approaches.
 
 {{< embed notebooks/mak_figures.qmd#fig-distribution-bx-0 >}}
 
-This distribution highlights another negative consequence of p-hacking. In addition to inflation of Type I error rates, it biases the parameter estimates. While it is centered around zero, its bimodal distribution emphasizes how it biases the estimates. The remaining distributions are centered around zero. The model fit with no covariates has the widest distribution, indicating greater variability in its estimate for the $X$ effect.
+This distribution highlights another negative consequence of p-hacking. While its distribution is still centered around zero, it is not normally distributed around zero, emphasizing a biasing of the parameter estimates. The remaining distributions are centered around zero. The model fit with no covariates has the widest distribution, indicating greater variability in its estimate for the $X$ effect.
 
 ## Type II Error
 
 In the case of a nonzero $X$ effect, we tested two values for the population parameter for $X$, 0.3 and 0.5 (i.e., $b_x=0.3, b_x=0.5$), so that any non-significant result found is a Type II error. There is no benchmark of expected Type II error as there was for Type I, so the stronger methods will be those with lower Type II error (implying greater statistical power). As the p-hacked method was established as a method that is not statistically valid, it will not be considered in comparisons of Type II error.
 
-The first comparison will look at selection method overall, aggregated across all research settings, for both effect sizes. In Figure [@typeII-bar-03] and Figure [@typeII-bar-05], the proportion of non-significant effects -- the Type II error -- is calculated and displayed. 
+The first comparison will look at selection method overall, aggregated across all research settings, for both effect sizes. In Figure [@typeII-bar-03] and Figure [@typeII-bar-05], the proportion of non-significant effects -- the Type II error -- is calculated and displayed. See the Supplemental Material section for the distributions of Type II error of each valid method.
 
 {{< embed notebooks/mak_figures.qmd#fig-typeII-bar-03 >}}
 
@@ -176,7 +180,7 @@ All methods (excluding the no covariates approach) show similar decreasing trend
 
 ## Parameter Estimates
 
-As mentioned, this section considers two population parameters of $X$ set to 0.3 and 0.5 Figure [@fig-distribution-bx-03] and Figure [@fig-distribution-bx-05] show the sampling distributions for the parameter estimate of $X$ for all eight methods.
+As mentioned, this section considers two population parameters of $X$ set to 0.3 and 0.5 Figure [@fig-distribution-bx-03] and Figure [@fig-distribution-bx-05] show the sampling distributions for the parameter estimate of $X$ for all eight methods. See the tables in the Supplemental Material section for more information about the average estimates, the standard deviation of the estimates, and the average standard error of the model for both 0.3 and 0.5 effect sizes. The tables show that the bivariate correlation, full linear model without $X$, and LASSO without $X$ approaches slightly underestimate the parameter estimate. 
 
 {{< embed notebooks/mak_figures.qmd#fig-distribution-bx-03 >}}
 
@@ -186,9 +190,9 @@ Both distributions show parameter estimates centered around the population value
 
 # Discussion
 
-This paper seeks to empirically compare methods for covariate selection in linear models. R scripts were used to generate data, fit linear models, and extract and visualize model results. The data generation process was based on full crossings of levels of variables which were chosen to represent common research settings in Psychology. Within each research setting, a unique dataset was simulated 40,000 times, with each dataset being used to fit the nine models and save the results. Simulations were ran using high-throughput computing.
+This present study sought to empirically compare methods for covariate selection in linear models. R scripts were used to generate data, fit linear models, and extract and visualize model results. The data generation process was based on full crossings of levels of variables which were chosen to represent common research settings in Psychology. Within each research setting, a unique dataset was simulated 40,000 times using high-throughput computing, with each dataset being used to fit models according to the nine methods discussed.
 
-The first step in evaluating the nine methods, was to establish which methods are statistically valid (i.e., have a Type I error rate of 0.05). We replicated previous findings that p-hacking is not a statistically valid method as it yielded inflated Type I error rates and also yielded biased parameter estimates. The remaining eight methods were found to be statistically valid, with LASSO and full linear model showing some inflation. 
+The first step in evaluating the nine methods, was to establish which methods are statistically valid (i.e., have a Type I error rate of 0.05). We replicated previous findings that p-hacking is not a statistically valid method as it yielded inflated Type I error rates and biased parameter estimates. The remaining eight methods were found to be statistically valid, although LASSO and full linear model show slight inflation. 
 
 With this established, the methods could be further compared by their Type II error rates. Lower Type II error can also be considered as higher statistical power. Including all covariates in a model shows a large reduction in Type II error compared to including no covariates in a model. Thus, researchers are encouraged to measure and use covariates. From there, performing a selection of covariates yields further reductions in Type II error compared to simply using all covariates. Overall, LASSO, partial correlation, and bivariate correlation resulted in the lowest Type II errors. However, there are more factors to take into consideration.
 
