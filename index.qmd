@@ -109,12 +109,12 @@ For research settings where the population parameter for *X* is 0 (i.e., *X* has
 
 ## Type I Error
 
-Since this is simulation study, we were able to set the true population parameter for *X* to be zero (i.e., $b_x = 0$). Therefore, any significant result found was a Type I error. @fig-typeI-bar shows the average type I error rate across all research settings for each method. The p-hacking method for selecting covariates, unsurprisingly led to a highly inflated Type I error rate, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives. Most other methods remained around the expected .05 threshold. There was some elevation in type I errors for methods that controlled for *X* compared to those, however, it is not clear that these differences are substantial.
+Since this is simulation study, we were able to set the true population parameter for *X* to be zero (i.e., $b_x = 0$). Therefore, any significant result found was a Type I error. @fig-bar-1 shows the average type I error rate across all research settings for each method. The p-hacking method for selecting covariates, unsurprisingly led to a highly inflated Type I error rate, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives. Most other methods remained around the expected .05 threshold. There was some elevation in type I errors for methods that controlled for *X* compared to those, however, it is not clear that these differences are substantial.
 
-{{< embed notebooks/mak_figures.qmd#fig-typeI-bar >}}
+{{< embed notebooks/mak_figures.qmd#fig-bar-1 >}}
 
 
-We assessed Type I error by individual research setting and found several patterns emerged (@fig-type1-panel). First, small sample sizes are more susceptible to inflated Type I error rates when using covariate selection methods that control for *X*. As sample sizes get larger (i.e., *n* = 300), the methods become comparable. Second, as the number of available covariates to select from increases, type I error rate increases for covariate selection methods that control for *X*, such as a full linear model with *X* and LASSO with *X*, and to a lesser degree partial correlation. Third, there appeared to be no definitive pattern in type I error rate as the proportion of good covariates increased<!--maybe error of LASSO decreases slightly and error of full linear model increases?-->. Similarly we did not see changes in type I error rate as function of the correlation strength between covariates and *Y*.
+We assessed Type I error by individual research setting and found several patterns (@fig-type1-panel). First, small sample sizes are more susceptible to inflated Type I error rates when using covariate selection methods that control for *X*. As sample sizes get larger (i.e., *n* = 300), the methods become comparable. Second, as the number of available covariates to select from increases, type I error rate increases for covariate selection methods that control for *X*, such as a full linear model with *X* and LASSO with *X*, and to a lesser degree partial correlation. Third, there appeared to be no definitive pattern in type I error rate as the proportion of good covariates increased<!--maybe error of LASSO decreases slightly and error of full linear model increases?-->. Similarly we did not see changes in type I error rate as function of the correlation strength between covariates and *Y*.
 
 {{< embed notebooks/mak_figures.qmd#fig-type1-panel >}}
 
@@ -123,39 +123,25 @@ We assessed Type I error by individual research setting and found several patter
 
 ## Type II Error
 
-We simulated datasets with two possible population parameters for the effect of *X* on *Y* ($b_x = 0.3$, $b_x = 0.5$). Any non-significant result found indicated a Type II error. Stronger statistical methods will have lower Type II error (implying greater statistical power). Since we demonstrated that p-hacking substantially inflates Type I error, making it a statistically invalid method for covariate selection, we do not evaluate Type II Error for this method. @fig-typeII-bar shows the average type II error rate across all research settings for each method. 
+We simulated datasets with two possible population parameters for the effect of *X* on *Y* ($b_x = 0.3$, $b_x = 0.5$). Any non-significant result found indicated a Type II error. Stronger statistical methods will have lower Type II error (implying greater statistical power). Since we demonstrated that p-hacking substantially inflates Type I error, making it a statistically invalid method for covariate selection, we do not evaluate Type II Error for this method. [@fig-bar-2] shows the average type II error rate across all research settings for each method. Using no covariates results in the highest Type II error highlighting the importance of covariates for detecting true effects. Type II error rates trended lower for covariate selection methods that controlled for *X* compared to those that did not control for *X*.
+
+{{< embed notebooks/mak_figures.qmd#fig-bar-2 >}}
+
+We also assessed Type II error by individual research setting (@fig-panel-2). Across all research setting, using no covariates was associated with higher Type II error.  Using all available covariates or selection methods that do not control for *X* performed had higher type II error rates compared to the other methods when sample sizes were low. This pattern was especially notable for using all covariates and a full linear model without *X*. As sample size increased, the methods performed comparably with respect to Type II error. Using all covariates or a full linear model without *X* for selection produced higher Type II error rates compared to other methods when there was a larger number of covariates available. The full linear model without *X* also produced higher Type II error rates, compared to other methods when the proportion of good covariates was higher.
 
 
-<!-- For both effect sizes, similar trends are shown. Fitting a model with no covariates results in the highest Type II error. When further examining the error rates within research settings, the no covariates approach will continue to yield the highest Type II error. There is a large reduction in error when all covariates are included in the model instead of no covariates. Additionally, performing selection of these covariates further reduces Type II error from simply including all covariates. -->
-
-{{< embed notebooks/mak_figures.qmd#fig-typeII-bar >}}
-
-<!-- At the smallest sample size, the methods differ in Type II error, with LASSO and partial correlation approaches yielding the lowest in both effect size cases. As sample size increases, the seven methods (excluding the no covariates method) tend to become indistinguishable. -->
-
-
-<!-- For the smallest number of covariates, the methods are comparable in Type II error, but for larger numbers of covariates, there is a larger gap in performance. As the number of covariates increases, LASSO begins to have the lowest Type II error, followed by the partial correlation and bivariate correlation approaches. Additionally, the method of including all covariates becomes out-performed by the selection methods. -->
-
-<!-- For higher proportions of good covariates, LASSO, partial correlation, and bivariate correlation have the lowest Type II error. -->
-
-
-<!-- All methods (excluding the no covariates approach) show similar decreasing trends in Type II error as the correlation between $Y$ and the good covariates increases. The differences between these methods are minimal. -->
-
-{{< embed notebooks/mak_figures.qmd#fig-typeII-panel>}}
+{{< embed notebooks/mak_figures.qmd#fig-panel-2 >}}
 
 
 
 
 ## Parameter Estimates
 
-As mentioned, this section considers a population parameter of *X* set to zero. Figure [@fig-distribution-bx] shows the sampling distribution for the parameter estimate of *X* for all nine methods. For further information about the average estimate, see the table in the Supplemental Material section. This table also displays the standard deviation of the estimates from the linear model, the average standard error of the model, and their difference. The standard error of the sampling distribution is expected to match the standard error of the parameter estimates. The table shows a large difference in these values for the p-hacked method and slight differences for LASSO, full linear model, and partial correlation approaches.
-
-This distribution highlights another negative consequence of p-hacking. While its distribution is still centered around zero, it is not normally distributed around zero, emphasizing a biasing of the parameter estimates. The remaining distributions are centered around zero. The model fit with no covariates has the widest distribution, indicating greater variability in its estimate for the $X$ effect.
-
-As mentioned, this section considers two population parameters of $X$ set to 0.3 and 0.5. Figure show the sampling distributions for the parameter estimate of $X$ for all eight methods. See the tables in the Supplemental Material section for more information about the average estimates, the standard deviation of the estimates, and the average standard error of the model for both 0.3 and 0.5 effect sizes. The tables show that the bivariate correlation, full linear model without $X$, and LASSO without $X$ approaches slightly underestimate the parameter estimate.
-
-Both distributions show parameter estimates centered around the population values. In both effect size cases, the method including no covariates has a wider distribution, and therefore, more variability in its parameter estimates.
+@fig-distribution-bx shows the sampling distribution for the parameter estimate of *X* for all nine methods separately by effect size ($b_x = 0$, $b_x = 0.3$, $b_x = 0.5$). Distributions for parameter estimates for all methods are centered around the true population values. Using no covariates produces a wider distribution, indicating more variability in its parameter estimates. The top plot also highlights an unusual feature of p-hacking. When there is no true effect the distribution appears bimodal due to the artificial inflation or deflation of parameter estimates that occurs when selecting covariates to obtain a significant p-value. 
 
 {{< embed notebooks/mak_figures.qmd#fig-distribution-bx >}}
+
+
 
 # Discussion
 

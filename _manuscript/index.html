@@ -9,7 +9,7 @@
 <meta name="author" content="Lauren Khoury">
 <meta name="author" content="Kendra Wyant">
 <meta name="author" content="John J. Curtin">
-<meta name="dcterms.date" content="2025-10-15">
+<meta name="dcterms.date" content="2025-10-16">
 
 <title>Evaluating Methods for Covariate Selection</title>
 <style>
@@ -97,10 +97,10 @@ window.Quarto = {
 <meta name="citation_author" content="Lauren Khoury">
 <meta name="citation_author" content="Kendra Wyant">
 <meta name="citation_author" content="John J. Curtin">
-<meta name="citation_publication_date" content="2025-10-15">
-<meta name="citation_cover_date" content="2025-10-15">
+<meta name="citation_publication_date" content="2025-10-16">
+<meta name="citation_cover_date" content="2025-10-16">
 <meta name="citation_year" content="2025">
-<meta name="citation_online_date" content="2025-10-15">
+<meta name="citation_online_date" content="2025-10-16">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Power failure: Why small sample size undermines the reliability of neuroscience;,citation_abstract=A study with low statistical power has a reduced chance of detecting a true effect, but it is less well appreciated that low power also reduces the likelihood that a statistically significant result reflects a true effect. Here, we show that the average statistical power of studies in the neurosciences is very low. The consequences of this include overestimates of effect size and low reproducibility of results. There are also ethical dimensions to this problem, as unreliable research is inefficient and wasteful. Improving reproducibility in neuroscience is a key priority and requires attention to well-established but often ignored methodological principles.;,citation_author=Katherine S. Button;,citation_author=John P. A. Ioannidis;,citation_author=Claire Mokrysz;,citation_author=Brian A. Nosek;,citation_author=Jonathan Flint;,citation_author=Emma S. J. Robinson;,citation_author=Marcus R. Munafò;,citation_publication_date=2013-05;,citation_cover_date=2013-05;,citation_year=2013;,citation_issue=5;,citation_doi=10.1038/nrn3475;,citation_issn=1471-003X;,citation_volume=14;,citation_language=en-US;,citation_journal_title=Nature Reviews Neuroscience;">
 <meta name="citation_reference" content="citation_title=Center for high throughput computing;,citation_author=Center for High Throughput Computing;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_doi=10.21231/GNT1-HW21;,citation_publisher=Center for High Throughput Computing;">
@@ -157,7 +157,7 @@ window.Quarto = {
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">October 15, 2025</p>
+              <p class="date">October 16, 2025</p>
             </div>
           </div>
           
@@ -202,10 +202,7 @@ window.Quarto = {
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
   <ul class="collapse">
   <li><a href="#type-i-error" id="toc-type-i-error" class="nav-link" data-scroll-target="#type-i-error">Type I Error</a></li>
-  <li><a href="#type-ii-error" id="toc-type-ii-error" class="nav-link" data-scroll-target="#type-ii-error">Type II Error</a>
-  <ul class="collapse">
-  <li><a href="#by-research-settings" id="toc-by-research-settings" class="nav-link" data-scroll-target="#by-research-settings">By Research Settings</a></li>
-  </ul></li>
+  <li><a href="#type-ii-error" id="toc-type-ii-error" class="nav-link" data-scroll-target="#type-ii-error">Type II Error</a></li>
   <li><a href="#parameter-estimates" id="toc-parameter-estimates" class="nav-link" data-scroll-target="#parameter-estimates">Parameter Estimates</a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
@@ -261,8 +258,7 @@ window.Quarto = {
 <h1>Methods</h1>
 <section id="covariate-selection-methods" class="level2">
 <h2 class="anchored" data-anchor-id="covariate-selection-methods">Covariate Selection Methods</h2>
-<!--Think of how we want to refer to the 9 methods, since they are not all covariate selection methods, maybe Regression Methods?-->
-<p>We evaluated nine linear regression models. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on the Pearson correlation coefficient (<em>r</em>), a full linear model, and LASSO, controlling for the focal manipulation (i.e., <em>X</em>) and without controlling for <em>X</em>. A summary of the nine models is presented in <a href="#tbl-methods" class="quarto-xref">Table&nbsp;1</a>.</p>
+<p>We evaluated nine linear regression models with varying levels and methods of covariate selection. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on the Pearson correlation coefficient (<em>r</em>), a full linear model, and LASSO, controlling for the focal manipulation (i.e., <em>X</em>) and without controlling for <em>X</em>. A summary of the nine models is presented in <a href="#tbl-methods" class="quarto-xref">Table&nbsp;1</a>.</p>
 <div class="quarto-embed-nb-cell">
 <div class="cell">
 <div id="tbl-methods" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -393,34 +389,34 @@ Table&nbsp;2: Research setting variables and values
 <h1>Results</h1>
 <section id="type-i-error" class="level2">
 <h2 class="anchored" data-anchor-id="type-i-error">Type I Error</h2>
-<p>Since this is simulation study, we were able to set the true population parameter for <em>X</em> to be zero (i.e., <span class="math inline">\(b_x = 0\)</span>). Therefore, any significant result found is a Type I error. <strong>?@fig-typeI-bar</strong> shows the average type I error rate across all research settings for each method. The p-hacking method for selecting covariates, unsurprisingly led to a highly inflated Type I error rate, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives. Most other methods remained around the expected .05 threshold. There was some elevation in type I errors for methods that controlled for <em>X</em> compared to those, however, it is not clear that these differences are substantial.</p>
+<p>Since this is simulation study, we were able to set the true population parameter for <em>X</em> to be zero (i.e., <span class="math inline">\(b_x = 0\)</span>). Therefore, any significant result found was a Type I error. <a href="#fig-bar-1" class="quarto-xref">Figure&nbsp;1</a> shows the average type I error rate across all research settings for each method. The p-hacking method for selecting covariates, unsurprisingly led to a highly inflated Type I error rate, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives. Most other methods remained around the expected .05 threshold. There was some elevation in type I errors for methods that controlled for <em>X</em> compared to those, however, it is not clear that these differences are substantial.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeI-bar" class="cell">
+<div id="cell-fig-bar-1" class="cell">
 <div class="cell-output cell-output-display">
-<div id="fig-typei-bar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-bar-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typei-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typei-bar-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. The horizontal dotted black line indicates expected Type 1 Error rate for an alpha = .05."><img src="index_files/figure-html/notebooks-mak_figures-fig-typei-bar-output-1.png" width="672" height="480" class="figure-img"></a>
+<div aria-describedby="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), p-hacking (crosshatch), selection without controlling for X (striped), selection controlling for X (dotted). The horizontal dotted black line indicates expected Type 1 Error rate for an alpha = .05."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typei-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. The horizontal dotted black line indicates expected Type 1 Error rate for an alpha = .05.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), p-hacking (crosshatch), selection without controlling for X (striped), selection controlling for X (dotted). The horizontal dotted black line indicates expected Type 1 Error rate for an alpha = .05.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<p>We assessed Type I error by individual research setting and found several patterns emerged (<a href="#fig-type1-panel" class="quarto-xref">Figure&nbsp;2</a>). First, small sample sizes are more susceptible to inflated Type I error rates when using covariate selection methods that control for <em>X</em>. As sample sizes get larger (i.e., <em>n</em> = 300), the methods become comparable. Second, as the number of available covariates to select from increases, type I error rate increases for covariate selection methods that control for <em>X</em>, such as a full linear model with <em>X</em> and LASSO with <em>X</em>, and to a lesser degree partial correlation. Third, there appeared to be no definitive pattern in type I error rate as the proportion of good covariates increased<!--maybe error of LASSO decreases slightly and error of full linear model increases?-->. Similarly we did not see changes in type I error rate as function of the correlation strength between covariates and <em>Y</em>.</p>
+<p>We assessed Type I error by individual research setting and found several patterns (<a href="#fig-type1-panel" class="quarto-xref">Figure&nbsp;2</a>). First, small sample sizes are more susceptible to inflated Type I error rates when using covariate selection methods that control for <em>X</em>. As sample sizes get larger (i.e., <em>n</em> = 300), the methods become comparable. Second, as the number of available covariates to select from increases, type I error rate increases for covariate selection methods that control for <em>X</em>, such as a full linear model with <em>X</em> and LASSO with <em>X</em>, and to a lesser degree partial correlation. Third, there appeared to be no definitive pattern in type I error rate as the proportion of good covariates increased<!--maybe error of LASSO decreases slightly and error of full linear model increases?-->. Similarly we did not see changes in type I error rate as function of the correlation strength between covariates and <em>Y</em>.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-type1-panel" class="cell" data-fig-height="8" data-fig-width="7">
+<div id="cell-fig-type1-panel" class="cell" data-fig-height="7" data-fig-width="8">
 <div class="cell-output cell-output-display">
-<div id="fig-type1-panel" class="quarto-float quarto-figure quarto-figure-center anchored" width="672" height="768">
+<div id="fig-type1-panel" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-type1-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-type1-panel-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: "><img src="index_files/figure-html/notebooks-mak_figures-fig-type1-panel-output-1.png" id="fig-type1-panel" width="672" height="768" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-type1-panel-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Type I error by method and research setting. Plots are paneled by aspects of the research setting (number of observations, number of covariates, proportioin of good covariates, and Y-covariate correlation strength). Methods are displayed separately by color. Methods with no covariate selection are depicted as solid lines. p-hacking is depicted as dashed line. Covariate selection methods that control for X are depicted as two dash lines. Covariate selection methods that do not control for X are depicted as long dash lines. The horizontal dotted black line depicts expected type I error rate for an alpha of 0.5."><img src="index_files/figure-html/notebooks-mak_figures-fig-type1-panel-output-1.png" width="768" height="672" class="figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-type1-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-type1-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Type I error by method and research setting. Plots are paneled by aspects of the research setting (number of observations, number of covariates, proportioin of good covariates, and Y-covariate correlation strength). Methods are displayed separately by color. Methods with no covariate selection are depicted as solid lines. p-hacking is depicted as dashed line. Covariate selection methods that control for X are depicted as two dash lines. Covariate selection methods that do not control for X are depicted as long dash lines. The horizontal dotted black line depicts expected type I error rate for an alpha of 0.5.
 </figcaption>
 </figure>
 </div>
@@ -430,235 +426,63 @@ Figure&nbsp;2
 </section>
 <section id="type-ii-error" class="level2">
 <h2 class="anchored" data-anchor-id="type-ii-error">Type II Error</h2>
-<p>In the case of a nonzero <span class="math inline">\(X\)</span> effect, we tested two values for the population parameter for <span class="math inline">\(X\)</span>, 0.3 and 0.5 (i.e., <span class="math inline">\(b_x=0.3, b_x=0.5\)</span>), so that any non-significant result found is a Type II error. There is no benchmark of expected Type II error as there was for Type I, so the stronger methods will be those with lower Type II error (implying greater statistical power). As the p-hacked method was established as a method that is not statistically valid, it will not be considered in comparisons of Type II error.</p>
-<p>The first comparison will look at selection method overall, aggregated across all research settings, for both effect sizes. In Figure <span class="citation" data-cites="typeII-bar-03">(<a href="#ref-typeII-bar-03" role="doc-biblioref"><strong>typeII-bar-03?</strong></a>)</span> and Figure <span class="citation" data-cites="typeII-bar-05">(<a href="#ref-typeII-bar-05" role="doc-biblioref"><strong>typeII-bar-05?</strong></a>)</span>, the proportion of non-significant effects – the Type II error – is calculated and displayed. See the Supplemental Material section for the distributions of Type II error of each valid method.</p>
+<p>We simulated datasets with two possible population parameters for the effect of <em>X</em> on <em>Y</em> (<span class="math inline">\(b_x = 0.3\)</span>, <span class="math inline">\(b_x = 0.5\)</span>). Any non-significant result found indicated a Type II error. Stronger statistical methods will have lower Type II error (implying greater statistical power). Since we demonstrated that p-hacking substantially inflates Type I error, making it a statistically invalid method for covariate selection, we do not evaluate Type II Error for this method. <a href="#fig-bar-2" class="quarto-xref">Figure&nbsp;3</a> shows the average type II error rate across all research settings for each method. Using no covariates results in the highest Type II error highlighting the importance of covariates for detecting true effects. Type II error rates trended lower for covariate selection methods that controlled for <em>X</em> compared to those that did not control for <em>X</em>.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-bar-03" class="cell">
+<div id="cell-fig-bar-2" class="cell">
 <div class="cell-output cell-output-display">
-<div id="fig-typeii-bar-03" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-bar-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-bar-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-bar-03-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method, b_x=0.3"><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-bar-03-output-1.png" width="672" height="480" class="figure-img"></a>
+<div aria-describedby="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), selection without controlling for X (striped), selection controlling for X (dotted)."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-bar-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Type II Error by Method, b_x=0.3
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), selection without controlling for X (striped), selection controlling for X (dotted).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
+<p>We also assessed Type II error by individual research setting (<a href="#fig-panel-2" class="quarto-xref">Figure&nbsp;4</a>). Across all research setting, using no covariates was associated with higher Type II error. Using all available covariates or selection methods that do not control for <em>X</em> performed had higher type II error rates compared to the other methods when sample sizes were low. This pattern was especially notable for using all covariates and a full linear model without <em>X</em>. As sample size increased, the methods performed comparably with respect to Type II error. Using all covariates or a full linear model without <em>X</em> for selection produced higher Type II error rates compared to other methods when there was a larger number of covariates available. The full linear model without <em>X</em> also produced higher Type II error rates, compared to other methods when the proportion of good covariates was higher.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-bar-05" class="cell">
+<div id="cell-fig-panel-2" class="cell" data-fig-height="8" data-fig-width="7.5">
 <div class="cell-output cell-output-display">
-<div id="fig-typeii-bar-05" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-panel-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-bar-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-bar-05-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Type II Error by Method, b_x=0.5"><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-bar-05-output-1.png" width="672" height="480" class="figure-img"></a>
+<div aria-describedby="fig-panel-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Type II error by method and research setting. Plots are paneled by aspects of the research setting (number of observations, number of covariates, proportioin of good covariates, Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Methods with no covariate selection are depicted as solid lines. Covariate selection methods that control for X are depicted as two dash lines. Covariate selection methods that do not control for X are depicted as long dash lines."><img src="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-1.png" width="720" height="768" class="figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-bar-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Type II Error by Method, b_x=0.5
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-panel-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Type II error by method and research setting. Plots are paneled by aspects of the research setting (number of observations, number of covariates, proportioin of good covariates, Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Methods with no covariate selection are depicted as solid lines. Covariate selection methods that control for X are depicted as two dash lines. Covariate selection methods that do not control for X are depicted as long dash lines.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<p>For both effect sizes, similar trends are shown. Fitting a model with no covariates results in the highest Type II error. When further examining the error rates within research settings, the no covariates approach will continue to yield the highest Type II error. There is a large reduction in error when all covariates are included in the model instead of no covariates. Additionally, performing selection of these covariates further reduces Type II error from simply including all covariates.</p>
-<section id="by-research-settings" class="level3">
-<h3 class="anchored" data-anchor-id="by-research-settings">By Research Settings</h3>
-<p>Figure <strong>?@fig-typeII-nobs-03</strong> and Figure <strong>?@fig-typeII-nobs-05</strong> display the change in Type II error as the number of observations in a sample increases for all eight methods.</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-nobs-03" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-typeii-nobs-03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-nobs-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-nobs-03-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Type II Error by Number of Observations, b_x=0.3"><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-nobs-03-output-1.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-nobs-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Type II Error by Number of Observations, b_x=0.3
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-nobs-05" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-typeii-nobs-05" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-nobs-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-nobs-05-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Type II Error by Number of Observations, b_x=0.5"><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-nobs-05-output-1.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-nobs-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Type II Error by Number of Observations, b_x=0.5
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<p>At the smallest sample size, the methods differ in Type II error, with LASSO and partial correlation approaches yielding the lowest in both effect size cases. As sample size increases, the seven methods (excluding the no covariates method) tend to become indistinguishable.</p>
-<p>Figure <strong>?@fig-typeII-ncovs-03</strong> and Figure <strong>?@fig-typeII-ncovs-05</strong> display the change in Type II error as the number of covariates increases for all eight methods.</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-ncovs-03" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-typeii-ncovs-03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-ncovs-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-ncovs-03-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Type II Error by Number of Covariates, b_x=0.3"><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-ncovs-03-output-1.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-ncovs-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Type II Error by Number of Covariates, b_x=0.3
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-ncovs-05" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-typeii-ncovs-05" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-ncovs-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-ncovs-05-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: Type II Error by Number of Covariates, b_x=0.5"><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-ncovs-05-output-1.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-ncovs-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Type II Error by Number of Covariates, b_x=0.5
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<p>For the smallest number of covariates, the methods are comparable in Type II error, but for larger numbers of covariates, there is a larger gap in performance. As the number of covariates increases, LASSO begins to have the lowest Type II error, followed by the partial correlation and bivariate correlation approaches. Additionally, the method of including all covariates becomes out-performed by the selection methods.</p>
-<p>Figure <strong>?@fig-typeII-pgoodcovs-03</strong> and Figure <strong>?@fig-typeII-pgoodcovs-05</strong> display the change in Type II error as the proportion of good covariates increases for all eight methods.</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-pgoodcovs-03" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-typeii-pgoodcovs-03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-pgoodcovs-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-pgoodcovs-03-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Type II Error by Proportion of Good Covariates, b_x=0.3"><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-pgoodcovs-03-output-1.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-pgoodcovs-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Type II Error by Proportion of Good Covariates, b_x=0.3
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-pgoodcovs-05" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-typeii-pgoodcovs-05" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-pgoodcovs-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-pgoodcovs-05-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: Type II Error by Proportion of Good Covariates, b_x=0.5"><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-pgoodcovs-05-output-1.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-pgoodcovs-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10: Type II Error by Proportion of Good Covariates, b_x=0.5
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<p>For higher proportions of good covariates, LASSO, partial correlation, and bivariate correlation have the lowest Type II error.</p>
-<p>Figure <strong>?@fig-typeII-rycov-03</strong> and Figure <strong>?@fig-typeII-rycov-05</strong> display the change in Type II error as the correlation between <span class="math inline">\(Y\)</span> and the good covariates increases for all eight methods.</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-rycov-03" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-typeii-rycov-03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-rycov-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-rycov-03-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Type II Error by Y-Covariate Correlation, b_x=0.3"><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-rycov-03-output-1.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-rycov-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11: Type II Error by Y-Covariate Correlation, b_x=0.3
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-rycov-05" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-typeii-rycov-05" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-rycov-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-rycov-05-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: Type II Error by Y-Covariate Correlation, b_x=0.5"><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-rycov-05-output-1.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-rycov-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12: Type II Error by Y-Covariate Correlation, b_x=0.5
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<p>All methods (excluding the no covariates approach) show similar decreasing trends in Type II error as the correlation between <span class="math inline">\(Y\)</span> and the good covariates increases. The differences between these methods are minimal.</p>
-</section>
 </section>
 <section id="parameter-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="parameter-estimates">Parameter Estimates</h2>
-<p>As mentioned, this section considers a population parameter of <em>X</em> set to zero. Figure <a href="#fig-distribution-bx-0" class="quarto-xref">Figure&nbsp;13</a> shows the sampling distribution for the parameter estimate of <em>X</em> for all nine methods. For further information about the average estimate, see the table in the Supplemental Material section. This table also displays the standard deviation of the estimates from the linear model, the average standard error of the model, and their difference. The standard error of the sampling distribution is expected to match the standard error of the parameter estimates. The table shows a large difference in these values for the p-hacked method and slight differences for LASSO, full linear model, and partial correlation approaches.</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-distribution-bx-0" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-distribution-bx-0" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-distribution-bx-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-0-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Sampling Distribution for b_x=0 Estimate"><img src="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-0-output-2.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distribution-bx-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13: Sampling Distribution for b_x=0 Estimate
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
+<p>As mentioned, this section considers a population parameter of <em>X</em> set to zero. <a href="#fig-distribution-bx" class="quarto-xref">Figure&nbsp;5</a> shows the sampling distribution for the parameter estimate of <em>X</em> for all nine methods. For further information about the average estimate, see the table in the Supplemental Material section. This table also displays the standard deviation of the estimates from the linear model, the average standard error of the model, and their difference. The standard error of the sampling distribution is expected to match the standard error of the parameter estimates. The table shows a large difference in these values for the p-hacked method and slight differences for LASSO, full linear model, and partial correlation approaches.</p>
 <p>This distribution highlights another negative consequence of p-hacking. While its distribution is still centered around zero, it is not normally distributed around zero, emphasizing a biasing of the parameter estimates. The remaining distributions are centered around zero. The model fit with no covariates has the widest distribution, indicating greater variability in its estimate for the <span class="math inline">\(X\)</span> effect.</p>
-<p>As mentioned, this section considers two population parameters of <span class="math inline">\(X\)</span> set to 0.3 and 0.5 Figure <a href="#fig-distribution-bx-03" class="quarto-xref">Figure&nbsp;14</a> and Figure <a href="#fig-distribution-bx-05" class="quarto-xref">Figure&nbsp;15</a> show the sampling distributions for the parameter estimate of <span class="math inline">\(X\)</span> for all eight methods. See the tables in the Supplemental Material section for more information about the average estimates, the standard deviation of the estimates, and the average standard error of the model for both 0.3 and 0.5 effect sizes. The tables show that the bivariate correlation, full linear model without <span class="math inline">\(X\)</span>, and LASSO without <span class="math inline">\(X\)</span> approaches slightly underestimate the parameter estimate.</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-distribution-bx-03" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-distribution-bx-03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-distribution-bx-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-03-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure&nbsp;14: Sampling Distribution for b_x=0.3 Estimate"><img src="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-03-output-2.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distribution-bx-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14: Sampling Distribution for b_x=0.3 Estimate
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-distribution-bx-05" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-distribution-bx-05" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-distribution-bx-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-05-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure&nbsp;15: Sampling Distribution for b_x=0.5 Estimate"><img src="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-05-output-2.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distribution-bx-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15: Sampling Distribution for b_x=0.5 Estimate
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
+<p>As mentioned, this section considers two population parameters of <span class="math inline">\(X\)</span> set to 0.3 and 0.5. Figure show the sampling distributions for the parameter estimate of <span class="math inline">\(X\)</span> for all eight methods. See the tables in the Supplemental Material section for more information about the average estimates, the standard deviation of the estimates, and the average standard error of the model for both 0.3 and 0.5 effect sizes. The tables show that the bivariate correlation, full linear model without <span class="math inline">\(X\)</span>, and LASSO without <span class="math inline">\(X\)</span> approaches slightly underestimate the parameter estimate.</p>
 <p>Both distributions show parameter estimates centered around the population values. In both effect size cases, the method including no covariates has a wider distribution, and therefore, more variability in its parameter estimates.</p>
+<div class="quarto-embed-nb-cell">
+<div id="cell-fig-distribution-bx" class="cell" data-fig-height="8">
+<div class="cell-output cell-output-display">
+<div id="fig-distribution-bx" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-distribution-bx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Sampling Distribution for Population Parameter Estimates."><img src="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-output-2.png" width="672" height="768" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distribution-bx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Sampling Distribution for Population Parameter Estimates.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="discussion" class="level1">
