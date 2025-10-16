@@ -1,0 +1,4 @@
+- source: index.qmd
+  quarto-pub:
+    - id: 3ed9ba5b-990f-4e37-ab9b-e456c28e1ff9
+      url: https://kendra-wyant.quarto.pub/study-cov
