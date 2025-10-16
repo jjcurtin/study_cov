@@ -1408,8 +1408,8 @@ border: 0;
 <div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lm_methods <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Method =</span> <span class="fu">c</span>(<span class="st">&quot;No covariates&quot;</span>, <span class="st">&quot;All covariates&quot;</span>, <span class="st">&quot;P-hacking&quot;</span>,</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Bivariate correlation&quot;</span>, <span class="st">&quot;Partial correlation&quot;</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Full linear model&quot;</span>, <span class="st">&quot;Full linear model with $X$&quot;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;LASSO&quot;</span>, <span class="st">&quot;LASSO with $X$&quot;</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Full linear model&quot;</span>, <span class="st">&quot;Full linear model with X&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;LASSO&quot;</span>, <span class="st">&quot;LASSO with X&quot;</span>),</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">Definition =</span> <span class="fu">c</span>(<span class="st">&quot;Y is regressed on X without any covariates.&quot;</span>,</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;All available covariates are included in the regression model.&quot;</span>,</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;Unsystematically adding covariates based on whether they lower the p-value of the main effect of X on Y.&quot;</span>,</span>
@@ -1465,7 +1465,7 @@ The nine linear regression models and their definition for covariate selection.
    <td style="text-align:left;"> A full linear model that regresses Y on all available covariates. Covariates that have a statistically significant effect on Y (p &lt; .05) are retained. </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Full linear model with $X$ </td>
+   <td style="text-align:left;"> Full linear model with X </td>
    <td style="text-align:left;"> A full linear model that regresses Y on all available covariates and X. Covariates that have a statistically significant effect on Y (p &lt; .05) when controlling for X are retained. </td>
   </tr>
   <tr>
@@ -1473,7 +1473,7 @@ The nine linear regression models and their definition for covariate selection.
    <td style="text-align:left;"> A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates, potentially dropping them altogether (i.e., coefficient of 0). Covariates with non-zero coefficients were retained. </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> LASSO with $X$ </td>
+   <td style="text-align:left;"> LASSO with X </td>
    <td style="text-align:left;"> A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates. We assigned a 0 penalty to X to retain it in the model. Covariates with non-zero coefficients when controlling for X were retained. </td>
   </tr>
 </tbody>
