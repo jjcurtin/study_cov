@@ -443,11 +443,8 @@ Figure&nbsp;3: Type II Error by Method. Average type II error rate across all re
 </div>
 </div>
 </div>
-<p>We also assessed Type II error by individual research setting (<strong>?@fig-typeII-panel</strong>). Across all research setting, using no covariates was associated with higher Type II error. Selection methods that controlled for <em>X</em> produced notably lower type II error rates compared to selection methods that did not control for <em>X</em> or using all available covariates when sample sizes were low. As sample size increased, the methods performed comparably with respect to Type II error.</p>
-<!-- For the smallest number of covariates, the methods are comparable in Type II error, but for larger numbers of covariates, there is a larger gap in performance. As the number of covariates increases, LASSO begins to have the lowest Type II error, followed by the partial correlation and bivariate correlation approaches. Additionally, the method of including all covariates becomes out-performed by the selection methods. -->
-<!-- For higher proportions of good covariates, LASSO, partial correlation, and bivariate correlation have the lowest Type II error. -->
-<!-- All methods (excluding the no covariates approach) show similar decreasing trends in Type II error as the correlation between $Y$ and the good covariates increases. The differences between these methods are minimal. -->
-{{&lt; embed notebooks/mak_figures.qmd#fig-typeII-panel&gt;}}
+<p>We also assessed Type II error by individual research setting (<strong>?@fig-panel-2</strong>). Across all research setting, using no covariates was associated with higher Type II error. Using all available covariates or selection methods that do not control for <em>X</em> performed had higher type II error rates compared to the other methods when sample sizes were low. This pattern was especially notable for using all covariates and a full linear model without <em>X</em>. As sample size increased, the methods performed comparably with respect to Type II error. Using all covariates or a full linear model without <em>X</em> for selection produced higher Type II error rates compared to other methods when there was a larger number of covariates available. The full linear model without <em>X</em> also produced higher Type II error rates, compared to other methods when the proportion of good covariates was higher.</p>
+{{&lt; embed notebooks/mak_figures.qmd#fig-panel-2&gt;}}
 </section>
 <section id="parameter-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="parameter-estimates">Parameter Estimates</h2>
