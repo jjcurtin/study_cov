@@ -51,8 +51,8 @@ options(digits = 3)
 ```{r}
 lm_methods <- tibble(Method = c("No covariates", "All covariates", "P-hacking",
                   "Bivariate correlation", "Partial correlation",
-                  "Full linear model", "Full linear model with $X$",
-                  "LASSO", "LASSO with $X$"),
+                  "Full linear model", "Full linear model with X",
+                  "LASSO", "LASSO with X"),
        Definition = c("Y is regressed on X without any covariates.",
                       "All available covariates are included in the regression model.",
                       "Unsystematically adding covariates based on whether they lower the p-value of the main effect of X on Y.",

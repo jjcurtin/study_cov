@@ -26,29 +26,30 @@ library(dplyr) |> suppressMessages()
 library(skimr)
 library(purrr)
 library(ggplot2)
+library(patchwork)
 library(cowplot)
 library(forcats)
 library(kableExtra, exclude = ("group_rows"))
 
 theme_set(theme_classic())
-method_colors <- c("no_covs" = "sienna",
-                   "all_covs" = "goldenrod2",
-                   "p_hacked" = "red2",
-                   "r" = "springgreen3",
-                   "partial_r" = "deepskyblue",
-                   "full_lm" = "mediumpurple1",
-                   "full_lm_wo_x" = "slateblue1",
-                   "lasso" = "hotpink",
-                   "lasso_wo_x" = "lightpink")
-method_linetypes <- c("no_covs" = "solid",
-                      "all_covs" = "solid",
-                      "p_hacked" = "longdash",
-                      "r" = "longdash",
-                      "partial_r" = "longdash",
-                      "full_lm" = "longdash",
-                      "full_lm_wo_x" = "longdash",
-                      "lasso" = "longdash",
-                      "lasso_wo_x" = "longdash")
+method_colors <- c("No covariates" = "sienna",
+                   "All covariates" = "goldenrod2",
+                   "p-hacking" = "red2",
+                   "Bivariate correlation" = "springgreen3",
+                   "Partial correlation" = "deepskyblue",
+                   "Full linear model" = "mediumpurple1",
+                   "Full linear model with X" = "slateblue1",
+                   "LASSO" = "hotpink",
+                   "LASSO with X" = "lightpink")
+method_linetypes <- c("No covariates" = "solid",
+                      "All covariates" = "solid",
+                      "p-hacking" = "longdash",
+                      "Bivariate correlation" = "dashed",
+                      "Partial correlation" = "twodash",
+                      "Full linear model" = "dashed",
+                      "Full linear model with X" = "twodash",
+                      "LASSO" = "dashed",
+                      "LASSO with X" = "twodash")
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
@@ -107,51 +108,64 @@ d_05 <- rbind(d_05, d_wo_x_new |> filter(b_x == 0.5))
 #| label: factor levels
 
 d_0 <- d_0 |> 
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
-                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
+  mutate(method = factor(method, levels = c("no_covs", "all_covs", "p_hacked", "r", 
+                                            "partial_r", "full_lm_wo_x", "full_lm",  
+                                           "lasso_wo_x", "lasso"),
+                         labels = c("No covariates", "All covariates", "p-hacking", 
+                                    "Bivariate correlation", "Partial correlation", 
+                                    "Full linear model", "Full linear model with X", 
+                                            "LASSO", "LASSO with X")))
 
 d_03 <- d_03 |> 
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
-                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
+  mutate(method = factor(method, levels = c("no_covs", "all_covs", "p_hacked", "r", 
+                                            "partial_r", "full_lm_wo_x", "full_lm",  
+                                           "lasso_wo_x", "lasso"),
+                         labels = c("No covariates", "All covariates", "p-hacking", 
+                                    "Bivariate correlation", "Partial correlation", 
+                                    "Full linear model", "Full linear model with X", 
+                                            "LASSO", "LASSO with X")))
 
 d_05 <- d_05 |> 
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
-                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
-
+  mutate(method = factor(method, levels = c("no_covs", "all_covs", "p_hacked", "r", 
+                                            "partial_r", "full_lm_wo_x", "full_lm",  
+                                           "lasso_wo_x", "lasso"),
+                         labels = c("No covariates", "All covariates", "p-hacking", 
+                                    "Bivariate correlation", "Partial correlation", 
+                                    "Full linear model", "Full linear model with X", 
+                                            "LASSO", "LASSO with X")))
 
 ```
 
 ```{r}
 #| label: fig-typeI-bar
-#| fig-cap: "Type I Error by Method"
+#| fig-cap: "Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. The horizontal dotted black line indicates expected Type 1 Error rate for an alpha = .05."
 
 type_I_summary <- d_0 |>
   group_by(method) |>
   summarise(type_I = mean(p_value < 0.05))
 
 type_I_summary |> 
-  mutate(method = fct_relevel(method, "p_hacked")) |>
+  mutate(method = fct_relevel(method, "P-hacking")) |>
   ggplot(aes(x = method, y = type_I, fill = method)) +
   geom_bar(stat = "identity") +
-  geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
+  geom_hline(yintercept = 0.05, linetype = "dotted", color = "black", linewidth = .75) +
   geom_text(aes(label = sprintf("%.3f", type_I)), vjust = -0.5) +
-  labs(x = "Method",
+  labs(x = NULL,
        y = "Type I Error",
        fill = "Method") +
   scale_y_continuous(limits = c(0, max(type_I_summary$type_I) * 1.2), 
                      breaks = seq(0, max(type_I_summary$type_I) * 1.2, by = 0.05)) +
-  theme_minimal() +
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 45, hjust = 1)) +
   scale_fill_manual(values = method_colors)
 
 ```
 
-```{r}
-#| label: fig-typeI-nobs
-#| fig-cap: "Type I Error by Number of Observations"
 
-d_0 |> 
+<!--add to figure legends: Note that for the line plots throughout this report, a solid line will indicate a method that does not involve performing selection of covariates (i.e., using no or all covariates). A dashed line will indicate a method that does involve performing a non-trivial selection of covariates. A dotted black line will indicate the expected value (if applicable). For example, there will be a dotted line at $\alpha = 0.05$, the signifance level considered here and hence, the expected Type I error rate.-->
+
+```{r}
+observations <- d_0 |> 
   group_by(method, n_obs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
@@ -159,19 +173,16 @@ d_0 |>
   geom_line() +
   geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
   scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
-  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20)) +
-  labs(x = "Number of Observations",
+  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, .25, .30),
+                     limits = c(0.03, .30)) +
+  labs(x = NULL,
+       subtitle = "Number of Observations",
        y = "Type I Error") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
-```
 
-```{r}
-#| label: fig-typeI-ncovs
-#| fig-cap: "Type I Error by Number of Covariates"
-
-d_0 |> 
+covs <- d_0 |> 
   group_by(method, n_covs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
@@ -179,19 +190,15 @@ d_0 |>
   geom_line() +
   geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
   scale_x_continuous(breaks = c(4, 8, 12, 16, 20)) +
-  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25)) +
+  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25, .30),
+                     limits = c(.03, .30)) +
   labs(y = "Type I Error",
-       x = "Number of Covariates") +
+       x = NULL,
+       subtitle = "Number of Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
-```
-
-```{r}
-#| label: fig-typeI-pgoodcovs
-#| fig-cap: "Type I Error by Proportion of Good Covariates"
-
-d_0 |> 
+good_covs <- d_0 |> 
   group_by(method, p_good_covs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
@@ -199,19 +206,15 @@ d_0 |>
   geom_line() +
   geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
   scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
-  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20)) +
+  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, .25, .30), 
+                     limits = c(.03, .30)) +
   labs(y = "Type I Error",
-       x = "Proportion of Good Covariates") +
+       x = NULL,
+       subtitle = "Proportion of Good Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
-```
-
-```{r}
-#| label: fig-typeI-rycov
-#| fig-cap: "Type I Error by Y-Covariate Correlation"
-
-d_0 |> 
+ycor <- d_0 |> 
   group_by(method, r_ycov) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
@@ -219,13 +222,26 @@ d_0 |>
   geom_line() +
   geom_hline(yintercept = 0.05, linetype = "dotted", color = "black") +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
-  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25, 0.30)) +
+  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25, 0.30), 
+                     limits = c(.03, .30)) +
   labs(y = "Type I Error",
-       x = "Y-Covariate Correlation") +
+       x = NULL,
+       subtitle = "Y-Covariate Correlation") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
 ```
+
+
+```{r}
+#| label: fig-type1-panel
+#| fig-cap:
+
+(observations + covs)/(good_covs + ycor) +
+  plot_layout(guides = "collect") &
+  theme(legend.position = "bottom")
+```
+
 
 ```{r}
 #| label: fig-distribution-bx-0

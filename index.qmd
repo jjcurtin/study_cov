@@ -70,7 +70,7 @@ We replicate that p-hacking is not a statistically valid method and propose eigh
 
 ## Covariate Selection Methods
 
-<!--Think of how we want to refer to the 9 methods, since they are not all covariate selection methods-->
+<!--Think of how we want to refer to the 9 methods, since they are not all covariate selection methods, maybe Regression Methods?-->
 
 We evaluated nine linear regression models. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on the Pearson correlation coefficient (*r*), a full linear model, and LASSO, controlling for the focal manipulation (i.e., *X*) and without controlling for *X*. A summary of the nine models is presented in @tbl-methods.
 
@@ -111,49 +111,17 @@ For research settings where the population parameter for *X* is 0 (i.e., *X* has
 
 ## Type I Error
 
-In the case of a zero $X$ effect, we set the population parameter for $X$ to be zero (i.e., $b_x = 0$), so that any significant result found is a Type I error. The first comparison will look at selection method overall, aggregated across all research settings. In Figure [@typeI-bar], the average proportion of significant effects -- the Type I error -- is calculated and displayed. Refer to the Supplemental Material section to see the distribution of Type I error of each method.
+Since this is simulation study, we were able to set the true population parameter for *X* to be zero (i.e., $b_x = 0$). Therefore, any significant result found is a Type I error. @fig-typeI-bar shows the average type I error rate across all research settings for each method. The p-hacking method for selecting covariates, unsurprisingly led to a highly inflated Type I error rate, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives. Most other methods remained around the expected .05 threshold. There was some elevation in type I errors for methods that controlled for X compared to those, however, it is not clear that these differences are substantial.
 
 {{< embed notebooks/mak_figures.qmd#fig-typeI-bar >}}
 
-<!--add to figure legends: Note that for the line plots throughout this report, a solid line will indicate a method that does not involve performing selection of covariates (i.e., using no or all covariates). A dashed line will indicate a method that does involve performing a non-trivial selection of covariates. A dotted black line will indicate the expected value (if applicable). For example, there will be a dotted line at $\alpha = 0.05$, the signifance level considered here and hence, the expected Type I error rate.-->
 
-Previous findings are replicated that using p-hacking for selecting covariates leads to a highly inflated Type I error rate (0.198). The p-hacked model consistently shows high Type I error, as is evident in the remaining figures in this section. Most methods are at the expected 0.050 mark, while the partial correlation approach shows slight inflation (0.052), with both LASSO and full linear model showing further inflation (0.057 and 0.060, respectively). These eight methods (excluding p-hacking) can be considered statistically valid as they show little to no inflation of Type I error rates.
+We assessed Type 1 error by individual research setting and found several patterns emerged (@fig-typeI-panel). First, small sample sizes are more susceptible to inflated Type I error rates when using covariate selection methods that control for *X*. As sample sizes get larger (i.e., *n* = 300), the methods become comparable. Second, as the number of available covariates to select from increases, type I error rate increases for covariate selection methods that control for *X*, such as a full linear model with *X* and LASSO with *X*, and to a lesser degree partial correlation. Third, there appeared to be no definitive pattern in type I error rate as the proportion of good covariates increased<!--maybe error of LASSO decreases slightly and error of full linear model increases?-->. Similarly we did not see changes in type I error rate as function of the correlation strength between covariates and *Y*.
 
-### By Research Settings
+{{< embed notebooks/mak_figures.qmd#fig-typeI-panel >}}
 
-This section will consider the Type I error rates across the established values of the research context variables.
 
-Figure [@fig-typeI-nobs] displays the change in Type I error as the number of observations in a sample increases for all nine methods.
 
-{{< embed notebooks/mak_figures.qmd#fig-typeI-nobs >}}
-
-At the smallest sample size ($n=50$), the discrepancy between methods is greatest, with partial correlation, LASSO, and full linear model deviating from the expected value of 0.05. However, as sample size increases, all methods become comparable, especially with $n=300$ or larger.
-
-Figure [@fig-typeI-ncovs] displays the change in Type I error as the number of covariares increases for all nine methods. Recall that the number of covariates refers to the number of available covariates, not necessarily the number included in the final model.
-
-{{< embed notebooks/mak_figures.qmd#fig-typeI-ncovs >}}
-
-There is a slight increase in Type I error for LASSO and full linear model as the number of covariates increases, while the other methods stay at or around 0.05.
-
-Figure [@fig-typeI-pgoodcovs] displays the change in Type I error as the proportion of good covariares increases for all nine methods.
-
-{{< embed notebooks/mak_figures.qmd#fig-typeI-pgoodcovs >}}
-
-Most of the methods remain stagnant in Type I error as the proportions increase, except the error of LASSO decreases slightly and that of full linear model increases.
-
-Figure [@fig-typeI-rycov] shows the change in Type I error as the correlation between $Y$ and the good covariates increases for all nine methods. The correlation among the good covariates did not vary, so only the $Y$-covariate correlation will be compared.
-
-{{< embed notebooks/mak_figures.qmd#fig-typeI-rycov >}}
-
-All of the valid methods did not see a great change in Type I error as the correlation increased.
-
-## Parameter Estimates
-
-As mentioned, this section considers a population parameter of $X$ set to zero. Figure [@fig-distribution-bx-0] shows the sampling distribution for the parameter estimate of $X$ for all nine methods. For further information about the average estimate, see the table in the Supplemental Material section. This table also displays the standard deviation of the estimates from the linear model, the average standard error of the model, and their difference. The standard error of the sampling distribution is expected to match the standard error of the parameter estimates. The table shows a large difference in these values for the p-hacked method and slight differences for LASSO, full linear model, and partial correlation approaches.
-
-{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-0 >}}
-
-This distribution highlights another negative consequence of p-hacking. While its distribution is still centered around zero, it is not normally distributed around zero, emphasizing a biasing of the parameter estimates. The remaining distributions are centered around zero. The model fit with no covariates has the widest distribution, indicating greater variability in its estimate for the $X$ effect.
 
 ## Type II Error
 
@@ -201,7 +169,15 @@ Figure [@fig-typeII-rycov-03] and Figure [@fig-typeII-rycov-05] display the chan
 
 All methods (excluding the no covariates approach) show similar decreasing trends in Type II error as the correlation between $Y$ and the good covariates increases. The differences between these methods are minimal.
 
+
+
 ## Parameter Estimates
+
+As mentioned, this section considers a population parameter of *X* set to zero. Figure [@fig-distribution-bx-0] shows the sampling distribution for the parameter estimate of *X* for all nine methods. For further information about the average estimate, see the table in the Supplemental Material section. This table also displays the standard deviation of the estimates from the linear model, the average standard error of the model, and their difference. The standard error of the sampling distribution is expected to match the standard error of the parameter estimates. The table shows a large difference in these values for the p-hacked method and slight differences for LASSO, full linear model, and partial correlation approaches.
+
+{{< embed notebooks/mak_figures.qmd#fig-distribution-bx-0 >}}
+
+This distribution highlights another negative consequence of p-hacking. While its distribution is still centered around zero, it is not normally distributed around zero, emphasizing a biasing of the parameter estimates. The remaining distributions are centered around zero. The model fit with no covariates has the widest distribution, indicating greater variability in its estimate for the $X$ effect.
 
 As mentioned, this section considers two population parameters of $X$ set to 0.3 and 0.5 Figure [@fig-distribution-bx-03] and Figure [@fig-distribution-bx-05] show the sampling distributions for the parameter estimate of $X$ for all eight methods. See the tables in the Supplemental Material section for more information about the average estimates, the standard deviation of the estimates, and the average standard error of the model for both 0.3 and 0.5 effect sizes. The tables show that the bivariate correlation, full linear model without $X$, and LASSO without $X$ approaches slightly underestimate the parameter estimate.
 
