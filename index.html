@@ -286,7 +286,7 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">No covariates</td>
-<td style="text-align: left;">$Y$ is regressed on $X$ without any covariates.</td>
+<td style="text-align: left;">Y is regressed on X without any covariates.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">All covariates</td>
@@ -294,31 +294,31 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 </tr>
 <tr class="odd">
 <td style="text-align: left;">P-hacking</td>
-<td style="text-align: left;">Unsystematically adding covariates based on whether they lower the $p$-value of the main effect of $X$ on $Y$.</td>
+<td style="text-align: left;">Unsystematically adding covariates based on whether they lower the p-value of the main effect of X on Y.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Bivariate correlation</td>
-<td style="text-align: left;">Pearson correlation coefficient ($r$) of covariates on $Y$. Covariates are considered one at a time and included in the final model if they yield a significant effect on $Y$ ($p$ &lt; .05).</td>
+<td style="text-align: left;">Pearson correlation coefficient (r) of covariates on Y. Covariates are considered one at a time and included in the final model if they yield a significant effect on Y (p &lt; .05).</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Partial correlation</td>
-<td style="text-align: left;">Pearson correlation coefficient ($r$) of covariates on $Y$ while controlling for $X$. Covariates are considered one at a time and included in the final model if they yield a significant effect on $Y$ ($p$ &lt; .05).</td>
+<td style="text-align: left;">Pearson correlation coefficient (r) of covariates on Y while controlling for X. Covariates are considered one at a time and included in the final model if they yield a significant effect on Y (p &lt; .05).</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Full linear model</td>
-<td style="text-align: left;">A full linear model that regresses $Y$ on all available covariates. Covariates that have a statistically significant effect on $Y$ ($p$ &lt; .05) are retained.</td>
+<td style="text-align: left;">A full linear model that regresses Y on all available covariates. Covariates that have a statistically significant effect on Y (p &lt; .05) are retained.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Full linear model with $X$</td>
-<td style="text-align: left;">A full linear model that regresses $Y$ on all available covariates and $X$. Covariates that have a statistically significant effect on $Y$ ($p$ &lt; .05) when controlling for $X$ are retained.</td>
+<td style="text-align: left;">A full linear model that regresses Y on all available covariates and X. Covariates that have a statistically significant effect on Y (p &lt; .05) when controlling for X are retained.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">LASSO</td>
-<td style="text-align: left;">A linear model that regresses $Y$ on all available covariates and applies a penalty to shrink coefficients for less important covariates, potentially dropping them altogether (i.e., coefficient of 0). Covariates with non-zero coefficients were retained.</td>
+<td style="text-align: left;">A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates, potentially dropping them altogether (i.e., coefficient of 0). Covariates with non-zero coefficients were retained.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">LASSO with $X$</td>
-<td style="text-align: left;">A linear model that regresses $Y$ on all available covariates and applies a penalty to shrink coefficients for less important covariates. We assigned a 0 penalty to $X$ to retain it in the model. Covariates with non-zero coefficients when controlling for $X$ were retained.</td>
+<td style="text-align: left;">A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates. We assigned a 0 penalty to X to retain it in the model. Covariates with non-zero coefficients when controlling for X were retained.</td>
 </tr>
 </tbody>
 </table>
@@ -359,7 +359,7 @@ Table&nbsp;2: Research setting variables and values
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left; width: 15em;">The population parameter for $X$</td>
+<td style="text-align: left; width: 15em;">The population parameter for *X*</td>
 <td style="text-align: left; width: 10em;">0, 0.3, 0.5</td>
 </tr>
 <tr class="even">
@@ -375,7 +375,7 @@ Table&nbsp;2: Research setting variables and values
 <td style="text-align: left; width: 10em;">0.25, 0.50, 0.75</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; width: 15em;">The correlation between $Y$ and good covariates</td>
+<td style="text-align: left; width: 15em;">The correlation between *Y* and good covariates</td>
 <td style="text-align: left; width: 10em;">0.3, 0.5</td>
 </tr>
 </tbody>

@@ -1410,15 +1410,15 @@ border: 0;
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Bivariate correlation&quot;</span>, <span class="st">&quot;Partial correlation&quot;</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Full linear model&quot;</span>, <span class="st">&quot;Full linear model with $X$&quot;</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;LASSO&quot;</span>, <span class="st">&quot;LASSO with $X$&quot;</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">Definition =</span> <span class="fu">c</span>(<span class="st">&quot;$Y$ is regressed on $X$ without any covariates.&quot;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">Definition =</span> <span class="fu">c</span>(<span class="st">&quot;Y is regressed on X without any covariates.&quot;</span>,</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;All available covariates are included in the regression model.&quot;</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;Unsystematically adding covariates based on whether they lower the $p$-value of the main effect of $X$ on $Y$.&quot;</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;Pearson correlation coefficient ($r$) of covariates on $Y$. Covariates are considered one at a time and included in the final model if they yield a significant effect on $Y$ ($p$ &lt; .05).&quot;</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;Pearson correlation coefficient ($r$) of covariates on $Y$ while controlling for $X$. Covariates are considered one at a time and included in the final model if they yield a significant effect on $Y$ ($p$ &lt; .05).&quot;</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;A full linear model that regresses $Y$ on all available covariates. Covariates that have a statistically significant effect on $Y$ ($p$ &lt; .05) are retained.&quot;</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;A full linear model that regresses $Y$ on all available covariates and $X$. Covariates that have a statistically significant effect on $Y$ ($p$ &lt; .05) when controlling for $X$ are retained.&quot;</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;A linear model that regresses $Y$ on all available covariates and applies a penalty to shrink coefficients for less important covariates, potentially dropping them altogether (i.e., coefficient of 0). Covariates with non-zero coefficients were retained.&quot;</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;A linear model that regresses $Y$ on all available covariates and applies a penalty to shrink coefficients for less important covariates. We assigned a 0 penalty to $X$ to retain it in the model. Covariates with non-zero coefficients when controlling for $X$ were retained.&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;Unsystematically adding covariates based on whether they lower the p-value of the main effect of X on Y.&quot;</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;Pearson correlation coefficient (r) of covariates on Y. Covariates are considered one at a time and included in the final model if they yield a significant effect on Y (p &lt; .05).&quot;</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;Pearson correlation coefficient (r) of covariates on Y while controlling for X. Covariates are considered one at a time and included in the final model if they yield a significant effect on Y (p &lt; .05).&quot;</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;A full linear model that regresses Y on all available covariates. Covariates that have a statistically significant effect on Y (p &lt; .05) are retained.&quot;</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;A full linear model that regresses Y on all available covariates and X. Covariates that have a statistically significant effect on Y (p &lt; .05) when controlling for X are retained.&quot;</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates, potentially dropping them altogether (i.e., coefficient of 0). Covariates with non-zero coefficients were retained.&quot;</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates. We assigned a 0 penalty to X to retain it in the model. Covariates with non-zero coefficients when controlling for X were retained.&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div class="cell">
 
@@ -1442,7 +1442,7 @@ The nine linear regression models and their definition for covariate selection.
 <tbody>
   <tr>
    <td style="text-align:left;"> No covariates </td>
-   <td style="text-align:left;"> $Y$ is regressed on $X$ without any covariates. </td>
+   <td style="text-align:left;"> Y is regressed on X without any covariates. </td>
   </tr>
   <tr>
    <td style="text-align:left;"> All covariates </td>
@@ -1450,31 +1450,31 @@ The nine linear regression models and their definition for covariate selection.
   </tr>
   <tr>
    <td style="text-align:left;"> P-hacking </td>
-   <td style="text-align:left;"> Unsystematically adding covariates based on whether they lower the $p$-value of the main effect of $X$ on $Y$. </td>
+   <td style="text-align:left;"> Unsystematically adding covariates based on whether they lower the p-value of the main effect of X on Y. </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Bivariate correlation </td>
-   <td style="text-align:left;"> Pearson correlation coefficient ($r$) of covariates on $Y$. Covariates are considered one at a time and included in the final model if they yield a significant effect on $Y$ ($p$ &lt; .05). </td>
+   <td style="text-align:left;"> Pearson correlation coefficient (r) of covariates on Y. Covariates are considered one at a time and included in the final model if they yield a significant effect on Y (p &lt; .05). </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Partial correlation </td>
-   <td style="text-align:left;"> Pearson correlation coefficient ($r$) of covariates on $Y$ while controlling for $X$. Covariates are considered one at a time and included in the final model if they yield a significant effect on $Y$ ($p$ &lt; .05). </td>
+   <td style="text-align:left;"> Pearson correlation coefficient (r) of covariates on Y while controlling for X. Covariates are considered one at a time and included in the final model if they yield a significant effect on Y (p &lt; .05). </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Full linear model </td>
-   <td style="text-align:left;"> A full linear model that regresses $Y$ on all available covariates. Covariates that have a statistically significant effect on $Y$ ($p$ &lt; .05) are retained. </td>
+   <td style="text-align:left;"> A full linear model that regresses Y on all available covariates. Covariates that have a statistically significant effect on Y (p &lt; .05) are retained. </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Full linear model with $X$ </td>
-   <td style="text-align:left;"> A full linear model that regresses $Y$ on all available covariates and $X$. Covariates that have a statistically significant effect on $Y$ ($p$ &lt; .05) when controlling for $X$ are retained. </td>
+   <td style="text-align:left;"> A full linear model that regresses Y on all available covariates and X. Covariates that have a statistically significant effect on Y (p &lt; .05) when controlling for X are retained. </td>
   </tr>
   <tr>
    <td style="text-align:left;"> LASSO </td>
-   <td style="text-align:left;"> A linear model that regresses $Y$ on all available covariates and applies a penalty to shrink coefficients for less important covariates, potentially dropping them altogether (i.e., coefficient of 0). Covariates with non-zero coefficients were retained. </td>
+   <td style="text-align:left;"> A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates, potentially dropping them altogether (i.e., coefficient of 0). Covariates with non-zero coefficients were retained. </td>
   </tr>
   <tr>
    <td style="text-align:left;"> LASSO with $X$ </td>
-   <td style="text-align:left;"> A linear model that regresses $Y$ on all available covariates and applies a penalty to shrink coefficients for less important covariates. We assigned a 0 penalty to $X$ to retain it in the model. Covariates with non-zero coefficients when controlling for $X$ were retained. </td>
+   <td style="text-align:left;"> A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates. We assigned a 0 penalty to X to retain it in the model. Covariates with non-zero coefficients when controlling for X were retained. </td>
   </tr>
 </tbody>
 </table>
@@ -1489,11 +1489,11 @@ The nine linear regression models and their definition for covariate selection.
 <div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data_tbl0 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">description =</span> <span class="fu">c</span>(</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The population parameter for $X$&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The population parameter for *X*&quot;</span>,</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The number of observations in the sample&quot;</span>,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The number of covariates&quot;</span>,</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The proportion of </span><span class="sc">\&quot;</span><span class="st">good</span><span class="sc">\&quot;</span><span class="st"> covariates&quot;</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The correlation between $Y$ and good covariates&quot;</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The correlation between *Y* and good covariates&quot;</span>),</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;0, 0.3, 0.5&quot;</span>,</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;50, 100, 150, 200, 300, 400&quot;</span>, </span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;4, 8, 12, 16, 20&quot;</span>, </span>
@@ -1524,7 +1524,7 @@ Research setting variables and values
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;width: 15em; "> The population parameter for $X$ </td>
+   <td style="text-align:left;width: 15em; "> The population parameter for *X* </td>
    <td style="text-align:left;width: 10em; "> 0, 0.3, 0.5 </td>
   </tr>
   <tr>
@@ -1540,7 +1540,7 @@ Research setting variables and values
    <td style="text-align:left;width: 10em; "> 0.25, 0.50, 0.75 </td>
   </tr>
   <tr>
-   <td style="text-align:left;width: 15em; "> The correlation between $Y$ and good covariates </td>
+   <td style="text-align:left;width: 15em; "> The correlation between *Y* and good covariates </td>
    <td style="text-align:left;width: 10em; "> 0.3, 0.5 </td>
   </tr>
 </tbody>
