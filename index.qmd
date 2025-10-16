@@ -72,9 +72,7 @@ We replicate that p-hacking is not a statistically valid method and propose eigh
 
 <!--Think of how we want to refer to the 9 methods, since they are not all covariate selection methods-->
 
-We evaluated nine linear regression models. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on the Pearson correlation coefficient (*r*), a full linear model, and LASSO, controlling for the focal manipulation (i.e., *X*) and without controlling for *X*.
-
-A summary of the nine models is presented in @tbl-methods.
+We evaluated nine linear regression models. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on the Pearson correlation coefficient (*r*), a full linear model, and LASSO, controlling for the focal manipulation (i.e., *X*) and without controlling for *X*. A summary of the nine models is presented in @tbl-methods.
 
 {{< embed notebooks/mak_tables.qmd#tbl-methods >}}
 
@@ -83,19 +81,19 @@ A summary of the nine models is presented in @tbl-methods.
 ## Research Settings
 <!--consider adding citations throughout this section to justify some of our decisions-->
 
-We manipulated several variables designed to mimic varying research settings that psychology researchers might be working in. These include:
+We manipulated several variables designed to mimic varying research settings that psychology researchers might be working in. We crossed all levels of each variable to create a total of 540 unique research settings. A summary of these settings is presented in @tbl-dictionary. The variables include:
 
-1. **The true population parameter for *X*.** We selected values that represent null ($b_x = 0$), medium ($b_x = 0.3$) and large ($b_x = 0.5$) effect sizes. 
+1. The true population parameter for X. We selected values that represent null ($b_x = 0$), medium ($b_x = 0.3$) and large ($b_x = 0.5$) effect sizes. 
 
-2. **The sample size.** We chose values for the number of observations that pertain to common sample sizes in experimental research: 50, 100, 150, 200, 300, and 400 observations.
+2. The sample size. We chose values for the number of observations that pertain to common sample sizes in experimental research: 50, 100, 150, 200, 300, and 400 observations.
 
-2. **The number of covariates available.** We selected a wide range of possible scenarios: 4, 8, 12, 16, or 20 covariates.
+2. The number of covariates available. We selected a wide range of possible scenarios: 4, 8, 12, 16, or 20 covariates.
 
-3. **The proportion of "good" covariates.** We used varying proportions of good covariates across research settings (.25, .50, and .75) to represent a common reality when a researcher is faced with many covariates, but only some may be related to their outcome.
+3. The proportion of "good" covariates. We used varying proportions of good covariates across research settings (.25, .50, and .75) to represent a common reality when a researcher is faced with many covariates, but only some may be related to their outcome.
 
-4. **The strength of the relationship between the good covariates and *Y*.** All good covariates were given a moderate and large relationship to $Y$, correlations of 0.3 and 0.5, respectively. Since these good covariates are all correlated with $Y$, it is likeley they are also correlated with each other. Therefore we assigned a moderate 0.3 correlation for all relationships among good covariates. 
+4. The strength of the relationship between the good covariates and Y. All good covariates were given a moderate and large relationship to *Y*, correlations of 0.3 and 0.5, respectively. Since these good covariates are all correlated with *Y*, it is likeley they are also correlated with each other. Therefore we assigned a moderate 0.3 correlation for all relationships among good covariates. 
 
-We crossed all levels of each variable to create a total of 540 unique research settings. A summary of these settings is presented in @tbl-dictionary. 
+
 
 {{< embed notebooks/mak_tables.qmd#tbl-dictionary >}}
 
@@ -104,7 +102,7 @@ We crossed all levels of each variable to create a total of 540 unique research 
 
 All data analyses were done in R (version 4.4.2). Simulations were run using high-throughput computing resources provided by the University of Wisconsin-Madison Center for High Throughput Computing [@chtc]. 
 
-We ran 40,000 simulations for each research setting. Within each simulation we generated a unique datset that consisted of a dichotomous focal variable (*X*), varying numbers of quantitative covariates, where a subset are correlated with each other and with *Y* (see Research Settings section), and a quantitative outcome (*Y*) calculated by adding the *X* variable multiplied by the effect size (i.e., population parameter) to the *Y* generated from the correlation matrix with the covariates. We fit models from our nine methods on each simulated dataset. From each model we saved out the parameter estimate, standard error, and p-value for $X$. We also calculated true and false positive rates to evaluate the rate at which the model selected covariates correlated with $Y$ (i.e., percentage of good covariates selected) and incorrectly selected covariates not correlated with $Y$ (i.e., percentage of bad covariates selected).
+We ran 40,000 simulations for each research setting. Within each simulation we generated a unique datset that consisted of a dichotomous focal variable (*X*), varying numbers of quantitative covariates, where a subset are correlated with each other and with *Y* (see Research Settings section), and a quantitative outcome (*Y*) calculated by adding the *X* variable multiplied by the effect size (i.e., population parameter) to the *Y* generated from the correlation matrix with the covariates. We fit models from our nine methods on each simulated dataset. From each model we saved out the parameter estimate, standard error, and p-value for *X*. We also calculated true and false positive rates to evaluate the rate at which the model selected covariates correlated with *Y* (i.e., percentage of good covariates selected) and incorrectly selected covariates not correlated with *Y* (i.e., percentage of bad covariates selected).
 
 For research settings where the population parameter for *X* is 0 (i.e., *X* has no effect on *Y*), we report the type I error rate for each method both across and within research settings. For research settings where the population parameter for *X* is 0.3 or 0.5 (i.e., *X* has an effect on *Y*), we report the type II error rate for each method across and within research settings. We also provide sampling distributions of the parameter estimate for *X* across research settings for each method, separately by true effect size (0, 0.3, and 0.5). Detailed tables of range and average error rates for each research setting and true and false positive rates for covariates are available in the supplement.
 

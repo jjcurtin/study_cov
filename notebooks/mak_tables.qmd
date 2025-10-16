@@ -53,15 +53,15 @@ lm_methods <- tibble(Method = c("No covariates", "All covariates", "P-hacking",
                   "Bivariate correlation", "Partial correlation",
                   "Full linear model", "Full linear model with $X$",
                   "LASSO", "LASSO with $X$"),
-       Definition = c("$Y$ is regressed on $X$ without any covariates.",
+       Definition = c("Y is regressed on X without any covariates.",
                       "All available covariates are included in the regression model.",
-                      "Unsystematically adding covariates based on whether they lower the $p$-value of the main effect of $X$ on $Y$.",
-                      "Pearson correlation coefficient ($r$) of covariates on $Y$. Covariates are considered one at a time and included in the final model if they yield a significant effect on $Y$ ($p$ < .05).",
-                      "Pearson correlation coefficient ($r$) of covariates on $Y$ while controlling for $X$. Covariates are considered one at a time and included in the final model if they yield a significant effect on $Y$ ($p$ < .05).",
-                      "A full linear model that regresses $Y$ on all available covariates. Covariates that have a statistically significant effect on $Y$ ($p$ < .05) are retained.",
-                      "A full linear model that regresses $Y$ on all available covariates and $X$. Covariates that have a statistically significant effect on $Y$ ($p$ < .05) when controlling for $X$ are retained.",
-                      "A linear model that regresses $Y$ on all available covariates and applies a penalty to shrink coefficients for less important covariates, potentially dropping them altogether (i.e., coefficient of 0). Covariates with non-zero coefficients were retained.",
-                      "A linear model that regresses $Y$ on all available covariates and applies a penalty to shrink coefficients for less important covariates. We assigned a 0 penalty to $X$ to retain it in the model. Covariates with non-zero coefficients when controlling for $X$ were retained."))
+                      "Unsystematically adding covariates based on whether they lower the p-value of the main effect of X on Y.",
+                      "Pearson correlation coefficient (r) of covariates on Y. Covariates are considered one at a time and included in the final model if they yield a significant effect on Y (p < .05).",
+                      "Pearson correlation coefficient (r) of covariates on Y while controlling for X. Covariates are considered one at a time and included in the final model if they yield a significant effect on Y (p < .05).",
+                      "A full linear model that regresses Y on all available covariates. Covariates that have a statistically significant effect on Y (p < .05) are retained.",
+                      "A full linear model that regresses Y on all available covariates and X. Covariates that have a statistically significant effect on Y (p < .05) when controlling for X are retained.",
+                      "A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates, potentially dropping them altogether (i.e., coefficient of 0). Covariates with non-zero coefficients were retained.",
+                      "A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates. We assigned a 0 penalty to X to retain it in the model. Covariates with non-zero coefficients when controlling for X were retained."))
 ```
 
 ```{r}
@@ -81,11 +81,11 @@ lm_methods |>
 
 data_tbl0 <- tibble(
   description = c(
-    "The population parameter for $X$",
+    "The population parameter for X",
     "The number of observations in the sample",
     "The number of covariates",
-    "The percentage of \"good\" covariates",
-    "The correlation between $Y$ and good covariates"),
+    "The proportion of \"good\" covariates",
+    "The correlation between Y and good covariates"),
   values = c("0, 0.3, 0.5",
              "50, 100, 150, 200, 300, 400", 
              "4, 8, 12, 16, 20", 
