@@ -389,16 +389,16 @@ Table&nbsp;2: Research setting variables and values
 <h1>Results</h1>
 <section id="type-i-error" class="level2">
 <h2 class="anchored" data-anchor-id="type-i-error">Type I Error</h2>
-<p>Since this is simulation study, we were able to set the true population parameter for <em>X</em> to be zero (i.e., <span class="math inline">\(b_x = 0\)</span>). Therefore, any significant result found was a Type I error. <strong>?@fig-typeI-bar</strong> shows the average type I error rate across all research settings for each method. The p-hacking method for selecting covariates, unsurprisingly led to a highly inflated Type I error rate, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives. Most other methods remained around the expected .05 threshold. There was some elevation in type I errors for methods that controlled for <em>X</em> compared to those, however, it is not clear that these differences are substantial.</p>
+<p>Since this is simulation study, we were able to set the true population parameter for <em>X</em> to be zero (i.e., <span class="math inline">\(b_x = 0\)</span>). Therefore, any significant result found was a Type I error. <a href="#fig-bar-1" class="quarto-xref">Figure&nbsp;1</a> shows the average type I error rate across all research settings for each method. The p-hacking method for selecting covariates, unsurprisingly led to a highly inflated Type I error rate, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives. Most other methods remained around the expected .05 threshold. There was some elevation in type I errors for methods that controlled for <em>X</em> compared to those, however, it is not clear that these differences are substantial.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeI-bar" class="cell">
+<div id="cell-fig-bar-1" class="cell">
 <div class="cell-output cell-output-display">
-<div id="fig-typei-bar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-bar-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typei-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typei-bar-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), p-hacking (crosshatch), selection without controlling for X (striped), selection controlling for X (dotted). The horizontal dotted black line indicates expected Type 1 Error rate for an alpha = .05."><img src="index_files/figure-html/notebooks-mak_figures-fig-typei-bar-output-1.png" width="672" height="480" class="figure-img"></a>
+<div aria-describedby="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), p-hacking (crosshatch), selection without controlling for X (striped), selection controlling for X (dotted). The horizontal dotted black line indicates expected Type 1 Error rate for an alpha = .05."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typei-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), p-hacking (crosshatch), selection without controlling for X (striped), selection controlling for X (dotted). The horizontal dotted black line indicates expected Type 1 Error rate for an alpha = .05.
 </figcaption>
 </figure>
@@ -426,16 +426,16 @@ Figure&nbsp;2: Type I error by method and research setting. Plots are paneled by
 </section>
 <section id="type-ii-error" class="level2">
 <h2 class="anchored" data-anchor-id="type-ii-error">Type II Error</h2>
-<p>We simulated datasets with two possible population parameters for the effect of <em>X</em> on <em>Y</em> (<span class="math inline">\(b_x = 0.3\)</span>, <span class="math inline">\(b_x = 0.5\)</span>). Any non-significant result found indicated a Type II error. Stronger statistical methods will have lower Type II error (implying greater statistical power). Since we demonstrated that p-hacking substantially inflates Type I error, making it a statistically invalid method for covariate selection, we do not evaluate Type II Error for this method. <strong>?@fig-typeII-bar</strong> shows the average type II error rate across all research settings for each method. Using no covariates results in the highest Type II error highlighting the importance of covariates for detecting true effects. Type II error rates trended lower for covariate selection methods that controlled for <em>X</em> compared to those that did not control for <em>X</em>.</p>
+<p>We simulated datasets with two possible population parameters for the effect of <em>X</em> on <em>Y</em> (<span class="math inline">\(b_x = 0.3\)</span>, <span class="math inline">\(b_x = 0.5\)</span>). Any non-significant result found indicated a Type II error. Stronger statistical methods will have lower Type II error (implying greater statistical power). Since we demonstrated that p-hacking substantially inflates Type I error, making it a statistically invalid method for covariate selection, we do not evaluate Type II Error for this method. <a href="#fig-bar-2" class="quarto-xref">Figure&nbsp;3</a> shows the average type II error rate across all research settings for each method. Using no covariates results in the highest Type II error highlighting the importance of covariates for detecting true effects. Type II error rates trended lower for covariate selection methods that controlled for <em>X</em> compared to those that did not control for <em>X</em>.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-typeII-bar" class="cell">
+<div id="cell-fig-bar-2" class="cell">
 <div class="cell-output cell-output-display">
-<div id="fig-typeii-bar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-bar-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-typeii-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-typeii-bar-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), selection without controlling for X (striped), selection controlling for X (dotted)."><img src="index_files/figure-html/notebooks-mak_figures-fig-typeii-bar-output-1.png" width="672" height="480" class="figure-img"></a>
+<div aria-describedby="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), selection without controlling for X (striped), selection controlling for X (dotted)."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typeii-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), selection without controlling for X (striped), selection controlling for X (dotted).
 </figcaption>
 </figure>
@@ -443,12 +443,27 @@ Figure&nbsp;3: Type II Error by Method. Average type II error rate across all re
 </div>
 </div>
 </div>
-<p>We also assessed Type II error by individual research setting (<strong>?@fig-panel-2</strong>). Across all research setting, using no covariates was associated with higher Type II error. Using all available covariates or selection methods that do not control for <em>X</em> performed had higher type II error rates compared to the other methods when sample sizes were low. This pattern was especially notable for using all covariates and a full linear model without <em>X</em>. As sample size increased, the methods performed comparably with respect to Type II error. Using all covariates or a full linear model without <em>X</em> for selection produced higher Type II error rates compared to other methods when there was a larger number of covariates available. The full linear model without <em>X</em> also produced higher Type II error rates, compared to other methods when the proportion of good covariates was higher.</p>
-{{&lt; embed notebooks/mak_figures.qmd#fig-panel-2&gt;}}
+<p>We also assessed Type II error by individual research setting (<a href="#fig-panel-2" class="quarto-xref">Figure&nbsp;4</a>). Across all research setting, using no covariates was associated with higher Type II error. Using all available covariates or selection methods that do not control for <em>X</em> performed had higher type II error rates compared to the other methods when sample sizes were low. This pattern was especially notable for using all covariates and a full linear model without <em>X</em>. As sample size increased, the methods performed comparably with respect to Type II error. Using all covariates or a full linear model without <em>X</em> for selection produced higher Type II error rates compared to other methods when there was a larger number of covariates available. The full linear model without <em>X</em> also produced higher Type II error rates, compared to other methods when the proportion of good covariates was higher.</p>
+<div class="quarto-embed-nb-cell">
+<div id="cell-fig-panel-2" class="cell" data-fig-height="8" data-fig-width="7.5">
+<div class="cell-output cell-output-display">
+<div id="fig-panel-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-panel-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Type II error by method and research setting. Plots are paneled by aspects of the research setting (number of observations, number of covariates, proportioin of good covariates, Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Methods with no covariate selection are depicted as solid lines. Covariate selection methods that control for X are depicted as two dash lines. Covariate selection methods that do not control for X are depicted as long dash lines."><img src="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-1.png" width="720" height="768" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-panel-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Type II error by method and research setting. Plots are paneled by aspects of the research setting (number of observations, number of covariates, proportioin of good covariates, Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Methods with no covariate selection are depicted as solid lines. Covariate selection methods that control for X are depicted as two dash lines. Covariate selection methods that do not control for X are depicted as long dash lines.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="parameter-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="parameter-estimates">Parameter Estimates</h2>
-<p>As mentioned, this section considers a population parameter of <em>X</em> set to zero. <a href="#fig-distribution-bx" class="quarto-xref">Figure&nbsp;4</a> shows the sampling distribution for the parameter estimate of <em>X</em> for all nine methods. For further information about the average estimate, see the table in the Supplemental Material section. This table also displays the standard deviation of the estimates from the linear model, the average standard error of the model, and their difference. The standard error of the sampling distribution is expected to match the standard error of the parameter estimates. The table shows a large difference in these values for the p-hacked method and slight differences for LASSO, full linear model, and partial correlation approaches.</p>
+<p>As mentioned, this section considers a population parameter of <em>X</em> set to zero. <a href="#fig-distribution-bx" class="quarto-xref">Figure&nbsp;5</a> shows the sampling distribution for the parameter estimate of <em>X</em> for all nine methods. For further information about the average estimate, see the table in the Supplemental Material section. This table also displays the standard deviation of the estimates from the linear model, the average standard error of the model, and their difference. The standard error of the sampling distribution is expected to match the standard error of the parameter estimates. The table shows a large difference in these values for the p-hacked method and slight differences for LASSO, full linear model, and partial correlation approaches.</p>
 <p>This distribution highlights another negative consequence of p-hacking. While its distribution is still centered around zero, it is not normally distributed around zero, emphasizing a biasing of the parameter estimates. The remaining distributions are centered around zero. The model fit with no covariates has the widest distribution, indicating greater variability in its estimate for the <span class="math inline">\(X\)</span> effect.</p>
 <p>As mentioned, this section considers two population parameters of <span class="math inline">\(X\)</span> set to 0.3 and 0.5. Figure show the sampling distributions for the parameter estimate of <span class="math inline">\(X\)</span> for all eight methods. See the tables in the Supplemental Material section for more information about the average estimates, the standard deviation of the estimates, and the average standard error of the model for both 0.3 and 0.5 effect sizes. The tables show that the bivariate correlation, full linear model without <span class="math inline">\(X\)</span>, and LASSO without <span class="math inline">\(X\)</span> approaches slightly underestimate the parameter estimate.</p>
 <p>Both distributions show parameter estimates centered around the population values. In both effect size cases, the method including no covariates has a wider distribution, and therefore, more variability in its parameter estimates.</p>
@@ -458,10 +473,10 @@ Figure&nbsp;3: Type II Error by Method. Average type II error rate across all re
 <div id="fig-distribution-bx" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-distribution-bx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Sampling Distribution for Population Parameter Estimates."><img src="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-output-2.png" width="672" height="768" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Sampling Distribution for Population Parameter Estimates."><img src="index_files/figure-html/notebooks-mak_figures-fig-distribution-bx-output-2.png" width="672" height="768" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distribution-bx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Sampling Distribution for Population Parameter Estimates.
+Figure&nbsp;5: Sampling Distribution for Population Parameter Estimates.
 </figcaption>
 </figure>
 </div>
