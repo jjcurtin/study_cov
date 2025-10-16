@@ -24,6 +24,19 @@ editor_options:
   chunk_output_type: console
 ---
 
+<!-- Outlets:
+Psychological Science (first choice)
+- 2,000 word limit for intro/discussion/notes/acknowledgements/appendices
+- No word count for Methods and Results, but they encourage no more than 2,500 words 
+- No figure/table limit
+- 40 reference limit
+- Open access option ($1000 extra)
+
+
+Plos One
+- No word count or figure limit
+- Open access journal ($2000 - $3000)
+-->
 # Introduction
 
 ## 1
