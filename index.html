@@ -398,10 +398,10 @@ Table&nbsp;2: Research setting variables and values
 <div id="fig-bar-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), p-hacking (crosshatch), selection without controlling for X (striped), selection controlling for X (dotted)."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" width="672" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Dashed line depicts expected Type I error rate for .05 alpha."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-2.png" width="672" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), p-hacking (crosshatch), selection without controlling for X (striped), selection controlling for X (dotted).
+Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Dashed line depicts expected Type I error rate for .05 alpha.
 </figcaption>
 </figure>
 </div>
@@ -435,10 +435,10 @@ Figure&nbsp;2: Type I error by method and research setting. Plots are paneled by
 <div id="fig-bar-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), selection without controlling for X (striped), selection controlling for X (dotted)."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" width="672" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), selection without controlling for X (striped), selection controlling for X (dotted).
+Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color.
 </figcaption>
 </figure>
 </div>
@@ -486,19 +486,31 @@ Figure&nbsp;5: Sampling Distribution for Population Parameter Estimates.
 </section>
 <section id="discussion" class="level1">
 <h1>Discussion</h1>
-<!-- Discussion: -->
-<!-- 1. Don’t p-hack (type 1 error) -->
-<!-- 2. Use covariates (power) -->
-<!-- 3. In many instances you can use all covariates -->
-<!-- 4. Selection methods (R and partial R - comparable in power, one slight increase in type 1 and 1 small biasing in parameter estimates) might improve power in certain research settings (low n, large number of covariates). Describe departure in type 1 error by comparing with other violations - normality (trivial -->
-<!-- 5. Finding good covariates? -->
-<!-- 6. Branch on covariates - Measured covariates after baseline (reasonably sure that they were not affected by x). Another use of covariates is for controlling but that is different and more complicated.  -->
-<!-- 7. Don’t run with 50 but difficult to reach conclusions -->
-<!-- 8. Why we get biased parameter estimates with x -->
-<p>This present study sought to empirically compare methods for covariate selection in linear models. R scripts were used to generate data, fit linear models, and extract and visualize model results. The data generation process was based on full crossings of levels of variables which were chosen to represent common research settings in Psychology. Within each research setting, a unique dataset was simulated 40,000 times using high-throughput computing, with each dataset being used to fit models according to the nine methods discussed.</p>
-<p>The first step in evaluating the nine methods, was to establish which methods are statistically valid (i.e., have a Type I error rate of 0.05). We replicated previous findings that p-hacking is not a statistically valid method as it yielded inflated Type I error rates and biased parameter estimates. The remaining eight methods were found to be statistically valid, although LASSO and full linear model show slight inflation.</p>
-<p>With this established, the methods could be further compared by their Type II error rates. Lower Type II error can also be considered as higher statistical power. Including all covariates in a model shows a large reduction in Type II error compared to including no covariates in a model. Thus, researchers are encouraged to measure and use covariates. From there, performing a selection of covariates yields further reductions in Type II error compared to simply using all covariates. Overall, LASSO, partial correlation, and bivariate correlation resulted in the lowest Type II errors. However, there are more factors to take into consideration.</p>
-<p>Depending on the research setting, researchers may prefer one method over another. As sample size increases (especially past <span class="math inline">\(n=200\)</span>), the performance of methods tends to become indistinguishable. For the largest number of covariates tested (20), LASSO had the lowest Type II error, but for smaller numbers, it is comparable to partial correlation. LASSO showed more inflation of Type I error than the partial correlation approach which in turn showed more inflation than the bivariate correlation approach. Among these three, LASSO is the most computationally expensive and will come with a steep learning curve for new users. The bivariate correlation approach showed no inflation of Type I error, but underestimated the parameter estimates for the nonzero <span class="math inline">\(X\)</span> effects. The partial correlation approach did have slight inflation of Type I error, but correctly estimated the parameter estimates for the nonzero effects. The partial correlation approach also had lower Type II error than the bivariate correlation approach, overall and within different research contexts. With this information, researchers should consider what to prioritize depending on their goals.</p>
+<section id="dont-p-hack-and-other-type-1-error-conclusions" class="level4">
+<h4 class="anchored" data-anchor-id="dont-p-hack-and-other-type-1-error-conclusions">1. Don’t p-hack and other type 1 error conclusions</h4>
+</section>
+<section id="use-covariates-and-other-type-ii-error-conclusions" class="level4">
+<h4 class="anchored" data-anchor-id="use-covariates-and-other-type-ii-error-conclusions">2. Use covariates and other type II error conclusions</h4>
+</section>
+<section id="in-many-instances-you-can-use-all-covariates" class="level4">
+<h4 class="anchored" data-anchor-id="in-many-instances-you-can-use-all-covariates">3. In many instances you can use all covariates</h4>
+</section>
+<section id="compare-candidate-selection-methods-r-and-partial-r---comparable-in-power-one-slight-increase-in-type-1-and-1-small-biasing-in-parameter-estimates-might-improve-power-in-certain-research-settings-low-n-large-number-of-covariates.-describe-departure-in-type-1-error-by-comparing-with-other-violations---normality-trivial" class="level4">
+<h4 class="anchored" data-anchor-id="compare-candidate-selection-methods-r-and-partial-r---comparable-in-power-one-slight-increase-in-type-1-and-1-small-biasing-in-parameter-estimates-might-improve-power-in-certain-research-settings-low-n-large-number-of-covariates.-describe-departure-in-type-1-error-by-comparing-with-other-violations---normality-trivial">4. Compare candidate selection methods (R and partial R - comparable in power, one slight increase in type 1 and 1 small biasing in parameter estimates) might improve power in certain research settings (low n, large number of covariates). Describe departure in type 1 error by comparing with other violations - normality (trivial)</h4>
+</section>
+<section id="dont-run-with-n-50-but-acknowledge-difficulty-in-reaching-conclusions" class="level4">
+<h4 class="anchored" data-anchor-id="dont-run-with-n-50-but-acknowledge-difficulty-in-reaching-conclusions">5. Don’t run with n = 50 but acknowledge difficulty in reaching conclusions</h4>
+</section>
+<section id="alternative-type-of-covariate-not-addressed-in-this-study---measured-covariates-after-baseline-reasonably-sure-that-they-were-not-affected-by-x.-another-use-of-covariates-is-for-controlling-but-that-is-different-and-more-complicated." class="level4">
+<h4 class="anchored" data-anchor-id="alternative-type-of-covariate-not-addressed-in-this-study---measured-covariates-after-baseline-reasonably-sure-that-they-were-not-affected-by-x.-another-use-of-covariates-is-for-controlling-but-that-is-different-and-more-complicated.">6. Alternative type of covariate not addressed in this study - Measured covariates after baseline (reasonably sure that they were not affected by x). Another use of covariates is for controlling but that is different and more complicated.</h4>
+<!-- ### 7. Finding good covariates?  -->
+</section>
+<section id="why-we-get-biased-parameter-estimates-with-x" class="level4">
+<h4 class="anchored" data-anchor-id="why-we-get-biased-parameter-estimates-with-x">7. Why we get biased parameter estimates with x</h4>
+</section>
+<section id="final-conclusions" class="level4">
+<h4 class="anchored" data-anchor-id="final-conclusions">8. Final Conclusions</h4>
+</section>
 </section>
 <section id="references" class="level1 unnumbered">
 
