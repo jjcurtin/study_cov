@@ -38,7 +38,7 @@ method_colors <- c("No covariates" = "sienna",
                    "Bivariate correlation" = "#A1ECFF",
                    "Partial correlation" = "#113378",
                    "Full linear model" = "#C199F2",
-                   "Full linear model with X" = "#351178",
+                   "Full linear model with X" = "#5A1F7D",
                    "LASSO" = "#71E36D",
                    "LASSO with X" = "#054C02")
 method_linetypes <- c("No covariates" = "solid",
@@ -286,7 +286,7 @@ type_II_summary <- d_all |>
 
 type_II_summary |> 
   ggplot(aes(x = method, y = type_II, fill = method)) +
-  geom_column(color = "black") +
+  geom_col(color = "black") +
   # ggplot(aes(x = method, y = type_II, fill = method, pattern = method)) +
   # geom_bar_pattern(
   #   stat = "identity",
@@ -303,7 +303,8 @@ type_II_summary |>
                      breaks = seq(0, max(type_II_summary$type_II) * 1.2, by = 0.05)) +
   # scale_pattern_manual(values = method_patterns) +
   scale_fill_manual(values = method_colors) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legen.position = "none")
 ```
 
 ```{r}
