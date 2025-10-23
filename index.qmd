@@ -49,7 +49,7 @@ The validity of causal interpretations depends on the prequisite of adequate sta
 
 Adding covariates, variables measured at baseline prior to the manipulation, to statistical models has been shown to reduce Type II error by accounting for unexplained variance in the outcome that might otherwise be interpreted as noise<!--citations-->. In the earlier example, where researchers test whether a new treatment reduces anxiety symptoms, they might consider including a measure of recent stressful life events as a covariate. Stressful events are expected to correlate with anxiety but, if measured after treatment assignment, would not be correlated with the manipulated variable thereby reducing variance in anxiety that is unrelated to the manipulation.
 
-However, selecting which covariates to include is not straightforward. As a result, researchers have often iterated over their analyses, selectively adding covariates that improve the statistical significance (i.e., *p*-value) of their focal variable. This is a practice known as *p*-hacking [@urisimonsohnPCurveEffectSize2014]. It is now well-estabished that this is a statistically invalid method for covariate selection and leads to an increased Type I error rate (i.e., finding significant effects that do not truly exist; [@simmonsFalsepositivePsychologyUndisclosed2011; @ioannidisWhyMostPublished2005]). 
+However, selecting which covariates to include is not straightforward. As a result, researchers have often iterated over their analyses, selectively adding covariates that improve the statistical significance (i.e., *p*-value) of their focal variable. This is a practice known as *p*-hacking [@urisimonsohnPCurveEffectSize2014]. It is now well-established that this is a statistically invalid method for covariate selection and leads to an increased Type I error rate (i.e., finding significant effects that do not truly exist; [@simmonsFalsepositivePsychologyUndisclosed2011; @ioannidisWhyMostPublished2005]). 
 
 While this serves as an example of what not to do, there remains an important question on how covariates should be selected. In light of the serious consequences of *p*-hacking, as highlighted by @simmonsFalsepositivePsychologyUndisclosed2011 and others, one might conclude that perhaps no covariates should be used. Though, as noted earlier, this would increase the risk of Type II error. Another conclusion might be to use all available covariates that are reasonably believed to account for unexplained variance in the outcome. Each additional covariate, however, reduces degrees of freedom. In psychology, where potential covariates are numerous and often redundant, this can unnecessarily reduce degrees of freedom, again increasing the risk of Type II error. 
 
@@ -133,6 +133,17 @@ We also assessed Type II error by individual research setting (@fig-panel-2). Ac
 
 
 # Discussion
+
+<!-- Discussion: -->
+<!-- 1. Don’t p-hack (type 1 error) -->
+<!-- 2. Use covariates (power) -->
+<!-- 3. In many instances you can use all covariates -->
+<!-- 4. Selection methods (R and partial R - comparable in power, one slight increase in type 1 and 1 small biasing in parameter estimates) might improve power in certain research settings (low n, large number of covariates). Describe departure in type 1 error by comparing with other violations - normality (trivial -->
+<!-- 5. Finding good covariates? -->
+<!-- 6. Branch on covariates - Measured covariates after baseline (reasonably sure that they were not affected by x). Another use of covariates is for controlling but that is different and more complicated.  -->
+<!-- 7. Don’t run with 50 but difficult to reach conclusions -->
+<!-- 8. Why we get biased parameter estimates with x -->
+
 
 This present study sought to empirically compare methods for covariate selection in linear models. R scripts were used to generate data, fit linear models, and extract and visualize model results. The data generation process was based on full crossings of levels of variables which were chosen to represent common research settings in Psychology. Within each research setting, a unique dataset was simulated 40,000 times using high-throughput computing, with each dataset being used to fit models according to the nine methods discussed.
 
