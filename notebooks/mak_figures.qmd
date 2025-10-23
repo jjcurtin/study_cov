@@ -34,13 +34,13 @@ library(kableExtra, exclude = ("group_rows"))
 theme_set(theme_classic())
 method_colors <- c("No covariates" = "sienna",
                    "All covariates" = "goldenrod2",
-                   "p-hacking" = "red2",
-                   "Bivariate correlation" = "springgreen3",
-                   "Partial correlation" = "deepskyblue",
-                   "Full linear model" = "mediumpurple1",
-                   "Full linear model with X" = "slateblue1",
-                   "LASSO" = "hotpink",
-                   "LASSO with X" = "lightpink")
+                   "p-hacking" = "#B01505",
+                   "Bivariate correlation" = "#A1ECFF",
+                   "Partial correlation" = "#113378",
+                   "Full linear model" = "#C199F2",
+                   "Full linear model with X" = "#351178",
+                   "LASSO" = "#71E36D",
+                   "LASSO with X" = "#054C02")
 method_linetypes <- c("No covariates" = "solid",
                       "All covariates" = "solid",
                       "p-hacking" = "dashed",
@@ -51,15 +51,15 @@ method_linetypes <- c("No covariates" = "solid",
                       "LASSO" = "longdash",
                       "LASSO with X" = "twodash")
 
-method_patterns <- c("No covariates" = "none",
-                      "All covariates" = "none",
-                      "p-hacking" = "crosshatch",
-                      "Bivariate correlation" = "stripe",
-                      "Partial correlation" = "circle",
-                      "Full linear model" = "stripe",
-                      "Full linear model with X" = "circle",
-                      "LASSO" = "stripe",
-                      "LASSO with X" = "circle")
+# method_patterns <- c("No covariates" = "none",
+#                       "All covariates" = "none",
+#                       "p-hacking" = "crosshatch",
+#                       "Bivariate correlation" = "stripe",
+#                       "Partial correlation" = "circle",
+#                       "Full linear model" = "stripe",
+#                       "Full linear model with X" = "circle",
+#                       "LASSO" = "stripe",
+#                       "LASSO with X" = "circle")
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
@@ -159,20 +159,23 @@ type_I_summary <- d_0 |>
 
 ```{r}
 #| label: fig-bar-1
-#| fig-cap: "Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), p-hacking (crosshatch), selection without controlling for X (striped), selection controlling for X (dotted)."
+#| fig-cap: "Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Dashed line depicts expected Type I error rate for .05 alpha."
  
 type_I_summary |>
   mutate(method = fct_relevel(method, "p-hacking")) |>
-  ggplot(aes(x = method, y = type_I, fill = method, pattern = method)) +
-  geom_bar_pattern(
-    stat = "identity",
-    pattern_fill = "black",
-    pattern_angle = 45,
-    pattern_density = 0.1,
-    pattern_size = .1,
-    pattern_spacing = 0.05,
-    color = "black") +
+  ggplot(aes(x = method, y = type_I, fill = method)) +
+  geom_col(color = "black") +
+  # ggplot(aes(x = method, y = type_I, fill = method, pattern = method)) +
+  # geom_bar_pattern(
+  #   stat = "identity",
+  #   pattern_fill = "black",
+  #   pattern_angle = 45,
+  #   pattern_density = 0.1,
+  #   pattern_size = .1,
+  #   pattern_spacing = 0.05,
+  #   color = "black") +
   geom_text(aes(label = sprintf("%.3f", type_I)), vjust = -0.5) +
+  geom_hline(yintercept = .5, linetype = "dashed") +
   labs(x = NULL,
        y = "Type I Error",
        fill = "Method",
@@ -181,7 +184,8 @@ type_I_summary |>
                      breaks = seq(0, max(type_I_summary$type_I) * 1.2, by = 0.05)) +
   scale_pattern_manual(values = method_patterns) +
   scale_fill_manual(values = method_colors) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none")
 ```
 
 
@@ -272,7 +276,7 @@ ycor <- d_0 |>
 
 ```{r}
 #| label: fig-bar-2
-#| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Patterns indicate type of covariate selection: no selection (solid), selection without controlling for X (striped), selection controlling for X (dotted)."
+#| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color."
 
 d_all <- d_03 |>
   bind_rows(d_05) |> 
@@ -283,15 +287,17 @@ type_II_summary <- d_all |>
   summarise(type_II = mean(p_value >= 0.05))
 
 type_II_summary |> 
-  ggplot(aes(x = method, y = type_II, fill = method, pattern = method)) +
-  geom_bar_pattern(
-    stat = "identity",
-    pattern_fill = "black",
-    pattern_angle = 45,
-    pattern_density = 0.1,
-    pattern_size = .1,
-    pattern_spacing = 0.05,
-    color = "black") +
+  ggplot(aes(x = method, y = type_II, fill = method)) +
+  geom_column(color = "black") +
+  # ggplot(aes(x = method, y = type_II, fill = method, pattern = method)) +
+  # geom_bar_pattern(
+  #   stat = "identity",
+  #   pattern_fill = "black",
+  #   pattern_angle = 45,
+  #   pattern_density = 0.1,
+  #   pattern_size = .1,
+  #   pattern_spacing = 0.05,
+  #   color = "black") +
   geom_text(aes(label = sprintf("%.3f", type_II)), vjust = -0.5) +
   labs(x = NULL,
        y = "Type II Error",
@@ -383,7 +389,8 @@ b_x <- d_all |>
        subtitle = "Population Parameter for X") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) +
-  theme(legend.title = element_blank())
+  theme(legend.title = element_blank(),
+        legend.position = "none")
 
 ```
 
