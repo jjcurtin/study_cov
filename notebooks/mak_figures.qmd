@@ -177,12 +177,10 @@ type_I_summary |>
   geom_text(aes(label = sprintf("%.3f", type_I)), vjust = -0.5) +
   geom_hline(yintercept = .5, linetype = "dashed") +
   labs(x = NULL,
-       y = "Type I Error",
-       fill = "Method",
-       pattern = "Method") +
+       y = "Type I Error") +
   scale_y_continuous(limits = c(0, max(type_I_summary$type_I) * 1.2), 
                      breaks = seq(0, max(type_I_summary$type_I) * 1.2, by = 0.05)) +
-  scale_pattern_manual(values = method_patterns) +
+  # scale_pattern_manual(values = method_patterns) +
   scale_fill_manual(values = method_colors) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         legend.position = "none")
@@ -300,12 +298,10 @@ type_II_summary |>
   #   color = "black") +
   geom_text(aes(label = sprintf("%.3f", type_II)), vjust = -0.5) +
   labs(x = NULL,
-       y = "Type II Error",
-       fill = "Method",
-       pattern = "Method") +
+       y = "Type II Error") +
   scale_y_continuous(limits = c(0, max(type_II_summary$type_II) * 1.2), 
                      breaks = seq(0, max(type_II_summary$type_II) * 1.2, by = 0.05)) +
-  scale_pattern_manual(values = method_patterns) +
+  # scale_pattern_manual(values = method_patterns) +
   scale_fill_manual(values = method_colors) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
