@@ -27,7 +27,7 @@ library(skimr)
 library(purrr)
 library(ggplot2)
 library(patchwork)
-library(ggpattern)
+# library(ggpattern)
 library(forcats)
 library(kableExtra, exclude = ("group_rows"))
 
@@ -304,7 +304,7 @@ type_II_summary |>
   # scale_pattern_manual(values = method_patterns) +
   scale_fill_manual(values = method_colors) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legen.position = "none")
+        legend.position = "none")
 ```
 
 ```{r}
