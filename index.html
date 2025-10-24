@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -54,10 +54,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a1ff8711b79ae3724c050874b28d9907.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -248,8 +248,8 @@ Plos One
 -->
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Psychology researchers are often interested in experimental manipulations as a means of estabishing causal relationships between a variable of interest and a psychological outcome. For example, researchers may manipulate treatment conditions to determine whether a new psychotherapy intervention reduces anxiety symptoms.</p>
-<p>The validity of causal interpretations depends on the prequisite of adequate statistical power <span class="citation" data-cites="cohenStatisticalPowerAnalysis1988 cohenPowerPrimer1992">(<a href="#ref-cohenStatisticalPowerAnalysis1988" role="doc-biblioref">Cohen 1988</a>, <a href="#ref-cohenPowerPrimer1992" role="doc-biblioref">1992</a>)</span>. Statistical power is the probability of avoiding a Type II error, or failing to reject the null hypothesis when a true effect exists. The field has increasingly recognized the critical importance of adequately powered studies. Low-powered studies do not replicate well. They have a low probability of finding true effects and when an effect is detected, the magnitude of the effect is often inflated and the likelihood that the finding is a true positive is low <span class="citation" data-cites="cohenStatisticalPowerAbnormalsocial1962 buttonPowerFailureWhy2013">(<a href="#ref-cohenStatisticalPowerAbnormalsocial1962" role="doc-biblioref">Cohen 1962</a>; <a href="#ref-buttonPowerFailureWhy2013" role="doc-biblioref">Button et al. 2013</a>)</span>. These concerns have led to a replication crisis and have prompted increased caution and consideration around researcher decisions in statistical tests.</p>
+<p>Psychology researchers are often interested in experimental manipulations as a means of establishing causal relationships between a variable of interest and a psychological outcome. For example, researchers may manipulate treatment conditions to determine whether a new psychotherapy intervention reduces anxiety symptoms.</p>
+<p>Valid causal interpretations require adequate statistical power <span class="citation" data-cites="cohenStatisticalPowerAnalysis1988 cohenPowerPrimer1992">(<a href="#ref-cohenStatisticalPowerAnalysis1988" role="doc-biblioref">Cohen 1988</a>, <a href="#ref-cohenPowerPrimer1992" role="doc-biblioref">1992</a>)</span>. Statistical power is the probability of avoiding a Type II error, or failing to reject the null hypothesis when a true effect exists. The field has increasingly recognized the critical importance of adequately powered studies. Low-powered studies do not replicate well. They have a low probability of finding true effects and when an effect is detected, the magnitude of the effect is often inflated and the likelihood that the finding is a true positive is low <span class="citation" data-cites="cohenStatisticalPowerAbnormalsocial1962 buttonPowerFailureWhy2013">(<a href="#ref-cohenStatisticalPowerAbnormalsocial1962" role="doc-biblioref">Cohen 1962</a>; <a href="#ref-buttonPowerFailureWhy2013" role="doc-biblioref">Button et al. 2013</a>)</span>. These concerns have led to a replication crisis and have prompted increased caution and consideration around researcher decisions in statistical tests.</p>
 <p>Adding covariates, variables measured at baseline prior to the manipulation, to statistical models has been shown to reduce Type II error by accounting for unexplained variance in the outcome that might otherwise be interpreted as noise <span class="citation" data-cites="thompsonCovariateAdjustmentHad2015 hernandezCovariateAdjustmentRandomized2004 hernandezRandomizedControlledTrials2006 kahanRisksRewardsCovariate2014 vanbreukelenANCOVAChangeBaseline2006 egbewaleBiasPrecisionStatistical2014">(<a href="#ref-thompsonCovariateAdjustmentHad2015" role="doc-biblioref">Thompson et al. 2015</a>; <a href="#ref-hernandezCovariateAdjustmentRandomized2004" role="doc-biblioref">Adrián V. Hernández, Steyerberg, and Habbema 2004</a>; <a href="#ref-hernandezRandomizedControlledTrials2006" role="doc-biblioref">Adrián V. Hernández, Eijkemans, and Steyerberg 2006</a>; <a href="#ref-kahanRisksRewardsCovariate2014" role="doc-biblioref">Kahan et al. 2014</a>; <a href="#ref-vanbreukelenANCOVAChangeBaseline2006" role="doc-biblioref">Van Breukelen 2006</a>; <a href="#ref-egbewaleBiasPrecisionStatistical2014" role="doc-biblioref">Egbewale, Lewis, and Sim 2014</a>)</span>. In the earlier example, where researchers test whether a new treatment reduces anxiety symptoms, they might consider including a measure of recent stressful life events as a covariate. Stressful events are expected to correlate with anxiety but, if measured after treatment assignment, would not be correlated with the manipulated variable thereby reducing variance in anxiety that is unrelated to the manipulation.</p>
 <p>However, selecting which covariates to include is not straightforward. As a result, researchers have often iterated over their analyses, selectively adding covariates that improve the statistical significance (i.e., <em>p</em>-value) of their focal variable. This is a practice known as <em>p</em>-hacking <span class="citation" data-cites="simonsohnPcurveKeyFiledrawer2014">(<a href="#ref-simonsohnPcurveKeyFiledrawer2014" role="doc-biblioref">Simonsohn, Nelson, and Simmons 2014</a>)</span>. It is now well-established that this is a statistically invalid method for covariate selection and leads to an increased Type I error rate (i.e., finding significant effects that do not truly exist; <span class="citation" data-cites="simmonsFalsepositivePsychologyUndisclosed2011 ioannidisWhyMostPublished2005 schelchterPosthocSelectionCovariates1985 beachChoosingCovariatesAnalysis1989">(<a href="#ref-simmonsFalsepositivePsychologyUndisclosed2011" role="doc-biblioref">Simmons, Nelson, and Simonsohn 2011</a>; <a href="#ref-ioannidisWhyMostPublished2005" role="doc-biblioref">Ioannidis 2005</a>; <a href="#ref-schelchterPosthocSelectionCovariates1985" role="doc-biblioref">Schelchter and Forsythe 1985</a>; <a href="#ref-beachChoosingCovariatesAnalysis1989" role="doc-biblioref">Beach and Meier 1989</a>)</span>).</p>
 <p>While this serves as an example of what not to do, there remains an important question on how covariates should be selected. In light of the serious consequences of <em>p</em>-hacking, as highlighted by <span class="citation" data-cites="simmonsFalsepositivePsychologyUndisclosed2011">Simmons, Nelson, and Simonsohn (<a href="#ref-simmonsFalsepositivePsychologyUndisclosed2011" role="doc-biblioref">2011</a>)</span> and others, one might conclude that perhaps no covariates should be used. Though, as noted earlier, this would increase the risk of Type II error. Another conclusion might be to use all available covariates that are reasonably believed to account for unexplained variance in the outcome. Each additional covariate, however, reduces degrees of freedom. In psychology, where potential covariates are numerous and often redundant, this can unnecessarily reduce degrees of freedom, again increasing the risk of Type II error.</p>
@@ -650,8 +650,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -762,7 +760,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -989,7 +986,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
