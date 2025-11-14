@@ -80,6 +80,7 @@ open for all and no?   but then how on line graphs?
 We evaluated nine linear regression models with varying levels and methods of covariate selection. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on the Pearson correlation coefficient (*r*), a full linear model, and LASSO, controlling for the focal manipulation (i.e., *X*) and without controlling for *X*. A summary of the nine models is presented in @tbl-methods.<!--how select?   Need to make distinction that focuses on covs not X-->
 <!--terminology:  not models.   Methods, procedures?-->
 <!--not correlation because that cant generalize to include x-->
+<!--all are selection methods.   But some are using data to select-->
 {{< embed notebooks/mak_tables.qmd#tbl-methods >}}
 
 
@@ -178,10 +179,13 @@ Use Covariates
 In many instances, using all available covariates is reasonable option
 
 - again, 05 type 1 and unbiased always
+- easiest because doesnt require any emprical selection
 - on average only 1.5 - 2.5% lower power compared to better selection methods
 - BUT relative worse with small N or large number of covariates. Likely DF related.  Small N is where we maybe most need covariates.   Also some research contexts may have more than 20 covariates available.   Select in those contexts
+- And maybe you never want to leave any power on the table.  
 
 Lets talk through select method recs DURING MEETING
+
 
 Anchor Type I inflation - need simulation
 Anchor Type II benefit?  small but how to think about it?   N increase but not linear so specific N?
@@ -189,10 +193,9 @@ Anchor Type II benefit?  small but how to think about it?   N increase but not l
 
 Focused on power with covariates measured at baseline/before assignment/manipulation.  Still likely applicable when covs are uncorrelated but measured after baseline
 
-Did not address use of covariates for statistical control of confounds.   That must be done based on theory about confounds and causal structure.   Complicated and not as strong as people think because of exact X.  Focus of another paper
+Did not address use of covariates for statistical control of confounds. Common where X cannot be manipulated.  That must be done based on theory about confounds and causal structure.   Complicated and not as strong as people think because of exact X.  Focus of another paper
 
 
-Not sure what you mean by "Finding good covariates?
 
 -->
 
