@@ -59,29 +59,48 @@ This study aims to provide clear and accessible methods for researchers to selec
 
 # Methods
 
+<!-- names
+single covariate lm
+single covariate lm with X
+all covariates lm
+all covariates lm with X
+all covariates LASSO
+all covariate LASSO with x
+
+bar plot patterns
+cross vs. solid for without vs. with x? Colors for methods    dashed vs. solid, keep colors
+Solid red for hack - keep color and solid line
+open for all and no?   but then how on line graphs?
+-->
+
+
+
 ## Covariate Selection Methods
 
 We evaluated nine linear regression models with varying levels and methods of covariate selection. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on the Pearson correlation coefficient (*r*), a full linear model, and LASSO, controlling for the focal manipulation (i.e., *X*) and without controlling for *X*. A summary of the nine models is presented in @tbl-methods.<!--how select?   Need to make distinction that focuses on covs not X-->
-
+<!--terminology:  not models.   Methods, procedures?-->
+<!--not correlation because that cant generalize to include x-->
 {{< embed notebooks/mak_tables.qmd#tbl-methods >}}
 
 
 
 ## Research Settings
 <!--consider adding citations throughout this section to justify some of our decisions-->
-
+<!--research context rather than setting-->
+<!--why important to manipulate context?-->
 We manipulated several variables designed to mimic varying research settings that psychology researchers might be working in. We crossed all levels of each variable to create a total of 540 unique research settings. A summary of these settings is presented in @tbl-dictionary. The variables include:
 
 1. The true population parameter for X. We selected values that represent null ($b_x = 0$), medium ($b_x = 0.3$) and large ($b_x = 0.5$) effect sizes. 
-
+<!--convert to d-->
 2. The sample size. We chose values for the number of observations that pertain to common sample sizes in experimental research: 50, 100, 150, 200, 300, and 400 observations.
 
 2. The number of covariates available. We selected a wide range of possible scenarios: 4, 8, 12, 16, or 20 covariates.
 
 3. The proportion of "good" covariates. We used varying proportions of good covariates across research settings (.25, .50, and .75) to represent a common reality when a researcher is faced with many covariates, but only some may be related to their outcome.
+<!--not clear what "good" is-->
 
 4. The strength of the relationship between the good covariates and Y. All good covariates were given a moderate and large relationship to *Y*, correlations of 0.3 and 0.5, respectively. Since these good covariates are all correlated with *Y*, it is likeley they are also correlated with each other. Therefore we assigned a moderate 0.3 correlation for all relationships among good covariates. 
-
+<!--combine with 4 at least in the description here-->
 
 
 {{< embed notebooks/mak_tables.qmd#tbl-dictionary >}}
@@ -89,9 +108,13 @@ We manipulated several variables designed to mimic varying research settings tha
 
 ## Data Analytic Plan
 
-All data analyses were done in R (version 4.4.2). Simulations were run using high-throughput computing resources provided by the University of Wisconsin-Madison Center for High Throughput Computing [@chtc]. 
+All data analyses were done in R (version 4.4.2). <!--not sure about version.  Maybe also cite RStudio and tidyverse-->Simulations were run using high-throughput computing resources provided by the University of Wisconsin-Madison Center for High Throughput Computing [@chtc]. 
 
 We ran 40,000 simulations for each research setting. Within each simulation we generated a unique datset that consisted of a dichotomous focal variable (*X*), varying numbers of quantitative covariates, where a subset are correlated with each other and with *Y* (see Research Settings section), and a quantitative outcome (*Y*) calculated by adding the *X* variable multiplied by the effect size (i.e., population parameter) to the *Y* generated from the correlation matrix with the covariates. We fit models from our nine methods on each simulated dataset. From each model we saved out the parameter estimate, standard error, and p-value for *X*. We also calculated true and false positive rates to evaluate the rate at which the model selected covariates correlated with *Y* (i.e., percentage of good covariates selected) and incorrectly selected covariates not correlated with *Y* (i.e., percentage of bad covariates selected).
+<!--edit above a bit for clarity-->
+<!--true and false positve rates are confusing.  Think of X but you mean cov as good.  Maybe we dont even need those analyses?-->
+
+<!--show code to generate Y in paper??-->
 
 For research settings where the population parameter for *X* is 0 (i.e., *X* has no effect on *Y*), we report the Type I error rate for each method both across and within research settings. For research settings where the population parameter for *X* is 0.3 or 0.5 (i.e., *X* has an effect on *Y*), we report the Type II error rate for each method across and within research settings. We also provide sampling distributions of the parameter estimate for *X* across research settings for each method, separately by true effect size (0, 0.3, and 0.5). Detailed tables of range and average error rates for each research setting and true and false positive rates for covariates are available in the supplement.
 
@@ -104,6 +127,7 @@ Since this is simulation study, we were able to set the true population paramete
 
 {{< embed notebooks/mak_figures.qmd#fig-bar-1 >}}
 
+<!--make point that type 1 error is .05 for all and no covariates approach before p-hacking -->
 
 We assessed Type I error by individual research setting and found several patterns (@fig-type1-panel). First, small sample sizes are more susceptible to inflated Type I error rates when using covariate selection methods that control for *X*. As sample sizes get larger (i.e., *n* = 300), the methods become comparable. Second, as the number of available covariates to select from increases, Type I error rate increases for covariate selection methods that control for *X*, such as a full linear model with *X* and LASSO with *X*, and to a lesser degree partial correlation. Third, there appeared to be no definitive pattern in Type I error rate as the proportion of good covariates increased<!--maybe error of LASSO decreases slightly and error of full linear model increases?-->. Similarly we did not see changes in Type I error rate as function of the correlation strength between covariates and *Y*.
 
@@ -114,8 +138,10 @@ We assessed Type I error by individual research setting and found several patter
 
 ## Type II Error
 
-We simulated datasets with two possible population parameters for the effect of *X* on *Y* ($b_x = 0.3$, $b_x = 0.5$). Any non-significant result found indicated a Type II error. Stronger statistical methods will have lower Type II error (implying greater statistical power). Since we demonstrated that p-hacking substantially inflates Type I error, making it a statistically invalid method for covariate selection, we do not evaluate Type II Error for this method. [@fig-bar-2] shows the average Type II error rate across all research settings for each method. Using no covariates results in the highest Type II error highlighting the importance of covariates for detecting true effects. Type II error rates trended lower for covariate selection methods that controlled for *X* compared to those that did not control for *X*.
+We simulated datasets with two possible population parameters for the effect of *X* on *Y* ($b_x = 0.3$, $b_x = 0.5$). Any non-significant result found indicated a Type II error. Stronger statistical methods will have lower Type II error (implying greater statistical power). Since we demonstrated that p-hacking substantially inflates Type I error, making it a statistically invalid method for covariate selection, we do not evaluate Type II Error for this method. 
 
+[@fig-bar-2] shows the average Type II error rate across all research settings for each method. Using no covariates results in the highest Type II error highlighting the importance of covariates for detecting true effects. Type II error rates trended lower for covariate selection methods that controlled for *X* compared to those that did not control for *X*.
+<!-- what about all covariates?-->
 {{< embed notebooks/mak_figures.qmd#fig-bar-2 >}}
 
 We also assessed Type II error by individual research setting (@fig-panel-2). Across all research setting, using no covariates was associated with higher Type II error.  Using all available covariates or selection methods that do not control for *X* performed had higher Type II error rates compared to the other methods when sample sizes were low. This pattern was especially notable for using all covariates and a full linear model without *X*. As sample size increased, the methods performed comparably with respect to Type II error. Using all covariates or a full linear model without *X* for selection produced higher Type II error rates compared to other methods when there was a larger number of covariates available. The full linear model without *X* also produced higher Type II error rates, compared to other methods when the proportion of good covariates was higher.
@@ -127,17 +153,54 @@ We also assessed Type II error by individual research setting (@fig-panel-2). Ac
 
 
 ## Parameter Estimates
+<!--table rather than distributions.  Three columns for three b.   Doesn't without X show some bias???-->
+<!--remind that when assumptions met, parameter estimates are unbiased-->
+<!--need to look at this and think a bit more.  Should this also be reported separately for b =0 vs. b <>0 and embedded in those sections above.  Can make the point that we want low type II, .05 type I and unbiased at the start of method or end of intro-->
 
 @fig-distribution-bx shows the sampling distribution for the parameter estimate of *X* for all nine methods separately by effect size ($b_x = 0$, $b_x = 0.3$, $b_x = 0.5$). Distributions for parameter estimates for all methods are centered around the true population values. Using no covariates produces a wider distribution, indicating more variability in its parameter estimates. The top plot also highlights an unusual feature of p-hacking. When there is no true effect the distribution appears bimodal due to the artificial inflation or deflation of parameter estimates that occurs when selecting covariates to obtain a significant p-value. 
 
 {{< embed notebooks/mak_figures.qmd#fig-distribution-bx >}}
 
 
+<!--TABLE of TYPE1 and TYPE 2 by method, b and context?  In paper or supplement
 
 # Discussion
+<!--
+Dont p-hack
+- we knew this
+- but this reinforces the magnitude of the problem. Talk about how bad it can really be in some contexts (which ones?)
+Compare to simons estimate, which is underestimate
 
-#### 1. Don’t p-hack and other type 1 error conclusions 
+Use Covariates
+- no covariates approach does have 05 Type I and unbiased parameter estimates
+- but meaningfully higher type II.  Talk about average and then where it is worse
 
+In many instances, using all available covariates is reasonable option
+
+- again, 05 type 1 and unbiased always
+- on average only 1.5 - 2.5% lower power compared to better selection methods
+- BUT relative worse with small N or large number of covariates. Likely DF related.  Small N is where we maybe most need covariates.   Also some research contexts may have more than 20 covariates available.   Select in those contexts
+
+Lets talk through select method recs DURING MEETING
+
+Anchor Type I inflation - need simulation
+Anchor Type II benefit?  small but how to think about it?   N increase but not linear so specific N?
+
+
+Focused on power with covariates measured at baseline/before assignment/manipulation.  Still likely applicable when covs are uncorrelated but measured after baseline
+
+Did not address use of covariates for statistical control of confounds.   That must be done based on theory about confounds and causal structure.   Complicated and not as strong as people think because of exact X.  Focus of another paper
+
+
+Not sure what you mean by "Finding good covariates?
+
+-->
+
+
+
+
+
+#### 1. Don't p hack and other type I error conclusions
 
 #### 2. Use covariates and other type II error conclusions
 
