@@ -48,7 +48,7 @@ div.csl-indent {
 }</style>
 
 
-<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -61,6 +61,9 @@ div.csl-indent {
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -485,8 +488,88 @@ Figure&nbsp;4: Type II error by method and research context. Plots are paneled b
 <!--table rather than distributions.  Three columns for three b.   Doesn't without X show some bias???-->
 <!--remind that when assumptions met, parameter estimates are unbiased-->
 <!--need to look at this and think a bit more.  Should this also be reported separately for b =0 vs. b <>0 and embedded in those sections above.  Can make the point that we want low type II, .05 type I and unbiased at the start of method or end of intro-->
-<!--TABLE X-->
-<p>shows the sampling distribution for the parameter estimate of <em>X</em> for all nine methods separately by effect size (<span class="math inline">\(b_x = 0\)</span>, <span class="math inline">\(b_x = 0.3\)</span>, <span class="math inline">\(b_x = 0.5\)</span>). Distributions for parameter estimates for all methods are centered around the true population values. Using no covariates produces a wider distribution, indicating more variability in its parameter estimates. The top plot also highlights an unusual feature of p-hacking. When there is no true effect the distribution appears bimodal due to the artificial inflation or deflation of parameter estimates that occurs when selecting covariates to obtain a significant p-value.</p>
+<p><a href="#tbl-est" class="quarto-xref">Table&nbsp;3</a> shows the mean parameter estimate of <em>X</em> for all nine methods separately by effect size (<span class="math inline">\(b_x = 0\)</span>, <span class="math inline">\(b_x = 0.3\)</span>, <span class="math inline">\(b_x = 0.5\)</span>). All methods yield unbiased estimates when the effect size is 0. When there is a non-zero effect, p-hacking methods notably inflate the effect size. Other data-driven methods that do not control for X yield slightly biased parameter estimates. Sampling distributions of parameter estimates are available in the supplement.</p>
+<div class="quarto-embed-nb-cell">
+<div class="cell">
+<div id="tbl-est" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Mean estimates of effect size by method and true effect size
+</figcaption>
+<div aria-describedby="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<table class="lightable-classic do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">method</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">b_x = 0</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">b_x = .3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">b_x = .5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">p-hacking</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.368</td>
+<td style="text-align: right;">0.563</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No covariates</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.300</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All covariates</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.300</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Single covariate lm</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.297</td>
+<td style="text-align: right;">0.495</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Single covariate lm with X</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.300</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All covariates lm</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.287</td>
+<td style="text-align: right;">0.479</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All covariates lm with X</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.300</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All covariates LASSO</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.292</td>
+<td style="text-align: right;">0.487</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All covariates LASSO with X</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.300</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
 <!--TABLE of TYPE1 and TYPE 2 by method, b and context?  In paper or supplement
 
 # Discussion
@@ -1026,7 +1109,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
