@@ -27,39 +27,54 @@ library(skimr)
 library(purrr)
 library(ggplot2)
 library(patchwork)
-# library(ggpattern)
+library(ggpattern)
 library(forcats)
 library(kableExtra, exclude = ("group_rows"))
 
 theme_set(theme_classic())
-method_colors <- c("No covariates" = "sienna",
-                   "All covariates" = "goldenrod2",
-                   "p-hacking" = "#B01505",
-                   "Bivariate correlation" = "#A1ECFF",
-                   "Partial correlation" = "#113378",
-                   "Full linear model" = "#C199F2",
-                   "Full linear model with X" = "#5A1F7D",
-                   "LASSO" = "#71E36D",
-                   "LASSO with X" = "#054C02")
-method_linetypes <- c("No covariates" = "solid",
-                      "All covariates" = "solid",
-                      "p-hacking" = "dashed",
-                      "Bivariate correlation" = "longdash",
-                      "Partial correlation" = "twodash",
-                      "Full linear model" = "longdash",
-                      "Full linear model with X" = "twodash",
-                      "LASSO" = "longdash",
-                      "LASSO with X" = "twodash")
 
-# method_patterns <- c("No covariates" = "none",
-#                       "All covariates" = "none",
-#                       "p-hacking" = "crosshatch",
-#                       "Bivariate correlation" = "stripe",
-#                       "Partial correlation" = "circle",
-#                       "Full linear model" = "stripe",
-#                       "Full linear model with X" = "circle",
-#                       "LASSO" = "stripe",
-#                       "LASSO with X" = "circle")
+
+
+method_colors <- c("No covariates" = "#9E5900",
+                   "All covariates" = "#E8BE6D",
+                   "p-hacking" = "#C92C04",
+                   "Single covariate lm" = "#5489BA",
+                   "Single covariate lm with X" = "#5489BA",
+                   "All covariates lm" = "#664896",
+                   "All covariates lm with X" = "#664896",
+                   "All covariates LASSO" = "#4A7C59",
+                   "All covariates LASSO with X" = "#4A7C59")
+
+
+method_linetypes <- c("No covariates" = "solid",
+                     "All covariates" = "solid",
+                     "p-hacking" = "solid",
+                     "Single covariate lm" = "dashed",
+                     "Single covariate lm with X" = "solid",
+                     "All covariates lm" = "dashed",
+                     "All covariates lm with X" = "solid",
+                     "All covariates LASSO" = "dashed",
+                     "All covariates LASSO with X" = "solid")
+
+method_linewidths <- c("No covariates" = .5,
+                     "All covariates" = .5,
+                     "p-hacking" = .7,
+                     "Single covariate lm" = .7,
+                     "Single covariate lm with X" = .7,
+                     "All covariates lm" = .7,
+                     "All covariates lm with X" = .7,
+                     "All covariates LASSO" = .7,
+                     "All covariates LASSO with X" = .7)
+
+method_patterns <- c("No covariates" = "none",
+                     "All covariates" = "none",
+                     "p-hacking" = "none",
+                     "Single covariate lm" = "stripe",
+                     "Single covariate lm with X" = "none",
+                     "All covariates lm" = "stripe",
+                     "All covariates lm with X" = "none",
+                     "All covariates LASSO" = "stripe",
+                     "All covariates LASSO with X" = "none")
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
@@ -121,69 +136,121 @@ rm(d_20_covs, d_n50, d2_0, d2_03, d2_05, d_wo_x_og, d_wo_x_new)
 #| label: factor levels
 
 d_0 <- d_0 |> 
-  mutate(method = factor(method, levels = c("no_covs", "all_covs", "p_hacked", "r", 
+  mutate(method = factor(method, levels = c("p_hacked", "no_covs", "all_covs", "r",
                                             "partial_r", "full_lm_wo_x", "full_lm",  
                                            "lasso_wo_x", "lasso"),
-                         labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Bivariate correlation", "Partial correlation", 
-                                    "Full linear model", "Full linear model with X", 
-                                            "LASSO", "LASSO with X")))
+                         labels = c("p-hacking", "No covariates", "All covariates", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                            "All covariates LASSO", "All covariates LASSO with X")))
 
 d_03 <- d_03 |> 
-  mutate(method = factor(method, levels = c("no_covs", "all_covs", "p_hacked", "r", 
+  mutate(method = factor(method, levels = c("p_hacked", "no_covs", "all_covs",  "r", 
                                             "partial_r", "full_lm_wo_x", "full_lm",  
                                            "lasso_wo_x", "lasso"),
-                         labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Bivariate correlation", "Partial correlation", 
-                                    "Full linear model", "Full linear model with X", 
-                                            "LASSO", "LASSO with X")))
+                         labels = c("p-hacking", "No covariates", "All covariates", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                            "All covariates LASSO", "All covariates LASSO with X")))
 
 d_05 <- d_05 |> 
-  mutate(method = factor(method, levels = c("no_covs", "all_covs", "p_hacked", "r", 
+  mutate(method = factor(method, levels = c("p_hacked", "no_covs", "all_covs",  "r", 
                                             "partial_r", "full_lm_wo_x", "full_lm",  
                                            "lasso_wo_x", "lasso"),
-                         labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Bivariate correlation", "Partial correlation", 
-                                    "Full linear model", "Full linear model with X", 
-                                            "LASSO", "LASSO with X")))
+                         labels = c("p-hacking", "No covariates", "All covariates", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                            "All covariates LASSO", "All covariates LASSO with X")))
 
 ```
 
 ```{r}
 type_I_summary <- d_0 |>
   group_by(method) |>
-  summarise(type_I = mean(p_value < 0.05))
+  summarise(type_I = mean(p_value < 0.05)) |> 
+  mutate(group = case_match(method,
+                            "p-hacking" ~ "p-hacking",
+                            "No covariates" ~ "No selection",
+                            "All covariates" ~ "No selection",
+                            "Single covariate lm" ~ "Single covariate lm",
+                            "Single covariate lm with X" ~ "Single covariate lm",
+                            "All covariates lm" ~ "All covariates lm",
+                            "All covariates lm with X" ~ "All covariates lm",
+                            "All covariates LASSO" ~ "All covariates LASSO",
+                            "All covariates LASSO with X" ~ "All covariates LASSO"))
 
 ```
 
 
 ```{r}
 #| label: fig-bar-1
-#| fig-cap: "Type I Error by Method. Average type I error rate across all research settings is displayed for each method separately by color. Dashed line depicts expected Type I error rate for .05 alpha."
- 
-type_I_summary |>
+#| fig-cap: "Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Striped shading indicates data-driven selection methods that do not control for X."
+
+
+# ---- Parameters
+gap_after_idx <- c(1, 3, 5, 7)  
+gap_size <- 0.2                
+bar_width <- 0.9                
+
+
+df <- type_I_summary |>
   mutate(method = fct_relevel(method, "p-hacking")) |>
-  ggplot(aes(x = method, y = type_I, fill = method)) +
-  geom_col(color = "black") +
-  # ggplot(aes(x = method, y = type_I, fill = method, pattern = method)) +
-  # geom_bar_pattern(
-  #   stat = "identity",
-  #   pattern_fill = "black",
-  #   pattern_angle = 45,
-  #   pattern_density = 0.1,
-  #   pattern_size = .1,
-  #   pattern_spacing = 0.05,
-  #   color = "black") +
-  geom_text(aes(label = sprintf("%.3f", type_I)), vjust = -0.5) +
-  geom_hline(yintercept = .5, linetype = "dashed") +
-  labs(x = NULL,
-       y = "Type I Error") +
-  scale_y_continuous(limits = c(0, max(type_I_summary$type_I) * 1.2), 
-                     breaks = seq(0, max(type_I_summary$type_I) * 1.2, by = 0.05)) +
-  # scale_pattern_manual(values = method_patterns) +
+  mutate(method_chr = as.character(method))
+
+
+n <- nrow(df)
+base_pos <- seq_len(n)  
+
+# compute how many gaps precede each bar
+gap_count_before <- sapply(base_pos, function(i) sum(gap_after_idx < i))
+# add the total gap length before each bar
+x_pos <- base_pos + gap_count_before * gap_size
+
+plot_df <- df |>
+  mutate(x_pos = x_pos)
+
+
+x_breaks <- plot_df$x_pos
+x_labels <- plot_df$method_chr
+
+
+ggplot(
+  plot_df,
+  aes(x = x_pos, y = type_I, fill = method, pattern = method)
+) +
+  geom_bar_pattern(
+    stat = "identity",
+    width = bar_width,
+    pattern_colour = "white",
+    pattern_fill = "white",
+    pattern_angle = 45,
+    pattern_density = 0.3,
+    pattern_size = 0.1,
+    pattern_spacing = 0.03,
+    color = "black"
+  ) +
+  geom_text(
+    aes(label = sprintf("%.3f", type_I)),
+    vjust = -0.5
+  ) +
+  labs(x = NULL, y = "Type I Error") +
+  scale_y_continuous(
+    limits = c(0, max(type_I_summary$type_I) * 1.2),
+    breaks = seq(0, max(type_I_summary$type_I) * 1.2, by = 0.05)
+  ) +
+  # numeric x with custom breaks/labels; gaps are just extra space between positions
+  scale_x_continuous(
+    breaks = x_breaks,
+    labels = x_labels,
+    expand = expansion(mult = c(0.02, 0.05))  # trim extra margin if you like
+  ) +
+  scale_pattern_manual(values = method_patterns) +
   scale_fill_manual(values = method_colors) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.position = "none")
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "none"
+  )
+
 ```
 
 
@@ -193,7 +260,8 @@ observations <- d_0 |>
   group_by(method, n_obs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  ggplot(aes(x = n_obs, y = prop_sig, color = method, linetype = method)) + 
+  ggplot(aes(x = n_obs, y = prop_sig, color = method, linetype = method,
+             linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
   scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, .25, .30),
@@ -202,6 +270,7 @@ observations <- d_0 |>
        subtitle = "Number of Observations",
        y = "Type I Error") +
   scale_linetype_manual(values = method_linetypes) +
+  scale_linewidth_manual(values = method_linewidths) +
   scale_color_manual(values = method_colors) +
   theme(legend.title = element_blank())
 
@@ -210,7 +279,8 @@ covs <- d_0 |>
   group_by(method, n_covs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  ggplot(aes(x = n_covs, y = prop_sig, color = method, linetype = method)) + 
+  ggplot(aes(x = n_covs, y = prop_sig, color = method, linetype = method,
+             linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(4, 8, 12, 16, 20)) +
   scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25, .30),
@@ -220,13 +290,15 @@ covs <- d_0 |>
        subtitle = "Number of Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) +
+  scale_linewidth_manual(values = method_linewidths) +
   theme(legend.title = element_blank())
 
 good_covs <- d_0 |> 
   group_by(method, p_good_covs) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  ggplot(aes(x = p_good_covs, y = prop_sig, color = method, linetype = method)) + 
+  ggplot(aes(x = p_good_covs, y = prop_sig, color = method, linetype = method, 
+             linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
   scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, .25, .30), 
@@ -236,13 +308,15 @@ good_covs <- d_0 |>
        subtitle = "Proportion of Good Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) +
+  scale_linewidth_manual(values = method_linewidths) +
   theme(legend.title = element_blank())
 
 ycor <- d_0 |> 
   group_by(method, r_ycov) |> 
   summarise(prop_sig = mean(p_value < 0.05),
             .groups = "drop") |> 
-  ggplot(aes(x = r_ycov, y = prop_sig, color = method, linetype = method)) + 
+  ggplot(aes(x = r_ycov, y = prop_sig, color = method, linetype = method, 
+             linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
   scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25, 0.30), 
@@ -252,6 +326,7 @@ ycor <- d_0 |>
        subtitle = "Y-Covariate Correlation Strength") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) +
+  scale_linewidth_manual(values = method_linewidths) +
   theme(legend.title = element_blank())
 
 ```
@@ -260,7 +335,7 @@ ycor <- d_0 |>
 
 ```{r}
 #| label: fig-type1-panel
-#| fig-cap: "Type I error by method and research setting. Plots are paneled by aspects of the research setting (number of observations, number of covariates, proportioin of good covariates, and Y-covariate correlation strength). Methods are displayed separately by color. Methods with no covariate selection are depicted as solid lines. p-hacking is depicted as dashed line. Covariate selection methods that control for X are depicted as two dash lines. Covariate selection methods that do not control for X are depicted as long dash lines."
+#| fig-cap: "Type I error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."
 #| fig-height: 6
 #| fig-width: 8
 
@@ -274,7 +349,7 @@ ycor <- d_0 |>
 
 ```{r}
 #| label: fig-bar-2
-#| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color."
+#| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Striped shading indicates data-driven selection methods that do not control for X."
 
 d_all <- d_03 |>
   bind_rows(d_05) |> 
@@ -284,27 +359,69 @@ type_II_summary <- d_all |>
   group_by(method) |>
   summarise(type_II = mean(p_value >= 0.05))
 
-type_II_summary |> 
-  ggplot(aes(x = method, y = type_II, fill = method)) +
-  geom_col(color = "black") +
-  # ggplot(aes(x = method, y = type_II, fill = method, pattern = method)) +
-  # geom_bar_pattern(
-  #   stat = "identity",
-  #   pattern_fill = "black",
-  #   pattern_angle = 45,
-  #   pattern_density = 0.1,
-  #   pattern_size = .1,
-  #   pattern_spacing = 0.05,
-  #   color = "black") +
-  geom_text(aes(label = sprintf("%.3f", type_II)), vjust = -0.5) +
-  labs(x = NULL,
-       y = "Type II Error") +
-  scale_y_continuous(limits = c(0, max(type_II_summary$type_II) * 1.2), 
-                     breaks = seq(0, max(type_II_summary$type_II) * 1.2, by = 0.05)) +
-  # scale_pattern_manual(values = method_patterns) +
+# ---- Parameters
+gap_after_idx <- c(2, 4, 6)  
+gap_size <- 0.2                
+bar_width <- 0.9                
+
+
+df <- type_II_summary |>
+  mutate(method_chr = as.character(method))
+
+
+n <- nrow(df)
+base_pos <- seq_len(n)  
+
+# compute how many gaps precede each bar
+gap_count_before <- sapply(base_pos, function(i) sum(gap_after_idx < i))
+# add the total gap length before each bar
+x_pos <- base_pos + gap_count_before * gap_size
+
+plot_df <- df |>
+  mutate(x_pos = x_pos)
+
+
+x_breaks <- plot_df$x_pos
+x_labels <- plot_df$method_chr
+
+
+
+ggplot(
+  plot_df,
+  aes(x = x_pos, y = type_II, fill = method, pattern = method)
+) +
+   geom_bar_pattern(
+    stat = "identity",
+    width = bar_width,
+    pattern_colour = "white",
+    pattern_fill = "white",
+    pattern_angle = 45,
+    pattern_density = 0.3,
+    pattern_size = 0.1,
+    pattern_spacing = 0.03,
+    color = "black"
+  ) +
+  geom_text(
+    aes(label = sprintf("%.3f", type_II)),
+    vjust = -0.5
+  ) +
+  labs(x = NULL, y = "Type II Error") +
+  scale_y_continuous(
+    limits = c(0, max(type_II_summary$type_II) * 1.2),
+    breaks = seq(0, max(type_II_summary$type_II) * 1.2, by = 0.05)
+  ) +
+  # numeric x with custom breaks/labels; gaps are just extra space between positions
+  scale_x_continuous(
+    breaks = x_breaks,
+    labels = x_labels,
+    expand = expansion(mult = c(0.02, 0.05))  # trim extra margin if you like
+  ) +
+  scale_pattern_manual(values = method_patterns) +
   scale_fill_manual(values = method_colors) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.position = "none")
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "none"
+  )
 ```
 
 ```{r}
@@ -312,7 +429,7 @@ observations_2 <- d_all |>
   group_by(method, n_obs) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
-  ggplot(aes(x = n_obs, y = prop_not_sig, color = method, linetype = method)) + 
+  ggplot(aes(x = n_obs, y = prop_not_sig, color = method, linetype = method, linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
   scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70 ),
@@ -322,13 +439,15 @@ observations_2 <- d_all |>
        x = NULL) +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) +
+  scale_linewidth_manual(values = method_linewidths) +
   theme(legend.title = element_blank())
 
 covs_2 <- d_all |> 
   group_by(method, n_covs) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
-  ggplot(aes(x = n_covs, y = prop_not_sig, color = method, linetype = method)) + 
+  ggplot(aes(x = n_covs, y = prop_not_sig, color = method, linetype = method,
+             linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(4, 8, 12, 16, 20)) +
   scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70 ),
@@ -338,13 +457,15 @@ covs_2 <- d_all |>
        subtitle = "Number of Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) +
+  scale_linewidth_manual(values = method_linewidths) +
   theme(legend.title = element_blank())
 
 good_covs_2 <- d_all |> 
   group_by(method, p_good_covs) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
-  ggplot(aes(x = p_good_covs, y = prop_not_sig, color = method, linetype = method)) + 
+  ggplot(aes(x = p_good_covs, y = prop_not_sig, color = method, linetype = method,
+             linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
   scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70 ),
@@ -354,13 +475,15 @@ good_covs_2 <- d_all |>
        subtitle = "Proportion of Good Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) +
+  scale_linewidth_manual(values = method_linewidths) +
   theme(legend.title = element_blank())
 
 ycor_2 <- d_all |> 
   group_by(method, r_ycov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
-  ggplot(aes(x = r_ycov, y = prop_not_sig, color = method, linetype = method)) + 
+  ggplot(aes(x = r_ycov, y = prop_not_sig, color = method, linetype = method,
+             linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
   scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70 ),
@@ -369,6 +492,7 @@ ycor_2 <- d_all |>
        x = NULL,
        subtitle = "Y-Covariate Correlation Strength") +
   scale_linetype_manual(values = method_linetypes) +
+  scale_linewidth_manual(values = method_linewidths) +
   scale_color_manual(values = method_colors) +
   theme(legend.title = element_blank())
 
@@ -376,7 +500,8 @@ b_x <- d_all |>
   group_by(method, b_x) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
-  ggplot(aes(x = b_x, y = prop_not_sig, color = method, linetype = method)) + 
+  ggplot(aes(x = b_x, y = prop_not_sig, color = method, linetype = method,
+             linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
   scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70 ),
@@ -386,6 +511,7 @@ b_x <- d_all |>
        subtitle = "Population Parameter for X") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) +
+  scale_linewidth_manual(values = method_linewidths) +
   theme(legend.title = element_blank(),
         legend.position = "none")
 
@@ -395,7 +521,7 @@ b_x <- d_all |>
 
 ```{r}
 #| label: fig-panel-2
-#| fig-cap: "Type II error by method and research setting. Plots are paneled by aspects of the research setting (number of observations, number of covariates, proportioin of good covariates, Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Methods with no covariate selection are depicted as solid lines. Covariate selection methods that control for X are depicted as two dash lines. Covariate selection methods that do not control for X are depicted as long dash lines."
+#| fig-cap: "Type II error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."
 #| fig-height: 9
 #| fig-width: 7.5
 
@@ -403,56 +529,6 @@ b_x <- d_all |>
   plot_layout(guides = "collect") &
   theme(legend.position = "right")
 ```
-
-```{r}
-rm(d_all)
-```
-
-```{r}
-est_d_0 <- d_0 |> 
-  ggplot(aes(x = estimate, color = method, linetype = method)) +
-  geom_density(alpha = 0.5) +
-  geom_vline(xintercept = 0, linetype = "dotted", color = "black") +
-  scale_x_continuous(limits = c(-0.5, 0.5), breaks = seq(-0.5, 0.5, by = 0.5)) +
-  labs(y = "Density",
-       x = "Estimate") +
-  scale_linetype_manual(values = method_linetypes) +
-  scale_color_manual(values = method_colors) 
-
-est_d_03 <- d_03 |> 
-  filter(method != "p-hacking") |> 
-  ggplot(aes(x = estimate, color = method, linetype = method)) +
-  geom_density(alpha = 0.5) +
-  geom_vline(xintercept = 0.3, linetype = "dotted") +
-  scale_x_continuous(limits = c(-0.2, 0.8), breaks = c(0, 0.3, 0.6)) +
-  labs(y = "Density",
-       x = "Estimate") +
-  scale_linetype_manual(values = method_linetypes) +
-  scale_color_manual(values = method_colors) +
-  theme(legend.position = "none")
-
-est_d_05 <- d_05 |> 
-  filter(method != "p-hacking") |> 
-  ggplot(aes(x = estimate, color = method, linetype = method)) +
-  geom_density(alpha = 0.5) +
-  geom_vline(xintercept = 0.5, linetype = "dotted") +
-  scale_x_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) +
-  labs(y = "Density",
-       x = "Estimate") + 
-  scale_linetype_manual(values = method_linetypes) +
-  scale_color_manual(values = method_colors) +
-  theme(legend.position = "none")
-```
-
-```{r}
-#| label: fig-distribution-bx
-#| fig-cap: "Sampling Distribution for Population Parameter Estimates."
-#| fig-height: 8
-
-est_d_0 / est_d_03 / est_d_05 
-```
-
-
 
 
 

@@ -158,9 +158,9 @@ We also assessed Type II error by individual research setting (@fig-panel-2). Ac
 <!--remind that when assumptions met, parameter estimates are unbiased-->
 <!--need to look at this and think a bit more.  Should this also be reported separately for b =0 vs. b <>0 and embedded in those sections above.  Can make the point that we want low type II, .05 type I and unbiased at the start of method or end of intro-->
 
-@fig-distribution-bx shows the sampling distribution for the parameter estimate of *X* for all nine methods separately by effect size ($b_x = 0$, $b_x = 0.3$, $b_x = 0.5$). Distributions for parameter estimates for all methods are centered around the true population values. Using no covariates produces a wider distribution, indicating more variability in its parameter estimates. The top plot also highlights an unusual feature of p-hacking. When there is no true effect the distribution appears bimodal due to the artificial inflation or deflation of parameter estimates that occurs when selecting covariates to obtain a significant p-value. 
+<!--TABLE X--> shows the sampling distribution for the parameter estimate of *X* for all nine methods separately by effect size ($b_x = 0$, $b_x = 0.3$, $b_x = 0.5$). Distributions for parameter estimates for all methods are centered around the true population values. Using no covariates produces a wider distribution, indicating more variability in its parameter estimates. The top plot also highlights an unusual feature of p-hacking. When there is no true effect the distribution appears bimodal due to the artificial inflation or deflation of parameter estimates that occurs when selecting covariates to obtain a significant p-value. 
 
-{{< embed notebooks/mak_figures.qmd#fig-distribution-bx >}}
+
 
 
 <!--TABLE of TYPE1 and TYPE 2 by method, b and context?  In paper or supplement
@@ -213,7 +213,7 @@ Did not address use of covariates for statistical control of confounds. Common w
 
 #### 4. Compare candidate selection methods (R and partial R - comparable in power, one slight increase in type 1 and 1 small biasing in parameter estimates) might improve power in certain research settings (low n, large number of covariates). Describe departure in type 1 error by comparing with other violations - normality (trivial)
 
-#### 5. Don’t run with n = 50 but acknowledge difficulty in reaching conclusions
+#### 5. Don't run with n = 50 but acknowledge difficulty in reaching conclusions
 
 
 #### 6. Alternative type of covariate not addressed in this study - Measured covariates after baseline (reasonably sure that they were not affected by x). Another use of covariates is for controlling but that is different and more complicated. 
