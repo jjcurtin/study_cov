@@ -501,64 +501,70 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 <table class="lightable-classic do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">method</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">b_x = 0</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">b_x = .3</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">b_x = .5</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">No effect</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d = .3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d = .5</th>
 </tr>
 </thead>
 <tbody>
+<tr class="odd" data-grouplength="2">
+<td colspan="4" style="border-bottom: 0">Researcher selection</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">No covariates</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.300</td>
+<td style="text-align: right;">0.500</td>
+</tr>
 <tr class="odd">
-<td style="text-align: left;">p-hacking</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.300</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="even" data-grouplength="7">
+<td colspan="4" style="border-bottom: 0">Data-driven selection</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">p-hacking</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.368</td>
 <td style="text-align: right;">0.563</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">No covariates</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.300</td>
-<td style="text-align: right;">0.500</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">All covariates</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.300</td>
-<td style="text-align: right;">0.500</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Single covariate lm</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.297</td>
 <td style="text-align: right;">0.495</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Single covariate lm with X</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm with X</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.300</td>
 <td style="text-align: right;">0.500</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">All covariates lm</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.287</td>
 <td style="text-align: right;">0.479</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">All covariates lm with X</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm with X</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.300</td>
 <td style="text-align: right;">0.500</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">All covariates LASSO</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.292</td>
 <td style="text-align: right;">0.487</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">All covariates LASSO with X</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO with X</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.300</td>
 <td style="text-align: right;">0.500</td>
 </tr>
@@ -1109,7 +1115,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":false,"closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":false,"closeEffect":"zoom","descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
