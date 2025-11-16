@@ -18,33 +18,18 @@ html-table-processing: none
 ---
 
 ```{r}
-#| label: set up
-
-library(dplyr) |> suppressMessages()
 library(skimr)
-library(purrr)
-library(ggplot2)
 library(cowplot)
-library(forcats)
+library(tidyverse)
 library(kableExtra, exclude = ("group_rows"))
 
-theme_set(theme_classic())
-method_colors <- c("no_covs" = "sienna",
-                   "all_covs" = "goldenrod2",
-                   "p_hacked" = "red2",
-                   "r" = "springgreen3",
-                   "partial_r" = "deepskyblue",
-                   "full_lm" = "mediumpurple1",
-                   "lasso" = "hotpink")
-method_linetypes <- c("no_covs" = "solid",
-                      "all_covs" = "solid",
-                      "p_hacked" = "longdash",
-                      "r" = "longdash",
-                      "partial_r" = "longdash",
-                      "full_lm" = "longdash",
-                      "lasso" = "longdash")
-
 options(digits = 3)
+
+devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
+
+rdrive_path <- format_path("cov/raw_data")
+table <- read_csv(here::here(rdrive_path, "estimate_table.csv"),
+                  show_col_types = FALSE)
 
 ```
 
@@ -106,8 +91,13 @@ data_tbl0 |>
 
 
 
+```{r}
+#| label: tbl-est
+#| tbl-cap: "Mean estimates of effect size by method and true effect size"
+#| warning: false
 
-
-
-
+table |> 
+  kable() |> 
+  kable_classic()
+```
 

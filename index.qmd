@@ -158,10 +158,9 @@ We also assessed Type II error by individual research setting (@fig-panel-2). Ac
 <!--remind that when assumptions met, parameter estimates are unbiased-->
 <!--need to look at this and think a bit more.  Should this also be reported separately for b =0 vs. b <>0 and embedded in those sections above.  Can make the point that we want low type II, .05 type I and unbiased at the start of method or end of intro-->
 
-<!--TABLE X--> shows the sampling distribution for the parameter estimate of *X* for all nine methods separately by effect size ($b_x = 0$, $b_x = 0.3$, $b_x = 0.5$). Distributions for parameter estimates for all methods are centered around the true population values. Using no covariates produces a wider distribution, indicating more variability in its parameter estimates. The top plot also highlights an unusual feature of p-hacking. When there is no true effect the distribution appears bimodal due to the artificial inflation or deflation of parameter estimates that occurs when selecting covariates to obtain a significant p-value. 
+@tbl-est shows the mean parameter estimate of *X* for all nine methods separately by effect size ($b_x = 0$, $b_x = 0.3$, $b_x = 0.5$). All methods yield unbiased estimates when the effect size is 0. When there is a non-zero effect, p-hacking methods notably inflate the effect size. Other data-driven methods that do not control for X yield slightly biased parameter estimates. Sampling distributions of parameter estimates are available in the supplement.
 
-
-
+{{< embed notebooks/mak_tables.qmd#tbl-est >}}
 
 <!--TABLE of TYPE1 and TYPE 2 by method, b and context?  In paper or supplement
 
