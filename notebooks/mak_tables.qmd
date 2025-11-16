@@ -24,6 +24,7 @@ library(tidyverse)
 library(kableExtra, exclude = ("group_rows"))
 
 options(digits = 3)
+options(knitr.kable.NA = '')
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
@@ -97,7 +98,29 @@ data_tbl0 |>
 #| warning: false
 
 table |> 
+  rename(Method = method, 
+         `No effect` = `b_x = 0`,
+         `d = .3` = `b_x = .3`,
+         `d = .5` = `b_x = .5`) |> 
+  mutate(Method = factor(Method, 
+                         levels = c("No covariates", "All covariates", "p-hacking", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                    "All covariates LASSO", "All covariates LASSO with X"),
+                         labels = c("No covariates", "All covariates", "p-hacking", 
+                                    "Single covariate lm without X", 
+                                    "Single covariate lm with X", 
+                                    "All covariates lm without X", 
+                                    "All covariates lm with X", 
+                                    "All covariates LASSO without X", 
+                                    "All covariates LASSO with X")),
+         `No effect` = sprintf("%.3f", `No effect`)) |> 
+  arrange(Method) |> 
+  add_row(Method = "Researcher selection", .before = 1) |> 
+  add_row(Method = "Data-driven selection", .after = 3) |> 
   kable() |> 
-  kable_classic()
+  kable_classic() |> 
+  pack_rows(NULL, 2, 3) |> 
+  pack_rows(NULL, 5, 11)
 ```
 

@@ -411,15 +411,15 @@ Table&nbsp;2: Research setting variables and values
 <h2 class="anchored" data-anchor-id="type-i-error">Type I Error</h2>
 <p>Since this is simulation study, we were able to set the true population parameter for <em>X</em> to be zero (i.e., <span class="math inline">\(b_x = 0\)</span>). Therefore, any significant result found was a Type I error. <a href="#fig-bar-1" class="quarto-xref">Figure&nbsp;1</a> shows the average Type I error rate across all research settings for each method. The p-hacking method for selecting covariates, unsurprisingly led to a highly inflated Type I error rate, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives. Most other methods remained around the expected .05 threshold. There was some elevation in Type I errors for methods that controlled for <em>X</em> compared to those, however, it is not clear that these differences are substantial.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-bar-1" class="cell">
+<div id="cell-fig-bar-1" class="cell" data-fig-width="8.75">
 <div class="cell-output cell-output-display">
 <div id="fig-bar-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" width="672" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" width="840" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Striped shading indicates data-driven selection methods that do not control for X.
+Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.
 </figcaption>
 </figure>
 </div>
@@ -450,15 +450,15 @@ Figure&nbsp;2: Type I error by method and research context. Plots are paneled by
 <p>We simulated datasets with two possible population parameters for the effect of <em>X</em> on <em>Y</em> (<span class="math inline">\(b_x = 0.3\)</span>, <span class="math inline">\(b_x = 0.5\)</span>). Any non-significant result found indicated a Type II error. Stronger statistical methods will have lower Type II error (implying greater statistical power). Since we demonstrated that p-hacking substantially inflates Type I error, making it a statistically invalid method for covariate selection, we do not evaluate Type II Error for this method.</p>
 <p><a href="#fig-bar-2" class="quarto-xref">Figure&nbsp;3</a> shows the average Type II error rate across all research settings for each method. Using no covariates results in the highest Type II error highlighting the importance of covariates for detecting true effects. Type II error rates trended lower for covariate selection methods that controlled for <em>X</em> compared to those that did not control for <em>X</em>. <!-- what about all covariates?--></p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-bar-2" class="cell">
+<div id="cell-fig-bar-2" class="cell" data-fig-width="8.75">
 <div class="cell-output cell-output-display">
 <div id="fig-bar-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" width="672" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" width="840" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Striped shading indicates data-driven selection methods that do not control for X.
+Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.
 </figcaption>
 </figure>
 </div>
@@ -501,64 +501,82 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 <table class="lightable-classic do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">method</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">b_x = 0</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">b_x = .3</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">b_x = .5</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">No effect</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d = .3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d = .5</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">p-hacking</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">Researcher selection</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even" data-grouplength="2">
+<td colspan="4" style="text-align: left; border-bottom: 0;"><strong></strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">No covariates</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.300</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.300</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data-driven selection</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even" data-grouplength="7">
+<td colspan="4" style="text-align: left; border-bottom: 0;"><strong></strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">p-hacking</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.368</td>
 <td style="text-align: right;">0.563</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">No covariates</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.300</td>
-<td style="text-align: right;">0.500</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">All covariates</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0.300</td>
-<td style="text-align: right;">0.500</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Single covariate lm</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm without X</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.297</td>
 <td style="text-align: right;">0.495</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Single covariate lm with X</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm with X</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.300</td>
 <td style="text-align: right;">0.500</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">All covariates lm</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm without X</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.287</td>
 <td style="text-align: right;">0.479</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">All covariates lm with X</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm with X</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.300</td>
 <td style="text-align: right;">0.500</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">All covariates LASSO</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO without X</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.292</td>
 <td style="text-align: right;">0.487</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">All covariates LASSO with X</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO with X</td>
+<td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.300</td>
 <td style="text-align: right;">0.500</td>
 </tr>
@@ -1109,7 +1127,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

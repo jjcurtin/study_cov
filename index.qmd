@@ -1,11 +1,11 @@
 ---
 title: Evaluating Methods for Covariate Selection in Experimental Designs
 author:
-  - name: Lauren Khoury
+  - name: Kendra Wyant
     corresponding: false
     affiliations:
       - Department of Psychology, University of Wisconsin-Madison
-  - name: Kendra Wyant
+  - name: Lauren Khoury
     corresponding: false
     affiliations:
       - Department of Psychology, University of Wisconsin-Madison
@@ -201,28 +201,37 @@ Did not address use of covariates for statistical control of confounds. Common w
 
 
 
-
-#### 1. Don't p hack and other type I error conclusions
-
-#### 2. Use covariates and other type II error conclusions
-
-
-#### 3. In many instances you can use all covariates
+Dont p-hack
+- we knew this
+- but this reinforces the magnitude of the problem. Talk about how bad it can really be in some contexts (which ones?)
+Compare to simons estimate, which is underestimate
 
 
-#### 4. Compare candidate selection methods (R and partial R - comparable in power, one slight increase in type 1 and 1 small biasing in parameter estimates) might improve power in certain research settings (low n, large number of covariates). Describe departure in type 1 error by comparing with other violations - normality (trivial)
-
-#### 5. Don't run with n = 50 but acknowledge difficulty in reaching conclusions
-
-
-#### 6. Alternative type of covariate not addressed in this study - Measured covariates after baseline (reasonably sure that they were not affected by x). Another use of covariates is for controlling but that is different and more complicated. 
-
-<!-- ### 7. Finding good covariates?  -->
-
-#### 7. Why we get biased parameter estimates with x
+Use Covariates
+- no covariates approach does have 05 Type I and unbiased parameter estimates
+- but meaningfully higher type II.  Talk about average and then where it is worse
 
 
-#### 8. Final Conclusions
+
+In many instances, using all available covariates is reasonable option
+- again, 05 type 1 and unbiased always
+- easiest because doesnt require any emprical selection
+- on average only 1.5 - 2.5% lower power compared to better selection methods
+- BUT relative worse with small N or large number of covariates. Likely DF related.  Small N is where we maybe most need covariates.   Also some research contexts may have more than 20 covariates available.   Select in those contexts
+- And maybe you never want to leave any power on the table.  
+
+Lets talk through select method recs DURING MEETING
+
+
+Anchor Type I inflation - need simulation
+Anchor Type II benefit?  small but how to think about it?   N increase but not linear so specific N?
+
+
+Focused on power with covariates measured at baseline/before assignment/manipulation.  Still likely applicable when covs are uncorrelated but measured after baseline
+
+
+
+Did not address use of covariates for statistical control of confounds. Common where X cannot be manipulated.  That must be done based on theory about confounds and causal structure.   Complicated and not as strong as people think because of exact X.  Focus of another paper
 
 
 # References

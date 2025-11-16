@@ -184,7 +184,8 @@ type_I_summary <- d_0 |>
 
 ```{r}
 #| label: fig-bar-1
-#| fig-cap: "Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Striped shading indicates data-driven selection methods that do not control for X."
+#| fig-cap: "Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
+#| fig-width: 8.75
 
 
 # ---- Parameters
@@ -368,7 +369,8 @@ ycor <- d_0 |>
 
 ```{r}
 #| label: fig-bar-2
-#| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Striped shading indicates data-driven selection methods that do not control for X."
+#| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
+#| fig-width: 8.75
 
 d_all <- d_03 |>
   bind_rows(d_05) |> 
