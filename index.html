@@ -508,23 +508,35 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 </tr>
 </thead>
 <tbody>
-<tr class="odd" data-grouplength="2">
-<td colspan="4" style="border-bottom: 0">Researcher selection</td>
+<tr class="odd">
+<td style="text-align: left;">Researcher selection</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
-<tr class="even">
+<tr class="even" data-grouplength="2">
+<td colspan="4" style="text-align: left; border-bottom: 0;"><strong></strong></td>
+</tr>
+<tr class="odd">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">No covariates</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.300</td>
 <td style="text-align: right;">0.500</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.300</td>
 <td style="text-align: right;">0.500</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">Data-driven selection</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
 <tr class="even" data-grouplength="7">
-<td colspan="4" style="border-bottom: 0">Data-driven selection</td>
+<td colspan="4" style="text-align: left; border-bottom: 0;"><strong></strong></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">p-hacking</td>
@@ -533,7 +545,7 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 <td style="text-align: right;">0.563</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm without X</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.297</td>
 <td style="text-align: right;">0.495</td>
@@ -545,7 +557,7 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 <td style="text-align: right;">0.500</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm without X</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.287</td>
 <td style="text-align: right;">0.479</td>
@@ -557,7 +569,7 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 <td style="text-align: right;">0.500</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO without X</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.292</td>
 <td style="text-align: right;">0.487</td>
@@ -1115,7 +1127,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":false,"closeEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
