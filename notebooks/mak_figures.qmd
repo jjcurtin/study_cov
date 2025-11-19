@@ -184,7 +184,7 @@ type_I_summary <- d_0 |>
 
 ```{r}
 #| label: fig-bar-1
-#| fig-cap: "Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
+#| fig-cap: "Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
 #| fig-width: 8.75
 
 
@@ -223,7 +223,7 @@ segment_labels <- tibble::tibble(
         mean(c(6.2, 8.0)),
         mean(c(8.4, 10.2))),
   y = c(.22, .22, .08, .08, .08) + 0.015,   
-  label = c("Researcher selection", "Data-driven selection", "Single covariate lm", "All covariates lm", "All covariates LASSO")
+  label = c("A priori selection", "Data-driven selection", "Single covariate lm", "All covariates lm", "All covariates LASSO")
 )
 
 ggplot(
@@ -369,7 +369,7 @@ ycor <- d_0 |>
 
 ```{r}
 #| label: fig-bar-2
-#| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
+#| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
 #| fig-width: 8.75
 
 d_all <- d_03 |>
@@ -415,7 +415,7 @@ segment_labels <- tibble::tibble(
         mean(c(5, 6.8)),
         mean(c(7.2, 9))),
   y = c(.37, .37, .275, .275, .275) + 0.015,   
-  label = c("Researcher selection", "Data-driven selection", "Single covariate lm", "All covariates lm", "All covariates LASSO")
+  label = c("A priori selection", "Data-driven selection", "Single covariate lm", "All covariates lm", "All covariates LASSO")
 )
 
 

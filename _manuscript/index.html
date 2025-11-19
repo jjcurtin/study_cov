@@ -6,11 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Lauren Khoury">
 <meta name="author" content="Kendra Wyant">
+<meta name="author" content="Lauren Khoury">
 <meta name="author" content="Markus Brauer">
 <meta name="author" content="John J. Curtin">
-<meta name="dcterms.date" content="2025-11-14">
+<meta name="dcterms.date" content="2025-11-19">
 
 <title>Evaluating Methods for Covariate Selection in Experimental Designs</title>
 <style>
@@ -98,14 +98,14 @@ window.Quarto = {
 <meta name="citation_title" content="Evaluating Methods for Covariate Selection in Experimental Designs">
 <meta name="citation_abstract" content="Abstract of paper goes here and can span several lines.
 ">
-<meta name="citation_author" content="Lauren Khoury">
 <meta name="citation_author" content="Kendra Wyant">
+<meta name="citation_author" content="Lauren Khoury">
 <meta name="citation_author" content="Markus Brauer">
 <meta name="citation_author" content="John J. Curtin">
-<meta name="citation_publication_date" content="2025-11-14">
-<meta name="citation_cover_date" content="2025-11-14">
+<meta name="citation_publication_date" content="2025-11-19">
+<meta name="citation_cover_date" content="2025-11-19">
 <meta name="citation_year" content="2025">
-<meta name="citation_online_date" content="2025-11-14">
+<meta name="citation_online_date" content="2025-11-19">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Choosing covariates in the analysis of clinical trials;,citation_abstract=Much of the literature on clinical trials emphasizes the importance of adjusting the results for any covariates (baseline variables) for which randomization fails to produce nearly exact balance, but the literature is very nearly devoid of recipes for assessing the consequences of such adjustments. Several years ago, Paul Canner presented an approximate expression for the effect of a covariate adjustment, and he considered its use in the selection of covariates. With the aid of Canner’s equation, using both formal analysis and simulation, the impact of covariate adjustment is further explored. Unless tight control over the analysis plans is established in advance, covariate adjustment can lead to seriously misleading inferences. Illustrations from the clinical trials literature are provided.;,citation_author=M. L. Beach;,citation_author=P. Meier;,citation_publication_date=1989-12;,citation_cover_date=1989-12;,citation_year=1989;,citation_issue=4 Suppl;,citation_doi=10.1016/0197-2456(89)90055-x;,citation_issn=0197-2456;,citation_pmid=2605965;,citation_volume=10;,citation_language=en-US;,citation_journal_title=Controlled Clinical Trials;">
 <meta name="citation_reference" content="citation_title=Power failure: Why small sample size undermines the reliability of neuroscience;,citation_abstract=A study with low statistical power has a reduced chance of detecting a true effect, but it is less well appreciated that low power also reduces the likelihood that a statistically significant result reflects a true effect. Here, we show that the average statistical power of studies in the neurosciences is very low. The consequences of this include overestimates of effect size and low reproducibility of results. There are also ethical dimensions to this problem, as unreliable research is inefficient and wasteful. Improving reproducibility in neuroscience is a key priority and requires attention to well-established but often ignored methodological principles.;,citation_author=Katherine S. Button;,citation_author=John P. A. Ioannidis;,citation_author=Claire Mokrysz;,citation_author=Brian A. Nosek;,citation_author=Jonathan Flint;,citation_author=Emma S. J. Robinson;,citation_author=Marcus R. Munafò;,citation_publication_date=2013-05;,citation_cover_date=2013-05;,citation_year=2013;,citation_issue=5;,citation_doi=10.1038/nrn3475;,citation_issn=1471-003X;,citation_volume=14;,citation_language=en-US;,citation_journal_title=Nature Reviews Neuroscience;">
@@ -143,7 +143,7 @@ window.Quarto = {
           <div class="quarto-title-meta-heading">Affiliation</div>
           
                 <div class="quarto-title-meta-contents">
-            <p class="author">Lauren Khoury </p>
+            <p class="author">Kendra Wyant </p>
           </div>
                 <div class="quarto-title-meta-contents">
                     <p class="affiliation">
@@ -151,7 +151,7 @@ window.Quarto = {
                       </p>
                   </div>
                       <div class="quarto-title-meta-contents">
-            <p class="author">Kendra Wyant </p>
+            <p class="author">Lauren Khoury </p>
           </div>
                 <div class="quarto-title-meta-contents">
                     <p class="affiliation">
@@ -182,7 +182,7 @@ window.Quarto = {
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">November 14, 2025</p>
+              <p class="date">November 19, 2025</p>
             </div>
           </div>
           
@@ -222,6 +222,7 @@ window.Quarto = {
   <li><a href="#type-ii-error" id="toc-type-ii-error" class="nav-link" data-scroll-target="#type-ii-error">Type II Error</a></li>
   <li><a href="#parameter-estimates" id="toc-parameter-estimates" class="nav-link" data-scroll-target="#parameter-estimates">Parameter Estimates</a></li>
   </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 <div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks\mak_figures-preview.html"><i class="bi bi-journal-code"></i>Make Figures for Main Manuscript</a></li><li><a href="notebooks\mak_tables-preview.html"><i class="bi bi-journal-code"></i>Make Tables for Main Manuscript</a></li><li><a href="notebooks\supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li></ul></div></nav>
@@ -416,10 +417,10 @@ Table&nbsp;2: Research setting variables and values
 <div id="fig-bar-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" width="840" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" width="840" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.
+Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.
 </figcaption>
 </figure>
 </div>
@@ -455,10 +456,10 @@ Figure&nbsp;2: Type I error by method and research context. Plots are paneled by
 <div id="fig-bar-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" width="840" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" width="840" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Researcher selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.
+Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.
 </figcaption>
 </figure>
 </div>
@@ -588,67 +589,23 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 </div>
 </div>
 </div>
-<!--TABLE of TYPE1 and TYPE 2 by method, b and context?  In paper or supplement
-
-# Discussion
-<!--
-Dont p-hack
-- we knew this
-- but this reinforces the magnitude of the problem. Talk about how bad it can really be in some contexts (which ones?)
-Compare to simons estimate, which is underestimate
-
-Use Covariates
-- no covariates approach does have 05 Type I and unbiased parameter estimates
-- but meaningfully higher type II.  Talk about average and then where it is worse
-
-In many instances, using all available covariates is reasonable option
-
-- again, 05 type 1 and unbiased always
-- easiest because doesnt require any emprical selection
-- on average only 1.5 - 2.5% lower power compared to better selection methods
-- BUT relative worse with small N or large number of covariates. Likely DF related.  Small N is where we maybe most need covariates.   Also some research contexts may have more than 20 covariates available.   Select in those contexts
-- And maybe you never want to leave any power on the table.  
-
-Lets talk through select method recs DURING MEETING
-
-
-Anchor Type I inflation - need simulation
-Anchor Type II benefit?  small but how to think about it?   N increase but not linear so specific N?
-
-
-Focused on power with covariates measured at baseline/before assignment/manipulation.  Still likely applicable when covs are uncorrelated but measured after baseline
-
-Did not address use of covariates for statistical control of confounds. Common where X cannot be manipulated.  That must be done based on theory about confounds and causal structure.   Complicated and not as strong as people think because of exact X.  Focus of another paper
-
-
-
--->
-<section id="dont-p-hack-and-other-type-i-error-conclusions" class="level4">
-<h4 class="anchored" data-anchor-id="dont-p-hack-and-other-type-i-error-conclusions">1. Don’t p hack and other type I error conclusions</h4>
-</section>
-<section id="use-covariates-and-other-type-ii-error-conclusions" class="level4">
-<h4 class="anchored" data-anchor-id="use-covariates-and-other-type-ii-error-conclusions">2. Use covariates and other type II error conclusions</h4>
-</section>
-<section id="in-many-instances-you-can-use-all-covariates" class="level4">
-<h4 class="anchored" data-anchor-id="in-many-instances-you-can-use-all-covariates">3. In many instances you can use all covariates</h4>
-</section>
-<section id="compare-candidate-selection-methods-r-and-partial-r---comparable-in-power-one-slight-increase-in-type-1-and-1-small-biasing-in-parameter-estimates-might-improve-power-in-certain-research-settings-low-n-large-number-of-covariates.-describe-departure-in-type-1-error-by-comparing-with-other-violations---normality-trivial" class="level4">
-<h4 class="anchored" data-anchor-id="compare-candidate-selection-methods-r-and-partial-r---comparable-in-power-one-slight-increase-in-type-1-and-1-small-biasing-in-parameter-estimates-might-improve-power-in-certain-research-settings-low-n-large-number-of-covariates.-describe-departure-in-type-1-error-by-comparing-with-other-violations---normality-trivial">4. Compare candidate selection methods (R and partial R - comparable in power, one slight increase in type 1 and 1 small biasing in parameter estimates) might improve power in certain research settings (low n, large number of covariates). Describe departure in type 1 error by comparing with other violations - normality (trivial)</h4>
-</section>
-<section id="dont-run-with-n-50-but-acknowledge-difficulty-in-reaching-conclusions" class="level4">
-<h4 class="anchored" data-anchor-id="dont-run-with-n-50-but-acknowledge-difficulty-in-reaching-conclusions">5. Don’t run with n = 50 but acknowledge difficulty in reaching conclusions</h4>
-</section>
-<section id="alternative-type-of-covariate-not-addressed-in-this-study---measured-covariates-after-baseline-reasonably-sure-that-they-were-not-affected-by-x.-another-use-of-covariates-is-for-controlling-but-that-is-different-and-more-complicated." class="level4">
-<h4 class="anchored" data-anchor-id="alternative-type-of-covariate-not-addressed-in-this-study---measured-covariates-after-baseline-reasonably-sure-that-they-were-not-affected-by-x.-another-use-of-covariates-is-for-controlling-but-that-is-different-and-more-complicated.">6. Alternative type of covariate not addressed in this study - Measured covariates after baseline (reasonably sure that they were not affected by x). Another use of covariates is for controlling but that is different and more complicated.</h4>
-<!-- ### 7. Finding good covariates?  -->
-</section>
-<section id="why-we-get-biased-parameter-estimates-with-x" class="level4">
-<h4 class="anchored" data-anchor-id="why-we-get-biased-parameter-estimates-with-x">7. Why we get biased parameter estimates with x</h4>
-</section>
-<section id="final-conclusions" class="level4">
-<h4 class="anchored" data-anchor-id="final-conclusions">8. Final Conclusions</h4>
+<!--TABLE of TYPE1 and TYPE 2 by method, b and context?  In paper or supplement-->
 </section>
 </section>
+<section id="discussion" class="level1">
+<h1>Discussion</h1>
+<p>Our findings reinforce the cautionary warning by Simmons and colleagues <span class="citation" data-cites="simmonsFalsepositivePsychologyUndisclosed2011">(<a href="#ref-simmonsFalsepositivePsychologyUndisclosed2011" role="doc-biblioref">Simmons, Nelson, and Simonsohn 2011</a>)</span>: p-hacking severely inflates Type I error rate. Simmons et al.&nbsp;simulated an average Type I error rate of 11.7% for a treatment effect when selecting between two potential covariates (<em>N</em>=40). In our closest research context (<em>N</em>=50, 4 covariates), we observed similar rates of 10.3% (range: 8.4%-13.5%). However, our simulations suggest this estimate may gravely underestimate the magnitude of the problem of p-hacking. It is more realistic that researchers must choose from several candidate covariates. Even when the number of available covariates is modest (i.e., 8-12), our results show that Type I error rates increase to 17.6% (range: 9.4%-32.9%) across contexts. When selecting among 16-20 covariates, Type I error rates, on average, reach a 2.5 fold increase from the 4 covariate context (26.9%, range: 13.9%-46.2%).</p>
+<p>When covariates were completely withheld (i.e., no covariates method), simulated models yielded an average Type I error rate of .05 and unbiased parameter estimates. However, this approach also showed a meaningful higher Type II error rate compared to the other methods. This is not surprising given that adding additional variables related to the outcome will account for some variance in that outcome thereby increasing power (or lowering Type II error rate). Perhaps then it is also not surprising that the research contexts with highest discrepancies in Type II error rates between the no covariates method and selection methods include situations with moderate to large sample sizes (<em>N</em>=150-400) where degrees of freedom can afford the cost of additional parameters, and in situations where there are many covariates to choose from with strong correlations to the outcome, where covariates have the most opportunity to reduce unexplained variance in the outcome.</p>
+<p>In many instances, using all available covariates is a reasonable option. Our simulated models showed consistent average Type I error rates of .05 and unbiased parameter estimates. Additionally, on average Type II error rates (mean=24.0%, range: .01%-77.3%) were only 1% higher than the 6 data-driven selection methods (mean=23%, range: .01%-72.0%)<!--This average includes all covariates lm method which actually has higher type II error rate compared to all covs-->. This method is easiest because it eliminates the need for selection. However, in certain contexts, such as with small sample sizes or large numbers of covariates this difference is no longer trivial, with some data-driven selection methods yielding Type II error rates up to 9% lower. These findings are concerning in that it is not uncommon in psychological research to have 20+ covariates available. Moreover, with the cost of running an experimental study some researchers may be confined to small sample sizes or may not want to risk leaving any power to detect an effect on the table regardless. Hence the importance of identifying a rigorous data-driven covariate selection method. <!--JC note: Anchor Type II benefit?  small but how to think about it?   N increase but not linear so specific N?--></p>
+<p>Among the three data-driven selection methods our simulations showed that when the methods did not include the focal variable, <em>X</em>, in the model they produced biased parameter estimates. This bias results from the models favoring selecting covariates that are correlated with <em>X</em> in the sample despite being uncorrelated in the population. In other words, the models are accounting for variance in the outcome related to <em>X</em> by capitalizing on spurious correlations. This bias was largest for the all covariates linear model and trivial with the single covariate linear model.</p>
+<p>However, data-driven selection methods that included <em>X</em> in the model produced larger Type I error inflation. <!--JC notes: 
+- Anchor Type I inflation - need simulation
+- Why? Flexibility of models? Seen across all methods that include X.--></p>
+<p>Our findings suggest the all covariates linear model is not an optimal data-driven covariate selection method. On average it performed worse the other data-driven methods with regard to Type I and Type II error and bias.</p>
+<p>The absolute best method for Type II error is Lasso with <em>X</em> included in the model, but it is complicated.</p>
+<p>Alternatively, the simplest single covariate linear models that could be run as a table of correlation or partial correlations are easy to do and almost as good as Lasso with regard to Type I error, Type II error, and bias.</p>
+<p>This study demonstrated the gains in power when using covariates measured before assignment. These findings are likely still applicable to covariates uncorrelated to the focal variable and empirically related to the outcome, but measured after assignment.</p>
+<p>In this study, we did not address the use of covariates for statistically controlling confounds. That is including variables related to both the focal variable and the outcome to control for its effect. This is common practice in situations where <em>X</em> cannot be manipulated (e.g., controlling for gender when looking at the effects of parenting style on child school performance). This use of covariates, however, is complicated and covariates must be selected carefully based on theory and causal structure. Unfortunately, controlling for a confounding variable is also not as strong as people tend to believe. Controlling for a confounding variable with a covariate does not fully eliminate its influence, but removes the partial effect on the outcome measurable by the model. We plan to demonstrate this in a future simulation paper.</p>
 </section>
 <section id="references" class="level1 unnumbered">
 
@@ -1127,7 +1084,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","loop":false,"descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
