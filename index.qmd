@@ -162,76 +162,32 @@ We also assessed Type II error by individual research setting (@fig-panel-2). Ac
 
 {{< embed notebooks/mak_tables.qmd#tbl-est >}}
 
-<!--TABLE of TYPE1 and TYPE 2 by method, b and context?  In paper or supplement
+<!--TABLE of TYPE1 and TYPE 2 by method, b and context?  In paper or supplement-->
 
 # Discussion
-<!--
-Dont p-hack
-- we knew this
-- but this reinforces the magnitude of the problem. Talk about how bad it can really be in some contexts (which ones?)
-Compare to simons estimate, which is underestimate
 
-Use Covariates
-- no covariates approach does have 05 Type I and unbiased parameter estimates
-- but meaningfully higher type II.  Talk about average and then where it is worse
+Our findings reinforce the cautionary warning by Simmons and colleagues [@simmonsFalsepositivePsychologyUndisclosed2011]: p-hacking severely inflates Type I error rate. Simmons et al. simulated an average Type I error rate of 11.7% for a treatment effect when selecting between two potential covariates (*N*=40). In our closest research context (*N*=50, 4 covariates), we observed similar rates of 10.3% (range: 8.4%-13.5%). However, our simulations suggest this estimate may gravely underestimate the magnitude of the problem of p-hacking. It is more realistic that researchers must choose from several candidate covariates. Even when the number of available covariates is modest (i.e., 8-12), our results show that Type I error rates increase to 17.6% (range: 9.4%-32.9%) across contexts. When selecting among 16-20 covariates, Type I error rates, on average, reach a 2.5 fold increase from the 4 covariate context (26.9%, range: 13.9%-46.2%). 
 
-In many instances, using all available covariates is reasonable option
+When covariates were completely withheld (i.e., no covariates method), simulated models yielded an average Type I error rate of .05 and unbiased parameter estimates. However, this approach also showed a meaningful higher Type II error rate compared to the other methods. This is not surprising given that adding additional variables related to the outcome will account for some variance in that outcome thereby increasing power (or lowering Type II error rate). Perhaps then it is also not surprising that the research contexts with highest discrepancies in Type II error rates between the no covariates method and selection methods include situations with moderate to large sample sizes (*N*=150-400) where degrees of freedom can afford the cost of  additional parameters, and in situations where there are many covariates to choose from with strong correlations to the outcome, where covariates have the most opportunity to reduce unexplained variance in the outcome.
 
-- again, 05 type 1 and unbiased always
-- easiest because doesnt require any emprical selection
-- on average only 1.5 - 2.5% lower power compared to better selection methods
-- BUT relative worse with small N or large number of covariates. Likely DF related.  Small N is where we maybe most need covariates.   Also some research contexts may have more than 20 covariates available.   Select in those contexts
-- And maybe you never want to leave any power on the table.  
+In many instances, using all available covariates is a reasonable option. Our simulated models showed consistent average Type I error rates of .05 and unbiased parameter estimates. Additionally, on average Type II error rates (mean=24.0%, range: .01%-77.3%) were only 1% higher than the 6 data-driven selection methods (mean=23%, range: .01%-72.0%)<!--This average includes all covariates lm method which actually has higher type II error rate compared to all covs-->. This method is easiest because it eliminates the need for selection. However, in certain contexts, such as with small sample sizes or large numbers of covariates this difference is no longer trivial, with some data-driven selection methods yielding Type II error rates up to 9% lower. These findings are concerning in that it is not uncommon in psychological research to have 20+ covariates available. Moreover, with the cost of running an experimental study some researchers may be confined to small sample sizes or may not want to risk leaving any power to detect an effect on the table regardless. Hence the importance of identifying a rigorous data-driven covariate selection method.
+<!--JC note: Anchor Type II benefit?  small but how to think about it?   N increase but not linear so specific N?-->
 
-Lets talk through select method recs DURING MEETING
+Among the three data-driven selection methods our simulations showed that when the methods did not include the focal variable, *X*, in the model they produced biased parameter estimates. This bias results from the models favoring selecting covariates that are correlated with *X* in the sample despite being uncorrelated in the population. In other words, the models are accounting for variance in the outcome related to *X* by capitalizing on spurious correlations. This bias was largest for the all covariates linear model and trivial with the single covariate linear model.
 
+However, data-driven selection methods that included *X* in the model produced larger Type I error inflation. 
+<!--JC notes: 
+- Anchor Type I inflation - need simulation
+- Why? Flexibility of models? Seen across all methods that include X.-->
 
-Anchor Type I inflation - need simulation
-Anchor Type II benefit?  small but how to think about it?   N increase but not linear so specific N?
+Our findings suggest the all covariates linear model is not an optimal data-driven covariate selection method. On average it performed worse the other data-driven methods with regard to Type I and Type II error and bias.
 
+The absolute best method for Type II error is Lasso with *X* included in the model, but it is complicated.
 
-Focused on power with covariates measured at baseline/before assignment/manipulation.  Still likely applicable when covs are uncorrelated but measured after baseline
+Alternatively, the simplest single covariate linear models that could be run as a table of correlation or partial correlations are easy to do and almost as good as Lasso with regard to Type I error, Type II error, and bias.
 
-Did not address use of covariates for statistical control of confounds. Common where X cannot be manipulated.  That must be done based on theory about confounds and causal structure.   Complicated and not as strong as people think because of exact X.  Focus of another paper
+This study demonstrated the gains in power when using covariates measured before assignment. These findings are likely still applicable to covariates uncorrelated to the focal variable and empirically related to the outcome, but measured after assignment. 
 
-
-
--->
-
-
-
-
-Dont p-hack
-- we knew this
-- but this reinforces the magnitude of the problem. Talk about how bad it can really be in some contexts (which ones?)
-Compare to simons estimate, which is underestimate
-
-
-Use Covariates
-- no covariates approach does have 05 Type I and unbiased parameter estimates
-- but meaningfully higher type II.  Talk about average and then where it is worse
-
-
-
-In many instances, using all available covariates is reasonable option
-- again, 05 type 1 and unbiased always
-- easiest because doesnt require any emprical selection
-- on average only 1.5 - 2.5% lower power compared to better selection methods
-- BUT relative worse with small N or large number of covariates. Likely DF related.  Small N is where we maybe most need covariates.   Also some research contexts may have more than 20 covariates available.   Select in those contexts
-- And maybe you never want to leave any power on the table.  
-
-Lets talk through select method recs DURING MEETING
-
-
-Anchor Type I inflation - need simulation
-Anchor Type II benefit?  small but how to think about it?   N increase but not linear so specific N?
-
-
-Focused on power with covariates measured at baseline/before assignment/manipulation.  Still likely applicable when covs are uncorrelated but measured after baseline
-
-
-
-Did not address use of covariates for statistical control of confounds. Common where X cannot be manipulated.  That must be done based on theory about confounds and causal structure.   Complicated and not as strong as people think because of exact X.  Focus of another paper
-
+In this study, we did not address the use of covariates for statistically controlling confounds. That is including variables related to both the focal variable and the outcome to control for its effect. This is common practice in situations where *X* cannot be manipulated (e.g., controlling for gender when looking at the effects of parenting style on child school performance). This use of covariates, however, is complicated and covariates must be selected carefully based on theory and causal structure. Unfortunately, controlling for a confounding variable is also not as strong as people tend to believe. Controlling for a confounding variable with a covariate does not fully eliminate its influence, but removes the partial effect on the outcome measurable by the model. We plan to demonstrate this in a future simulation paper.
 
 # References
