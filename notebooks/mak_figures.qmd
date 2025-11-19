@@ -35,8 +35,8 @@ theme_set(theme_classic())
 
 
 
-method_colors <- c("No covariates" = "#9E5900",
-                   "All covariates" = "#E8BE6D",
+method_colors <- c("No covariates" = "#FF7D00",
+                   "All covariates" = "#9E5900",
                    "p-hacking" = "#C92C04",
                    "Single covariate lm" = "#5489BA",
                    "Single covariate lm with X" = "#5489BA",
@@ -56,8 +56,8 @@ method_linetypes <- c("No covariates" = "solid",
                      "All covariates LASSO" = "dashed",
                      "All covariates LASSO with X" = "solid")
 
-method_linewidths <- c("No covariates" = .3,
-                     "All covariates" = .3,
+method_linewidths <- c("No covariates" = .75,
+                     "All covariates" = .75,
                      "p-hacking" = .5,
                      "Single covariate lm" = .5,
                      "Single covariate lm with X" = .5,
