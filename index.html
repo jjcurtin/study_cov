@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="author" content="Lauren Khoury">
 <meta name="author" content="Markus Brauer">
 <meta name="author" content="John J. Curtin">
-<meta name="dcterms.date" content="2025-11-19">
+<meta name="dcterms.date" content="2025-12-03">
 
 <title>Evaluating Methods for Covariate Selection in Experimental Designs</title>
 <style>
@@ -54,10 +54,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a1ff8711b79ae3724c050874b28d9907.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -102,10 +102,10 @@ window.Quarto = {
 <meta name="citation_author" content="Lauren Khoury">
 <meta name="citation_author" content="Markus Brauer">
 <meta name="citation_author" content="John J. Curtin">
-<meta name="citation_publication_date" content="2025-11-19">
-<meta name="citation_cover_date" content="2025-11-19">
+<meta name="citation_publication_date" content="2025-12-03">
+<meta name="citation_cover_date" content="2025-12-03">
 <meta name="citation_year" content="2025">
-<meta name="citation_online_date" content="2025-11-19">
+<meta name="citation_online_date" content="2025-12-03">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Choosing covariates in the analysis of clinical trials;,citation_abstract=Much of the literature on clinical trials emphasizes the importance of adjusting the results for any covariates (baseline variables) for which randomization fails to produce nearly exact balance, but the literature is very nearly devoid of recipes for assessing the consequences of such adjustments. Several years ago, Paul Canner presented an approximate expression for the effect of a covariate adjustment, and he considered its use in the selection of covariates. With the aid of Canner’s equation, using both formal analysis and simulation, the impact of covariate adjustment is further explored. Unless tight control over the analysis plans is established in advance, covariate adjustment can lead to seriously misleading inferences. Illustrations from the clinical trials literature are provided.;,citation_author=M. L. Beach;,citation_author=P. Meier;,citation_publication_date=1989-12;,citation_cover_date=1989-12;,citation_year=1989;,citation_issue=4 Suppl;,citation_doi=10.1016/0197-2456(89)90055-x;,citation_issn=0197-2456;,citation_pmid=2605965;,citation_volume=10;,citation_language=en-US;,citation_journal_title=Controlled Clinical Trials;">
 <meta name="citation_reference" content="citation_title=Power failure: Why small sample size undermines the reliability of neuroscience;,citation_abstract=A study with low statistical power has a reduced chance of detecting a true effect, but it is less well appreciated that low power also reduces the likelihood that a statistically significant result reflects a true effect. Here, we show that the average statistical power of studies in the neurosciences is very low. The consequences of this include overestimates of effect size and low reproducibility of results. There are also ethical dimensions to this problem, as unreliable research is inefficient and wasteful. Improving reproducibility in neuroscience is a key priority and requires attention to well-established but often ignored methodological principles.;,citation_author=Katherine S. Button;,citation_author=John P. A. Ioannidis;,citation_author=Claire Mokrysz;,citation_author=Brian A. Nosek;,citation_author=Jonathan Flint;,citation_author=Emma S. J. Robinson;,citation_author=Marcus R. Munafò;,citation_publication_date=2013-05;,citation_cover_date=2013-05;,citation_year=2013;,citation_issue=5;,citation_doi=10.1038/nrn3475;,citation_issn=1471-003X;,citation_volume=14;,citation_language=en-US;,citation_journal_title=Nature Reviews Neuroscience;">
@@ -182,7 +182,7 @@ window.Quarto = {
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">November 19, 2025</p>
+              <p class="date">December 3, 2025</p>
             </div>
           </div>
           
@@ -603,7 +603,7 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 - Why? Flexibility of models? Seen across all methods that include X.--></p>
 <p>Our findings suggest the all covariates linear model is not an optimal data-driven covariate selection method. On average it performed worse the other data-driven methods. When no true effect existed the all covariates linear model with <em>X</em> yielded the highest Type II error compared to the other data-driven selection methods. When there was a true effect, the all covariates linear model with and without <em>X</em> showed higher Type II error rates compared to the respective single covariate linear and all covariates LASSO models, with and without <em>X</em>. Finally, the all covariates model with <em>X</em> produced the most biased parameter estimates, compared to the other data-driven selection methods, when true effects existed.</p>
 <p>The absolute best method for Type II error is LASSO with <em>X</em> included in the model. LASSO is a machine learning algorithm that may be unfamiliar to some psychology researchers. As such, this data-driven selection method may feel overly complicated. We provide code in the supplement<!--need to add this if JC agrees--> to demonstrate how LASSO can be easily implemented in R for covariate selection.</p>
-<p>However, the simple single covariate linear model with <em>X</em> included in the model may be an equally viable alternative to LASSO. This method performed almost as good as LASSO with regard to Type II error and had lower Type I error compared to LASSO. Moreover, this method is easy to implement as it can be run as a table of correlation or partial correlation values. Both of these methods yielded unbiased parameter estimates and are likely comparable. Researchers can weigh the trade off between Type I and Type II error and the complexity of these methods in choosing which data-driven selection method to use.</p>
+<p>However, the simple single covariate linear model with <em>X</em> included in the model may be an equally viable alternative to LASSO. This method performed almost as good as LASSO with regard to Type II error and had lower Type I error compared to LASSO. Moreover, this method is easy to implement as it can be run as a table of correlation or partial correlation values. Both of these methods yielded unbiased parameter estimates and are likely comparable. Researchers can weigh the trade off between Type I and Type II error and the complexity of these methods in choosing which data-driven selection method to use. And of course, this decision should be pre-registered to avoid adding additional researcher degrees of freedom into the analyses.</p>
 <p>This study demonstrated the gains in power when using covariates measured before assignment. These findings are likely still applicable to covariates uncorrelated to the focal variable and empirically related to the outcome, but measured after assignment. Another use of covariates that we did not address in this study is to statistically control for confounding effects by including additional variables related to both the focal variable and the outcome. This is common practice in situations where <em>X</em> cannot be manipulated (e.g., controlling for gender when looking at the effects of parenting style on child school performance). This use of covariates, however, is complicated and covariates must be selected carefully based on theory and causal structure. Unfortunately, controlling for a confounding variable is also not as strong as people tend to believe. Controlling for a confounding variable with a covariate does not fully eliminate its influence, but removes the partial effect on the outcome measurable by the model. Given the complex nature of these types of covariates, we considered them to fall outside the scope of the current paper and we plan to address them in a future simulation paper.</p>
 </section>
 <section id="references" class="level1 unnumbered">
@@ -744,8 +744,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -856,7 +854,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1083,7 +1080,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
