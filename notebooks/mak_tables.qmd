@@ -63,7 +63,7 @@ lm_methods |>
 
 ```{r}
 #| label: tbl-dictionary
-#| tbl-cap: "Research setting variables and values"
+#| tbl-cap: "Research context variables and values"
 
 data_tbl0 <- tibble(
   description = c(
@@ -81,7 +81,7 @@ data_tbl0 <- tibble(
 )
 
 data_tbl0 |>
-  kbl(col.names = c("Research Setting Variable", "Values"), 
+  kbl(col.names = c("Research Context Variable", "Values"), 
       escape = FALSE) |>
   kable_styling(bootstrap_options = c("striped", "hover"), 
                 full_width = FALSE) |>
@@ -116,7 +116,7 @@ table |>
                                     "All covariates LASSO with X")),
          `No effect` = sprintf("%.3f", `No effect`)) |> 
   arrange(Method) |> 
-  add_row(Method = "Researcher selection", .before = 1) |> 
+  add_row(Method = "A priori selection", .before = 1) |> 
   add_row(Method = "Data-driven selection", .after = 3) |> 
   kable() |> 
   kable_classic() |> 
