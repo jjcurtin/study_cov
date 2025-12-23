@@ -98,8 +98,8 @@ d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv")
 # d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv"))
 d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv"))
 
-d_wo_x_og <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_og_seed.csv"))
-d_wo_x_new <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_new_seed.csv"))
+d_wo_x_0 <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_seed0.csv"))
+d_wo_x_1 <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_seed1.csv"))
 
 d_02_0 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed0.csv"))
 d_02_1 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed1.csv"))
@@ -121,19 +121,19 @@ d_0 <- rbind(d_0, d2_0)
 # d_03 <- rbind(d_03, d2_03)
 d_05 <- rbind(d_05, d2_05)
 
-d_0 <- rbind(d_0, d_wo_x_og |> filter(b_x == 0))
-d_0 <- rbind(d_0, d_wo_x_new |> filter(b_x == 0))
+d_0 <- rbind(d_0, d_wo_x_0 |> filter(b_x == 0))
+d_0 <- rbind(d_0, d_wo_x_1 |> filter(b_x == 0))
 # d_03 <- rbind(d_03, d_wo_x_og |> filter(b_x == 0.3))
 # d_03 <- rbind(d_03, d_wo_x_new |> filter(b_x == 0.3))
-d_05 <- rbind(d_05, d_wo_x_og |> filter(b_x == 0.5))
-d_05 <- rbind(d_05, d_wo_x_new |> filter(b_x == 0.5))
+d_05 <- rbind(d_05, d_wo_x_0 |> filter(b_x == 0.5))
+d_05 <- rbind(d_05, d_wo_x_1 |> filter(b_x == 0.5))
 
 d_02 <- rbind(d_02_0, d_02_1)
 
 ```
 
 ```{r}
-rm(d_20_covs, d_n50, d2_0, d2_03, d2_05, d_wo_x_og, d_wo_x_new, d_02_0, d_02_1)
+rm(d_20_covs, d_n50, d2_0, d2_03, d2_05, d_wo_x_0, d_wo_x_1, d_02_0, d_02_1)
 ```
 
 
