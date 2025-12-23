@@ -88,18 +88,21 @@ options(digits = 3)
 #| label: read in data
 
 d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv"))
-d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv"))
+# d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv"))
 d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv"))
 
 d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv"))
 d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv"))
 
 d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv"))
-d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv"))
+# d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv"))
 d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv"))
 
 d_wo_x_og <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_og_seed.csv"))
 d_wo_x_new <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_new_seed.csv"))
+
+d_02_0 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed0.csv"))
+d_02_1 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed1.csv"))
 
 ```
 
@@ -107,28 +110,30 @@ d_wo_x_new <- data.table::fread(here::here(rdrive_path, "batch_results_methods_w
 #| label: combine data
 
 d_0 <- rbind(d_0, d_20_covs |> filter(b_x == 0))
-d_03 <- rbind(d_03, d_20_covs |> filter(b_x == 0.3))
+# d_03 <- rbind(d_03, d_20_covs |> filter(b_x == 0.3))
 d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
 
 d_0 <- rbind(d_0, d_n50 |> filter(b_x == 0))
-d_03 <- rbind(d_03, d_n50 |> filter(b_x == 0.3))
+# d_03 <- rbind(d_03, d_n50 |> filter(b_x == 0.3))
 d_05 <- rbind(d_05, d_n50 |> filter(b_x == 0.5))
 
 d_0 <- rbind(d_0, d2_0)
-d_03 <- rbind(d_03, d2_03)
+# d_03 <- rbind(d_03, d2_03)
 d_05 <- rbind(d_05, d2_05)
 
 d_0 <- rbind(d_0, d_wo_x_og |> filter(b_x == 0))
 d_0 <- rbind(d_0, d_wo_x_new |> filter(b_x == 0))
-d_03 <- rbind(d_03, d_wo_x_og |> filter(b_x == 0.3))
-d_03 <- rbind(d_03, d_wo_x_new |> filter(b_x == 0.3))
+# d_03 <- rbind(d_03, d_wo_x_og |> filter(b_x == 0.3))
+# d_03 <- rbind(d_03, d_wo_x_new |> filter(b_x == 0.3))
 d_05 <- rbind(d_05, d_wo_x_og |> filter(b_x == 0.5))
 d_05 <- rbind(d_05, d_wo_x_new |> filter(b_x == 0.5))
+
+d_02 <- rbind(d_02_0, d_02_1)
 
 ```
 
 ```{r}
-rm(d_20_covs, d_n50, d2_0, d2_03, d2_05, d_wo_x_og, d_wo_x_new)
+rm(d_20_covs, d_n50, d2_0, d2_03, d2_05, d_wo_x_og, d_wo_x_new, d_02_0, d_02_1)
 ```
 
 
@@ -144,7 +149,7 @@ d_0 <- d_0 |>
                                     "All covariates lm", "All covariates lm with X", 
                                             "All covariates LASSO", "All covariates LASSO with X")))
 
-d_03 <- d_03 |> 
+d_02 <- d_02 |> 
   mutate(method = factor(method, levels = c("no_covs", "all_covs","p_hacked",   "r", 
                                             "partial_r", "full_lm_wo_x", "full_lm",  
                                            "lasso_wo_x", "lasso"),
@@ -372,7 +377,7 @@ ycor <- d_0 |>
 #| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
 #| fig-width: 8.75
 
-d_all <- d_03 |>
+d_all <- d_02 |>
   bind_rows(d_05) |> 
   filter(method != "p-hacking")
 
@@ -526,7 +531,7 @@ ycor_2 <- d_all |>
   ggplot(aes(x = r_ycov, y = prop_not_sig, color = method, linetype = method,
              linewidth = method)) + 
   geom_line() +
-  scale_x_continuous(breaks = c(0.3, 0.5)) +
+  scale_x_continuous(breaks = c(0.2, 0.5)) +
   scale_y_continuous(breaks = c(0.10, 0.20, .30, .40),
                     limits = c(0.02, .42)) +
   labs(y = NULL,
@@ -544,7 +549,7 @@ b_x <- d_all |>
   ggplot(aes(x = b_x, y = prop_not_sig, color = method, linetype = method,
              linewidth = method)) + 
   geom_line() +
-  scale_x_continuous(breaks = c(0.3, 0.5)) +
+  scale_x_continuous(breaks = c(0.2, 0.5)) +
   scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50),
                     limits = c(0.02, .52)) +
   labs(y = "Type II Error",
