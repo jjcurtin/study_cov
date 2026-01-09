@@ -73,7 +73,7 @@ data_tbl0 <- tibble(
     "The number of covariates",
     "The proportion of \"good\" covariates",
     "The correlation between Y and good covariates"),
-  values = c("0, 0.3, 0.5",
+  values = c("0, 0.2, 0.5",
              "50, 100, 150, 200, 300, 400", 
              "4, 8, 12, 16, 20", 
              "0.25, 0.50, 0.75",
@@ -101,7 +101,7 @@ data_tbl0 |>
 table |> 
   rename(Method = method, 
          `No effect` = `b_x = 0`,
-         `d = .3` = `b_x = .3`,
+         `d = .2` = `b_x = .2`,
          `d = .5` = `b_x = .5`) |> 
   mutate(Method = factor(Method, 
                          levels = c("No covariates", "All covariates", "p-hacking", 
