@@ -78,7 +78,9 @@ method_patterns <- c("No covariates" = "none",
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
-rdrive_path <- format_path("cov/raw_data")
+# rdrive_path <- format_path("cov/raw_data")
+
+rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
 
 options(digits = 3)
 
@@ -110,30 +112,30 @@ d_02_1 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed1.csv"
 #| label: combine data
 
 d_0 <- rbind(d_0, d_20_covs |> filter(b_x == 0))
-# d_03 <- rbind(d_03, d_20_covs |> filter(b_x == 0.3))
-d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
-
 d_0 <- rbind(d_0, d_n50 |> filter(b_x == 0))
-# d_03 <- rbind(d_03, d_n50 |> filter(b_x == 0.3))
+
+d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
 d_05 <- rbind(d_05, d_n50 |> filter(b_x == 0.5))
 
+rm(d_20_covs, d_n50)
+
 d_0 <- rbind(d_0, d2_0)
-# d_03 <- rbind(d_03, d2_03)
 d_05 <- rbind(d_05, d2_05)
+
+rm(d2_0, d2_05)
 
 d_0 <- rbind(d_0, d_wo_x_0 |> filter(b_x == 0))
 d_0 <- rbind(d_0, d_wo_x_1 |> filter(b_x == 0))
-# d_03 <- rbind(d_03, d_wo_x_og |> filter(b_x == 0.3))
-# d_03 <- rbind(d_03, d_wo_x_new |> filter(b_x == 0.3))
+
 d_05 <- rbind(d_05, d_wo_x_0 |> filter(b_x == 0.5))
 d_05 <- rbind(d_05, d_wo_x_1 |> filter(b_x == 0.5))
 
+rm(d_wo_x_0, d_wo_x_1)
+
 d_02 <- rbind(d_02_0, d_02_1)
 
-```
+rm(d_02_0, d_02_1)
 
-```{r}
-rm(d_20_covs, d_n50, d2_0, d2_03, d2_05, d_wo_x_0, d_wo_x_1, d_02_0, d_02_1)
 ```
 
 
@@ -369,17 +371,23 @@ ycor <- d_0 |>
   theme(legend.position = "right")
 ```
 
-
-
+```{r}
+rm(d_0)
+```
 
 ```{r}
 #| label: fig-bar-2
 #| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
 #| fig-width: 8.75
 
+d_02 <- rbind(d_02, d_05)
+
+rm(d_05)
+
 d_all <- d_02 |>
-  bind_rows(d_05) |> 
   filter(method != "p-hacking")
+
+rm(d_02)
 
 type_II_summary <- d_all |> 
   group_by(method) |>

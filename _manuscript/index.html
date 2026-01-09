@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="author" content="Lauren Khoury">
 <meta name="author" content="Markus Brauer">
 <meta name="author" content="John J. Curtin">
-<meta name="dcterms.date" content="2025-12-03">
+<meta name="dcterms.date" content="2025-12-24">
 
 <title>Evaluating Methods for Covariate Selection in Experimental Designs</title>
 <style>
@@ -54,10 +54,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a1ff8711b79ae3724c050874b28d9907.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -102,10 +102,10 @@ window.Quarto = {
 <meta name="citation_author" content="Lauren Khoury">
 <meta name="citation_author" content="Markus Brauer">
 <meta name="citation_author" content="John J. Curtin">
-<meta name="citation_publication_date" content="2025-12-03">
-<meta name="citation_cover_date" content="2025-12-03">
+<meta name="citation_publication_date" content="2025-12-24">
+<meta name="citation_cover_date" content="2025-12-24">
 <meta name="citation_year" content="2025">
-<meta name="citation_online_date" content="2025-12-03">
+<meta name="citation_online_date" content="2025-12-24">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Choosing covariates in the analysis of clinical trials;,citation_abstract=Much of the literature on clinical trials emphasizes the importance of adjusting the results for any covariates (baseline variables) for which randomization fails to produce nearly exact balance, but the literature is very nearly devoid of recipes for assessing the consequences of such adjustments. Several years ago, Paul Canner presented an approximate expression for the effect of a covariate adjustment, and he considered its use in the selection of covariates. With the aid of Canner’s equation, using both formal analysis and simulation, the impact of covariate adjustment is further explored. Unless tight control over the analysis plans is established in advance, covariate adjustment can lead to seriously misleading inferences. Illustrations from the clinical trials literature are provided.;,citation_author=M. L. Beach;,citation_author=P. Meier;,citation_publication_date=1989-12;,citation_cover_date=1989-12;,citation_year=1989;,citation_issue=4 Suppl;,citation_doi=10.1016/0197-2456(89)90055-x;,citation_issn=0197-2456;,citation_pmid=2605965;,citation_volume=10;,citation_language=en-US;,citation_journal_title=Controlled Clinical Trials;">
 <meta name="citation_reference" content="citation_title=Power failure: Why small sample size undermines the reliability of neuroscience;,citation_abstract=A study with low statistical power has a reduced chance of detecting a true effect, but it is less well appreciated that low power also reduces the likelihood that a statistically significant result reflects a true effect. Here, we show that the average statistical power of studies in the neurosciences is very low. The consequences of this include overestimates of effect size and low reproducibility of results. There are also ethical dimensions to this problem, as unreliable research is inefficient and wasteful. Improving reproducibility in neuroscience is a key priority and requires attention to well-established but often ignored methodological principles.;,citation_author=Katherine S. Button;,citation_author=John P. A. Ioannidis;,citation_author=Claire Mokrysz;,citation_author=Brian A. Nosek;,citation_author=Jonathan Flint;,citation_author=Emma S. J. Robinson;,citation_author=Marcus R. Munafò;,citation_publication_date=2013-05;,citation_cover_date=2013-05;,citation_year=2013;,citation_issue=5;,citation_doi=10.1038/nrn3475;,citation_issn=1471-003X;,citation_volume=14;,citation_language=en-US;,citation_journal_title=Nature Reviews Neuroscience;">
@@ -182,7 +182,7 @@ window.Quarto = {
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">December 3, 2025</p>
+              <p class="date">December 24, 2025</p>
             </div>
           </div>
           
@@ -225,7 +225,7 @@ window.Quarto = {
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks\mak_figures-preview.html"><i class="bi bi-journal-code"></i>Make Figures for Main Manuscript</a></li><li><a href="notebooks\mak_tables-preview.html"><i class="bi bi-journal-code"></i>Make Tables for Main Manuscript</a></li><li><a href="notebooks\supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks\mak_figures-preview.html"><i class="bi bi-journal-code"></i>mak_figures.qmd</a></li><li><a href="notebooks\mak_tables-preview.html"><i class="bi bi-journal-code"></i>mak_tables.qmd</a></li><li><a href="notebooks\supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li></ul></div></nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
 </div>
@@ -251,32 +251,19 @@ Plos One
 -->
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Psychology researchers are often interested in experimental manipulations as a means of establishing causal relationships between a variable of interest and a psychological outcome. For example, researchers may manipulate treatment conditions to determine whether a new psychotherapy intervention reduces anxiety symptoms. <!--maybe add example that is social psych focused?--></p>
-<p>Valid causal interpretations require adequate statistical power <span class="citation" data-cites="cohenStatisticalPowerAnalysis1988 cohenPowerPrimer1992">(<a href="#ref-cohenStatisticalPowerAnalysis1988" role="doc-biblioref">Cohen 1988</a>, <a href="#ref-cohenPowerPrimer1992" role="doc-biblioref">1992</a>)</span>. Statistical power is the probability of avoiding a Type II error, or failing to reject the null hypothesis when a true effect exists. The field has increasingly recognized the critical importance of adequately powered studies. Low-powered studies do not replicate well. They have a low probability of finding true effects and when an effect is detected, the magnitude of the effect is often inflated and the likelihood that the finding is a true positive is low <span class="citation" data-cites="cohenStatisticalPowerAbnormalsocial1962 buttonPowerFailureWhy2013">(<a href="#ref-cohenStatisticalPowerAbnormalsocial1962" role="doc-biblioref">Cohen 1962</a>; <a href="#ref-buttonPowerFailureWhy2013" role="doc-biblioref">Button et al. 2013</a>)</span>.</p>
-<p>Adding covariates, variables measured at baseline prior to the manipulation, to statistical models has been shown to reduce Type II error by accounting for unexplained variance in the outcome that might otherwise be interpreted as noise <span class="citation" data-cites="thompsonCovariateAdjustmentHad2015 hernandezCovariateAdjustmentRandomized2004 hernandezRandomizedControlledTrials2006 kahanRisksRewardsCovariate2014 vanbreukelenANCOVAChangeBaseline2006 egbewaleBiasPrecisionStatistical2014">(<a href="#ref-thompsonCovariateAdjustmentHad2015" role="doc-biblioref">Thompson et al. 2015</a>; <a href="#ref-hernandezCovariateAdjustmentRandomized2004" role="doc-biblioref">Adrián V. Hernández, Steyerberg, and Habbema 2004</a>; <a href="#ref-hernandezRandomizedControlledTrials2006" role="doc-biblioref">Adrián V. Hernández, Eijkemans, and Steyerberg 2006</a>; <a href="#ref-kahanRisksRewardsCovariate2014" role="doc-biblioref">Kahan et al. 2014</a>; <a href="#ref-vanbreukelenANCOVAChangeBaseline2006" role="doc-biblioref">Van Breukelen 2006</a>; <a href="#ref-egbewaleBiasPrecisionStatistical2014" role="doc-biblioref">Egbewale, Lewis, and Sim 2014</a>)</span>. In the earlier example, where researchers test whether a new treatment reduces anxiety symptoms, they might consider including a measure of recent stressful life events as a covariate. Stressful events are expected to correlate with anxiety but, if measured after treatment assignment, would not be correlated with the manipulated variable thereby reducing variance in anxiety that is unrelated to the manipulation.</p>
-<p>However, selecting which covariates to include is not straightforward. As a result, researchers have often iterated over their analyses, selectively adding covariates that improve the statistical significance (i.e., <em>p</em>-value) of their focal variable. This is a practice known as <em>p</em>-hacking <span class="citation" data-cites="simonsohnPcurveKeyFiledrawer2014">(<a href="#ref-simonsohnPcurveKeyFiledrawer2014" role="doc-biblioref">Simonsohn, Nelson, and Simmons 2014</a>)</span>. It is now well-established that this is a statistically invalid method for covariate selection and leads to an increased Type I error rate (i.e., finding significant effects that do not truly exist; <span class="citation" data-cites="simmonsFalsepositivePsychologyUndisclosed2011 ioannidisWhyMostPublished2005 schelchterPosthocSelectionCovariates1985 beachChoosingCovariatesAnalysis1989">(<a href="#ref-simmonsFalsepositivePsychologyUndisclosed2011" role="doc-biblioref">Simmons, Nelson, and Simonsohn 2011</a>; <a href="#ref-ioannidisWhyMostPublished2005" role="doc-biblioref">Ioannidis 2005</a>; <a href="#ref-schelchterPosthocSelectionCovariates1985" role="doc-biblioref">Schelchter and Forsythe 1985</a>; <a href="#ref-beachChoosingCovariatesAnalysis1989" role="doc-biblioref">Beach and Meier 1989</a>)</span>). These concerns have led to a replication crisis and have prompted increased caution and consideration around researcher decisions in statistical tests. <!--KW: John, I moved this last sentence from the earlier paragraph for the version we send to Markus--> <!--replication crisis is also due to RDF.   Not sure it makes sense to introduce without focusing on both at the same time--> <!-- combine with earlier issues about power and statistical validity??--></p>
-<p>While this serves as an example of what not to do, there remains an important question on how covariates should be selected. In light of the serious consequences of <em>p</em>-hacking, as highlighted by <span class="citation" data-cites="simmonsFalsepositivePsychologyUndisclosed2011">Simmons, Nelson, and Simonsohn (<a href="#ref-simmonsFalsepositivePsychologyUndisclosed2011" role="doc-biblioref">2011</a>)</span> and others, one might conclude that perhaps no covariates should be used. Though, as noted earlier, this would increase the risk of Type II error. Another conclusion might be to use all available covariates that are reasonably believed to account for unexplained variance in the outcome. Each additional covariate, however, reduces degrees of freedom. In psychology, where potential covariates are numerous and often redundant<!--not clear-->, this can unnecessarily reduce degrees of freedom, again increasing the risk of Type II error.</p>
-<p>It is clear, then, that covariate selection is essential for adequately powered analyses (i.e., those with low Type II error). An optimal covariate selection method will be able to select the covariates that provide the highest increase in power (e.g., covariates highly correlated with the outcome <span class="citation" data-cites="kahanRisksRewardsCovariate2014">(<a href="#ref-kahanRisksRewardsCovariate2014" role="doc-biblioref">Kahan et al. 2014</a>)</span>) with the lowest cost to degrees of freedom (e.g., by including covariates that contribute to unique reductions in variance). Criticially the method of covariate selection must also not nominally inflate the Type I error rate, as occurs with <em>p</em>-hacking.</p>
-<p>This study aims to provide clear and accessible methods for researchers to select among a set of covariates. Specifically, we conducted 40,000 simulations of nine candidate methods across several research contexts. These contexts varied in population parameter, sample size, number of available covariates, proportion of good covariates, and the strength of relationships between good covariates and the outcome. <!--why different contexts-->We report Type I and Type II error rates for methods that use no covariates, all available covariates, a statistically invalid selection method (<em>p</em>-hacking), and three valid selection methods (single covariate linear model, all covariates linear model, and all covariates least absolute shrinkage and selection operator [LASSO]) that were each tested with and without controlling for the focal variable. <!--break apart methods from how we evaluate them-->These findings can help researchers determine the optimal covariate selection method for their specific research context.</p>
+<p>Research in Psychology is often uses experimental manipulations as a means of establishing causal relationships between a focal independent variable (IV) and a psychological outcome. For example, participants may be randomly assigned to receive a moderate dose of alcohol or placebo to evaluate the effect of alcohol consumption on response to a laboratory stressor (INSERT A COUPLE OF REFS TO OUR STUDIES). [Markus, can you provide a simple second example that focuses on an IV manipulation that is social psych relevant?)</p>
+<p>A valid test of the effect of an IV requires adequate statistical power (i.e., low probability of a type II error) <span class="citation" data-cites="cohenStatisticalPowerAnalysis1988 cohenPowerPrimer1992">(<a href="#ref-cohenStatisticalPowerAnalysis1988" role="doc-biblioref">Cohen 1988</a>, <a href="#ref-cohenPowerPrimer1992" role="doc-biblioref">1992</a>)</span>. By definition, low statistical power is associated with a high probability of a type II error (i.e., failure to reject a false null hypothesis). Significant effects detected by studies with low power often do not replicate due to their low positive predictive value. Furthermore, estimates of the effect size for an IV may be positively biased when derived from studies with low power. For all these reasons, methods to increase statistical power are critically important for a robust scientific literature <span class="citation" data-cites="cohenStatisticalPowerAbnormalsocial1962 buttonPowerFailureWhy2013">(<a href="#ref-cohenStatisticalPowerAbnormalsocial1962" role="doc-biblioref">Cohen 1962</a>; <a href="#ref-buttonPowerFailureWhy2013" role="doc-biblioref">Button et al. 2013</a>)</span>.</p>
+<p>The use of covariates that are measured at baseline (i.e., prior to random assignment/manipulation of the focal IV) has been shown to increase statistical power and reduce Type II errors by accounting for unexplained variance in the outcome that would otherwise be treated as noise in the analysis <span class="citation" data-cites="thompsonCovariateAdjustmentHad2015 hernandezCovariateAdjustmentRandomized2004 hernandezRandomizedControlledTrials2006 kahanRisksRewardsCovariate2014 vanbreukelenANCOVAChangeBaseline2006 egbewaleBiasPrecisionStatistical2014">(<a href="#ref-thompsonCovariateAdjustmentHad2015" role="doc-biblioref">Thompson et al. 2015</a>; <a href="#ref-hernandezCovariateAdjustmentRandomized2004" role="doc-biblioref">Adrián V. Hernández, Steyerberg, and Habbema 2004</a>; <a href="#ref-hernandezRandomizedControlledTrials2006" role="doc-biblioref">Adrián V. Hernández, Eijkemans, and Steyerberg 2006</a>; <a href="#ref-kahanRisksRewardsCovariate2014" role="doc-biblioref">Kahan et al. 2014</a>; <a href="#ref-vanbreukelenANCOVAChangeBaseline2006" role="doc-biblioref">Van Breukelen 2006</a>; <a href="#ref-egbewaleBiasPrecisionStatistical2014" role="doc-biblioref">Egbewale, Lewis, and Sim 2014</a>)</span>. For example, in the previously described test of the effect of alcohol on stress response, baseline measures of both trait anxiety and fearfulness could be included as covariates. These measures would be expected to correlate with laboratory stress response and therefore reduce variance in stress response that is unrelated to the manipulation to increase statistical power.</p>
+<p>However, selection of the optimal covariates to include to increase statistical power is not straightforward. Historically, researchers often iterated over the set of possible covariates and included only those covariates that lowered the p-value for the test of their focal IV. Today, we recognize that this approach, known as p-hacking <span class="citation" data-cites="simonsohnPcurveKeyFiledrawer2014">(<a href="#ref-simonsohnPcurveKeyFiledrawer2014" role="doc-biblioref">Simonsohn, Nelson, and Simmons 2014</a>)</span>, seriously undermines the statistical validity of the analyses by substantially increasing the probability of type I errors (i.e., rejecting the null hypothesis when it is not false <span class="citation" data-cites="simmonsFalsepositivePsychologyUndisclosed2011 ioannidisWhyMostPublished2005 schelchterPosthocSelectionCovariates1985 beachChoosingCovariatesAnalysis1989">(<a href="#ref-simmonsFalsepositivePsychologyUndisclosed2011" role="doc-biblioref">Simmons, Nelson, and Simonsohn 2011</a>; <a href="#ref-ioannidisWhyMostPublished2005" role="doc-biblioref">Ioannidis 2005</a>; <a href="#ref-schelchterPosthocSelectionCovariates1985" role="doc-biblioref">Schelchter and Forsythe 1985</a>; <a href="#ref-beachChoosingCovariatesAnalysis1989" role="doc-biblioref">Beach and Meier 1989</a>)</span>). Statistically valid analyses require both low probability of type II errors and control of type I errors at the specified value of alpha (e.g., 0.05).</p>
+<p>Given that p-hacking compromises statistical validity, we are left with questions about appropriate covariate selection strategies that both minimize type II errors and control type I errors. A priori, the researcher could decide to avoid the use of covariates altogether with no risk to type I error control. But statistical power would likely be lost by this decision. At the other extreme, the researcher could plan to include all available covariates that are reasonably believed to account for unexplained variance in the outcome in the statistical analysis. This decision, if made a priori, would also not be expected to inflate the type I error rate. However, this approach may not yield optimal statistical power because a subset of these covariates may not manifest strong, or any, relationship with the outcome in any particular study if they have not been previously well-established as robust predictors. Furthermore, available covariates are often correlated with each other (e.g., trait anxiety and fearfulness from the previous example), which reduces their potential benefit in reducing noise relative to their cost to degrees of freedom in the analysis.</p>
+<p>Given these previous options, it may be that a data-driven approach to covariate selection could improve statistical validity relative to the a priori all or no covariate approaches. An optimal data-driven covariate selection method may be able to select the covariates that provide the greatest increase in power (e.g., covariates highly correlated with the outcome <span class="citation" data-cites="kahanRisksRewardsCovariate2014">(<a href="#ref-kahanRisksRewardsCovariate2014" role="doc-biblioref">Kahan et al. 2014</a>)</span>) with the lowest cost to degrees of freedom (e.g., by including covariates that contribute to unique reductions in variance). Of course, spastically valid data-driven approaches must also not nominally inflate the Type I error rate, as occurs with <em>p</em>-hacking.</p>
+<p>In this study, we use simulation methods to evaluate six data-driven approaches to select an optimal set of covariates when testing the effect of a focal manipulated IV. For each approach, we select covariates that manifest significant relationships with the outcome variable in covariate screening models that are used to identify which covariates to include in the subsequent analysis that tests the focal IV. Across these screening models, we consider three modeling approaches (i.e., bivariate regression models that screen each covariate in its own model, multiple regression models that screen all covariates in a single model, and LASSO models that screen all covariates in a single model). Across these modeling approaches, we either include or exclude the focal IV in the screening models for a total of six data-driven approaches. We benchmark these data-driven approaches against the a priori “all covariates” and “no covariates” approaches as well as the p-hacking approach. For all approaches we quantify the probability of type I and type II errors across a variety of research contexts that vary by sample size, number of available covariates, strength of covariate effects, effect size for the IV and other relevant context characteristics. We use results from these simulations to provide clear and accessible guidance about how best to select an optimal set of covariates to increase statistical power when testing the effect of a manipulated IV.</p>
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
-<!-- names
-single covariate lm
-single covariate lm with X
-all covariates lm
-all covariates lm with X
-all covariates LASSO
-all covariate LASSO with x
-
-bar plot patterns
-cross vs. solid for without vs. with x? Colors for methods    dashed vs. solid, keep colors
-Solid red for hack - keep color and solid line
-open for all and no?   but then how on line graphs?
--->
 <section id="covariate-selection-methods" class="level2">
 <h2 class="anchored" data-anchor-id="covariate-selection-methods">Covariate Selection Methods</h2>
-<p>We evaluated nine linear regression models with varying levels and methods of covariate selection. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on a single covariate linear model, all covariates linear model, and all covariates LASSO, controlling for the focal manipulation (i.e., <em>X</em>) and without controlling for <em>X</em>. A summary of the nine models is presented in <a href="#tbl-methods" class="quarto-xref">Table&nbsp;1</a>.<!--how select?   Need to make distinction that focuses on covs not X--> <!--terminology:  not models.   Methods, procedures?--> <!--not correlation because that cant generalize to include x--> <!--all are selection methods.   But some are using data to select--></p>
+<p>As described above, we evaluated nine approaches to select covariates to use when testing the effect of a focal dichotomous IV. linear regression models with varying levels and methods of covariate selection. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on a single covariate linear model, all covariates linear model, and all covariates LASSO, controlling for the focal manipulation (i.e., <em>X</em>) and without controlling for <em>X</em>. A summary of the nine models is presented in <a href="#tbl-methods" class="quarto-xref">Table&nbsp;1</a>.<!--how select?   Need to make distinction that focuses on covs not X--> <!--terminology:  not models.   Methods, procedures?--> <!--not correlation because that cant generalize to include x--> <!--all are selection methods.   But some are using data to select--></p>
 <div class="quarto-embed-nb-cell">
 <div class="cell">
 <div id="tbl-methods" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -341,31 +328,27 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 </section>
 <section id="research-contexts" class="level2">
 <h2 class="anchored" data-anchor-id="research-contexts">Research Contexts</h2>
-<!--consider adding citations throughout this section to justify some of our decisions-->
-<!--research context rather than setting-->
-<!--KW: John, I changed settings to context-->
-<!--why important to manipulate context?-->
-<p>We manipulated several variables designed to mimic varying research contexts that psychology researchers might be working in. We crossed all levels of each variable to create a total of 540 unique research contexts. A summary of these contexts is presented in <a href="#tbl-dictionary" class="quarto-xref">Table&nbsp;2</a>. The variables include:</p>
+<p>We manipulated several characteristics designed to mimic varying research contexts that psychology researchers might encounter in their studies. We crossed all levels of each characteristic to create a total of 540 unique research contexts to allow results from our simulations to generalize across the diversity of contexts within which psychology studies are situated. A summary of these contexts is presented in <a href="#tbl-dictionary" class="quarto-xref">Table&nbsp;2</a>. The variables include:</p>
 <ol type="1">
-<li><p>The true population parameter for X. We selected values that represent null (<span class="math inline">\(b_x = 0\)</span>), medium (<span class="math inline">\(b_x = 0.3\)</span>) and large (<span class="math inline">\(b_x = 0.5\)</span>) effect sizes. <!--convert to d--></p></li>
+<li><p>The true population parameter for the focal IV. We selected values that represent null (<span class="math inline">\(b_{iv} = 0\)</span>), small (<span class="math inline">\(b_{iv} = 0.3\)</span>) and medium (<span class="math inline">\(b_{iv} = 0.5\)</span>) effects for the IV. Given that the variance of the outcome variable was set to 1 in all simulations, these parameter values correspond to null, small, and medium Cohen’s d effect sizes (INSERT COHEN 1991 ref).</p></li>
 <li><p>The sample size. We chose values for the number of observations that pertain to common sample sizes in experimental research: 50, 100, 150, 200, 300, and 400 observations.</p></li>
-<li><p>The number of covariates available. We selected a wide range of possible scenarios: 4, 8, 12, 16, or 20 covariates.</p></li>
-<li><p>The proportion of “good” covariates. We used varying proportions of good covariates across research contexts (.25, .50, and .75) to represent a common reality when a researcher is faced with many covariates, but only some may be related to their outcome. <!--not clear what "good" is--></p></li>
-<li><p>The strength of the relationship between the good covariates and Y. All good covariates were given a moderate and large relationship to <em>Y</em>, correlations of 0.3 and 0.5, respectively. Since these good covariates are all correlated with <em>Y</em>, it is likeley they are also correlated with each other. Therefore we assigned a moderate 0.3 correlation for all relationships among good covariates. <!--combine with 4 at least in the description here--></p></li>
+<li><p>The number of covariates available. We selected a wide range of possible scenarios: 4, 8, 12, 16, or 20 available covariates.</p></li>
+<li><p>The percentage of covariates with non-zero relationships with the outcome. We simulated research contexts where 25%, 50% or 75% of the available covariates were related to the outcome to represent realities where a researcher has many available covariates, but only some may be useful given their relationship with the outcome.</p></li>
+<li><p>The strength of the relationship between the covariates and Y. All non-zero covariates (see characteristic 3) were given a moderate or large relationship to the outcome (i.e., correlations of 0.3 and 0.5), respectively. Since these covariates are all correlated with the outcome, it is likely they are also correlated with each other. Therefore, we assigned a moderate 0.3 correlation for all relationships among good covariates. <!--combine with 4 at least in the description here--></p></li>
 </ol>
 <div class="quarto-embed-nb-cell">
 <div class="cell">
 <div id="tbl-dictionary" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: Research setting variables and values
+Table&nbsp;2: Research context variables and values
 </figcaption>
 <div aria-describedby="tbl-dictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display">
 <table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Research Setting Variable</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Research Context Variable</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">Values</th>
 </tr>
 </thead>
@@ -474,7 +457,7 @@ Figure&nbsp;3: Type II Error by Method. Average type II error rate across all re
 <div id="fig-panel-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-panel-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Type II error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."><img src="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-1.png" width="720" height="864" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Type II error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."><img src="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-2.png" width="720" height="864" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-panel-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Type II error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines.
@@ -511,7 +494,7 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Researcher selection</td>
+<td style="text-align: left;">A priori selection</td>
 <td style="text-align: left;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -745,6 +728,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -855,6 +840,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

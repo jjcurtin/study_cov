@@ -28,7 +28,8 @@ options(knitr.kable.NA = '')
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
-rdrive_path <- format_path("cov/raw_data")
+# rdrive_path <- format_path("cov/raw_data")
+rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
 table <- read_csv(here::here(rdrive_path, "estimate_table.csv"),
                   show_col_types = FALSE)
 
