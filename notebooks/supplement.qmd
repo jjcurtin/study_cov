@@ -581,45 +581,51 @@ d_05 |>
 
 ```
 
+
+
+### Parameter Estimates
 ```{r}
-#| label: tbl-est-sd-se-0
+est_d_0 <- d_0 |> 
+  ggplot(aes(x = estimate, color = method, linetype = method)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(xintercept = 0, linetype = "dotted", color = "black") +
+  scale_x_continuous(limits = c(-0.5, 0.5), breaks = seq(-0.5, 0.5, by = 0.5)) +
+  labs(y = "Density",
+       x = "Estimate") +
+  scale_linetype_manual(values = method_linetypes) +
+  scale_color_manual(values = method_colors) 
 
-d_0 |> 
-  group_by(method) |> 
-  summarise(mean_estimate = sprintf("%.3f", mean(estimate)*-1),
-            SD_estimate = sd(estimate),
-            SE_mean = sqrt(mean(SE^2)),
-            difference = SD_estimate - SE_mean) |> 
-  kbl(caption = "b_x = 0")
+est_d_03 <- d_03 |> 
+  filter(method != "p-hacking") |> 
+  ggplot(aes(x = estimate, color = method, linetype = method)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(xintercept = 0.3, linetype = "dotted") +
+  scale_x_continuous(limits = c(-0.2, 0.8), breaks = c(0, 0.3, 0.6)) +
+  labs(y = "Density",
+       x = "Estimate") +
+  scale_linetype_manual(values = method_linetypes) +
+  scale_color_manual(values = method_colors) +
+  theme(legend.position = "none")
 
+est_d_05 <- d_05 |> 
+  filter(method != "p-hacking") |> 
+  ggplot(aes(x = estimate, color = method, linetype = method)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(xintercept = 0.5, linetype = "dotted") +
+  scale_x_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) +
+  labs(y = "Density",
+       x = "Estimate") + 
+  scale_linetype_manual(values = method_linetypes) +
+  scale_color_manual(values = method_colors) +
+  theme(legend.position = "none")
 ```
 
 ```{r}
-#| label: tbl-est-sd-se-03
+#| label: fig-distribution-bx
+#| fig-cap: "Sampling Distribution for Population Parameter Estimates."
+#| fig-height: 8
 
-d_03 |> 
-  filter(method != "p_hacked") |> 
-  group_by(method) |> 
-  summarise(mean_estimate = mean(estimate),
-            SD_estimate = sd(estimate),
-            mean_SE = sqrt(mean(SE^2)),
-            difference = SD_estimate - mean_SE) |> 
-  kbl(caption = "Estimate, SD, SE: b_x = 0.3")
-
-```
-
-```{r}
-#| label: tbl-est-sd-se-05
-
-d_05 |> 
-  filter(method != "p_hacked") |> 
-  group_by(method) |> 
-  summarise(mean_estimate = mean(estimate),
-            SD_estimate = sd(estimate),
-            mean_SE = sqrt(mean(SE^2)),
-            difference = SD_estimate - mean_SE) |> 
-  kbl(caption = "Estimate, SD, SE: b_x = 0.5")
-
+est_d_0 / est_d_03 / est_d_05 
 ```
 
 
