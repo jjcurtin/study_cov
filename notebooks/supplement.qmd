@@ -581,9 +581,8 @@ d_05 |>
 
 ```
 
-
-
 ### Parameter Estimates
+
 ```{r}
 est_d_0 <- d_0 |> 
   ggplot(aes(x = estimate, color = method, linetype = method)) +

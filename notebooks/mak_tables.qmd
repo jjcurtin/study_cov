@@ -100,9 +100,9 @@ data_tbl0 |>
 
 table |> 
   rename(Method = method, 
-         `No effect` = `b_x = 0`,
-         `d = .2` = `b_x = .2`,
-         `d = .5` = `b_x = .5`) |> 
+         `No effect` = `estimate_bx_0`,
+         `d = .2` = `estimate_bx_02`,
+         `d = .5` = `estimate_bx_05`) |> 
   mutate(Method = factor(Method, 
                          levels = c("No covariates", "All covariates", "p-hacking", 
                                     "Single covariate lm", "Single covariate lm with X", 

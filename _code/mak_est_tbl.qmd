@@ -1,0 +1,158 @@
+---
+title: "Make Estimate Table"
+author: "Lauren Khoury and Kendra Wyant"
+date: "`r lubridate::today()`"
+number-sections: true
+output: 
+  html_document:
+    toc: true 
+    toc_depth: 4
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-depth: 4
+editor_options: 
+  chunk_output_type: console
+execute:
+  echo: false
+html-table-processing: none
+---
+
+```{r}
+#| label: set up
+
+library(dplyr) |> suppressMessages()
+library(skimr)
+library(purrr)
+library(ggplot2)
+library(patchwork)
+library(ggpattern)
+library(forcats)
+library(kableExtra, exclude = ("group_rows"))
+
+theme_set(theme_classic())
+
+devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
+
+# rdrive_path <- format_path("cov/raw_data")
+rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
+
+options(digits = 3)
+
+```
+
+```{r}
+#| label: read in data
+
+d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv"))
+d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv"))
+
+d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv"))
+d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv"))
+
+d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv"))
+d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv"))
+
+d_wo_x_0 <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_seed0.csv"))
+d_wo_x_1 <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_seed1.csv"))
+
+d_02_0 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed0.csv"))
+d_02_1 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed1.csv"))
+
+```
+
+```{r}
+#| label: combine data
+
+d_0 <- rbind(d_0, d_20_covs |> filter(b_x == 0))
+d_0 <- rbind(d_0, d_n50 |> filter(b_x == 0))
+
+d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
+d_05 <- rbind(d_05, d_n50 |> filter(b_x == 0.5))
+
+rm(d_20_covs, d_n50)
+
+d_0 <- rbind(d_0, d2_0)
+d_05 <- rbind(d_05, d2_05)
+
+rm(d2_0, d2_05)
+
+d_0 <- rbind(d_0, d_wo_x_0 |> filter(b_x == 0))
+d_0 <- rbind(d_0, d_wo_x_1 |> filter(b_x == 0))
+
+d_05 <- rbind(d_05, d_wo_x_0 |> filter(b_x == 0.5))
+d_05 <- rbind(d_05, d_wo_x_1 |> filter(b_x == 0.5))
+
+rm(d_wo_x_0, d_wo_x_1)
+
+d_02 <- rbind(d_02_0, d_02_1)
+
+rm(d_02_0, d_02_1)
+
+```
+
+```{r}
+#| label: factor levels
+
+d_0 <- d_0 |> 
+  mutate(method = factor(method, levels = c("no_covs", "all_covs","p_hacked",  "r",
+                                            "partial_r", "full_lm_wo_x", "full_lm",  
+                                           "lasso_wo_x", "lasso"),
+                         labels = c("No covariates", "All covariates", "p-hacking", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                            "All covariates LASSO", "All covariates LASSO with X")))
+
+d_02 <- d_02 |> 
+  mutate(method = factor(method, levels = c("no_covs", "all_covs","p_hacked",   "r", 
+                                            "partial_r", "full_lm_wo_x", "full_lm",  
+                                           "lasso_wo_x", "lasso"),
+                         labels = c( "No covariates", "All covariates", "p-hacking", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                            "All covariates LASSO", "All covariates LASSO with X")))
+
+d_05 <- d_05 |> 
+  mutate(method = factor(method, levels = c("no_covs", "all_covs","p_hacked",   "r", 
+                                            "partial_r", "full_lm_wo_x", "full_lm",  
+                                           "lasso_wo_x", "lasso"),
+                         labels = c("No covariates", "All covariates", "p-hacking", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                            "All covariates LASSO", "All covariates LASSO with X")))
+
+```
+
+```{r}
+
+#| label: table est
+
+tbl_0 <- d_0 |> 
+  group_by(method) |> 
+  summarise(estimate_bx_0 = mean(estimate))
+
+tbl_02 <- d_02 |> 
+  group_by(method) |> 
+  summarise(estimate_bx_02 = mean(estimate))
+
+tbl_05 <- d_05 |> 
+  group_by(method) |> 
+  summarise(estimate_bx_05 = mean(estimate))
+
+```
+
+```{r}
+
+#| label: save table
+
+final_table <- list(tbl_0, tbl_02, tbl_05) |> reduce(left_join, by = "method")
+write.csv(final_table, "estimate_table.csv", row.names = FALSE)
+
+```
+
+
+
+
+
+
