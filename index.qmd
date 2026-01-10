@@ -73,7 +73,7 @@ As described above, we evaluated nine approaches to select covariates to use whe
 ## Research Contexts
 We manipulated several characteristics designed to mimic varying research contexts that psychology researchers might encounter in their studies. We crossed all levels of each characteristic to create a total of 540 unique research contexts to allow results from our simulations to generalize across the diversity of contexts within which psychology studies are situated. A summary of these contexts is presented in @tbl-dictionary. The variables include:
 
-1. The true population parameter for the focal IV. We selected values that represent null ($b_{iv} = 0$), small ($b_{iv} = 0.3$) and medium ($b_{iv} = 0.5$) effects for the IV. Given that the variance of the outcome variable was set to 1 in all simulations, these parameter values correspond to null, small, and medium Cohen's d effect sizes (INSERT COHEN 1991 ref).
+1. The true population parameter for the focal IV. We selected values that represent null ($b_{iv} = 0$), small ($b_{iv} = 0.2$) and medium ($b_{iv} = 0.5$) effects for the IV. Given that the variance of the outcome variable was set to 1 in all simulations, these parameter values correspond to null, small, and medium Cohen's d effect sizes (INSERT COHEN 1991 ref).
 
 2. The sample size. We chose values for the number of observations that pertain to common sample sizes in experimental research: 50, 100, 150, 200, 300, and 400 observations.
 
@@ -120,7 +120,7 @@ We assessed Type I error by individual research context and found several patter
 
 ## Type II Error
 
-We simulated datasets with two possible population parameters for the effect of *X* on *Y* ($b_x = 0.3$, $b_x = 0.5$). Any non-significant result found indicated a Type II error. Stronger statistical methods will have lower Type II error (implying greater statistical power). Since we demonstrated that p-hacking substantially inflates Type I error, making it a statistically invalid method for covariate selection, we do not evaluate Type II Error for this method. 
+We simulated datasets with two possible population parameters for the effect of *X* on *Y* ($b_x = 0.2$, $b_x = 0.5$). Any non-significant result found indicated a Type II error. Stronger statistical methods will have lower Type II error (implying greater statistical power). Since we demonstrated that p-hacking substantially inflates Type I error, making it a statistically invalid method for covariate selection, we do not evaluate Type II Error for this method. 
 
 [@fig-bar-2] shows the average Type II error rate across all research contexts for each method. Using no covariates results in the highest Type II error highlighting the importance of covariates for detecting true effects. Type II error rates trended lower for covariate selection methods that controlled for *X* compared to those that did not control for *X*.
 <!-- what about all covariates?-->
@@ -139,7 +139,7 @@ We also assessed Type II error by individual research context (@fig-panel-2). Ac
 <!--remind that when assumptions met, parameter estimates are unbiased-->
 <!--need to look at this and think a bit more.  Should this also be reported separately for b =0 vs. b <>0 and embedded in those sections above.  Can make the point that we want low type II, .05 type I and unbiased at the start of method or end of intro-->
 
-@tbl-est shows the mean parameter estimate of *X* for all nine methods separately by effect size ($b_x = 0$, $b_x = 0.3$, $b_x = 0.5$). All methods yield unbiased estimates when the effect size is 0. When there is a non-zero effect, p-hacking methods notably inflate the effect size. Other data-driven methods that do not control for X yield slightly biased parameter estimates. Sampling distributions of parameter estimates are available in the supplement.
+@tbl-est shows the mean parameter estimate of *X* for all nine methods separately by effect size ($b_x = 0$, $b_x = 0.2$, $b_x = 0.5$). All methods yield unbiased estimates when the effect size is 0. When there is a non-zero effect, p-hacking methods notably inflate the effect size. Other data-driven methods that do not control for X yield slightly biased parameter estimates. Sampling distributions of parameter estimates are available in the supplement.
 
 {{< embed notebooks/mak_tables.qmd#tbl-est >}}
 

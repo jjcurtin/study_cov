@@ -24,35 +24,61 @@ library(dplyr) |> suppressMessages()
 library(skimr)
 library(purrr)
 library(ggplot2)
-library(cowplot)
+library(patchwork)
+library(ggpattern)
 library(forcats)
 library(kableExtra, exclude = ("group_rows"))
 
 theme_set(theme_classic())
-method_colors <- c("no_covs" = "sienna",
-                   "all_covs" = "goldenrod2",
-                   "p_hacked" = "red2",
-                   "r" = "springgreen3",
-                   "partial_r" = "deepskyblue",
-                   "full_lm" = "mediumpurple1",
-                   "full_lm_wo_x" = "slateblue1",
-                   "lasso" = "hotpink",
-                   "lasso_wo_x" = "lightpink")
-method_linetypes <- c("no_covs" = "solid",
-                      "all_covs" = "solid",
-                      "p_hacked" = "longdash",
-                      "r" = "longdash",
-                      "partial_r" = "longdash",
-                      "full_lm" = "longdash",
-                      "full_lm_wo_x" = "longdash",
-                      "lasso" = "longdash",
-                      "lasso_wo_x" = "longdash")
+
+
+
+method_colors <- c("No covariates" = "#FF7D00",
+                   "All covariates" = "#9E5900",
+                   "p-hacking" = "#C92C04",
+                   "Single covariate lm" = "#5489BA",
+                   "Single covariate lm with X" = "#5489BA",
+                   "All covariates lm" = "#664896",
+                   "All covariates lm with X" = "#664896",
+                   "All covariates LASSO" = "#4A7C59",
+                   "All covariates LASSO with X" = "#4A7C59")
+
+
+method_linetypes <- c("No covariates" = "solid",
+                     "All covariates" = "solid",
+                     "p-hacking" = "solid",
+                     "Single covariate lm" = "dashed",
+                     "Single covariate lm with X" = "solid",
+                     "All covariates lm" = "dashed",
+                     "All covariates lm with X" = "solid",
+                     "All covariates LASSO" = "dashed",
+                     "All covariates LASSO with X" = "solid")
+
+method_linewidths <- c("No covariates" = .75,
+                     "All covariates" = .75,
+                     "p-hacking" = .5,
+                     "Single covariate lm" = .5,
+                     "Single covariate lm with X" = .5,
+                     "All covariates lm" = .5,
+                     "All covariates lm with X" = .5,
+                     "All covariates LASSO" = .5,
+                     "All covariates LASSO with X" = .5)
+
+method_patterns <- c("No covariates" = "none",
+                     "All covariates" = "none",
+                     "p-hacking" = "none",
+                     "Single covariate lm" = "stripe",
+                     "Single covariate lm with X" = "none",
+                     "All covariates lm" = "stripe",
+                     "All covariates lm with X" = "none",
+                     "All covariates LASSO" = "stripe",
+                     "All covariates LASSO with X" = "none")
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
-# rdrive_path <- format_path("studydata/cov/raw_data")
+# rdrive_path <- format_path("cov/raw_data")
+
 rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
-setwd(rdrive_path)
 
 options(digits = 3)
 
@@ -62,18 +88,19 @@ options(digits = 3)
 #| label: read in data
 
 d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv"))
-d_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_03.csv"))
 d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv"))
 
 d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv"))
 d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv"))
 
 d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv"))
-d2_03 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_03.csv"))
 d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv"))
 
-d_wo_x_og <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_og_seed.csv"))
-d_wo_x_new <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_new_seed.csv"))
+d_wo_x_0 <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_seed0.csv"))
+d_wo_x_1 <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_seed1.csv"))
+
+d_02_0 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed0.csv"))
+d_02_1 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed1.csv"))
 
 ```
 
@@ -81,23 +108,29 @@ d_wo_x_new <- data.table::fread(here::here(rdrive_path, "batch_results_methods_w
 #| label: combine data
 
 d_0 <- rbind(d_0, d_20_covs |> filter(b_x == 0))
-d_03 <- rbind(d_03, d_20_covs |> filter(b_x == 0.3))
-d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
-
 d_0 <- rbind(d_0, d_n50 |> filter(b_x == 0))
-d_03 <- rbind(d_03, d_n50 |> filter(b_x == 0.3))
+
+d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
 d_05 <- rbind(d_05, d_n50 |> filter(b_x == 0.5))
 
+rm(d_20_covs, d_n50)
+
 d_0 <- rbind(d_0, d2_0)
-d_03 <- rbind(d_03, d2_03)
 d_05 <- rbind(d_05, d2_05)
 
-d_0 <- rbind(d_0, d_wo_x_og |> filter(b_x == 0))
-d_0 <- rbind(d_0, d_wo_x_new |> filter(b_x == 0))
-d_03 <- rbind(d_03, d_wo_x_og |> filter(b_x == 0.3))
-d_03 <- rbind(d_03, d_wo_x_new |> filter(b_x == 0.3))
-d_05 <- rbind(d_05, d_wo_x_og |> filter(b_x == 0.5))
-d_05 <- rbind(d_05, d_wo_x_new |> filter(b_x == 0.5))
+rm(d2_0, d2_05)
+
+d_0 <- rbind(d_0, d_wo_x_0 |> filter(b_x == 0))
+d_0 <- rbind(d_0, d_wo_x_1 |> filter(b_x == 0))
+
+d_05 <- rbind(d_05, d_wo_x_0 |> filter(b_x == 0.5))
+d_05 <- rbind(d_05, d_wo_x_1 |> filter(b_x == 0.5))
+
+rm(d_wo_x_0, d_wo_x_1)
+
+d_02 <- rbind(d_02_0, d_02_1)
+
+rm(d_02_0, d_02_1)
 
 ```
 
@@ -105,17 +138,31 @@ d_05 <- rbind(d_05, d_wo_x_new |> filter(b_x == 0.5))
 #| label: factor levels
 
 d_0 <- d_0 |> 
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
-                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
+  mutate(method = factor(method, levels = c("no_covs", "all_covs","p_hacked",  "r",
+                                            "partial_r", "full_lm_wo_x", "full_lm",  
+                                           "lasso_wo_x", "lasso"),
+                         labels = c("No covariates", "All covariates", "p-hacking", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                            "All covariates LASSO", "All covariates LASSO with X")))
 
-d_03 <- d_03 |> 
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
-                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
+d_02 <- d_02 |> 
+  mutate(method = factor(method, levels = c("no_covs", "all_covs","p_hacked",   "r", 
+                                            "partial_r", "full_lm_wo_x", "full_lm",  
+                                           "lasso_wo_x", "lasso"),
+                         labels = c( "No covariates", "All covariates", "p-hacking", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                            "All covariates LASSO", "All covariates LASSO with X")))
 
 d_05 <- d_05 |> 
-  mutate(method = factor(method, c("no_covs", "all_covs", "p_hacked", "r", "partial_r", 
-                                   "full_lm", "full_lm_wo_x", "lasso", "lasso_wo_x")))
-
+  mutate(method = factor(method, levels = c("no_covs", "all_covs","p_hacked",   "r", 
+                                            "partial_r", "full_lm_wo_x", "full_lm",  
+                                           "lasso_wo_x", "lasso"),
+                         labels = c("No covariates", "All covariates", "p-hacking", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                            "All covariates LASSO", "All covariates LASSO with X")))
 
 ```
 
@@ -224,9 +271,9 @@ d_0 |>
 ### Type II error
 
 ```{r}
-#| label: histograms variable 03
+#| label: histograms variable 02
 
-h03 <- d_03 |> 
+h02 <- d_02 |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(type_II = mean(p_value >= 0.05),
             .groups = "drop")
@@ -234,15 +281,15 @@ h03 <- d_03 |>
 ```
 
 ```{r}
-#| label: fig-histograms-all-03
+#| label: fig-histograms-all-02
 
-h03 |>
+h02 |>
   filter(method != "p_hacked") |> 
   ggplot(aes(x = type_II)) +
   geom_histogram() +
   facet_wrap(~ method) +
   labs(x = "Type II Error",
-       title = "Distribution of Type II error, b_x = 0.3")
+       title = "Distribution of Type II error, b_x = 0.2")
 
 ```
 
@@ -270,9 +317,9 @@ h05 |>
 ```
 
 ```{r}
-#| label: tbl-typeII-nobs-03
+#| label: tbl-typeII-nobs-02
 
-d_03 |> 
+d_02 |> 
   filter(method != "p_hacked") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
@@ -282,7 +329,7 @@ d_03 |>
             typeII_max = max(prop_not_sig),
             typeII_mean = mean(prop_not_sig),
             .groups = "drop") |> 
-  kbl(caption = "Type II error by n_obs, b_x = 0.3")
+  kbl(caption = "Type II error by n_obs, b_x = 0.2")
 
 ```
 
@@ -304,9 +351,9 @@ d_05 |>
 ```
 
 ```{r}
-#| label: tbl-typeII-ncovs-03
+#| label: tbl-typeII-ncovs-02
 
-d_03 |> 
+d_02 |> 
   filter(method != "p_hacked") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
@@ -316,7 +363,7 @@ d_03 |>
             typeII_max = max(prop_not_sig),
             typeII_mean = mean(prop_not_sig),
             .groups = "drop") |> 
-  kbl(caption = "Type II error by n_covs, b_x = 0.3")
+  kbl(caption = "Type II error by n_covs, b_x = 0.2")
 
 ```
 
@@ -338,9 +385,9 @@ d_05 |>
 ```
 
 ```{r}
-#| label: tbl-typeII-pgoodcovs-03
+#| label: tbl-typeII-pgoodcovs-02
 
-d_03 |> 
+d_02 |> 
   filter(method != "p_hacked") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
@@ -350,7 +397,7 @@ d_03 |>
             typeII_max = max(prop_not_sig),
             typeII_mean = mean(prop_not_sig),
             .groups = "drop") |> 
-  kbl(caption = "Type II error by p_good_covs, b_x = 0.3")
+  kbl(caption = "Type II error by p_good_covs, b_x = 0.2")
 
 ```
 
@@ -372,9 +419,9 @@ d_05 |>
 ```
 
 ```{r}
-#| label: tbl-typeII-rycov-03
+#| label: tbl-typeII-rycov-02
 
-d_03 |> 
+d_02 |> 
   filter(method != "p_hacked") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
@@ -384,7 +431,7 @@ d_03 |>
             typeII_max = max(prop_not_sig),
             typeII_mean = mean(prop_not_sig),
             .groups = "drop") |> 
-  kbl(caption = "Type II error by correlations, b_x = 0.3")
+  kbl(caption = "Type II error by correlations, b_x = 0.2")
 
 ```
 
@@ -437,20 +484,20 @@ d_0 |>
 ```
 
 ```{r}
-#| label: tbl-tpr-03
+#| label: tbl-tpr-02
 
-d_03 |> 
+d_02 |> 
   group_by(method) |> 
   summarise(covs_tpr_mean = sprintf("%.3f", mean(covs_tpr)),
             .groups = "drop") |> 
-  kbl(caption = "TPR, b_x = 0.3")
+  kbl(caption = "TPR, b_x = 0.2")
 
 ```
 
 ```{r}
-#| label: fig-tpr-03
+#| label: fig-tpr-02
 
-d_03 |> 
+d_02 |> 
   mutate(n_good_covs = n_covs * p_good_covs) |> 
   group_by(method, n_good_covs) |> 
   summarise(covs_tpr_mean = mean(covs_tpr),
@@ -459,7 +506,7 @@ d_03 |>
   geom_line() +
   scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15)) +
   labs(y = "True Positive Rate",
-       title = "TPR by n_good_covs, b_x = 0.3") +
+       title = "TPR by n_good_covs, b_x = 0.2") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -524,20 +571,20 @@ d_0 |>
 ```
 
 ```{r}
-#| label: tbl-fpr-03
+#| label: tbl-fpr-02
 
-d_03 |> 
+d_02 |> 
   group_by(method) |> 
   summarise(covs_fpr_mean = sprintf("%.3f", mean(covs_fpr)),
             .groups = "drop") |> 
-  kbl(caption = "FPR, b_x = 0.3")
+  kbl(caption = "FPR, b_x = 0.2")
 
 ```
 
 ```{r}
-#| label: fig-fpr-03
+#| label: fig-fpr-02
 
-d_03 |> 
+d_02 |> 
   mutate(n_good_covs = n_covs * p_good_covs) |> 
   group_by(method, n_good_covs) |> 
   summarise(covs_fpr_mean = mean(covs_fpr),
@@ -546,7 +593,7 @@ d_03 |>
   geom_line() +
   scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15)) +
   labs(y = "False Positive Rate",
-       title = "FPR by n_good_covs, b_x = 0.3") +
+       title = "FPR by n_good_covs, b_x = 0.2") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors)
 
@@ -594,12 +641,12 @@ est_d_0 <- d_0 |>
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) 
 
-est_d_03 <- d_03 |> 
+est_d_02 <- d_02 |> 
   filter(method != "p-hacking") |> 
   ggplot(aes(x = estimate, color = method, linetype = method)) +
   geom_density(alpha = 0.5) +
-  geom_vline(xintercept = 0.3, linetype = "dotted") +
-  scale_x_continuous(limits = c(-0.2, 0.8), breaks = c(0, 0.3, 0.6)) +
+  geom_vline(xintercept = 0.2, linetype = "dotted") +
+  scale_x_continuous(limits = c(-0.2, 0.8), breaks = c(0, 0.2, 0.6)) +
   labs(y = "Density",
        x = "Estimate") +
   scale_linetype_manual(values = method_linetypes) +
@@ -624,7 +671,7 @@ est_d_05 <- d_05 |>
 #| fig-cap: "Sampling Distribution for Population Parameter Estimates."
 #| fig-height: 8
 
-est_d_0 / est_d_03 / est_d_05 
+est_d_0 / est_d_02 / est_d_05 
 ```
 
 
