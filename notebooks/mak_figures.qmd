@@ -425,7 +425,7 @@ segment_labels <- tibble::tibble(
         mean(c(2.8, 4.6)),
         mean(c(5, 6.8)),
         mean(c(7.2, 9))),
-  y = c(.48, .48, .385, .385, .385) + 0.015,   
+  y = c(.49, .49, .405, .405, .405) + 0.015,   
   label = c("A priori selection", "Data-driven selection", "Single covariate lm", "All covariates lm", "All covariates LASSO")
 )
 
@@ -444,11 +444,11 @@ ggplot(
     pattern_spacing = 0.02,
     color = "black"
   ) +
-  geom_segment(aes(y = .48, x = .6, xend = 2.6)) +
-  geom_segment(aes(y = .48, x = 2.8, xend = 9.2)) +
-  geom_segment(aes(y = .385, x = 2.8, xend = 4.6)) +
-  geom_segment(aes(y = .385, x = 5, xend = 6.8)) +
-  geom_segment(aes(y = .385, x = 7.2, xend = 9)) +
+  geom_segment(aes(y = .49, x = .6, xend = 2.6)) +
+  geom_segment(aes(y = .49, x = 2.8, xend = 9.2)) +
+  geom_segment(aes(y = .405, x = 2.8, xend = 4.6)) +
+  geom_segment(aes(y = .405, x = 5, xend = 6.8)) +
+  geom_segment(aes(y = .405, x = 7.2, xend = 9)) +
   geom_text(
     aes(label = sprintf("%.3f", type_II)),
     vjust = -0.5
@@ -548,7 +548,7 @@ ycor_2 <- d_all |>
   scale_color_manual(values = method_colors) +
   theme(legend.title = element_blank())
 
-b_x_2 <- d_all |> 
+b_x <- d_all |> 
   group_by(method, b_x) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
@@ -556,8 +556,8 @@ b_x_2 <- d_all |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.2, 0.5)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50),
-                    limits = c(0.02, .52)) +
+  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70), 
+                     limits = c(0.02, .72)) +
   labs(y = "Type II Error",
        x = NULL,
        subtitle = "Population Parameter for X") +

@@ -147,10 +147,12 @@ tbl_05 <- d_05 |>
 #| label: save table
 
 final_table <- list(tbl_0, tbl_02, tbl_05) |> reduce(left_join, by = "method")
-write.csv(final_table, "estimate_table.csv", row.names = FALSE)
 
 ```
 
+```{r}
+write.csv(final_table, "estimate_table.csv", row.names = FALSE)
+```
 
 
 
