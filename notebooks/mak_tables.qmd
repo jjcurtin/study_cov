@@ -29,7 +29,8 @@ options(knitr.kable.NA = '')
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
 # rdrive_path <- format_path("cov/raw_data")
-rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
+# rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
+rdrive_path <- "/Volumes/jjcurtin/studydata/cov/raw_data"
 table <- read_csv(here::here(rdrive_path, "estimate_table.csv"),
                   show_col_types = FALSE)
 
@@ -115,7 +116,7 @@ table |>
                                     "All covariates lm with X", 
                                     "All covariates LASSO without X", 
                                     "All covariates LASSO with X")),
-         `No effect` = sprintf("%.3f", `No effect`)) |> 
+         `No effect` = sprintf("%.3f", abs(`No effect`))) |> 
   arrange(Method) |> 
   add_row(Method = "A priori selection", .before = 1) |> 
   add_row(Method = "Data-driven selection", .after = 3) |> 

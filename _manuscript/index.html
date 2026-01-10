@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="author" content="Lauren Khoury">
 <meta name="author" content="Markus Brauer">
 <meta name="author" content="John J. Curtin">
-<meta name="dcterms.date" content="2026-01-10">
+<meta name="dcterms.date" content="2026-01-09">
 
 <title>Evaluating Methods for Covariate Selection in Experimental Designs</title>
 <style>
@@ -54,10 +54,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-81e35ebdb4125010edbabe6010586085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -102,10 +102,10 @@ window.Quarto = {
 <meta name="citation_author" content="Lauren Khoury">
 <meta name="citation_author" content="Markus Brauer">
 <meta name="citation_author" content="John J. Curtin">
-<meta name="citation_publication_date" content="2026-01-10">
-<meta name="citation_cover_date" content="2026-01-10">
+<meta name="citation_publication_date" content="2026-01-09">
+<meta name="citation_cover_date" content="2026-01-09">
 <meta name="citation_year" content="2026">
-<meta name="citation_online_date" content="2026-01-10">
+<meta name="citation_online_date" content="2026-01-09">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Choosing covariates in the analysis of clinical trials;,citation_abstract=Much of the literature on clinical trials emphasizes the importance of adjusting the results for any covariates (baseline variables) for which randomization fails to produce nearly exact balance, but the literature is very nearly devoid of recipes for assessing the consequences of such adjustments. Several years ago, Paul Canner presented an approximate expression for the effect of a covariate adjustment, and he considered its use in the selection of covariates. With the aid of Canner’s equation, using both formal analysis and simulation, the impact of covariate adjustment is further explored. Unless tight control over the analysis plans is established in advance, covariate adjustment can lead to seriously misleading inferences. Illustrations from the clinical trials literature are provided.;,citation_author=M. L. Beach;,citation_author=P. Meier;,citation_publication_date=1989-12;,citation_cover_date=1989-12;,citation_year=1989;,citation_issue=4 Suppl;,citation_doi=10.1016/0197-2456(89)90055-x;,citation_issn=0197-2456;,citation_pmid=2605965;,citation_volume=10;,citation_language=en-US;,citation_journal_title=Controlled Clinical Trials;">
 <meta name="citation_reference" content="citation_title=Power failure: Why small sample size undermines the reliability of neuroscience;,citation_abstract=A study with low statistical power has a reduced chance of detecting a true effect, but it is less well appreciated that low power also reduces the likelihood that a statistically significant result reflects a true effect. Here, we show that the average statistical power of studies in the neurosciences is very low. The consequences of this include overestimates of effect size and low reproducibility of results. There are also ethical dimensions to this problem, as unreliable research is inefficient and wasteful. Improving reproducibility in neuroscience is a key priority and requires attention to well-established but often ignored methodological principles.;,citation_author=Katherine S. Button;,citation_author=John P. A. Ioannidis;,citation_author=Claire Mokrysz;,citation_author=Brian A. Nosek;,citation_author=Jonathan Flint;,citation_author=Emma S. J. Robinson;,citation_author=Marcus R. Munafò;,citation_publication_date=2013-05;,citation_cover_date=2013-05;,citation_year=2013;,citation_issue=5;,citation_doi=10.1038/nrn3475;,citation_issn=1471-003X;,citation_volume=14;,citation_language=en-US;,citation_journal_title=Nature Reviews Neuroscience;">
@@ -182,7 +182,7 @@ window.Quarto = {
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">January 10, 2026</p>
+              <p class="date">January 9, 2026</p>
             </div>
           </div>
           
@@ -225,7 +225,7 @@ window.Quarto = {
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks\mak_figures-preview.html"><i class="bi bi-journal-code"></i>mak_figures.qmd</a></li><li><a href="notebooks\mak_tables-preview.html"><i class="bi bi-journal-code"></i>mak_tables.qmd</a></li><li><a href="notebooks\supplement-preview.html"><i class="bi bi-journal-code"></i>supplement.qmd</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks/mak_figures-preview.html"><i class="bi bi-journal-code"></i>Make Figures for Main Manuscript</a></li><li><a href="notebooks/mak_tables-preview.html"><i class="bi bi-journal-code"></i>Make Tables for Main Manuscript</a></li><li><a href="notebooks/supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li></ul></div></nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
 </div>
@@ -728,8 +728,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -840,7 +838,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1067,7 +1064,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
