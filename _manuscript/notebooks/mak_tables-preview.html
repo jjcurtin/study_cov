@@ -3573,7 +3573,7 @@ The nine linear regression models and their definition for covariate selection.
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The number of covariates&quot;</span>,</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The proportion of </span><span class="sc">\&quot;</span><span class="st">good</span><span class="sc">\&quot;</span><span class="st"> covariates&quot;</span>,</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The correlation between Y and good covariates&quot;</span>),</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;0, 0.3, 0.5&quot;</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;0, 0.2, 0.5&quot;</span>,</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;50, 100, 150, 200, 300, 400&quot;</span>, </span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;4, 8, 12, 16, 20&quot;</span>, </span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;0.25, 0.50, 0.75&quot;</span>,</span>
@@ -3604,7 +3604,7 @@ Research context variables and values
 <tbody>
   <tr>
    <td style="text-align:left;width: 15em; "> The population parameter for X </td>
-   <td style="text-align:left;width: 10em; "> 0, 0.3, 0.5 </td>
+   <td style="text-align:left;width: 10em; "> 0, 0.2, 0.5 </td>
   </tr>
   <tr>
    <td style="text-align:left;width: 15em; "> The number of observations in the sample </td>
@@ -3635,9 +3635,9 @@ Research context variables and values
 <div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>table <span class="sc">|&gt;</span> </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Method =</span> method, </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">No effect</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">b_x = 0</span><span class="st">`</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">d = .3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">b_x = .3</span><span class="st">`</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">d = .5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">b_x = .5</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">No effect</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">estimate_bx_0</span><span class="st">`</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">d = .2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">estimate_bx_02</span><span class="st">`</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">d = .5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">estimate_bx_05</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="fu">factor</span>(Method, </span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;No covariates&quot;</span>, <span class="st">&quot;All covariates&quot;</span>, <span class="st">&quot;p-hacking&quot;</span>, </span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;Single covariate lm&quot;</span>, <span class="st">&quot;Single covariate lm with X&quot;</span>, </span>
@@ -3669,7 +3669,7 @@ Mean estimates of effect size by method and true effect size
   <tr>
    <th style="text-align:left;"> Method </th>
    <th style="text-align:left;"> No effect </th>
-   <th style="text-align:right;"> d = .3 </th>
+   <th style="text-align:right;"> d = .2 </th>
    <th style="text-align:right;"> d = .5 </th>
   </tr>
  </thead>
@@ -3684,13 +3684,13 @@ Mean estimates of effect size by method and true effect size
 <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> No covariates </td>
    <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.300 </td>
+   <td style="text-align:right;"> 0.200 </td>
    <td style="text-align:right;"> 0.500 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.300 </td>
+   <td style="text-align:left;"> -0.000 </td>
+   <td style="text-align:right;"> 0.200 </td>
    <td style="text-align:right;"> 0.500 </td>
   </tr>
   <tr>
@@ -3702,44 +3702,44 @@ Mean estimates of effect size by method and true effect size
   <tr grouplength="7"><td colspan="4" style="border-bottom: 0;"><strong></strong></td></tr>
 <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> p-hacking </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.368 </td>
+   <td style="text-align:left;"> -0.000 </td>
+   <td style="text-align:right;"> 0.262 </td>
    <td style="text-align:right;"> 0.563 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Single covariate lm without X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.297 </td>
+   <td style="text-align:left;"> -0.000 </td>
+   <td style="text-align:right;"> 0.198 </td>
    <td style="text-align:right;"> 0.495 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Single covariate lm with X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.300 </td>
+   <td style="text-align:left;"> -0.000 </td>
+   <td style="text-align:right;"> 0.200 </td>
    <td style="text-align:right;"> 0.500 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates lm without X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.287 </td>
+   <td style="text-align:left;"> -0.000 </td>
+   <td style="text-align:right;"> 0.192 </td>
    <td style="text-align:right;"> 0.479 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates lm with X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.300 </td>
+   <td style="text-align:left;"> -0.000 </td>
+   <td style="text-align:right;"> 0.200 </td>
    <td style="text-align:right;"> 0.500 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates LASSO without X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.292 </td>
+   <td style="text-align:left;"> -0.000 </td>
+   <td style="text-align:right;"> 0.195 </td>
    <td style="text-align:right;"> 0.487 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates LASSO with X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.300 </td>
+   <td style="text-align:left;"> -0.000 </td>
+   <td style="text-align:right;"> 0.200 </td>
    <td style="text-align:right;"> 0.500 </td>
   </tr>
 </tbody>

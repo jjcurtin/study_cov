@@ -182,7 +182,7 @@ h0 <- d_0 |>
 #| label: fig-histogram-phack
 
 h0 |>
-  filter(method == "p_hacked") |> 
+  filter(method == "p-hacking") |> 
   ggplot(aes(x = type_I)) +
   geom_histogram() +
   facet_wrap(~ method) +
@@ -195,7 +195,7 @@ h0 |>
 #| label: fig-histograms-all-0
 
 h0 |>
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   ggplot(aes(x = type_I)) +
   geom_histogram() +
   facet_wrap(~ method) +
@@ -284,7 +284,7 @@ h02 <- d_02 |>
 #| label: fig-histograms-all-02
 
 h02 |>
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   ggplot(aes(x = type_II)) +
   geom_histogram() +
   facet_wrap(~ method) +
@@ -307,7 +307,7 @@ h05 <- d_05 |>
 #| label: fig-histograms-all-05
 
 h05 |>
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   ggplot(aes(x = type_II)) +
   geom_histogram() +
   facet_wrap(~ method) +
@@ -320,7 +320,7 @@ h05 |>
 #| label: tbl-typeII-nobs-02
 
 d_02 |> 
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
@@ -337,7 +337,7 @@ d_02 |>
 #| label: tbl-typeII-nobs-05
 
 d_05 |> 
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
@@ -354,7 +354,7 @@ d_05 |>
 #| label: tbl-typeII-ncovs-02
 
 d_02 |> 
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
@@ -371,7 +371,7 @@ d_02 |>
 #| label: tbl-typeII-ncovs-05
 
 d_05 |> 
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
@@ -388,7 +388,7 @@ d_05 |>
 #| label: tbl-typeII-pgoodcovs-02
 
 d_02 |> 
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
@@ -405,7 +405,7 @@ d_02 |>
 #| label: tbl-typeII-pgoodcovs-05
 
 d_05 |> 
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
@@ -422,7 +422,7 @@ d_05 |>
 #| label: tbl-typeII-rycov-02
 
 d_02 |> 
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
@@ -439,7 +439,7 @@ d_02 |>
 #| label: tbl-typeII-rycov-05
 
 d_05 |> 
-  filter(method != "p_hacked") |> 
+  filter(method != "p-hacking") |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
   summarise(prop_not_sig = mean(p_value >= 0.05),
             .groups = "drop") |> 
