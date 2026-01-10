@@ -98,7 +98,7 @@ We ran 40,000 simulations for each research context. Within each simulation we g
 
 <!--show code to generate Y in paper??-->
 
-For research contexts where the population parameter for *X* is 0 (i.e., *X* has no effect on *Y*), we report the Type I error rate for each method both across and within research contexts. For research contexts where the population parameter for *X* is 0.3 or 0.5 (i.e., *X* has an effect on *Y*), we report the Type II error rate for each method across and within research contexts. We also provide sampling distributions of the parameter estimate for *X* across research contexts for each method, separately by true effect size (0, 0.3, and 0.5). Detailed tables of range and average error rates for each research context and true and false positive rates for covariates are available in the supplement.
+For research contexts where the population parameter for *X* is 0 (i.e., *X* has no effect on *Y*), we report the Type I error rate for each method both across and within research contexts. For research contexts where the population parameter for *X* is 0.2 or 0.5 (i.e., *X* has an effect on *Y*), we report the Type II error rate for each method across and within research contexts. We also provide sampling distributions of the parameter estimate for *X* across research contexts for each method, separately by true effect size (0, 0.2, and 0.5). Detailed tables of range and average error rates for each research context and true and false positive rates for covariates are available in the supplement.
 
 
 # Results
