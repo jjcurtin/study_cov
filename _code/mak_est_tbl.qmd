@@ -130,7 +130,7 @@ d_05 <- d_05 |>
 
 tbl_0 <- d_0 |> 
   group_by(method) |> 
-  summarise(estimate_bx_0 = mean(estimate))
+  summarise(estimate_bx_0 = abs(mean(estimate)))
 
 tbl_02 <- d_02 |> 
   group_by(method) |> 

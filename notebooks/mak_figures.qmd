@@ -537,7 +537,7 @@ ycor_2 <- d_all |>
   ggplot(aes(x = r_ycov, y = prop_not_sig, color = method, linetype = method,
              linewidth = method)) + 
   geom_line() +
-  scale_x_continuous(breaks = c(0.2, 0.5)) +
+  scale_x_continuous(breaks = c(0.3, 0.5)) +
   scale_y_continuous(breaks = c(0.10, 0.20, .30, .40),
                     limits = c(0.02, .42)) +
   labs(y = NULL,
