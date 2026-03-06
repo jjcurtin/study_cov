@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="author" content="Lauren Khoury">
 <meta name="author" content="Markus Brauer">
 <meta name="author" content="John J. Curtin">
-<meta name="dcterms.date" content="2026-01-09">
+<meta name="dcterms.date" content="2026-03-06">
 
 <title>Evaluating Methods for Covariate Selection in Experimental Designs</title>
 <style>
@@ -54,10 +54,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-81e35ebdb4125010edbabe6010586085.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -65,7 +65,7 @@ div.csl-indent {
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -102,10 +102,10 @@ window.Quarto = {
 <meta name="citation_author" content="Lauren Khoury">
 <meta name="citation_author" content="Markus Brauer">
 <meta name="citation_author" content="John J. Curtin">
-<meta name="citation_publication_date" content="2026-01-09">
-<meta name="citation_cover_date" content="2026-01-09">
+<meta name="citation_publication_date" content="2026-03-06">
+<meta name="citation_cover_date" content="2026-03-06">
 <meta name="citation_year" content="2026">
-<meta name="citation_online_date" content="2026-01-09">
+<meta name="citation_online_date" content="2026-03-06">
 <meta name="citation_language" content="en">
 <meta name="citation_reference" content="citation_title=Choosing covariates in the analysis of clinical trials;,citation_abstract=Much of the literature on clinical trials emphasizes the importance of adjusting the results for any covariates (baseline variables) for which randomization fails to produce nearly exact balance, but the literature is very nearly devoid of recipes for assessing the consequences of such adjustments. Several years ago, Paul Canner presented an approximate expression for the effect of a covariate adjustment, and he considered its use in the selection of covariates. With the aid of Canner’s equation, using both formal analysis and simulation, the impact of covariate adjustment is further explored. Unless tight control over the analysis plans is established in advance, covariate adjustment can lead to seriously misleading inferences. Illustrations from the clinical trials literature are provided.;,citation_author=M. L. Beach;,citation_author=P. Meier;,citation_publication_date=1989-12;,citation_cover_date=1989-12;,citation_year=1989;,citation_issue=4 Suppl;,citation_doi=10.1016/0197-2456(89)90055-x;,citation_issn=0197-2456;,citation_pmid=2605965;,citation_volume=10;,citation_language=en-US;,citation_journal_title=Controlled Clinical Trials;">
 <meta name="citation_reference" content="citation_title=Power failure: Why small sample size undermines the reliability of neuroscience;,citation_abstract=A study with low statistical power has a reduced chance of detecting a true effect, but it is less well appreciated that low power also reduces the likelihood that a statistically significant result reflects a true effect. Here, we show that the average statistical power of studies in the neurosciences is very low. The consequences of this include overestimates of effect size and low reproducibility of results. There are also ethical dimensions to this problem, as unreliable research is inefficient and wasteful. Improving reproducibility in neuroscience is a key priority and requires attention to well-established but often ignored methodological principles.;,citation_author=Katherine S. Button;,citation_author=John P. A. Ioannidis;,citation_author=Claire Mokrysz;,citation_author=Brian A. Nosek;,citation_author=Jonathan Flint;,citation_author=Emma S. J. Robinson;,citation_author=Marcus R. Munafò;,citation_publication_date=2013-05;,citation_cover_date=2013-05;,citation_year=2013;,citation_issue=5;,citation_doi=10.1038/nrn3475;,citation_issn=1471-003X;,citation_volume=14;,citation_language=en-US;,citation_journal_title=Nature Reviews Neuroscience;">
@@ -120,9 +120,9 @@ window.Quarto = {
 <meta name="citation_reference" content="citation_title=The risks and rewards of covariate adjustment in randomized trials: An assessment of 12 outcomes from 8 studies;,citation_abstract=Background Adjustment for prognostic covariates can lead to increased power in the analysis of randomized trials. However, adjusted analyses are not often performed in practice. Methods We used simulation to examine the impact of covariate adjustment on 12 outcomes from 8 studies across a range of therapeutic areas. We assessed (1) how large an increase in power can be expected in practice; and (2) the impact of adjustment for covariates that are not prognostic. Results Adjustment for known prognostic covariates led to large increases in power for most outcomes. When power was set to 80% based on an unadjusted analysis, covariate adjustment led to a median increase in power to 92.6% across the 12 outcomes (range 80.6 to 99.4%). Power was increased to over 85% for 8 of 12 outcomes, and to over 95% for 5 of 12 outcomes. Conversely, the largest decrease in power from adjustment for covariates that were not prognostic was from 80% to 78.5%. Conclusions Adjustment for known prognostic covariates can lead to substantial increases in power, and should be routinely incorporated into the analysis of randomized trials. The potential benefits of adjusting for a small number of possibly prognostic covariates in trials with moderate or large sample sizes far outweigh the risks of doing so, and so should also be considered.;,citation_author=Brennan C Kahan;,citation_author=Vipul Jairath;,citation_author=Caroline J Doré;,citation_author=Tim P Morris;,citation_publication_date=2014-04;,citation_cover_date=2014-04;,citation_year=2014;,citation_doi=10.1186/1745-6215-15-139;,citation_issn=1745-6215;,citation_pmid=24755011;,citation_volume=15;,citation_journal_title=Trials;">
 <meta name="citation_reference" content="citation_title=Subgroup analysis, covariate adjustment and baseline comparisons in clinical trial reporting: Current practiceand problems;,citation_abstract=Clinical trial investigators often record a great deal of baseline data on each patient at randomization. When reporting the trial’s findings such baseline data can be used for (i) subgroup analyses which explore whether there is evidence that the treatment difference depends on certain patient characteristics, (ii) covariate-adjusted analyses which aim to refine the analysis of the overall treatment difference by taking account of the fact that some baseline characteristics are related to outcome and may be unbalanced between treatment groups, and (iii) baseline comparisons which compare the baseline characteristics of patients in each treatment group for any possible (unlucky) differences. This paper examines how these issues are currently tackled in the medical journals, based on a recent survey of 50 trial reports in four major journals. The statistical ramifications are explored, major problems are highlighted and recommendations for future practice are proposed. Key issues include: the overuse and overinterpretation of subgroup analyses; the underuse of appropriate statistical tests for interaction; inconsistencies in the use of covariate-adjustment; the lack of clear guidelines on covariate selection; the overuse of baseline comparisons in some studies; the misuses of significance tests for baseline comparability, and the need for trials to have a predefined statistical analysis plan for all these uses of baseline data. Copyright © 2002 John Wiley &amp;amp;amp; Sons, Ltd.;,citation_author=Stuart J. Pocock;,citation_author=Susan E. Assmann;,citation_author=Laura E. Enos;,citation_author=Linda E. Kasten;,citation_publication_date=2002;,citation_cover_date=2002;,citation_year=2002;,citation_issue=19;,citation_doi=10.1002/sim.1296;,citation_issn=1097-0258;,citation_volume=21;,citation_language=en-US;,citation_journal_title=Statistics in Medicine;">
 <meta name="citation_reference" content="citation_title=Post-hoc selection of covariates in randomized experiments;,citation_abstract=Monte Carlo methods are used to compere a number of adaptive strategies for deciding which of several covariates to incorporate into the analysis of a randomized experiment.Sixteen selection strategies in three categories are considered: 1)select covariates correlated with the response, 2)select covariates with means differing across groups, and 3)select covariates with means differing across groups that are also correlated with the response. The criteria examined are the type I error rate of the test for equality of adjusted group means and the variance of the estimated treatment effect. These strategies can result in either inflated or deflated type I errors, depending on the method and the population parameters. The adaptive methods in the first category some times yieldpoint estimates of the treatment effect more precise than estimators derive dusing either all or none of the covariates.;,citation_author=Mark D. Schelchter;,citation_author=Alan B. Forsythe;,citation_publication_date=1985-01;,citation_cover_date=1985-01;,citation_year=1985;,citation_issue=3;,citation_doi=10.1080/03610928508828942;,citation_issn=0361-0926;,citation_volume=14;,citation_journal_title=Communications in Statistics - Theory and Methods;,citation_publisher=Taylor &amp;amp;amp; Francis;">
-<meta name="citation_reference" content="citation_title=False-positive psychology: Undisclosed flexibility in data collection and analysis allows presenting anything as significant;,citation_abstract=In this article, we accomplish two things. First, we show that despite empirical psychologists’ nominal endorsement of a low rate of false-positive findings ($\leq$ .05), flexibility in data collection, analysis, and reporting dramatically increases actual false-positive rates. In many cases, a researcher is more likely to falsely find evidence that an effect exists than to correctly find evidence that it does not. We present computer simulations and a pair of actual experiments that demonstrate how unacceptably easy it is to accumulate (and report) statistically significant evidence for a false hypothesis. Second, we suggest a simple, low-cost, and straightforwardly effective disclosure-based solution to this problem. The solution involves six concrete requirements for authors and four guidelines for reviewers, all of which impose a minimal burden on the publication process.;,citation_author=Joseph P. Simmons;,citation_author=Leif D. Nelson;,citation_author=Uri Simonsohn;,citation_publication_date=2011-11;,citation_cover_date=2011-11;,citation_year=2011;,citation_issue=11;,citation_doi=10.1177/0956797611417632;,citation_issn=1467-9280;,citation_pmid=22006061;,citation_volume=22;,citation_language=en-US;,citation_journal_title=Psychological Science;">
+<meta name="citation_reference" content="citation_title=False-positive psychology: Undisclosed flexibility in data collection and analysis allows presenting anything as significant;,citation_abstract=In this article, we accomplish two things. First, we show that despite empirical psychologists’ nominal endorsement of a low rate of false-positive findings (\leq .05), flexibility in data collection, analysis, and reporting dramatically increases actual false-positive rates. In many cases, a researcher is more likely to falsely find evidence that an effect exists than to correctly find evidence that it does not. We present computer simulations and a pair of actual experiments that demonstrate how unacceptably easy it is to accumulate (and report) statistically significant evidence for a false hypothesis. Second, we suggest a simple, low-cost, and straightforwardly effective disclosure-based solution to this problem. The solution involves six concrete requirements for authors and four guidelines for reviewers, all of which impose a minimal burden on the publication process.;,citation_author=Joseph P. Simmons;,citation_author=Leif D. Nelson;,citation_author=Uri Simonsohn;,citation_publication_date=2011-11;,citation_cover_date=2011-11;,citation_year=2011;,citation_issue=11;,citation_doi=10.1177/0956797611417632;,citation_issn=1467-9280;,citation_pmid=22006061;,citation_volume=22;,citation_language=en-US;,citation_journal_title=Psychological Science;">
 <meta name="citation_reference" content="citation_title=P-curve: A key to the file-drawer.;,citation_abstract=Because scientists tend to report only studies (publication bias) or analyses (p-hacking) that “work,” readers must ask, “Are these effects true, or do they merely reflect selective reporting?” We introduce p-curve as a way to answer this question. P-curve is the distribution of statistically significant p values for a set of studies (ps &amp;amp;amp;lt; .05). Because only true effects are expected to generate right-skewed p-curves—containing more low (.01s) than high (.04s) significant p values—only right-skewed p-curves are diagnostic of evidential value. By telling us whether we can rule out selective reporting as the sole explanation for a set of findings, p-curve offers a solution to the age-old inferential problems caused by file-drawers of failed studies and analyses. (PsycInfo Database Record (c) 2025 APA, all rights reserved);,citation_author=Uri Simonsohn;,citation_author=Leif D. Nelson;,citation_author=Joseph P. Simmons;,citation_publication_date=2014-04;,citation_cover_date=2014-04;,citation_year=2014;,citation_issue=2;,citation_doi=10.1037/a0033242;,citation_issn=1939-2222;,citation_volume=143;,citation_language=en-US;,citation_journal_title=Journal of Experimental Psychology: General;,citation_publisher=American Psychological Association;">
-<meta name="citation_reference" content="citation_title=Covariate adjustment had similar benefits in small and large randomized controlled trials;,citation_abstract=Objectives Covariate adjustment is a standard statistical approach in the analysis of randomized controlled trials. We aimed to explore whether the benefit of covariate adjustment on statistical significance and power differed between small and large trials, where chance imbalance in prognostic factors necessarily differs. Study Design and Setting We studied two large trial data sets [Global Use of Strategies to Open Occluded Coronary Arteries (GUSTO-I), N&nbsp;=&nbsp;30,510 and International Stroke Trial (IST), N&nbsp;=&nbsp;18,372] repeatedly drawing random samples (500,000 times) of sizes 300 and 5,000 per arm and simulated each primary outcome using the control arms. We empirically determined the treatment effects required to fix power at 80% for all unadjusted analyses and calculated the joint probabilities in the discordant cells when cross-classifying adjusted and unadjusted results from logistic regression models (ie, P&nbsp;$&amp;amp;amp;lt;~$0.05 vs. P&nbsp;$\geq~$0.05). Results The power gained from an adjusted analysis for small and large samples was between 5% and 6%. Similar proportions of discordance were noted irrespective of the sample size in both the GUSTO-I and the IST data sets. Conclusion The proportions of change in statistical significance from covariate adjustment of strongly prognostic characteristics were the same for small and large trials with similar gains in statistical power. Covariate adjustment is equally recommendable in small and large trials.;,citation_author=Douglas D. Thompson;,citation_author=Hester F. Lingsma;,citation_author=William N. Whiteley;,citation_author=Gordon D. Murray;,citation_author=Ewout W. Steyerberg;,citation_publication_date=2015-09;,citation_cover_date=2015-09;,citation_year=2015;,citation_issue=9;,citation_doi=10.1016/j.jclinepi.2014.11.001;,citation_issn=0895-4356;,citation_volume=68;,citation_journal_title=Journal of Clinical Epidemiology;">
+<meta name="citation_reference" content="citation_title=Covariate adjustment had similar benefits in small and large randomized controlled trials;,citation_abstract=Objectives Covariate adjustment is a standard statistical approach in the analysis of randomized controlled trials. We aimed to explore whether the benefit of covariate adjustment on statistical significance and power differed between small and large trials, where chance imbalance in prognostic factors necessarily differs. Study Design and Setting We studied two large trial data sets [Global Use of Strategies to Open Occluded Coronary Arteries (GUSTO-I), N&nbsp;=&nbsp;30,510 and International Stroke Trial (IST), N&nbsp;=&nbsp;18,372] repeatedly drawing random samples (500,000 times) of sizes 300 and 5,000 per arm and simulated each primary outcome using the control arms. We empirically determined the treatment effects required to fix power at 80% for all unadjusted analyses and calculated the joint probabilities in the discordant cells when cross-classifying adjusted and unadjusted results from logistic regression models (ie, P&nbsp;&amp;amp;amp;lt;~0.05 vs. P&nbsp;\geq~0.05). Results The power gained from an adjusted analysis for small and large samples was between 5% and 6%. Similar proportions of discordance were noted irrespective of the sample size in both the GUSTO-I and the IST data sets. Conclusion The proportions of change in statistical significance from covariate adjustment of strongly prognostic characteristics were the same for small and large trials with similar gains in statistical power. Covariate adjustment is equally recommendable in small and large trials.;,citation_author=Douglas D. Thompson;,citation_author=Hester F. Lingsma;,citation_author=William N. Whiteley;,citation_author=Gordon D. Murray;,citation_author=Ewout W. Steyerberg;,citation_publication_date=2015-09;,citation_cover_date=2015-09;,citation_year=2015;,citation_issue=9;,citation_doi=10.1016/j.jclinepi.2014.11.001;,citation_issn=0895-4356;,citation_volume=68;,citation_journal_title=Journal of Clinical Epidemiology;">
 <meta name="citation_reference" content="citation_title=P-Curve and Effect Size: Correcting for Publication Bias Using Only Significant Results;,citation_author=Uri Simonsohn;,citation_author=Leif D. Nelson;,citation_author=Joseph P. Simmons;,citation_publication_date=2014-11;,citation_cover_date=2014-11;,citation_year=2014;,citation_issue=6;,citation_doi=10.1177/1745691614553988;,citation_volume=9;,citation_journal_title=Perspectives on Psychological Science;">
 <meta name="citation_reference" content="citation_title=ANCOVA versus change from baseline had more power in randomized studies and more bias in nonrandomized studies;,citation_abstract=Background and Objective: For inferring a treatment effect from the difference between a treated and untreated group on a quantitative outcome measured before and after treatment, current methods are analysis of covariance (ANCOVA) of the outcome with the baseline as covariate, and analysis of variance (ANOVA) of change from baseline. This article compares both methods on power and bias, for randomized and nonrandomized studies. Methods: The methods are compared by writing both as a regression model and as a repeated measures model, and are applied to a nonrandomized study of preventing depression. Results: In randomized studies both methods are unbiased, but ANCOVA has more power. If treatment assignment is based on the baseline, only ANCOVA is unbiased. In nonrandomized studies with preexisting groups differing at baseline, the two methods cannot both be unbiased, and may contradict each other. In the study of depression, ANCOVA suggests absence, but ANOVA of change suggests presence, of a treatment effect. The methods differ because ANCOVA assumes absence of a baseline difference. Conclusion: In randomized studies and studies with treatment assignment depending on the baseline, ANCOVA must be used. In nonrandomized studies of preexisting groups, ANOVA of change seems less biased than ANCOVA, but two control groups and two baseline measurements are recommended.;,citation_author=Gerard Van Breukelen;,citation_publication_date=2006;,citation_cover_date=2006;,citation_year=2006;,citation_volume=59;,citation_journal_title=Journal of Clinical Epidemiology;">
 </head>
@@ -182,7 +182,7 @@ window.Quarto = {
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">January 9, 2026</p>
+              <p class="date">March 6, 2026</p>
             </div>
           </div>
           
@@ -225,9 +225,9 @@ window.Quarto = {
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks/mak_figures-preview.html"><i class="bi bi-journal-code"></i>Make Figures for Main Manuscript</a></li><li><a href="notebooks/mak_tables-preview.html"><i class="bi bi-journal-code"></i>Make Tables for Main Manuscript</a></li><li><a href="notebooks/supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks/supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li><li><a href="notebooks/mak_tables-preview.html"><i class="bi bi-journal-code"></i>Make Tables for Main Manuscript</a></li><li><a href="notebooks/mak_figures-preview.html"><i class="bi bi-journal-code"></i>Make Figures for Main Manuscript</a></li></ul></div></nav>
 </div>
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -266,14 +266,15 @@ Plos One
 <p>As described above, we evaluated nine approaches to select covariates to use when testing the effect of a focal dichotomous IV. linear regression models with varying levels and methods of covariate selection. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on a single covariate linear model, all covariates linear model, and all covariates LASSO, controlling for the focal manipulation (i.e., <em>X</em>) and without controlling for <em>X</em>. A summary of the nine models is presented in <a href="#tbl-methods" class="quarto-xref">Table&nbsp;1</a>.<!--how select?   Need to make distinction that focuses on covs not X--> <!--terminology:  not models.   Methods, procedures?--> <!--not correlation because that cant generalize to include x--> <!--all are selection methods.   But some are using data to select--></p>
 <div class="quarto-embed-nb-cell">
 <div class="cell">
-<div id="tbl-methods" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div id="tbl-methods" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: The nine linear regression models and their definition for covariate selection.
 </figcaption>
 <div aria-describedby="tbl-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display">
-<table class="lightable-classic do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<div>
+<table class="lightable-classic do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
@@ -321,10 +322,11 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 </table>
 </div>
 </div>
+</div>
 </figure>
 </div>
 </div>
-</div>
+<a class="quarto-notebook-link" id="nblink-1" href="notebooks/mak_tables-preview.html#cell-tbl-methods">Source: Make Tables for Main Manuscript</a></div>
 </section>
 <section id="research-contexts" class="level2">
 <h2 class="anchored" data-anchor-id="research-contexts">Research Contexts</h2>
@@ -338,14 +340,15 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 </ol>
 <div class="quarto-embed-nb-cell">
 <div class="cell">
-<div id="tbl-dictionary" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div id="tbl-dictionary" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;2: Research context variables and values
 </figcaption>
 <div aria-describedby="tbl-dictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<div>
+<table class="table table-striped table-hover do-not-create-environment cell table-sm small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Research Context Variable</th>
@@ -377,10 +380,11 @@ Table&nbsp;2: Research context variables and values
 </table>
 </div>
 </div>
+</div>
 </figure>
 </div>
 </div>
-</div>
+<a class="quarto-notebook-link" id="nblink-2" href="notebooks/mak_tables-preview.html#cell-tbl-dictionary">Source: Make Tables for Main Manuscript</a></div>
 </section>
 <section id="data-analytic-plan" class="level2">
 <h2 class="anchored" data-anchor-id="data-analytic-plan">Data Analytic Plan</h2>
@@ -398,10 +402,10 @@ Table&nbsp;2: Research context variables and values
 <div class="quarto-embed-nb-cell">
 <div id="cell-fig-bar-1" class="cell" data-fig-width="8.75">
 <div class="cell-output cell-output-display">
-<div id="fig-bar-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-bar-1" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" width="840" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" width="840" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.
@@ -410,16 +414,16 @@ Figure&nbsp;1: Type I Error by Method. Average type I error rate across all rese
 </div>
 </div>
 </div>
-</div>
+<a class="quarto-notebook-link" id="nblink-3" href="notebooks/mak_figures-preview.html#cell-fig-bar-1">Source: Make Figures for Main Manuscript</a></div>
 <!--make point that type 1 error is .05 for all and no covariates approach before p-hacking -->
 <p>We assessed Type I error by individual research context and found several patterns (<a href="#fig-type1-panel" class="quarto-xref">Figure&nbsp;2</a>). First, small sample sizes are more susceptible to inflated Type I error rates when using covariate selection methods that control for <em>X</em>. As sample sizes get larger (i.e., <em>n</em> = 300), the methods become comparable. Second, as the number of available covariates to select from increases, Type I error rate increases for covariate selection methods that control for <em>X</em>, such as all covariates linear model with <em>X</em> and all covariates LASSO with <em>X</em>, and to a lesser degree single covariate linear model. Third, there appeared to be no definitive pattern in Type I error rate as the proportion of good covariates increased<!--maybe error of LASSO decreases slightly and error of full linear model increases?-->. Similarly, we did not see changes in Type I error rate as function of the correlation strength between covariates and <em>Y</em>.</p>
 <div class="quarto-embed-nb-cell">
 <div id="cell-fig-type1-panel" class="cell" data-fig-height="6" data-fig-width="8">
 <div class="cell-output cell-output-display">
-<div id="fig-type1-panel" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-type1-panel" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-type1-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-type1-panel-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Type I error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."><img src="index_files/figure-html/notebooks-mak_figures-fig-type1-panel-output-1.png" width="768" height="576" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-type1-panel-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/notebooks-mak_figures-fig-type1-panel-output-1.png" width="768" height="576" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-type1-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Type I error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines.
@@ -428,7 +432,7 @@ Figure&nbsp;2: Type I error by method and research context. Plots are paneled by
 </div>
 </div>
 </div>
-</div>
+<a class="quarto-notebook-link" id="nblink-4" href="notebooks/mak_figures-preview.html#cell-fig-type1-panel">Source: Make Figures for Main Manuscript</a></div>
 </section>
 <section id="type-ii-error" class="level2">
 <h2 class="anchored" data-anchor-id="type-ii-error">Type II Error</h2>
@@ -437,10 +441,10 @@ Figure&nbsp;2: Type I error by method and research context. Plots are paneled by
 <div class="quarto-embed-nb-cell">
 <div id="cell-fig-bar-2" class="cell" data-fig-width="8.75">
 <div class="cell-output cell-output-display">
-<div id="fig-bar-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-bar-2" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" width="840" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-2-output-1.png" width="840" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.
@@ -449,15 +453,15 @@ Figure&nbsp;3: Type II Error by Method. Average type II error rate across all re
 </div>
 </div>
 </div>
-</div>
+<a class="quarto-notebook-link" id="nblink-5" href="notebooks/mak_figures-preview.html#cell-fig-bar-2">Source: Make Figures for Main Manuscript</a></div>
 <p>We also assessed Type II error by individual research context (<a href="#fig-panel-2" class="quarto-xref">Figure&nbsp;4</a>). Across all research context, using no covariates was associated with higher Type II error. Using all available covariates or selection methods that do not control for <em>X</em> performed had higher Type II error rates compared to the other methods when sample sizes were low. This pattern was especially notable for using all covariates and an all covariates linear model without <em>X</em>. As sample size increased, the methods performed comparably with respect to Type II error. Using all covariates or an all covariates linear model without <em>X</em> for selection produced higher Type II error rates compared to other methods when there was a larger number of covariates available. The all covariates linear model without <em>X</em> also produced higher Type II error rates, compared to other methods when the proportion of good covariates was higher.</p>
 <div class="quarto-embed-nb-cell">
 <div id="cell-fig-panel-2" class="cell" data-fig-height="9" data-fig-width="7.5">
 <div class="cell-output cell-output-display">
-<div id="fig-panel-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-panel-2" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-panel-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Type II error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."><img src="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-2.png" width="720" height="864" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-2.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/notebooks-mak_figures-fig-panel-2-output-2.png" width="720" height="864" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-panel-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Type II error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines.
@@ -466,7 +470,7 @@ Figure&nbsp;4: Type II error by method and research context. Plots are paneled b
 </div>
 </div>
 </div>
-</div>
+<a class="quarto-notebook-link" id="nblink-6" href="notebooks/mak_figures-preview.html#cell-fig-panel-2">Source: Make Figures for Main Manuscript</a></div>
 </section>
 <section id="parameter-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="parameter-estimates">Parameter Estimates</h2>
@@ -476,14 +480,15 @@ Figure&nbsp;4: Type II error by method and research context. Plots are paneled b
 <p><a href="#tbl-est" class="quarto-xref">Table&nbsp;3</a> shows the mean parameter estimate of <em>X</em> for all nine methods separately by effect size (<span class="math inline">\(b_x = 0\)</span>, <span class="math inline">\(b_x = 0.2\)</span>, <span class="math inline">\(b_x = 0.5\)</span>). All methods yield unbiased estimates when the effect size is 0. When there is a non-zero effect, p-hacking methods notably inflate the effect size. Other data-driven methods that do not control for X yield slightly biased parameter estimates. Sampling distributions of parameter estimates are available in the supplement.</p>
 <div class="quarto-embed-nb-cell">
 <div class="cell">
-<div id="tbl-est" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div id="tbl-est" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;3: Mean estimates of effect size by method and true effect size
 </figcaption>
 <div aria-describedby="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display">
-<table class="lightable-classic do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<div>
+<table class="lightable-classic do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
@@ -569,10 +574,11 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 </table>
 </div>
 </div>
+</div>
 </figure>
 </div>
 </div>
-</div>
+<a class="quarto-notebook-link" id="nblink-7" href="notebooks/mak_tables-preview.html#cell-tbl-est">Source: Make Tables for Main Manuscript</a></div>
 <!--TABLE of TYPE1 and TYPE 2 by method, b and context?  In paper or supplement-->
 </section>
 </section>
@@ -590,8 +596,14 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 <p>However, the simple single covariate linear model with <em>X</em> included in the model may be an equally viable alternative to LASSO. This method performed almost as good as LASSO with regard to Type II error and had lower Type I error compared to LASSO. Moreover, this method is easy to implement as it can be run as a table of correlation or partial correlation values. Both of these methods yielded unbiased parameter estimates and are likely comparable. Researchers can weigh the trade off between Type I and Type II error and the complexity of these methods in choosing which data-driven selection method to use. And of course, this decision should be pre-registered to avoid introducing additional researcher degrees of freedom into the analyses.</p>
 <p>This study demonstrated the gains in power when using covariates measured before assignment. These findings are likely still applicable to covariates uncorrelated to the focal variable and empirically related to the outcome but measured after assignment. Another use of covariates that we did not address in this study is to statistically control for confounding effects by including additional variables related to both the focal variable and the outcome. This is common practice in situations where <em>X</em> cannot be manipulated (e.g., controlling for gender when looking at the effects of parenting style on child school performance). This use of covariates, however, is complicated and covariates must be selected carefully based on theory and causal structure. Unfortunately, controlling for a confounding variable is also not as strong as people tend to believe. Controlling for a confounding variable with a covariate does not fully eliminate its influence but removes the partial effect on the outcome measurable by the model. Given the complex nature of these types of covariates, we considered them to fall outside the scope of the current paper and we plan to address them in a future simulation paper.</p>
 </section>
-<section id="references" class="level1 unnumbered">
-
+<section id="references" class="level1">
+<h1>References</h1>
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.</span>
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Type I error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines.</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;3: Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;4: Type II error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines.</span>
+</div>
 
 </section>
 
@@ -681,7 +693,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -713,27 +736,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -741,7 +744,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -838,6 +841,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1064,37 +1068,30 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
-(function() {
-  let previousOnload = window.onload;
-  window.onload = () => {
-    if (previousOnload) {
-      previousOnload();
-    }
-    lightboxQuarto.on('slide_before_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      const href = trigger.getAttribute('href');
-      if (href !== null) {
-        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-        if (imgEl !== null) {
-          const srcAttr = imgEl.getAttribute("src");
-          if (srcAttr && srcAttr.startsWith("data:")) {
-            slideConfig.href = srcAttr;
-          }
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","loop":false});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
         }
-      } 
-    });
-  
-    lightboxQuarto.on('slide_after_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(slideNode);
       }
-    });
-  
-  };
-  
-})();
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
           </script>
 
 
