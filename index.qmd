@@ -133,18 +133,13 @@ We also assessed Type II error by individual research context (@fig-panel-2). Ac
 {{< embed notebooks/mak_figures.qmd#fig-panel-2 >}}
 
 
-
-
 ## Parameter Estimates
-<!--table rather than distributions.  Three columns for three b.   Doesn't without X show some bias???-->
-<!--remind that when assumptions met, parameter estimates are unbiased-->
-<!--need to look at this and think a bit more.  Should this also be reported separately for b =0 vs. b <>0 and embedded in those sections above.  Can make the point that we want low type II, .05 type I and unbiased at the start of method or end of intro-->
 
-@tbl-est shows the mean parameter estimate of *X* for all nine methods separately by effect size ($b_x = 0$, $b_x = 0.2$, $b_x = 0.5$). All methods yield unbiased estimates when the effect size is 0. When there is a non-zero effect, p-hacking methods notably inflate the effect size. Other data-driven methods that do not control for X yield slightly biased parameter estimates. Sampling distributions of parameter estimates are available in the supplement.
+When the assumptions of the general linear model are met, parameter estimates are unbiased and the sampling distribution for these parameter estimates follow the t-distribution.  @tbl-est shows the mean parameter estimate of *X* for all approaches separately by effect size ($b_x = 0$, $b_x = 0.2$, $b_x = 0.5$). We present sampling distributions for the parameter estimates in the supplement.   All approaches yielded unbiased estimates when the true effect size is 0 but the shape of the sampling distribution for the p-hacking approach was distorted (bi-modal). When there is a true non-zero effect, the a priori approaches and the data-driven approaches that include *X* yielded unbiased parameter estimates, whereas there was slight conservative (under-estimation) bias in the parameter estimates for the data-driven approaches that do not include *X*.  In contrast, p-hacking yielded more substantial optimistic (over-estimation) bias in the parameter estimates when there is a non-zero effect. 
+
 
 {{< embed notebooks/mak_tables.qmd#tbl-est >}}
 
-<!--TABLE of TYPE1 and TYPE 2 by method, b and context?  In paper or supplement-->
 
 # Discussion
 
