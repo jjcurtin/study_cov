@@ -78,9 +78,9 @@ method_patterns <- c("No covariates" = "none",
 
 devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
-# rdrive_path <- format_path("cov/raw_data")
+rdrive_path <- format_path("cov/raw_data")
 
-rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
+# rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
 
 options(digits = 3)
 
@@ -484,8 +484,8 @@ observations_2 <- d_all |>
   ggplot(aes(x = n_obs, y = prop_not_sig, color = method, linetype = method, linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70 ),
-                    limits = c(0.02, .72)) +
+  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70, .80),
+                    limits = c(0.02, .80)) +
   labs(y = "Type II Error",
        subtitle = "Number of Observations",
        x = NULL) +
@@ -502,8 +502,8 @@ covs_2 <- d_all |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(4, 8, 12, 16, 20)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40),
-                    limits = c(0.02, .42)) +
+  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50),
+                    limits = c(0.02, .50)) +
   labs(y = NULL,
        x = NULL,
        subtitle = "Number of Covariates") +
@@ -520,8 +520,8 @@ good_covs_2 <- d_all |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40 ),
-                    limits = c(0.02, .42)) +
+  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50 ),
+                    limits = c(0.02, .50)) +
   labs(y = "Type II Error",
        x = NULL,
        subtitle = "Proportion of Good Covariates") +
@@ -538,8 +538,8 @@ ycor_2 <- d_all |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40),
-                    limits = c(0.02, .42)) +
+  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50),
+                    limits = c(0.02, .52)) +
   labs(y = NULL,
        x = NULL,
        subtitle = "Y-Covariate Correlation Strength") +
@@ -556,8 +556,8 @@ b_x <- d_all |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.2, 0.5)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70), 
-                     limits = c(0.02, .72)) +
+  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70, .80), 
+                     limits = c(0.02, .80)) +
   labs(y = "Type II Error",
        x = NULL,
        subtitle = "Population Parameter for X") +
@@ -577,7 +577,7 @@ b_x <- d_all |>
 #| fig-height: 9
 #| fig-width: 7.5
 
-(observations_2 + covs_2)/(good_covs_2 + ycor_2)/(b_x + plot_spacer()) +
+  (observations_2 + covs_2)/(good_covs_2 + ycor_2)/(b_x + plot_spacer()) +
   plot_layout(guides = "collect") &
   theme(legend.position = "right")
 ```
