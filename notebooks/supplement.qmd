@@ -74,11 +74,11 @@ method_patterns <- c("No covariates" = "none",
                      "All covariates LASSO" = "stripe",
                      "All covariates LASSO with X" = "none")
 
-devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
+# devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
-rdrive_path <- format_path("cov/raw_data")
+# rdrive_path <- format_path("cov/raw_data")
 
-# rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
+rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
 
 options(digits = 3)
 
@@ -178,31 +178,6 @@ h0 <- d_0 |>
 
 ```
 
-```{r}
-#| label: fig-histogram-phack
-
-h0 |>
-  filter(method == "p-hacking") |> 
-  ggplot(aes(x = type_I)) +
-  geom_histogram() +
-  facet_wrap(~ method) +
-  labs(x = "Type I Error",
-       title = "Distribution of Type I error: p-hacked")
-
-```
-
-```{r}
-#| label: fig-histograms-all-0
-
-h0 |>
-  filter(method != "p-hacking") |> 
-  ggplot(aes(x = type_I)) +
-  geom_histogram() +
-  facet_wrap(~ method) +
-  labs(x = "Type I Error",
-       title = "Distribution of Type I error")
-
-```
 
 ```{r}
 #| label: tbl-typeI-nobs 
@@ -280,18 +255,6 @@ h02 <- d_02 |>
 
 ```
 
-```{r}
-#| label: fig-histograms-all-02
-
-h02 |>
-  filter(method != "p-hacking") |> 
-  ggplot(aes(x = type_II)) +
-  geom_histogram() +
-  facet_wrap(~ method) +
-  labs(x = "Type II Error",
-       title = "Distribution of Type II error, b_x = 0.2")
-
-```
 
 ```{r}
 #| label: histograms variable 05

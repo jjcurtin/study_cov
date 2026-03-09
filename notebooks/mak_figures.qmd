@@ -76,11 +76,11 @@ method_patterns <- c("No covariates" = "none",
                      "All covariates LASSO" = "stripe",
                      "All covariates LASSO with X" = "none")
 
-devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
+# devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
 
-rdrive_path <- format_path("cov/raw_data")
+# rdrive_path <- format_path("cov/raw_data")
 
-# rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
+rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
 
 options(digits = 3)
 
