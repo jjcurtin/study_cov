@@ -20,19 +20,101 @@ This file contains the supplemental materials for *Title of paper*. It includes 
 ```{r}
 #| label: set up
 
-library(dplyr) |> suppressMessages()
-library(skimr)
-library(purrr)
-library(ggplot2)
+library(tidyverse)
 library(patchwork)
-library(ggpattern)
-library(forcats)
 library(kableExtra, exclude = ("group_rows"))
 
 theme_set(theme_classic())
 
+path_processed <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_processed"
+
+d <- read_csv(here::here(path_processed, "results_tibble.csv"),
+              show_col_types = FALSE)
+
+d_full <- read_csv(here::here(path_processed, "results_combined_raw.csv"),
+              show_col_types = FALSE)
+
+options(digits = 3)
+
+```
 
 
+### Type I error
+
+#### b effect = 0
+
+```{r}
+#| warning: false
+
+d_0 <- d |> 
+  filter(b_x == 0) |> 
+  select(-type_II, -b_x) |> 
+  pivot_wider(names_from = method, values_from = type_I) |> 
+  select(`n obs` = n_obs, `n covs` = n_covs, `r ycov` = r_ycov, 
+         `prop good covs` = p_good_covs, `no covs` = no_covs, `all covs` = all_covs,
+         `p-hacking` = p_hacked, `single cov lm w/o x` = r, 
+         `single cov lm w/x` = partial_r, 
+         `all cov lm w/o x` = full_lm_wo_x, `all cov lm w/x` = full_lm,
+         `all cov lasso w/o x` = lasso_wo_x, `all cov lasso w/x` = lasso)
+
+d_0 |> 
+  kable() |> 
+  kable_classic() 
+```
+
+
+
+### Type II error
+
+#### b effect = 0.2
+
+```{r}
+#| warning: false
+
+d_02 <- d |> 
+  filter(b_x == 0.2) |> 
+  select(-type_I, -b_x) |> 
+  pivot_wider(names_from = method, values_from = type_II) |> 
+  select(`n obs` = n_obs, `n covs` = n_covs, `r ycov` = r_ycov, 
+         `prop good covs` = p_good_covs, `no covs` = no_covs, `all covs` = all_covs,
+         `p-hacking` = p_hacked, `single cov lm w/o x` = r, 
+         `single cov lm w/x` = partial_r, 
+         `all cov lm w/o x` = full_lm_wo_x, `all cov lm w/x` = full_lm,
+         `all cov lasso w/o x` = lasso_wo_x, `all cov lasso w/x` = lasso)
+
+d_02 |> 
+  kable() |> 
+  kable_classic() 
+```
+
+#### b effect = 0.5
+
+```{r}
+#| warning: false
+
+d_05 <- d |> 
+  filter(b_x == 0.5) |> 
+  select(-type_I, -b_x) |> 
+  pivot_wider(names_from = method, values_from = type_II) |> 
+  select(`n obs` = n_obs, `n covs` = n_covs, `r ycov` = r_ycov, 
+         `prop good covs` = p_good_covs, `no covs` = no_covs, `all covs` = all_covs,
+         `p-hacking` = p_hacked, `single cov lm w/o x` = r, 
+         `single cov lm w/x` = partial_r, 
+         `all cov lm w/o x` = full_lm_wo_x, `all cov lm w/x` = full_lm,
+         `all cov lasso w/o x` = lasso_wo_x, `all cov lasso w/x` = lasso)
+
+d_05 |> 
+  kable() |> 
+  kable_classic() 
+```
+
+
+
+
+
+### Parameter Estimates
+
+```{r}
 method_colors <- c("No covariates" = "#FF7D00",
                    "All covariates" = "#9E5900",
                    "p-hacking" = "#C92C04",
@@ -54,373 +136,24 @@ method_linetypes <- c("No covariates" = "solid",
                      "All covariates LASSO" = "dashed",
                      "All covariates LASSO with X" = "solid")
 
-method_linewidths <- c("No covariates" = .75,
-                     "All covariates" = .75,
-                     "p-hacking" = .5,
-                     "Single covariate lm" = .5,
-                     "Single covariate lm with X" = .5,
-                     "All covariates lm" = .5,
-                     "All covariates lm with X" = .5,
-                     "All covariates LASSO" = .5,
-                     "All covariates LASSO with X" = .5)
 
-method_patterns <- c("No covariates" = "none",
-                     "All covariates" = "none",
-                     "p-hacking" = "none",
-                     "Single covariate lm" = "stripe",
-                     "Single covariate lm with X" = "none",
-                     "All covariates lm" = "stripe",
-                     "All covariates lm with X" = "none",
-                     "All covariates LASSO" = "stripe",
-                     "All covariates LASSO with X" = "none")
-
-# devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
-
-# rdrive_path <- format_path("cov/raw_data")
-
-rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
-
-options(digits = 3)
-
-```
-
-```{r}
-#| label: read in data
-
-d_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_0.csv"))
-d_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_method_05.csv"))
-
-d_20_covs <- data.table::fread(here::here(rdrive_path, "batch_results_20_covs.csv"))
-d_n50 <- data.table::fread(here::here(rdrive_path, "batch_results_n50.csv"))
-
-d2_0 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_0.csv"))
-d2_05 <- data.table::fread(here::here(rdrive_path, "batch_results_new_20K_05.csv"))
-
-d_wo_x_0 <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_seed0.csv"))
-d_wo_x_1 <- data.table::fread(here::here(rdrive_path, "batch_results_methods_wo_x_seed1.csv"))
-
-d_02_0 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed0.csv"))
-d_02_1 <- data.table::fread(here::here(rdrive_path, "batch_results_02_seed1.csv"))
-
-```
-
-```{r}
-#| label: combine data
-
-d_0 <- rbind(d_0, d_20_covs |> filter(b_x == 0))
-d_0 <- rbind(d_0, d_n50 |> filter(b_x == 0))
-
-d_05 <- rbind(d_05, d_20_covs |> filter(b_x == 0.5))
-d_05 <- rbind(d_05, d_n50 |> filter(b_x == 0.5))
-
-rm(d_20_covs, d_n50)
-
-d_0 <- rbind(d_0, d2_0)
-d_05 <- rbind(d_05, d2_05)
-
-rm(d2_0, d2_05)
-
-d_0 <- rbind(d_0, d_wo_x_0 |> filter(b_x == 0))
-d_0 <- rbind(d_0, d_wo_x_1 |> filter(b_x == 0))
-
-d_05 <- rbind(d_05, d_wo_x_0 |> filter(b_x == 0.5))
-d_05 <- rbind(d_05, d_wo_x_1 |> filter(b_x == 0.5))
-
-rm(d_wo_x_0, d_wo_x_1)
-
-d_02 <- rbind(d_02_0, d_02_1)
-
-rm(d_02_0, d_02_1)
-
-```
-
-```{r}
-#| label: factor levels
-
-d_0 <- d_0 |> 
-  mutate(method = factor(method, levels = c("no_covs", "all_covs","p_hacked",  "r",
-                                            "partial_r", "full_lm_wo_x", "full_lm",  
-                                           "lasso_wo_x", "lasso"),
+d_full <- d_full |> 
+  mutate(method = factor(method, 
+                          levels = c("no_covs", "all_covs","p_hacked",  "r",
+                                      "partial_r", "full_lm_wo_x", "full_lm",  
+                                      "lasso_wo_x", "lasso"),
                          labels = c("No covariates", "All covariates", "p-hacking", 
                                     "Single covariate lm", "Single covariate lm with X", 
                                     "All covariates lm", "All covariates lm with X", 
-                                            "All covariates LASSO", "All covariates LASSO with X")))
-
-d_02 <- d_02 |> 
-  mutate(method = factor(method, levels = c("no_covs", "all_covs","p_hacked",   "r", 
-                                            "partial_r", "full_lm_wo_x", "full_lm",  
-                                           "lasso_wo_x", "lasso"),
-                         labels = c( "No covariates", "All covariates", "p-hacking", 
-                                    "Single covariate lm", "Single covariate lm with X", 
-                                    "All covariates lm", "All covariates lm with X", 
-                                            "All covariates LASSO", "All covariates LASSO with X")))
-
-d_05 <- d_05 |> 
-  mutate(method = factor(method, levels = c("no_covs", "all_covs","p_hacked",   "r", 
-                                            "partial_r", "full_lm_wo_x", "full_lm",  
-                                           "lasso_wo_x", "lasso"),
-                         labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Single covariate lm", "Single covariate lm with X", 
-                                    "All covariates lm", "All covariates lm with X", 
-                                            "All covariates LASSO", "All covariates LASSO with X")))
-
-```
-
-### Type I error
-
-```{r}
-#| label: histogram variable 0
-
-h0 <- d_0 |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(type_I = mean(p_value < 0.05),
-            .groups = "drop")
+                                    "All covariates LASSO", "All covariates LASSO with X")))
 
 ```
 
 
 ```{r}
-#| label: tbl-typeI-nobs 
 
-d_0 |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_sig = mean(p_value < 0.05),
-            .groups = "drop") |> 
-  group_by(n_obs, method) |> 
-  summarise(typeI_min = min(prop_sig),
-            typeI_max = max(prop_sig),
-            typeI_mean = mean(prop_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type I error by n_obs")
-
-```
-
-```{r}
-#| label: tbl-typeI-ncovs
-
-d_0 |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_sig = mean(p_value < 0.05),
-            .groups = "drop") |> 
-  group_by(n_covs, method) |> 
-  summarise(typeI_min = min(prop_sig),
-            typeI_max = max(prop_sig),
-            typeI_mean = mean(prop_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type I error by n_covs")
-
-```
-
-```{r}
-#| label: tbl-typeI-pgoodcovs
-
-d_0 |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_sig = mean(p_value < 0.05),
-            .groups = "drop") |> 
-  group_by(p_good_covs, method) |> 
-  summarise(typeI_min = min(prop_sig),
-            typeI_max = max(prop_sig),
-            typeI_mean = mean(prop_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type I error by p_good_covs")
-
-```
-
-```{r}
-#| label: tbl-typeI-rycov
-
-d_0 |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_sig = mean(p_value < 0.05),
-            .groups = "drop") |> 
-  group_by(r_ycov, method) |> 
-  summarise(typeI_min = min(prop_sig),
-            typeI_max = max(prop_sig),
-            typeI_mean = mean(prop_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type I error by y-cov correlations")
-
-```
-
-### Type II error
-
-```{r}
-#| label: histograms variable 02
-
-h02 <- d_02 |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(type_II = mean(p_value >= 0.05),
-            .groups = "drop")
-
-```
-
-
-```{r}
-#| label: histograms variable 05
-
-h05 <- d_05 |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(type_II = mean(p_value >= 0.05),
-            .groups = "drop")
-
-```
-
-```{r}
-#| label: fig-histograms-all-05
-
-h05 |>
-  filter(method != "p-hacking") |> 
-  ggplot(aes(x = type_II)) +
-  geom_histogram() +
-  facet_wrap(~ method) +
-  labs(x = "Type II Error",
-       title = "Distribution of Type II error, b_x = 0.5")
-
-```
-
-```{r}
-#| label: tbl-typeII-nobs-02
-
-d_02 |> 
-  filter(method != "p-hacking") |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(n_obs, method) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II error by n_obs, b_x = 0.2")
-
-```
-
-```{r}
-#| label: tbl-typeII-nobs-05
-
-d_05 |> 
-  filter(method != "p-hacking") |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(n_obs, method) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II error by n_obs, b_x = 0.5")
-
-```
-
-```{r}
-#| label: tbl-typeII-ncovs-02
-
-d_02 |> 
-  filter(method != "p-hacking") |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(n_covs, method) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II error by n_covs, b_x = 0.2")
-
-```
-
-```{r}
-#| label: tbl-typeII-ncovs-05
-
-d_05 |> 
-  filter(method != "p-hacking") |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(n_covs, method) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II error by n_covs, b_x = 0.5")
-
-```
-
-```{r}
-#| label: tbl-typeII-pgoodcovs-02
-
-d_02 |> 
-  filter(method != "p-hacking") |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(p_good_covs, method) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II error by p_good_covs, b_x = 0.2")
-
-```
-
-```{r}
-#| label: tbl-typeII-pgoodcovs-05
-
-d_05 |> 
-  filter(method != "p-hacking") |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(p_good_covs, method) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II error by p_good_covs, b_x = 0.5")
-
-```
-
-```{r}
-#| label: tbl-typeII-rycov-02
-
-d_02 |> 
-  filter(method != "p-hacking") |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(r_ycov, method) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II error by correlations, b_x = 0.2")
-
-```
-
-```{r}
-#| label: tbl-typeII-rycov-05
-
-d_05 |> 
-  filter(method != "p-hacking") |> 
-  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, r_cov) |> 
-  summarise(prop_not_sig = mean(p_value >= 0.05),
-            .groups = "drop") |> 
-  group_by(r_ycov, method) |> 
-  summarise(typeII_min = min(prop_not_sig),
-            typeII_max = max(prop_not_sig),
-            typeII_mean = mean(prop_not_sig),
-            .groups = "drop") |> 
-  kbl(caption = "Type II error by correlations, b_x = 0.5")
-
-```
-
-
-
-### Parameter Estimates
-
-```{r}
-est_d_0 <- d_0 |> 
+est_d_0 <- d_full |> 
+  filter(b_x == 0) |> 
   ggplot(aes(x = estimate, color = method, linetype = method)) +
   geom_density(alpha = 0.5) +
   geom_vline(xintercept = 0, linetype = "dotted", color = "black") +
@@ -430,7 +163,8 @@ est_d_0 <- d_0 |>
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) 
 
-est_d_02 <- d_02 |> 
+est_d_02 <-d_full |> 
+  filter(b_x == 0.2) |> 
   filter(method != "p-hacking") |> 
   ggplot(aes(x = estimate, color = method, linetype = method)) +
   geom_density(alpha = 0.5) +
@@ -442,7 +176,8 @@ est_d_02 <- d_02 |>
   scale_color_manual(values = method_colors) +
   theme(legend.position = "none")
 
-est_d_05 <- d_05 |> 
+est_d_05 <- d_full |> 
+  filter(b_x == 0.5) |> 
   filter(method != "p-hacking") |> 
   ggplot(aes(x = estimate, color = method, linetype = method)) +
   geom_density(alpha = 0.5) +
@@ -459,6 +194,7 @@ est_d_05 <- d_05 |>
 #| label: fig-distribution-bx
 #| fig-cap: "Sampling Distribution for Population Parameter Estimates."
 #| fig-height: 8
+#| warning: false
 
 est_d_0 / est_d_02 / est_d_05 
 ```

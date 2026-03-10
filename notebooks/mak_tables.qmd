@@ -26,12 +26,9 @@ library(kableExtra, exclude = ("group_rows"))
 options(digits = 3)
 options(knitr.kable.NA = '')
 
-# devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
+path_processed <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_processed"
 
-# rdrive_path <- format_path("cov/raw_data")
-rdrive_path <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\raw_data"
-
-table <- read_csv(here::here(rdrive_path, "estimate_table.csv"),
+table <- read_csv(here::here(path_processed, "estimate_tibble.csv"),
                   show_col_types = FALSE)
 
 ```
@@ -101,9 +98,9 @@ data_tbl0 |>
 
 table |> 
   rename(Method = method, 
-         `No effect (b = 0)` = `estimate_bx_0`,
-         `b = .2` = `estimate_bx_02`,
-         `b = .5` = `estimate_bx_05`) |> 
+         `No effect (b = 0)` = `0`,
+         `b = .2` = `0.2`,
+         `b = .5` = `0.5`) |> 
   mutate(Method = factor(Method, 
                          levels = c("No covariates", "All covariates", "p-hacking", 
                                     "Single covariate lm", "Single covariate lm with X", 
