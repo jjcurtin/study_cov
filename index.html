@@ -227,7 +227,7 @@ window.Quarto = {
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks\ana_p_hack-preview.html"><i class="bi bi-journal-code"></i>Calculate summary stats</a></li><li><a href="notebooks\mak_figures-preview.html"><i class="bi bi-journal-code"></i>Make Figures for Main Manuscript</a></li><li><a href="notebooks\mak_tables-preview.html"><i class="bi bi-journal-code"></i>Make Tables for Main Manuscript</a></li><li><a href="notebooks\supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks\mak_figures-preview.html"><i class="bi bi-journal-code"></i>Make Figures for Main Manuscript</a></li><li><a href="notebooks\mak_results_tibble-preview.html"><i class="bi bi-journal-code"></i>Make results tibble</a></li><li><a href="notebooks\mak_tables-preview.html"><i class="bi bi-journal-code"></i>Make Tables for Main Manuscript</a></li><li><a href="notebooks\supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li></ul></div></nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
 </div>
@@ -508,13 +508,13 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 <td colspan="4" style="text-align: left; border-bottom: 0;"><strong></strong></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">No covariates</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1"></td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.200</td>
 <td style="text-align: right;">0.500</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1"></td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.200</td>
 <td style="text-align: right;">0.500</td>
@@ -529,46 +529,46 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 <td colspan="4" style="text-align: left; border-bottom: 0;"><strong></strong></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">p-hacking</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1"></td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.192</td>
+<td style="text-align: right;">0.479</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1"></td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1"></td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.195</td>
+<td style="text-align: right;">0.487</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1"></td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1"></td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.262</td>
 <td style="text-align: right;">0.563</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm without X</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1"></td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1"></td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: right;">0.198</td>
 <td style="text-align: right;">0.495</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm with X</td>
-<td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.200</td>
-<td style="text-align: right;">0.500</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm without X</td>
-<td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.192</td>
-<td style="text-align: right;">0.479</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm with X</td>
-<td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.200</td>
-<td style="text-align: right;">0.500</td>
-</tr>
-<tr class="even">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO without X</td>
-<td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.195</td>
-<td style="text-align: right;">0.487</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO with X</td>
-<td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.200</td>
-<td style="text-align: right;">0.500</td>
 </tr>
 </tbody>
 </table>
@@ -582,7 +582,7 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 </section>
 <section id="discussion" class="level1">
 <h1>Discussion</h1>
-<p>Our findings reinforce the cautionary warning by Simmons and colleagues <span class="citation" data-cites="simmonsFalsepositivePsychologyUndisclosed2011">(<a href="#ref-simmonsFalsepositivePsychologyUndisclosed2011" role="doc-biblioref">Simmons, Nelson, and Simonsohn 2011</a>)</span>: p-hacking severely inflates Type I error rate. Simmons et al.&nbsp;simulated an average Type I error rate of 11.7% for a treatment effect when selecting between two potential covariates (<em>N</em>=40). In our closest research context (<em>N</em>=50, 4 covariates), we observed similar rates of 10.3% (range: 5.6%-15.2%). However, our simulations suggest this estimate may gravely underestimate the magnitude of the problem of p-hacking. It is more realistic that researchers can choose from several to many available candidate covariates. Even when the number of available covariates is modest (i.e., 8-12), our results show that Type I error rates increase to 19.1% (range: 12.1%-27.5%) across contexts. When selecting among 16-20 covariates, Type I error rates, on average, reach nearly a 3-fold increase from our 4-covariate context (29.4%, range: 21.7%-38.3%).</p>
+<p>Our findings reinforce the cautionary warning by Simmons and colleagues <span class="citation" data-cites="simmonsFalsepositivePsychologyUndisclosed2011">(<a href="#ref-simmonsFalsepositivePsychologyUndisclosed2011" role="doc-biblioref">Simmons, Nelson, and Simonsohn 2011</a>)</span>: p-hacking severely inflates Type I error rate. Simmons et al.&nbsp;simulated an average Type I error rate of 11.7% for a treatment effect when selecting between two potential covariates (<em>N</em>=40). In our closest research context (<em>N</em>=50, 4 covariates), we observed similar rates of 10.3% (range: 5.6%-15.2%)<!--KW: these ranges are across simulations. Maybe we don't need them here? Just average?-->. However, our simulations suggest this estimate may gravely underestimate the magnitude of the problem of p-hacking. It is more realistic that researchers can choose from several to many available candidate covariates. Even when the number of available covariates is modest (i.e., 8-12), our results show that Type I error rates increase to 19.1% (range: 12.1%-27.5%) across contexts. When selecting among 16-20 covariates, Type I error rates, on average, reach nearly a 3-fold increase from our 4-covariate context (29.4%, range: 21.7%-38.3%).</p>
 <p>When covariates were not used at all (i.e., a priori no covariates method), simulated models yielded an average Type I error rate of .05 and an unbiased parameter estimate of the X effect. However, this approach had a meaningfully higher Type II error rate compared to the other methods. This is not surprising. Adding covariates correlated with the outcome and uncorrelated with <em>X</em> will account for additional variance in the outcome, thus increasing power (or lowering Type II error rate). Perhaps then it is also not surprising that the research contexts with highest discrepancies in Type II error rates between the no covariates method and selection methods include situations with moderate to large sample sizes (<em>N</em>=150-400) where degrees of freedom can afford the cost of additional parameters, and in situations where there are many covariates to choose from with strong correlations to the outcome, where covariates have the most opportunity to reduce unexplained variance in the outcome. We believe that these data provide strong evidence to support the use of covariates when available.</p>
 <p>In many instances, using all available covariates selected a priori to data analysis is a reasonable option. Our simulated models showed consistent average Type I error rates of .05 and unbiased parameter for X. Additionally, on average Type II error rates were only about 1.5-2% higher than some of the best performing data-driven selection methods (i.e., all covariates LASSO with <em>X</em> and single covariate linear model with <em>X</em>). Using all available covariates is easiest because it eliminates the need for selection. However, in certain contexts, such as with small sample sizes or large numbers of covariates this difference is no longer trivial, with some data-driven selection methods yielding Type II error rates as much as 7% lower than the all covariates method. These findings are concerning in that it is not uncommon in psychological research to have 20+ covariates available. Moreover, the high cost of running experimental studies may confine researchers to smaller than ideal sample sizes. Moreover, even with an adequate sample size and modest number of covariates, it may not be wise to walk away from any power to detect an effect. <!--JC note: Anchor Type II benefit?  small but how to think about it?   N increase but not linear so specific N?--></p>
 <p>Among the three data-driven selection methods our simulations showed that when the methods did not include the focal variable, <em>X</em>, in the model they produced biased parameter estimates. This bias results from the models favoring selecting covariates that are correlated with <em>X</em> in the sample despite being uncorrelated in the population. In other words, the models are accounting for variance in the outcome related to <em>X</em> by capitalizing on spurious correlations. This bias was largest for the all covariates linear model and trivial with the single covariate linear model.</p>

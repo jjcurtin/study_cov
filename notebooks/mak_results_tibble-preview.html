@@ -5,10 +5,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-    <meta name="author" content="Kendra Wyant">
     <meta name="dcterms.date" content="2026-03-09">
 
-    <title>Calculate summary stats</title>
+    <title>Make results tibble</title>
     <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -194,15 +193,15 @@ transform: translateY(-100%);
     <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
       
       <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link" href><i class="bi bi-caret-left"></i> Back to Article</a>
-      <h6><i class="bi bi-journal-code"></i> Calculate summary stats</h6>
+      <h6><i class="bi bi-journal-code"></i> Make results tibble</h6>
 
-            <a href="../notebooks/ana_p_hack.qmd" class="btn btn-primary quarto-download-embed" download="ana_p_hack.qmd">Download Source</a>
+            <a href="../notebooks/mak_results_tibble.qmd" class="btn btn-primary quarto-download-embed" download="mak_results_tibble.qmd">Download Source</a>
           </div>
 
      <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Calculate summary stats</h1>
+      <h1 class="title">Make results tibble</h1>
           </div>
 
     
@@ -211,12 +210,6 @@ transform: translateY(-100%);
         
         <div class="quarto-title-meta">
 
-                <div>
-            <div class="quarto-title-meta-heading">Author</div>
-            <div class="quarto-title-meta-contents">
-                        <p>Kendra Wyant </p>
-                      </div>
-          </div>
                 
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
@@ -242,7 +235,8 @@ transform: translateY(-100%);
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#p-hacking-stats" id="toc-p-hacking-stats" class="nav-link active" data-scroll-target="#p-hacking-stats">P-Hacking stats</a></li>
+  <li><a href="#calculate-type-1-and-type-2-error" id="toc-calculate-type-1-and-type-2-error" class="nav-link active" data-scroll-target="#calculate-type-1-and-type-2-error">Calculate type 1 and type 2 error</a></li>
+  <li><a href="#create-parameter-estimate-summary-table" id="toc-create-parameter-estimate-summary-table" class="nav-link" data-scroll-target="#create-parameter-estimate-summary-table">Create Parameter Estimate summary table</a></li>
   </ul>
 </nav>
 </div>
@@ -250,9 +244,13 @@ transform: translateY(-100%);
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell">
+       <p>This script makes <code>results_tibble.csv</code> and <code>estimate_tibble.csv</code></p>
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package &#39;ggplot2&#39; was built under R version 4.4.3</code></pre>
 </div>
@@ -268,156 +266,115 @@ x dplyr::filter() masks stats::filter()
 x dplyr::lag()    masks stats::lag()
 i Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::source_url(&quot;https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true&quot;) |&gt; suppressMessages()</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># rdrive_path &lt;- format_path(&quot;cov/raw_data&quot;)</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>rdrive_path <span class="ot">&lt;-</span> <span class="st">&quot;</span><span class="sc">\\\\</span><span class="st">research.drive.wisc.edu</span><span class="sc">\\</span><span class="st">jjcurtin</span><span class="sc">\\</span><span class="st">studydata</span><span class="sc">\\</span><span class="st">cov</span><span class="sc">\\</span><span class="st">raw_data&quot;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>path_raw <span class="ot">&lt;-</span> <span class="st">&quot;</span><span class="sc">\\\\</span><span class="st">research.drive.wisc.edu</span><span class="sc">\\</span><span class="st">jjcurtin</span><span class="sc">\\</span><span class="st">studydata</span><span class="sc">\\</span><span class="st">cov</span><span class="sc">\\</span><span class="st">data_raw&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>path_processed <span class="ot">&lt;-</span> <span class="st">&quot;</span><span class="sc">\\\\</span><span class="st">research.drive.wisc.edu</span><span class="sc">\\</span><span class="st">jjcurtin</span><span class="sc">\\</span><span class="st">studydata</span><span class="sc">\\</span><span class="st">cov</span><span class="sc">\\</span><span class="st">data_processed&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>d_0 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(path_raw, <span class="st">&quot;batch_results_new_method_0.csv&quot;</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>d_05 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(path_raw, <span class="st">&quot;batch_results_new_method_05.csv&quot;</span>))</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>d_20_covs <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(path_raw, <span class="st">&quot;batch_results_20_covs.csv&quot;</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>d_n50 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(path_raw, <span class="st">&quot;batch_results_n50.csv&quot;</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>d2_0 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(path_raw, <span class="st">&quot;batch_results_new_20K_0.csv&quot;</span>))</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>d2_05 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(path_raw, <span class="st">&quot;batch_results_new_20K_05.csv&quot;</span>))</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>d_wo_x_0 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(path_raw, <span class="st">&quot;batch_results_methods_wo_x_seed0.csv&quot;</span>))</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>d_wo_x_1 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(path_raw, <span class="st">&quot;batch_results_methods_wo_x_seed1.csv&quot;</span>))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>d_02_0 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(path_raw, <span class="st">&quot;batch_results_02_seed0.csv&quot;</span>))</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>d_02_1 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(path_raw, <span class="st">&quot;batch_results_02_seed1.csv&quot;</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>d_0 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(rdrive_path, <span class="st">&quot;batch_results_new_method_0.csv&quot;</span>))</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>d_05 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(rdrive_path, <span class="st">&quot;batch_results_new_method_05.csv&quot;</span>))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>d_20_covs <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(rdrive_path, <span class="st">&quot;batch_results_20_covs.csv&quot;</span>))</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>d_n50 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(rdrive_path, <span class="st">&quot;batch_results_n50.csv&quot;</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d_0 <span class="ot">&lt;-</span> d_0 <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">subset</span>(d_20_covs, b_x <span class="sc">==</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">subset</span>(d_n50, b_x <span class="sc">==</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">subset</span>(d_wo_x_0, b_x <span class="sc">==</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">subset</span>(d_wo_x_1, b_x <span class="sc">==</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(d2_0)</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>d2_0 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(rdrive_path, <span class="st">&quot;batch_results_new_20K_0.csv&quot;</span>))</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>d2_05 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(rdrive_path, <span class="st">&quot;batch_results_new_20K_05.csv&quot;</span>))</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>d_wo_x_0 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(rdrive_path, <span class="st">&quot;batch_results_methods_wo_x_seed0.csv&quot;</span>))</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>d_wo_x_1 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(rdrive_path, <span class="st">&quot;batch_results_methods_wo_x_seed1.csv&quot;</span>))</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>d_02_0 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(rdrive_path, <span class="st">&quot;batch_results_02_seed0.csv&quot;</span>))</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>d_02_1 <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(here<span class="sc">::</span><span class="fu">here</span>(rdrive_path, <span class="st">&quot;batch_results_02_seed1.csv&quot;</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>d_05 <span class="ot">&lt;-</span> d_05 <span class="sc">|&gt;</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">subset</span>(d_20_covs, b_x <span class="sc">==</span> <span class="fl">0.5</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">subset</span>(d_n50, b_x <span class="sc">==</span> <span class="fl">0.5</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">subset</span>(d_wo_x_0, b_x <span class="sc">==</span> <span class="fl">0.5</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">subset</span>(d_wo_x_1, b_x <span class="sc">==</span> <span class="fl">0.5</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(d2_05)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>d_02 <span class="ot">&lt;-</span> d_02_0 <span class="sc">|&gt;</span> </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(d_02_1)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(d_20_covs, d_n50, d2_0, d2_05, d_02_0, d_02_1, d_wo_x_0, d_wo_x_1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
+<p>Combine and save out combined data</p>
 <div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>d_0 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_0, d_20_covs <span class="sc">|&gt;</span> <span class="fu">filter</span>(b_x <span class="sc">==</span> <span class="dv">0</span>))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>d_0 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_0, d_n50 <span class="sc">|&gt;</span> <span class="fu">filter</span>(b_x <span class="sc">==</span> <span class="dv">0</span>))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>d_05 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_05, d_20_covs <span class="sc">|&gt;</span> <span class="fu">filter</span>(b_x <span class="sc">==</span> <span class="fl">0.5</span>))</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>d_05 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_05, d_n50 <span class="sc">|&gt;</span> <span class="fu">filter</span>(b_x <span class="sc">==</span> <span class="fl">0.5</span>))</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(d_20_covs, d_n50)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>d_0 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_0, d2_0)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>d_05 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_05, d2_05)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(d2_0, d2_05)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>d_0 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_0, d_wo_x_0 <span class="sc">|&gt;</span> <span class="fu">filter</span>(b_x <span class="sc">==</span> <span class="dv">0</span>))</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>d_0 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_0, d_wo_x_1 <span class="sc">|&gt;</span> <span class="fu">filter</span>(b_x <span class="sc">==</span> <span class="dv">0</span>))</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>d_05 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_05, d_wo_x_0 <span class="sc">|&gt;</span> <span class="fu">filter</span>(b_x <span class="sc">==</span> <span class="fl">0.5</span>))</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>d_05 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_05, d_wo_x_1 <span class="sc">|&gt;</span> <span class="fu">filter</span>(b_x <span class="sc">==</span> <span class="fl">0.5</span>))</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(d_wo_x_0, d_wo_x_1)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>d_02 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_02_0, d_02_1)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(d_02_0, d_02_1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>d_all <span class="ot">&lt;-</span> d_0 <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(d_02, d_05) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 194,400,000
+Columns: 16
+$ job_num       &lt;int&gt; 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 10~
+$ method        &lt;chr&gt; &quot;no_covs&quot;, &quot;all_covs&quot;, &quot;p_hacked&quot;, &quot;r&quot;, &quot;partial_r&quot;, &quot;fu~
+$ simulation_id &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3,~
+$ estimate      &lt;dbl&gt; 0.21582038, 0.18719362, 0.22183271, 0.18118454, 0.181184~
+$ SE            &lt;dbl&gt; 0.1567998, 0.1514230, 0.1565812, 0.1514937, 0.1514937, 0~
+$ p_value       &lt;dbl&gt; 0.1707744, 0.2183858, 0.1586932, 0.2336270, 0.2336270, 0~
+$ ndf           &lt;int&gt; 1, 5, 3, 2, 2, 2, 4, 1, 5, 4, 2, 2, 2, 3, 1, 5, 1, 2, 2,~
+$ ddf           &lt;int&gt; 148, 144, 146, 147, 147, 147, 145, 148, 144, 145, 147, 1~
+$ covs_tpr      &lt;dbl&gt; 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1,~
+$ covs_fpr      &lt;dbl&gt; 0.0000000, 1.0000000, 0.6666667, 0.0000000, 0.0000000, 0~
+$ n_obs         &lt;int&gt; 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 1~
+$ b_x           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
+$ n_covs        &lt;int&gt; 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,~
+$ r_ycov        &lt;dbl&gt; 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0~
+$ p_good_covs   &lt;dbl&gt; 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.~
+$ r_cov         &lt;dbl&gt; 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0~</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>d_all <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_processed, <span class="st">&quot;results_combined_raw.csv&quot;</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
-<section id="p-hacking-stats" class="level3">
-<h3 class="anchored" data-anchor-id="p-hacking-stats">P-Hacking stats</h3>
-<p>Simmons comparison (N = 50, n-covs = 4)</p>
+<section id="calculate-type-1-and-type-2-error" class="level3">
+<h3 class="anchored" data-anchor-id="calculate-type-1-and-type-2-error">Calculate type 1 and type 2 error</h3>
+<p>Calculate error rates</p>
 <div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>d_0 <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">&quot;p-hacking&quot;</span> <span class="sc">&amp;</span> n_obs <span class="sc">==</span> <span class="dv">50</span> <span class="sc">&amp;</span> n_covs <span class="sc">==</span> <span class="dv">4</span>)  <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(simulation_id) <span class="sc">|&gt;</span> </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">type_I =</span> <span class="fu">mean</span>(p_value <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(type_I),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">min</span>(type_I),</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">max</span>(type_I))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There were 2 warnings in `summarise()`.
-The first warning was:
-i In argument: `min(type_I)`.
-Caused by warning in `min()`:
-! no non-missing arguments to min; returning Inf
-i Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 x 3
-  `mean(type_I)` `min(type_I)` `max(type_I)`
-           &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-1            NaN           Inf          -Inf</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>d_tibble <span class="ot">&lt;-</span> d_all <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method, n_obs, n_covs, r_ycov, p_good_covs, b_x) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">type_I =</span> <span class="fu">mean</span>(p_value <span class="sc">&lt;</span> <span class="fl">0.05</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">type_II =</span> <span class="fu">mean</span>(p_value <span class="sc">&gt;=</span> <span class="fl">0.05</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>d_tibble <span class="ot">&lt;-</span> d_tibble<span class="sc">|&gt;</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type_I =</span> <span class="fu">if_else</span>(b_x <span class="sc">!=</span> <span class="fl">0.0</span>, <span class="cn">NA_real_</span>, type_I),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">type_II =</span> <span class="fu">if_else</span>(b_x <span class="sc">==</span> <span class="fl">0.0</span>, <span class="cn">NA_real_</span>, type_II))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
-<p>8-12 covs</p>
+<p>Save out tibble</p>
 <div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>d_0 <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">&quot;p-hacking&quot;</span> <span class="sc">&amp;</span> n_obs <span class="sc">==</span> <span class="dv">50</span> <span class="sc">&amp;</span> n_covs <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">12</span>))  <span class="sc">|&gt;</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(simulation_id, n_covs) <span class="sc">|&gt;</span> </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">type_I =</span> <span class="fu">mean</span>(p_value <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(type_I),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">min</span>(type_I),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">max</span>(type_I))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There were 2 warnings in `summarise()`.
-The first warning was:
-i In argument: `min(type_I)`.
-Caused by warning in `min()`:
-! no non-missing arguments to min; returning Inf
-i Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 x 3
-  `mean(type_I)` `min(type_I)` `max(type_I)`
-           &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-1            NaN           Inf          -Inf</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>d_tibble <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_processed, <span class="st">&quot;results_tibble.csv&quot;</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
-<p>16-20 covs</p>
+</section>
+<section id="create-parameter-estimate-summary-table" class="level3">
+<h3 class="anchored" data-anchor-id="create-parameter-estimate-summary-table">Create Parameter Estimate summary table</h3>
 <div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>d_0 <span class="sc">|&gt;</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(method <span class="sc">==</span> <span class="st">&quot;p-hacking&quot;</span> <span class="sc">&amp;</span> n_obs <span class="sc">==</span> <span class="dv">50</span> <span class="sc">&amp;</span> n_covs <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">20</span>))  <span class="sc">|&gt;</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(simulation_id, n_covs) <span class="sc">|&gt;</span> </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">type_I =</span> <span class="fu">mean</span>(p_value <span class="sc">&lt;</span> <span class="fl">0.05</span>), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(type_I),</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">min</span>(type_I),</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">max</span>(type_I))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: There were 2 warnings in `summarise()`.
-The first warning was:
-i In argument: `min(type_I)`.
-Caused by warning in `min()`:
-! no non-missing arguments to min; returning Inf
-i Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>d_param <span class="ot">&lt;-</span> d_all <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method, b_x) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(estimate), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> b_x, <span class="at">values_from =</span> mean)  <span class="sc">|&gt;</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 x 3
-  `mean(type_I)` `min(type_I)` `max(type_I)`
-           &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-1            NaN           Inf          -Inf</code></pre>
+<pre><code>Rows: 9
+Columns: 4
+$ method &lt;chr&gt; &quot;all_covs&quot;, &quot;full_lm&quot;, &quot;full_lm_wo_x&quot;, &quot;lasso&quot;, &quot;lasso_wo_x&quot;, &quot;~
+$ `0`    &lt;dbl&gt; -8.416024e-05, -3.630614e-05, -4.612105e-05, -4.475049e-05, -6.~
+$ `0.2`  &lt;dbl&gt; 0.2000111, 0.1999958, 0.1915533, 0.2000109, 0.1946056, 0.199983~
+$ `0.5`  &lt;dbl&gt; 0.4999267, 0.4999396, 0.4793405, 0.4999455, 0.4869628, 0.500003~</code></pre>
 </div>
-</div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># d_02 &lt;- rbind(d_02, d_05)</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># rm(d_05)</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># d_all &lt;- d_02 |&gt;</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   filter(method != &quot;p-hacking&quot;)</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># d_all |&gt; </span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   filter(n_obs == 50)  |&gt; </span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(simulation_id, method) |&gt; </span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarise(type_II = mean(p_value &gt;= 0.05), .groups = &quot;drop&quot;) |&gt; </span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(method) |&gt; </span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarise(mean(type_II)) </span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># d_all |&gt; </span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co">#   filter(n_covs == 20)  |&gt; </span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(simulation_id, method) |&gt; </span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarise(type_II = mean(p_value &gt;= 0.05), .groups = &quot;drop&quot;) |&gt; </span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by(method) |&gt; </span></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarise(mean(type_II)) </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>d_param <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_processed, <span class="st">&quot;estimate_tibble.csv&quot;</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 </section>
      </main>
