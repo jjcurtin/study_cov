@@ -20,9 +20,9 @@ This file contains the supplemental materials for *Title of paper*. It includes 
 ```{r}
 #| label: set up
 
-library(tidyverse)
-library(patchwork)
-library(kableExtra, exclude = ("group_rows"))
+suppressWarnings(library(tidyverse))
+suppressWarnings(library(patchwork))
+suppressWarnings(library(kableExtra, exclude = ("group_rows")))
 
 theme_set(theme_classic())
 
@@ -44,7 +44,6 @@ options(digits = 3)
 #### b effect = 0
 
 ```{r}
-#| warning: false
 
 d_0 <- d |> 
   filter(b_x == 0) |> 
@@ -58,8 +57,10 @@ d_0 <- d |>
          `all cov lasso w/o x` = lasso_wo_x, `all cov lasso w/x` = lasso)
 
 d_0 |> 
-  kable() |> 
-  kable_classic("striped") 
+  kable(caption = "Type I error rates for b effect = 0 by method and research context", 
+        digits = 3) |> 
+  kable_classic("striped") |> 
+  suppressWarnings()
 ```
 
 
@@ -83,8 +84,10 @@ d_02 <- d |>
          `all cov lasso w/o x` = lasso_wo_x, `all cov lasso w/x` = lasso)
 
 d_02 |> 
-  kable() |> 
-  kable_classic("striped") 
+  kable(caption = "Type II error rates for b effect = 0.2 by method and research context", 
+        digits = 3) |> 
+  kable_classic("striped") |> 
+  suppressWarnings()
 ```
 
 #### b effect = 0.5
@@ -104,8 +107,10 @@ d_05 <- d |>
          `all cov lasso w/o x` = lasso_wo_x, `all cov lasso w/x` = lasso)
 
 d_05 |> 
-  kable() |> 
-  kable_classic("striped") 
+  kable(caption = "Type II error rates for b effect = 0.5 by method and research context", 
+        digits = 3) |> 
+  kable_classic("striped") |> 
+  suppressWarnings()
 ```
 
 
@@ -196,7 +201,7 @@ est_d_05 <- d_full |>
 #| fig-height: 8
 #| warning: false
 
-est_d_0 / est_d_02 / est_d_05 
+suppressWarning(est_d_0 / est_d_02 / est_d_05) 
 ```
 
 
