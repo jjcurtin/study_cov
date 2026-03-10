@@ -59,7 +59,7 @@ d_0 <- d |>
 
 d_0 |> 
   kable() |> 
-  kable_classic() 
+  kable_classic("striped") 
 ```
 
 
@@ -84,7 +84,7 @@ d_02 <- d |>
 
 d_02 |> 
   kable() |> 
-  kable_classic() 
+  kable_classic("striped") 
 ```
 
 #### b effect = 0.5
@@ -105,7 +105,7 @@ d_05 <- d |>
 
 d_05 |> 
   kable() |> 
-  kable_classic() 
+  kable_classic("striped") 
 ```
 
 
