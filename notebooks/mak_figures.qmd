@@ -357,7 +357,7 @@ segment_labels <- tibble::tibble(
         mean(c(2.8, 4.6)),
         mean(c(5, 6.8)),
         mean(c(7.2, 9))),
-  y = c(.50, .50, .37, .37, .37) + 0.015,   
+  y = c(.50, .50, .40, .40, .40) + 0.015,   
   label = c("A priori selection", "Data-driven selection", "Single covariate lm", "All covariates lm", "All covariates LASSO")
 )
 
@@ -378,9 +378,9 @@ ggplot(
   ) +
   geom_segment(aes(y = .50, x = .6, xend = 2.6)) +
   geom_segment(aes(y = .50, x = 2.8, xend = 9.2)) +
-  geom_segment(aes(y = .37, x = 2.8, xend = 4.6)) +
-  geom_segment(aes(y = .37, x = 5, xend = 6.8)) +
-  geom_segment(aes(y = .37, x = 7.2, xend = 9)) +
+  geom_segment(aes(y = .40, x = 2.8, xend = 4.6)) +
+  geom_segment(aes(y = .40, x = 5, xend = 6.8)) +
+  geom_segment(aes(y = .40, x = 7.2, xend = 9)) +
   geom_text(
     aes(label = sprintf("%.3f", type_II)),
     vjust = -0.5
