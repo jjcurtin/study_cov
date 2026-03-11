@@ -95,7 +95,7 @@ All data analyses were done in R. <!--Maybe also cite RStudio and tidyverse-->Si
 We ran 40,000 simulations for each research context. Within each simulation we generated a unique dataset that consisted of a dichotomous focal independent variable (*X*), varying numbers of quantitative covariates (*C*), where a subset are correlated with each other and with the outcome (see Research Contexts section), and a quantitative outcome (*Y*) calculated by adding the *X* variable multiplied by the effect size (i.e., population parameter) to the *Y* generated from the correlation matrix with the covariates. We fit models from our nine approaches on each simulated dataset. From each model we saved the parameter estimate for *X*,  the p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05.  
 
 ```{r}
-#| eval: false
+#| echo: true
 
 b_x <- 0.2 # <1>
 n_obs <- 100 
