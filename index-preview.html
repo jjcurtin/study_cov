@@ -406,8 +406,8 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 <td style="text-align: left;">p-hacking</td>
 <td style="text-align: left;">Y ~ X + C_1<br>
 Y ~ X + C_2<br>
-<u><br>
-Y ~ X + C_k</u></td>
+&amp;vdots;<br>
+Y ~ X + C_k</td>
 <td style="text-align: left;">Covariates that lower the p-value of X are retained in the final model</td>
 </tr>
 <tr class="even">
@@ -433,7 +433,7 @@ Y ~ X + C_k</u></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">All covariates linear model with X</td>
-<td style="text-align: left;">Y ~ X + C_1 + C_2 ... + C_k</td>
+<td style="text-align: left;">Y ~ X + C_1 + C_2 + ... + C_k</td>
 <td style="text-align: left;">Significant covariates (p &lt; .05) when controlling for X and all other covariates are retained in the final model</td>
 </tr>
 <tr class="even">
@@ -443,7 +443,7 @@ Y ~ X + C_k</u></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">All covariates LASSO with X</td>
-<td style="text-align: left;">Y ~ X + C_1 + C_2 ... + C_k w/lambda penalty applied to all covariates</td>
+<td style="text-align: left;">Y ~ X + C_1 + C_2 + ... + C_k w/lambda penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
 </tbody><tfoot>
