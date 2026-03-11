@@ -379,6 +379,11 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 <div aria-describedby="tbl-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display">
 <table class="lightable-classic do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
@@ -399,17 +404,26 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 </tr>
 <tr class="odd">
 <td style="text-align: left;">p-hacking</td>
-<td style="text-align: left;">Y ~ X + C_1, Y ~ X + C_2, ..., Y ~ X + C_k</td>
+<td style="text-align: left;">Y ~ X + C_1<br>
+Y ~ X + C_2<br>
+<u><br>
+Y ~ X + C_k</u></td>
 <td style="text-align: left;">Covariates that lower the p-value of X are retained in the final model</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Single covariate linear model without X</td>
-<td style="text-align: left;">Y ~ C_1, Y ~ C_2, ..., Y ~ C_k</td>
+<td style="text-align: left;">Y ~ C_1<br>
+Y ~ C_2<br>
+<u><br>
+Y ~ C_k</u></td>
 <td style="text-align: left;">Significant covariates (p &lt; .05) are retained in the final model</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Single covariate linear model with X</td>
-<td style="text-align: left;">Y ~ X + C_1, Y ~ X + C_2, ..., Y ~ X + C_k</td>
+<td style="text-align: left;">Y ~ X + C_1<br>
+Y ~ X + C_2<br>
+<u><br>
+Y ~ X + C_k</u></td>
 <td style="text-align: left;">Significant covariates (p &lt; .05) when controlling for X are retained in the final model</td>
 </tr>
 <tr class="even">
@@ -424,12 +438,12 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 </tr>
 <tr class="even">
 <td style="text-align: left;">All covariates LASSO without X</td>
-<td style="text-align: left;">Y ~ C_1 + C_2 + ... + C_k with lambda penalty applied to all covariates</td>
+<td style="text-align: left;">Y ~ C_1 + C_2 + ... + C_k w/lambda penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">All covariates LASSO with X</td>
-<td style="text-align: left;">Y ~ X + C_1 + C_2 ... + C_k with lambda penalty applied to all covariates</td>
+<td style="text-align: left;">Y ~ X + C_1 + C_2 ... + C_k w/lambda penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
 </tbody><tfoot>
@@ -591,7 +605,7 @@ Table&nbsp;2: Research context variables and values
 <!--add info about going from this to type i and type 2 errros-->
 <!--edit above a bit for clarity-->
 <!--show code to generate Y in paper??-->
-<p>For research contexts where the population parameter for <em>X</em> is 0 (i.e., <em>X</em> has no effect on <em>Y</em>), we report the Type I error rate for each method both across and within research contexts. For research contexts where the population parameter for <em>X</em> is 0.2 or 0.5 (i.e., <em>X</em> has an effect on <em>Y</em>), we report the Type II error rate for each method across and within research contexts. We also provide sampling distributions of the parameter estimate for <em>X</em> across research contexts for each method, separately by true effect size (0, 0.2, and 0.5). An interactive detailed dashboard of average error rates for all combinations of research context variables is accessible through our OSF page (https://osf.io/zh5gn/).<!--KW: Just put this last sentence in here as a placeholder for shiny table for now--> <!--edit above--></p>
+<p>For research contexts where the population parameter for <em>X</em> is 0 (i.e., <em>X</em> has no effect on <em>Y</em>), we report the Type I error rate for each method both across and within research contexts. For research contexts where the population parameter for <em>X</em> is 0.2 or 0.5 (i.e., <em>X</em> has an effect on <em>Y</em>), we report the Type II error rate for each method across and within research contexts. We also provide sampling distributions of the parameter estimate for <em>X</em> across research contexts for each method, separately by true effect size (0, 0.2, and 0.5). An interactive detailed dashboard of average error rates for all combinations of research context variables is accessible through our OSF page (<a href="https://osf.io/zh5gn/">https://osf.io/zh5gn/</a>).<!--KW: Just put this last sentence in here as a placeholder for shiny table for now--> <!--edit above--></p>
 </section>
 </section>
 <section id="results" class="level1">

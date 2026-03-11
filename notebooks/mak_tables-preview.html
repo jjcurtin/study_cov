@@ -521,13 +521,13 @@ i Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;All covariates LASSO with X&quot;</span>),</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                     <span class="st">`</span><span class="at">Screening Models</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;No screening models&quot;</span>,</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;No screening models&quot;</span>,</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ X + C_1, Y ~ X + C_2, ..., Y ~ X + C_k&quot;</span>,</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ C_1, Y ~ C_2, ..., Y ~ C_k&quot;</span>,</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ X + C_1, Y ~ X + C_2, ..., Y ~ X + C_k&quot;</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ X + C_1 &lt;br&gt;Y ~ X + C_2 &lt;br&gt;⋮ &lt;br&gt;Y ~ X + C_k&quot;</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ C_1 &lt;br&gt;Y ~ C_2 &lt;br&gt;⋮ &lt;br&gt;Y ~ C_k&quot;</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ X + C_1 &lt;br&gt;Y ~ X + C_2 &lt;br&gt;⋮ &lt;br&gt;Y ~ X + C_k&quot;</span>,</span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ C_1 + C_2 + ... + C_k&quot;</span>,</span>
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ X + C_1 + C_2 ... + C_k&quot;</span>,</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ C_1 + C_2 + ... + C_k with lambda penalty applied to all covariates&quot;</span>,</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ X + C_1 + C_2 ... + C_k with lambda penalty applied to all covariates&quot;</span>),</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ C_1 + C_2 + ... + C_k w/lambda penalty applied to all covariates&quot;</span>,</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">&quot;Y ~ X + C_1 + C_2 ... + C_k w/lambda penalty applied to all covariates&quot;</span>),</span>
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                     <span class="st">`</span><span class="at">Covariate Selection Criteria</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;No covariates used&quot;</span>,</span>
 <span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;All covariates used&quot;</span>,</span>
 <span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Covariates that lower the p-value of X are retained in the final model&quot;</span>,</span>
@@ -577,17 +577,20 @@ The nine linear regression models and their definition for covariate selection.
   </tr>
   <tr>
    <td style="text-align:left;"> p-hacking </td>
-   <td style="text-align:left;"> Y ~ X + C_1, Y ~ X + C_2, ..., Y ~ X + C_k </td>
+   <td style="text-align:left;"> Y ~ X + C_1 <br>Y ~ X + C_2 <br><u> <br>Y ~ X + C_k </u>
+</td>
    <td style="text-align:left;"> Covariates that lower the p-value of X are retained in the final model </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Single covariate linear model without X </td>
-   <td style="text-align:left;"> Y ~ C_1, Y ~ C_2, ..., Y ~ C_k </td>
+   <td style="text-align:left;"> Y ~ C_1 <br>Y ~ C_2 <br><u> <br>Y ~ C_k </u>
+</td>
    <td style="text-align:left;"> Significant covariates (p &lt; .05) are retained in the final model </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Single covariate linear model with X </td>
-   <td style="text-align:left;"> Y ~ X + C_1, Y ~ X + C_2, ..., Y ~ X + C_k </td>
+   <td style="text-align:left;"> Y ~ X + C_1 <br>Y ~ X + C_2 <br><u> <br>Y ~ X + C_k </u>
+</td>
    <td style="text-align:left;"> Significant covariates (p &lt; .05) when controlling for X are retained in the final model </td>
   </tr>
   <tr>
@@ -602,12 +605,12 @@ The nine linear regression models and their definition for covariate selection.
   </tr>
   <tr>
    <td style="text-align:left;"> All covariates LASSO without X </td>
-   <td style="text-align:left;"> Y ~ C_1 + C_2 + ... + C_k with lambda penalty applied to all covariates </td>
+   <td style="text-align:left;"> Y ~ C_1 + C_2 + ... + C_k w/lambda penalty applied to all covariates </td>
    <td style="text-align:left;"> Covariates with non-zero coefficients are retained in the model </td>
   </tr>
   <tr>
    <td style="text-align:left;"> All covariates LASSO with X </td>
-   <td style="text-align:left;"> Y ~ X + C_1 + C_2 ... + C_k with lambda penalty applied to all covariates </td>
+   <td style="text-align:left;"> Y ~ X + C_1 + C_2 ... + C_k w/lambda penalty applied to all covariates </td>
    <td style="text-align:left;"> Covariates with non-zero coefficients are retained in the model </td>
   </tr>
 </tbody>
