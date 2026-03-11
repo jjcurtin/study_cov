@@ -34,7 +34,7 @@ table <- read_csv(here::here(path_processed, "estimate_tibble.csv"),
 ```
 
 ```{r}
-footnote_methods <- "Screening models represent symbolic linear models where Y is the outcome, X is the focal predictor, C is a covariate, and k is the number of covariates."
+footnote_methods <- "Screening models represent symbolic linear models where Y is the outcome, X is the focal independent variable, C is a covariate, and k is the number of covariates."
 
 lm_methods <- tibble(Method = c("No covariates", 
                                 "All covariates", 
@@ -57,10 +57,10 @@ lm_methods <- tibble(Method = c("No covariates",
                      `Covariate Selection Criteria` = c("No covariates used",
                                                         "All covariates used",
                                                         "Covariates that lower the p-value of X are retained in the final model",
-                                                        "Covariates that yield a significant effect (p < .05) are retained in the final model",
-                                                        "Covariates that yield a significant effect (p < .05) when controlling for X are retained in the final model",
-                                                        "Covariates that yield a significant effect (P < .05) when controlling for all other covariates are retained in the final model",
-                                                        "Covariates that yield a significant effect (P < .05) when controlling for X and all other covariates are retained in the final model",
+                                                        "Significant covariates (p < .05) are retained in the final model",
+                                                        "Significant covariates (p < .05) when controlling for X are retained in the final model",
+                                                        "Significant covariates (p < .05) when controlling for all other covariates are retained in the final model",
+                                                        "Significant covariates (p < .05) when controlling for X and all other covariates are retained in the final model",
                                                         "Covariates with non-zero coefficients are retained in the model",
                                                         "Covariates with non-zero coefficients are retained in the model"))
 ```
