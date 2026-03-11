@@ -34,35 +34,75 @@ table <- read_csv(here::here(path_processed, "estimate_tibble.csv"),
 ```
 
 ```{r}
-footnote_methods <- "Screening models represent symbolic linear models where Y is the outcome, X is the focal independent variable, C is a covariate, and k is the number of covariates."
+# footnote_methods <- "Screening models represent symbolic linear models where Y is the outcome, X is the focal independent variable, C is a covariate, and k is the number of covariates."
+# 
+# lm_methods <- tibble(Method = c("No covariates", 
+#                                 "All covariates", 
+#                                 "p-hacking",
+#                                 "Single covariate linear model without X", 
+#                                 "Single covariate linear model with X",
+#                                 "All covariates linear model without X", 
+#                                 "All covariates linear model with X",
+#                                 "All covariates LASSO without X", 
+#                                 "All covariates LASSO with X"),
+#                      `Screening Models` = c("No screening models",
+#                                             "No screening models",
+#                                             "Y ~ X + C_1 <br>Y ~ X + C_2 <br>⋮ <br>Y ~ X + C_k",
+#                                             "Y ~ C_1 <br>Y ~ C_2 <br>⋮ <br>Y ~ C_k",
+#                                             "Y ~ X + C_1 <br>Y ~ X + C_2 <br>⋮ <br>Y ~ X + C_k",
+#                                             "Y ~ C_1 + C_2 + ... + C_k",
+#                                             "Y ~ X + C_1 + C_2 + ... + C_k",
+#                                             "Y ~ C_1 + C_2 + ... + C_k w/lambda penalty applied to all covariates",
+#                                             "Y ~ X + C_1 + C_2 + ... + C_k w/lambda penalty applied to all covariates"),
+#                      `Covariate Selection Criteria` = c("No covariates used",
+#                                                         "All covariates used",
+#                                                         "Covariates that lower the p-value of X are retained in the final model",
+#                                                         "Significant covariates (p < .05) are retained in the final model",
+#                                                         "Significant covariates (p < .05) when controlling for X are retained in the final model",
+#                                                         "Significant covariates (p < .05) when controlling for all other covariates are retained in the final model",
+#                                                         "Significant covariates (p < .05) when controlling for X and all other covariates are retained in the final model",
+#                                                         "Covariates with non-zero coefficients are retained in the model",
+#                                                         "Covariates with non-zero coefficients are retained in the model"))
 
-lm_methods <- tibble(Method = c("No covariates", 
-                                "All covariates", 
-                                "p-hacking",
-                                "Single covariate linear model without X", 
-                                "Single covariate linear model with X",
-                                "All covariates linear model without X", 
-                                "All covariates linear model with X",
-                                "All covariates LASSO without X", 
-                                "All covariates LASSO with X"),
-                     `Screening Models` = c("No screening models",
-                                            "No screening models",
-                                            "Y ~ X + C_1, Y ~ X + C_2, ..., Y ~ X + C_k",
-                                            "Y ~ C_1, Y ~ C_2, ..., Y ~ C_k",
-                                            "Y ~ X + C_1, Y ~ X + C_2, ..., Y ~ X + C_k",
-                                            "Y ~ C_1 + C_2 + ... + C_k",
-                                            "Y ~ X + C_1 + C_2 ... + C_k",
-                                            "Y ~ C_1 + C_2 + ... + C_k with lambda penalty applied to all covariates",
-                                            "Y ~ X + C_1 + C_2 ... + C_k with lambda penalty applied to all covariates"),
-                     `Covariate Selection Criteria` = c("No covariates used",
-                                                        "All covariates used",
-                                                        "Covariates that lower the p-value of X are retained in the final model",
-                                                        "Significant covariates (p < .05) are retained in the final model",
-                                                        "Significant covariates (p < .05) when controlling for X are retained in the final model",
-                                                        "Significant covariates (p < .05) when controlling for all other covariates are retained in the final model",
-                                                        "Significant covariates (p < .05) when controlling for X and all other covariates are retained in the final model",
-                                                        "Covariates with non-zero coefficients are retained in the model",
-                                                        "Covariates with non-zero coefficients are retained in the model"))
+
+footnote_methods <- "Screening models represent symbolic linear models where \\(Y\\) is the outcome, \\(X\\) is the focal independent variable, \\(C\\) is a covariate, and \\(k\\) is the number of covariates."
+
+lm_methods <- tibble(
+  Method = c(
+    "No covariates",
+    "All covariates",
+    "p-hacking",
+    "Single covariate linear model without X",
+    "Single covariate linear model with X",
+    "All covariates linear model without X",
+    "All covariates linear model with X",
+    "All covariates LASSO without X",
+    "All covariates LASSO with X"
+  ),
+  `Screening Models` = c(
+    "No screening models",
+    "No screening models",
+    "\\(Y \\sim X + C_{1}\\) <br> \\(Y \\sim X + C_{2}\\) <br> \\(\\vdots\\) <br> \\(Y \\sim X + C_{k}\\)",
+    "\\(Y \\sim C_{1}\\) <br> \\(Y \\sim C_{2}\\) <br> \\(\\vdots\\) <br> \\(Y \\sim C_{k}\\)",
+    "\\(Y \\sim X + C_{1}\\) <br> \\(Y \\sim X + C_{2}\\) <br> \\(\\vdots\\) <br> \\(Y \\sim X + C_{k}\\)",
+    "\\(Y \\sim C_{1} + C_{2} + \\cdots + C_{k}\\)",
+    "\\(Y \\sim X + C_{1} + C_{2} + \\cdots + C_{k}\\)",
+    "\\(Y \\sim C_{1} + C_{2} + \\cdots + C_{k}\\) with \\(\\lambda\\) penalty applied to all covariates",
+    "\\(Y \\sim X + C_{1} + C_{2} + \\cdots + C_{k}\\) with \\(\\lambda\\) penalty applied to all covariates"
+  ),
+  `Covariate Selection Criteria` = c(
+    "No covariates used",
+    "All covariates used",
+    "Covariates that lower the p-value of \\(X\\) are retained in the final model",
+    "Significant covariates (\\(p < .05\\)) are retained in the final model",
+    "Significant covariates (\\(p < .05\\)) when controlling for \\(X\\) are retained in the final model",
+    "Significant covariates (\\(p < .05\\)) when controlling for all other covariates are retained in the final model",
+    "Significant covariates (\\(p < .05\\)) when controlling for \\(X\\) and all other covariates are retained in the final model",
+    "Covariates with non-zero coefficients are retained in the model",
+    "Covariates with non-zero coefficients are retained in the model"
+  )
+)
+
 ```
 
 ```{r}
@@ -70,9 +110,9 @@ lm_methods <- tibble(Method = c("No covariates",
 #| tbl-cap: The nine linear regression models and their definition for covariate selection.
 
 lm_methods |> 
-  kbl(escape = FALSE) |> 
+  kbl(escape = FALSE, format = "html") |> 
   kable_classic() |> 
-  kableExtra::footnote(general = c(footnote_methods), escape=FALSE)
+  kableExtra::footnote(general = footnote_methods, escape=FALSE)
 ```
 
 
@@ -83,11 +123,11 @@ lm_methods |>
 
 data_tbl0 <- tibble(
   description = c(
-    "The population parameter for X",
-    "The number of observations in the sample",
-    "The number of covariates",
-    "The proportion of \"good\" covariates",
-    "The correlation between Y and good covariates"),
+    "The true population parameter for the focal IV",
+    "The sample size",
+    "The number of covariates available",
+    "The percentage of covariates with non-zero relationships with the outcome",
+    "The strength of the relationship between the covariates and Y"),
   values = c("0, 0.2, 0.5",
              "50, 100, 150, 200, 300, 400", 
              "4, 8, 12, 16, 20", 
@@ -99,7 +139,7 @@ data_tbl0 <- tibble(
 data_tbl0 |>
   kbl(col.names = c("Research Context Variable", "Values"), 
       escape = FALSE) |>
-  kable_styling(bootstrap_options = c("striped", "hover"), 
+  kable_styling(bootstrap_options = c("striped"), 
                 full_width = FALSE) |>
   column_spec(1, width = "15em") |>
   column_spec(2, width = "10em")
