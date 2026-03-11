@@ -508,7 +508,7 @@ i Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>footnote_methods <span class="ot">&lt;-</span> <span class="st">&quot;Screening models represent symbolic linear models where Y is the outcome, X is the focal predictor, C is a covariate, and k is the number of covariates.&quot;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>footnote_methods <span class="ot">&lt;-</span> <span class="st">&quot;Screening models represent symbolic linear models where Y is the outcome, X is the focal independent variable, C is a covariate, and k is the number of covariates.&quot;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>lm_methods <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Method =</span> <span class="fu">c</span>(<span class="st">&quot;No covariates&quot;</span>, </span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;All covariates&quot;</span>, </span>
@@ -531,10 +531,10 @@ i Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                     <span class="st">`</span><span class="at">Covariate Selection Criteria</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;No covariates used&quot;</span>,</span>
 <span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;All covariates used&quot;</span>,</span>
 <span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Covariates that lower the p-value of X are retained in the final model&quot;</span>,</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Covariates that yield a significant effect (p &lt; .05) are retained in the final model&quot;</span>,</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Covariates that yield a significant effect (p &lt; .05) when controlling for X are retained in the final model&quot;</span>,</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Covariates that yield a significant effect (P &lt; .05) when controlling for all other covariates are retained in the final model&quot;</span>,</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Covariates that yield a significant effect (P &lt; .05) when controlling for X and all other covariates are retained in the final model&quot;</span>,</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Significant covariates (p &lt; .05) are retained in the final model&quot;</span>,</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Significant covariates (p &lt; .05) when controlling for X are retained in the final model&quot;</span>,</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Significant covariates (p &lt; .05) when controlling for all other covariates are retained in the final model&quot;</span>,</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Significant covariates (p &lt; .05) when controlling for X and all other covariates are retained in the final model&quot;</span>,</span>
 <span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Covariates with non-zero coefficients are retained in the model&quot;</span>,</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">&quot;Covariates with non-zero coefficients are retained in the model&quot;</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
@@ -583,22 +583,22 @@ The nine linear regression models and their definition for covariate selection.
   <tr>
    <td style="text-align:left;"> Single covariate linear model without X </td>
    <td style="text-align:left;"> Y ~ C_1, Y ~ C_2, ..., Y ~ C_k </td>
-   <td style="text-align:left;"> Covariates that yield a significant effect (p &lt; .05) are retained in the final model </td>
+   <td style="text-align:left;"> Significant covariates (p &lt; .05) are retained in the final model </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Single covariate linear model with X </td>
    <td style="text-align:left;"> Y ~ X + C_1, Y ~ X + C_2, ..., Y ~ X + C_k </td>
-   <td style="text-align:left;"> Covariates that yield a significant effect (p &lt; .05) when controlling for X are retained in the final model </td>
+   <td style="text-align:left;"> Significant covariates (p &lt; .05) when controlling for X are retained in the final model </td>
   </tr>
   <tr>
    <td style="text-align:left;"> All covariates linear model without X </td>
    <td style="text-align:left;"> Y ~ C_1 + C_2 + ... + C_k </td>
-   <td style="text-align:left;"> Covariates that yield a significant effect (P &lt; .05) when controlling for all other covariates are retained in the final model </td>
+   <td style="text-align:left;"> Significant covariates (p &lt; .05) when controlling for all other covariates are retained in the final model </td>
   </tr>
   <tr>
    <td style="text-align:left;"> All covariates linear model with X </td>
    <td style="text-align:left;"> Y ~ X + C_1 + C_2 ... + C_k </td>
-   <td style="text-align:left;"> Covariates that yield a significant effect (P &lt; .05) when controlling for X and all other covariates are retained in the final model </td>
+   <td style="text-align:left;"> Significant covariates (p &lt; .05) when controlling for X and all other covariates are retained in the final model </td>
   </tr>
   <tr>
    <td style="text-align:left;"> All covariates LASSO without X </td>
@@ -614,7 +614,7 @@ The nine linear regression models and their definition for covariate selection.
 <tfoot>
 <tr><td style="padding: 0; " colspan="100%"><span style="font-style: italic;">Note: </span></td></tr>
 <tr><td style="padding: 0; " colspan="100%">
-<sup></sup> Screening models represent symbolic linear models where Y is the outcome, X is the focal predictor, C is a covariate, and k is the number of covariates.</td></tr>
+<sup></sup> Screening models represent symbolic linear models where Y is the outcome, X is the focal independent variable, C is a covariate, and k is the number of covariates.</td></tr>
 </tfoot>
 </table>
 

@@ -94,54 +94,44 @@ All data analyses were done in R. <!--Maybe also cite RStudio and tidyverse-->Si
 
 We ran 40,000 simulations for each research context. Within each simulation we generated a unique dataset that consisted of a dichotomous focal independent variable (*X*), varying numbers of quantitative covariates (*C*), where a subset are correlated with each other and with the outcome (see Research Contexts section), and a quantitative outcome (*Y*) calculated by adding the *X* variable multiplied by the effect size (i.e., population parameter) to the *Y* generated from the correlation matrix with the covariates. We fit models from our nine approaches on each simulated dataset. From each model we saved the parameter estimate for *X*,  the p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05.  
 
+Below, we demonstrate the covariance matrix and how to generate the multivariate normal dataset using this covariance matrix for a research context with a small true population parameter effect size ($b_{iv} = 0.2$), a sample size of 100, and four covariates, where 50% of the covariates have a 0.50 correlation with the outcome and 0.30 correlations with each other. The covariance matrix (i.e., sigma) for this research context is presented below.
+
 ```{r}
-#| echo: true
+#| echo: false
 
-b_x <- 0.2 # <1>
-n_obs <- 100 
-n_covs <- 4
-p_good_covs <- 0.5
-r_ycov <- .5
+sigma <- matrix(c(
+  1.0, 0.5, 0.5, 0,   0,
+  0.5, 1.0, 0.3, 0,   0,
+  0.5, 0.3, 1.0, 0,   0,
+  0,   0,   0,   1,   0,
+  0,   0,   0,   0,   1
+), nrow = 5, byrow = TRUE)
 
-x <- rep(c(0, 1), each = n_obs / 2) # <2>
 
+write.table(format(sigma, nsmall = 1), 
+            row.names = FALSE, col.names = FALSE, quote = FALSE, sep = " ")
 
-sigma <- diag(n_covs + 1) # <3>
-n_good_covs <- n_covs * p_good_covs  
-corr_matrix <- matrix(.3, 
-                      nrow = n_good_covs, 
-                      ncol = n_good_covs)
-diag(corr_matrix) <- 1
-sigma[2:(nrow(corr_matrix) + 1), 2:(ncol(corr_matrix) + 1)] <- corr_matrix
-sigma[1, 2:(n_good_covs + 1)] <- rep(r_ycov, n_good_covs)
-sigma[2:(n_good_covs + 1), 1] <- rep(r_ycov, n_good_covs)
-  
-ycovs <- MASS::mvrnorm(n_obs, mu = rep(0, n_covs + 1), Sigma = sigma) # <4>
-y <- ycovs[, 1]
-covs <- ycovs[, -1]
-  
-y <- y + b_x * x # <5>
- 
-covs <- covs |>  # <6>
-    tibble::as_tibble(.name_repair = "minimal")
-names(covs) <- stringr::str_c("c", 1:n_covs)
-df <- tibble::tibble(y = y, x = x) |> 
-   dplyr::bind_cols(covs)
 ```
 
-1. Set research context parameters.
-2. Create dichotomous focal predictor (X).
-3. Create variance/covariance matrix. Good predictors have 0.3 correlation with each other.
-4. Generate Y and all covariates using a multivariate normal distribution.
-5. Add in X effect on Y.
-6. Combine into final data tibble.
+The covariance matrix can then be used to generate a multivariate normal dataset of $Y$ and $C_1...C_4$ for 100 observations where all variables have a mean of 0.
+```{r}
+data <- MASS::mvrnorm(n = 100, mu = c(0, 0, 0, 0, 0), Sigma = sigma) # <1>
+
+x <- rep(c(0, 1), each = 50) # <2>
+
+data[, 1] <- data[, 1]+ .2 * x # <3>
+```
+
+1. Generate Y (column 1) and all covariates (columns 2-5) using a multivariate normal distribution with a mean of 0.
+2. Create a dichotomous focal independent variable. 
+3. Add in X effect on Y.
 
 
 <!--add info about going from this to type i and type 2 errros-->
 <!--edit above a bit for clarity-->
 <!--show code to generate Y in paper??-->
 
-For research contexts where the population parameter for *X* is 0 (i.e., *X* has no effect on *Y*), we report the Type I error rate for each method both across and within research contexts. For research contexts where the population parameter for *X* is 0.2 or 0.5 (i.e., *X* has an effect on *Y*), we report the Type II error rate for each method across and within research contexts. We also provide sampling distributions of the parameter estimate for *X* across research contexts for each method, separately by true effect size (0, 0.2, and 0.5). Detailed tables of range and average error rates for each research context and true and false positive rates for covariates are available in the supplement.
+For research contexts where the population parameter for *X* is 0 (i.e., *X* has no effect on *Y*), we report the Type I error rate for each method both across and within research contexts. For research contexts where the population parameter for *X* is 0.2 or 0.5 (i.e., *X* has an effect on *Y*), we report the Type II error rate for each method across and within research contexts. We also provide sampling distributions of the parameter estimate for *X* across research contexts for each method, separately by true effect size (0, 0.2, and 0.5). An interactive detailed dashboard of average error rates for all combinations of research context variables is accessible through our OSF page (https://osf.io/zh5gn/).<!--KW: Just put this last sentence in here as a placeholder for shiny table for now-->
 <!--edit above-->
 
 # Results
@@ -182,6 +172,8 @@ When the assumptions of the general linear model are met, parameter estimates ar
 
 
 {{< embed notebooks/mak_tables.qmd#tbl-est >}}
+
+{{< embed notebooks/mak_figures.qmd#fig-distribution-bx >}}
 
 
 # Discussion
