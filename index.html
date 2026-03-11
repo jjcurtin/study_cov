@@ -465,24 +465,21 @@ Table&nbsp;2: Research context variables and values
 <span id="annotated-cell-1-13"><a href="#annotated-cell-1-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">nrow =</span> n_good_covs, </span>
 <span id="annotated-cell-1-14"><a href="#annotated-cell-1-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ncol =</span> n_good_covs)</span>
 <span id="annotated-cell-1-15"><a href="#annotated-cell-1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(corr_matrix) <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="annotated-cell-1-16"><a href="#annotated-cell-1-16" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="annotated-cell-1-17"><a href="#annotated-cell-1-17" aria-hidden="true" tabindex="-1"></a>sigma[<span class="dv">2</span><span class="sc">:</span>(<span class="fu">nrow</span>(corr_matrix) <span class="sc">+</span> <span class="dv">1</span>), <span class="dv">2</span><span class="sc">:</span>(<span class="fu">ncol</span>(corr_matrix) <span class="sc">+</span> <span class="dv">1</span>)] <span class="ot">&lt;-</span> corr_matrix</span>
-<span id="annotated-cell-1-18"><a href="#annotated-cell-1-18" aria-hidden="true" tabindex="-1"></a>sigma[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span>(n_good_covs <span class="sc">+</span> <span class="dv">1</span>)] <span class="ot">&lt;-</span> <span class="fu">rep</span>(r_ycov, n_good_covs)</span>
-<span id="annotated-cell-1-19"><a href="#annotated-cell-1-19" aria-hidden="true" tabindex="-1"></a>sigma[<span class="dv">2</span><span class="sc">:</span>(n_good_covs <span class="sc">+</span> <span class="dv">1</span>), <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rep</span>(r_ycov, n_good_covs)</span>
-<span id="annotated-cell-1-20"><a href="#annotated-cell-1-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4" onclick="event.preventDefault();" href="">4</a><span id="annotated-cell-1-21" class="code-annotation-target"><a href="#annotated-cell-1-21" aria-hidden="true" tabindex="-1"></a>ycovs <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(n_obs, <span class="at">mu =</span> <span class="fu">rep</span>(<span class="dv">0</span>, n_covs <span class="sc">+</span> <span class="dv">1</span>), <span class="at">Sigma =</span> sigma)</span>
-<span id="annotated-cell-1-22"><a href="#annotated-cell-1-22" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> ycovs[, <span class="dv">1</span>]</span>
-<span id="annotated-cell-1-23"><a href="#annotated-cell-1-23" aria-hidden="true" tabindex="-1"></a>covs <span class="ot">&lt;-</span> ycovs[, <span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="annotated-cell-1-24"><a href="#annotated-cell-1-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5" onclick="event.preventDefault();" href="">5</a><span id="annotated-cell-1-25" class="code-annotation-target"><a href="#annotated-cell-1-25" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> y <span class="sc">+</span> b_x <span class="sc">*</span> x</span>
-<span id="annotated-cell-1-26"><a href="#annotated-cell-1-26" aria-hidden="true" tabindex="-1"></a> </span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="6" onclick="event.preventDefault();" href="">6</a><span id="annotated-cell-1-27" class="code-annotation-target"><a href="#annotated-cell-1-27" aria-hidden="true" tabindex="-1"></a>covs <span class="ot">&lt;-</span> covs <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-1-28"><a href="#annotated-cell-1-28" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="st">"minimal"</span>)</span>
-<span id="annotated-cell-1-29"><a href="#annotated-cell-1-29" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="annotated-cell-1-30"><a href="#annotated-cell-1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covs) <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(<span class="st">"c"</span>, <span class="dv">1</span><span class="sc">:</span>n_covs)</span>
-<span id="annotated-cell-1-31"><a href="#annotated-cell-1-31" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="annotated-cell-1-32"><a href="#annotated-cell-1-32" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">y =</span> y, <span class="at">x =</span> x) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-1-33"><a href="#annotated-cell-1-33" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(covs)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="annotated-cell-1-16"><a href="#annotated-cell-1-16" aria-hidden="true" tabindex="-1"></a>sigma[<span class="dv">2</span><span class="sc">:</span>(<span class="fu">nrow</span>(corr_matrix) <span class="sc">+</span> <span class="dv">1</span>), <span class="dv">2</span><span class="sc">:</span>(<span class="fu">ncol</span>(corr_matrix) <span class="sc">+</span> <span class="dv">1</span>)] <span class="ot">&lt;-</span> corr_matrix</span>
+<span id="annotated-cell-1-17"><a href="#annotated-cell-1-17" aria-hidden="true" tabindex="-1"></a>sigma[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span>(n_good_covs <span class="sc">+</span> <span class="dv">1</span>)] <span class="ot">&lt;-</span> <span class="fu">rep</span>(r_ycov, n_good_covs)</span>
+<span id="annotated-cell-1-18"><a href="#annotated-cell-1-18" aria-hidden="true" tabindex="-1"></a>sigma[<span class="dv">2</span><span class="sc">:</span>(n_good_covs <span class="sc">+</span> <span class="dv">1</span>), <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rep</span>(r_ycov, n_good_covs)</span>
+<span id="annotated-cell-1-19"><a href="#annotated-cell-1-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4" onclick="event.preventDefault();" href="">4</a><span id="annotated-cell-1-20" class="code-annotation-target"><a href="#annotated-cell-1-20" aria-hidden="true" tabindex="-1"></a>ycovs <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(n_obs, <span class="at">mu =</span> <span class="fu">rep</span>(<span class="dv">0</span>, n_covs <span class="sc">+</span> <span class="dv">1</span>), <span class="at">Sigma =</span> sigma)</span>
+<span id="annotated-cell-1-21"><a href="#annotated-cell-1-21" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> ycovs[, <span class="dv">1</span>]</span>
+<span id="annotated-cell-1-22"><a href="#annotated-cell-1-22" aria-hidden="true" tabindex="-1"></a>covs <span class="ot">&lt;-</span> ycovs[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="annotated-cell-1-23"><a href="#annotated-cell-1-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5" onclick="event.preventDefault();" href="">5</a><span id="annotated-cell-1-24" class="code-annotation-target"><a href="#annotated-cell-1-24" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> y <span class="sc">+</span> b_x <span class="sc">*</span> x</span>
+<span id="annotated-cell-1-25"><a href="#annotated-cell-1-25" aria-hidden="true" tabindex="-1"></a> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="6" onclick="event.preventDefault();" href="">6</a><span id="annotated-cell-1-26" class="code-annotation-target"><a href="#annotated-cell-1-26" aria-hidden="true" tabindex="-1"></a>covs <span class="ot">&lt;-</span> covs <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-1-27"><a href="#annotated-cell-1-27" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="st">"minimal"</span>)</span>
+<span id="annotated-cell-1-28"><a href="#annotated-cell-1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covs) <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(<span class="st">"c"</span>, <span class="dv">1</span><span class="sc">:</span>n_covs)</span>
+<span id="annotated-cell-1-29"><a href="#annotated-cell-1-29" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">y =</span> y, <span class="at">x =</span> x) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-1-30"><a href="#annotated-cell-1-30" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(covs)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
@@ -495,19 +492,19 @@ Table&nbsp;2: Research context variables and values
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="10" data-code-annotation="3">Create variance/covariance matrix.Good predictors have 0.3 correlation with each other</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="10" data-code-annotation="3">Create variance/covariance matrix. Good predictors have 0.3 correlation with each other.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="21" data-code-annotation="4">Generate Y and all covariates using a multivariate normal distribution.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="20" data-code-annotation="4">Generate Y and all covariates using a multivariate normal distribution.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="25" data-code-annotation="5">Add in X effect on Y.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="24" data-code-annotation="5">Add in X effect on Y.</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="27" data-code-annotation="6">Combine into final data tibble.</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="26" data-code-annotation="6">Combine into final data tibble.</span>
 </dd>
 </dl>
 </div>
