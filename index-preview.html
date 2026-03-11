@@ -226,9 +226,9 @@
     <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
       
       <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link" href=""><i class="bi bi-caret-left"></i> Back to Article</a>
-      <h6><i class="bi bi-journal-code"></i> Evaluating Methods for Covariate Selection in Experimental Designs</h6>
+      <h6><i class="bi bi-journal-code"></i> Article Notebook</h6>
 
-            <a href="./index.out.ipynb" class="btn btn-primary quarto-download-embed" download="index.qmd">Download Source</a>
+            <a href="./index.qmd" class="btn btn-primary quarto-download-embed" download="index.qmd">Download Source</a>
           </div>
 
      <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
@@ -426,13 +426,13 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 </tr>
 <tr class="even">
 <td style="text-align: left;">All covariates LASSO without X</td>
-<td style="text-align: left;">Y ~ C_1 + C_2 + ... + C_k with <u>penalty applied to all covariates</u></td>
+<td style="text-align: left;">Y ~ C_1 + C_2 + ... + C_k with lambda penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">All covariates LASSO with X</td>
-<td style="text-align: left;">Y ~ X + C_1 + C_2 ... + C_k with <u>penalty applied to all covariates</u></td>
-<td style="text-align: left;">COvariates with non-zero coefficients are retained in the model</td>
+<td style="text-align: left;">Y ~ X + C_1 + C_2 ... + C_k with lambda penalty applied to all covariates</td>
+<td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
 </tbody><tfoot>
 <tr class="odd">
@@ -545,6 +545,69 @@ Table&nbsp;2: Research context variables and values
 <h2 class="anchored" data-anchor-id="data-analytic-plan">Data Analytic Plan</h2>
 <p>All data analyses were done in R. <!--Maybe also cite RStudio and tidyverse-->Simulations were run using high-throughput computing resources provided by the University of Wisconsin-Madison Center for High Throughput Computing <span class="citation" data-cites="chtc">(<a href="#ref-chtc" role="doc-biblioref">Center for High Throughput Computing 2006</a>)</span>.</p>
 <p>We ran 40,000 simulations for each research context. Within each simulation we generated a unique dataset that consisted of a dichotomous focal independent variable (<em>X</em>), varying numbers of quantitative covariates (<em>C</em>), where a subset are correlated with each other and with the outcome (see Research Contexts section), and a quantitative outcome (<em>Y</em>) calculated by adding the <em>X</em> variable multiplied by the effect size (i.e., population parameter) to the <em>Y</em> generated from the correlation matrix with the covariates. We fit models from our nine approaches on each simulated dataset. From each model we saved the parameter estimate for <em>X</em>, the p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05.</p>
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();" href="">1</a><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>b_x <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>n_covs <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>p_good_covs <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>r_ycov <span class="ot">&lt;-</span> .<span class="dv">5</span></span>
+<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2" onclick="event.preventDefault();" href="">2</a><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> n_obs <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3" onclick="event.preventDefault();" href="">3</a><span id="annotated-cell-1-10" class="code-annotation-target"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">diag</span>(n_covs <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>n_good_covs <span class="ot">&lt;-</span> n_covs <span class="sc">*</span> p_good_covs  </span>
+<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a>corr_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(.<span class="dv">3</span>, </span>
+<span id="annotated-cell-1-13"><a href="#annotated-cell-1-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">nrow =</span> n_good_covs, </span>
+<span id="annotated-cell-1-14"><a href="#annotated-cell-1-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ncol =</span> n_good_covs)</span>
+<span id="annotated-cell-1-15"><a href="#annotated-cell-1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(corr_matrix) <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="annotated-cell-1-16"><a href="#annotated-cell-1-16" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="annotated-cell-1-17"><a href="#annotated-cell-1-17" aria-hidden="true" tabindex="-1"></a>sigma[<span class="dv">2</span><span class="sc">:</span>(<span class="fu">nrow</span>(corr_matrix) <span class="sc">+</span> <span class="dv">1</span>), <span class="dv">2</span><span class="sc">:</span>(<span class="fu">ncol</span>(corr_matrix) <span class="sc">+</span> <span class="dv">1</span>)] <span class="ot">&lt;-</span> corr_matrix</span>
+<span id="annotated-cell-1-18"><a href="#annotated-cell-1-18" aria-hidden="true" tabindex="-1"></a>sigma[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span>(n_good_covs <span class="sc">+</span> <span class="dv">1</span>)] <span class="ot">&lt;-</span> <span class="fu">rep</span>(r_ycov, n_good_covs)</span>
+<span id="annotated-cell-1-19"><a href="#annotated-cell-1-19" aria-hidden="true" tabindex="-1"></a>sigma[<span class="dv">2</span><span class="sc">:</span>(n_good_covs <span class="sc">+</span> <span class="dv">1</span>), <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rep</span>(r_ycov, n_good_covs)</span>
+<span id="annotated-cell-1-20"><a href="#annotated-cell-1-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4" onclick="event.preventDefault();" href="">4</a><span id="annotated-cell-1-21" class="code-annotation-target"><a href="#annotated-cell-1-21" aria-hidden="true" tabindex="-1"></a>ycovs <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(n_obs, <span class="at">mu =</span> <span class="fu">rep</span>(<span class="dv">0</span>, n_covs <span class="sc">+</span> <span class="dv">1</span>), <span class="at">Sigma =</span> sigma)</span>
+<span id="annotated-cell-1-22"><a href="#annotated-cell-1-22" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> ycovs[, <span class="dv">1</span>]</span>
+<span id="annotated-cell-1-23"><a href="#annotated-cell-1-23" aria-hidden="true" tabindex="-1"></a>covs <span class="ot">&lt;-</span> ycovs[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="annotated-cell-1-24"><a href="#annotated-cell-1-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5" onclick="event.preventDefault();" href="">5</a><span id="annotated-cell-1-25" class="code-annotation-target"><a href="#annotated-cell-1-25" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> y <span class="sc">+</span> b_x <span class="sc">*</span> x</span>
+<span id="annotated-cell-1-26"><a href="#annotated-cell-1-26" aria-hidden="true" tabindex="-1"></a> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="6" onclick="event.preventDefault();" href="">6</a><span id="annotated-cell-1-27" class="code-annotation-target"><a href="#annotated-cell-1-27" aria-hidden="true" tabindex="-1"></a>covs <span class="ot">&lt;-</span> covs <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-1-28"><a href="#annotated-cell-1-28" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="st">"minimal"</span>)</span>
+<span id="annotated-cell-1-29"><a href="#annotated-cell-1-29" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="annotated-cell-1-30"><a href="#annotated-cell-1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covs) <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_c</span>(<span class="st">"c"</span>, <span class="dv">1</span><span class="sc">:</span>n_covs)</span>
+<span id="annotated-cell-1-31"><a href="#annotated-cell-1-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="annotated-cell-1-32"><a href="#annotated-cell-1-32" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">y =</span> y, <span class="at">x =</span> x) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-1-33"><a href="#annotated-cell-1-33" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(covs)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="1" data-code-annotation="1">Set research context parameters.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="2">Create dichotomous focal predictor (X).</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="10" data-code-annotation="3">Create variance/covariance matrix.Good predictors have 0.3 correlation with each other</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="21" data-code-annotation="4">Generate Y and all covariates using a multivariate normal distribution.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="25" data-code-annotation="5">Add in X effect on Y.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="27" data-code-annotation="6">Combine into final data tibble.</span>
+</dd>
+</dl>
+</div>
+</div></div>
 <!--add info about going from this to type i and type 2 errros-->
 <!--edit above a bit for clarity-->
 <!--show code to generate Y in paper??-->
@@ -557,7 +620,7 @@ Table&nbsp;2: Research context variables and values
 <h2 class="anchored" data-anchor-id="type-i-error">Type I Error</h2>
 <p>Given our use of simulated datasets, we were able to set the true population parameter for <em>X</em> to be zero (i.e., <span class="math inline">\(b_x = 0\)</span>). Therefore, any significant result was a Type I error. <a href="#fig-bar-1" class="quarto-xref">Figure&nbsp;1</a> shows the average Type I error rate across all research contexts for each approach. The p-hacking approach for selecting covariates, unsurprisingly led to a highly inflated mean Type I error rate across contexts, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives. The other approaches were at or near the expected error rate of alpha = .05 across the relatively broad range of research context characteristics we considered. Specifically, the two a priori selection approaches and the data-driven selection approaches that did not include <em>X</em> in the screening model displayed average Type I error rates of exactly .05. The data-driven approaches that did include <em>X</em> in the screening model displayed slightly increased (&lt;= .06) average Type I error rates across contexts.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-bar-1">
-<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-fig-bar-1" class="cell" data-fig-width="8.75">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-fig-bar-1" class="cell" data-fig-width="8.75">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Parameters</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>gap_after_idx <span class="op">&lt;-</span> c(<span class="dv">2</span>,  <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>)  </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>gap_size <span class="op">&lt;-</span> <span class="fl">0.2</span>                </span>
@@ -657,7 +720,7 @@ Figure&nbsp;1: Type I Error by Method. Average type I error rate across all rese
 <p>We next assessed how Type I error rates varied by specific dimensions of our research contexts and noted several patterns (<a href="#fig-type1-panel" class="quarto-xref">Figure&nbsp;2</a>). First, the magnitude of Type I error rate inflation for the p-hacking approach was substantially increased with increasing number of available covariates, larger correlations between the covariates and <em>Y</em> (i.e., <span class="math inline">\(r_{cov-Y}\)</span> = 0.5), higher proportion of available covariates with non-zero correlations with <em>Y</em>, and smaller sample sizes. The Type I error rate for p-hacking reached XXXXX in the worst case context (N = 50, 20 available covariates with <span class="math inline">\(r_{cov-Y}\)</span> = 0.5 for 75% of the covariate set; SEE SUPPLEMENTAL TABLE XX).</p>
 <p>In contrast, to the p-hacking approach, the Type I error rates remained constant at .05 across all research context dimensions for the a prior approaches and the data-driven approaches that did not include <em>X</em>. Among the data driven approaches that did include <em>X</em>, small increases in Type I error rates were observed as the sample size decreased and the number of available covariates increased. However, Type I error rate inflation remained modest for these approaches even at the extremes of these two dimensions (up to XX at N = 50 and up to XX with 20 covariates). And in the worst case context at the intersection of these dimensions error rates only reached XX for XX, XX for XX and XX for XX. Neither the magnitude <span class="math inline">\(r_{cov-Y}\)</span> nor the proportion of available covariates with non-zero correlations with Y appears to have any systematic impact on the Type I error rates for the data-driven approaches that included <em>X</em>.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-type1-panel">
-<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-fig-type1-panel" class="cell" data-fig-height="6" data-fig-width="8">
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-type1-panel" class="cell" data-fig-height="6" data-fig-width="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(observations <span class="op">+</span> covs)<span class="op">/</span>(good_covs <span class="op">+</span> ycor) <span class="op">+</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  plot_layout(guides <span class="op">=</span> <span class="st">"collect"</span>) <span class="op">&amp;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  theme(legend.position <span class="op">=</span> <span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -681,7 +744,7 @@ Figure&nbsp;2: Type I error by method and research context. Plots are paneled by
 <p>We simulated datasets with two possible population parameters for the effect of <em>X</em> on <em>Y</em> (<span class="math inline">\(b_x = 0.2\)</span>, <span class="math inline">\(b_x = 0.5\)</span>). Given that we set the standard deviation of <em>Y</em> to equal 1, these represented contexts where <em>X</em> had a small (Cohen’s d = .2) or moderate (Cohen’s d = .5) effect on <em>Y</em>. In these simulations, non-significant effects for <em>X</em> were, by definition, Type II errors. Given the substantial problems with Type I error rate inflation noted above, we do not consider the p-hacking approach to be viable and therefore did not evaluate Type II error rates for this approach.</p>
 <p><a href="#fig-bar-2" class="quarto-xref">Figure&nbsp;3</a> shows the average Type II error rate across all research contexts for each approach. The a priori no covariates approach displayed the highest average Type II error, which reinforces the value of using covariates to increase statistical power to detect true effects. Among the approaches that used covariates, the data-driven approaches generally produced modestly lower average Type II error rates than the a priori all covariates approach. Furthermore, the data-driven approaches that included <em>X</em> displayed modestly lower average Type II error rates than the comparable approach that did not include <em>X</em> in the screening model.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-bar-2">
-<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-bar-2" class="cell" data-fig-width="8.75">
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-fig-bar-2" class="cell" data-fig-width="8.75">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>type_II_summary <span class="op">&lt;-</span> d_02 <span class="op">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  bind_rows(d_05) <span class="op">|&gt;</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">filter</span>(method <span class="op">!=</span> <span class="st">"p-hacking"</span>) <span class="op">|&gt;</span> </span>
@@ -797,7 +860,7 @@ Figure&nbsp;3: Type II Error by Method. Average type II error rate across all re
 </div>
 <p>We also assessed Type II error by individual research context (<a href="#fig-panel-2" class="quarto-xref">Figure&nbsp;4</a>). Across all research context, using no covariates was associated with higher Type II error. Using all available covariates or selection methods that do not control for <em>X</em> performed had higher Type II error rates compared to the other methods when sample sizes were low. This pattern was especially notable for using all covariates and an all covariates linear model without <em>X</em>. As sample size increased, the methods performed comparably with respect to Type II error. Using all covariates or an all covariates linear model without <em>X</em> for selection produced higher Type II error rates compared to other methods when there was a larger number of covariates available. The all covariates linear model without <em>X</em> also produced higher Type II error rates, compared to other methods when the proportion of good covariates was higher.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-panel-2">
-<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-fig-panel-2" class="cell" data-fig-height="9" data-fig-width="7.5">
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-fig-panel-2" class="cell" data-fig-height="9" data-fig-width="7.5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  (observations_2 <span class="op">+</span> covs_2)<span class="op">/</span>(good_covs_2 <span class="op">+</span> ycor_2)<span class="op">/</span>(b_x <span class="op">+</span> plot_spacer()) <span class="op">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  plot_layout(guides <span class="op">=</span> <span class="st">"collect"</span>) <span class="op">&amp;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  theme(legend.position <span class="op">=</span> <span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -820,7 +883,7 @@ Figure&nbsp;4: Type II error by method and research context. Plots are paneled b
 <h2 class="anchored" data-anchor-id="parameter-estimates">Parameter Estimates</h2>
 <p>When the assumptions of the general linear model are met, parameter estimates are unbiased and the sampling distribution for these parameter estimates follow the t-distribution. <a href="#tbl-est" class="quarto-xref">Table&nbsp;3</a> shows the mean parameter estimate of <em>X</em> for all approaches separately by effect size (<span class="math inline">\(b_x = 0\)</span>, <span class="math inline">\(b_x = 0.2\)</span>, <span class="math inline">\(b_x = 0.5\)</span>). We present sampling distributions for the parameter estimates in the supplement. All approaches yielded unbiased estimates when the true effect size is 0 but the shape of the sampling distribution for the p-hacking approach was distorted (bi-modal). When there is a true non-zero effect, the a priori approaches and the data-driven approaches that include <em>X</em> yielded unbiased parameter estimates, whereas there was slight conservative (under-estimation) bias in the parameter estimates for the data-driven approaches that do not include <em>X</em>. In contrast, p-hacking yielded more substantial optimistic (over-estimation) bias in the parameter estimates when there is a non-zero effect.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_tables.qmd" data-notebook-title="Make Tables for Main Manuscript" data-notebook-cellid="cell-tbl-est">
-<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>table <span class="op">|&gt;</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  rename(Method <span class="op">=</span> method, </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>         `No effect (b <span class="op">=</span> <span class="dv">0</span>)` <span class="op">=</span> `<span class="dv">0</span>`,</span>
@@ -854,7 +917,7 @@ Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
 Use 'xfun::attr2()' instead.
 See help("Deprecated")</code></pre>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="tbl-est" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="tbl-est" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;3: Mean estimates of effect size by method and true effect size

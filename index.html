@@ -227,7 +227,7 @@ window.Quarto = {
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks\mak_figures-preview.html"><i class="bi bi-journal-code"></i>Make Figures for Main Manuscript</a></li><li><a href="notebooks\mak_results_tibble-preview.html"><i class="bi bi-journal-code"></i>Make results tibble</a></li><li><a href="notebooks\mak_tables-preview.html"><i class="bi bi-journal-code"></i>Make Tables for Main Manuscript</a></li><li><a href="notebooks\supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li><li><a href="notebooks\mak_figures-preview.html"><i class="bi bi-journal-code"></i>Make Figures for Main Manuscript</a></li><li><a href="notebooks\mak_results_tibble-preview.html"><i class="bi bi-journal-code"></i>Make results tibble</a></li><li><a href="notebooks\mak_tables-preview.html"><i class="bi bi-journal-code"></i>Make Tables for Main Manuscript</a></li><li><a href="notebooks\supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li></ul></div></nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
 </div>
@@ -322,13 +322,13 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 </tr>
 <tr class="even">
 <td style="text-align: left;">All covariates LASSO without X</td>
-<td style="text-align: left;">Y ~ C_1 + C_2 + ... + C_k with <u>penalty applied to all covariates</u></td>
+<td style="text-align: left;">Y ~ C_1 + C_2 + ... + C_k with lambda penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">All covariates LASSO with X</td>
-<td style="text-align: left;">Y ~ X + C_1 + C_2 ... + C_k with <u>penalty applied to all covariates</u></td>
-<td style="text-align: left;">COvariates with non-zero coefficients are retained in the model</td>
+<td style="text-align: left;">Y ~ X + C_1 + C_2 ... + C_k with lambda penalty applied to all covariates</td>
+<td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
 </tbody><tfoot>
 <tr class="odd">
@@ -414,6 +414,14 @@ Table&nbsp;2: Research context variables and values
 <h2 class="anchored" data-anchor-id="data-analytic-plan">Data Analytic Plan</h2>
 <p>All data analyses were done in R. <!--Maybe also cite RStudio and tidyverse-->Simulations were run using high-throughput computing resources provided by the University of Wisconsin-Madison Center for High Throughput Computing <span class="citation" data-cites="chtc">(<a href="#ref-chtc" role="doc-biblioref">Center for High Throughput Computing 2006</a>)</span>.</p>
 <p>We ran 40,000 simulations for each research context. Within each simulation we generated a unique dataset that consisted of a dichotomous focal independent variable (<em>X</em>), varying numbers of quantitative covariates (<em>C</em>), where a subset are correlated with each other and with the outcome (see Research Contexts section), and a quantitative outcome (<em>Y</em>) calculated by adding the <em>X</em> variable multiplied by the effect size (i.e., population parameter) to the <em>Y</em> generated from the correlation matrix with the covariates. We fit models from our nine approaches on each simulated dataset. From each model we saved the parameter estimate for <em>X</em>, the p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05.</p>
+<ol type="1">
+<li>Set research context parameters.</li>
+<li>Create dichotomous focal predictor (X).</li>
+<li>Create variance/covariance matrix.Good predictors have 0.3 correlation with each other</li>
+<li>Generate Y and all covariates using a multivariate normal distribution.</li>
+<li>Add in X effect on Y.</li>
+<li>Combine into final data tibble.</li>
+</ol>
 <!--add info about going from this to type i and type 2 errros-->
 <!--edit above a bit for clarity-->
 <!--show code to generate Y in paper??-->
