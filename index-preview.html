@@ -363,9 +363,9 @@ Plos One
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_tables.qmd" data-notebook-title="Make Tables for Main Manuscript" data-notebook-cellid="cell-tbl-methods">
 <div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lm_methods <span class="op">|&gt;</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  kbl(escape <span class="op">=</span> FALSE) <span class="op">|&gt;</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  kbl(escape <span class="op">=</span> FALSE, <span class="bu">format</span> <span class="op">=</span> <span class="st">"html"</span>) <span class="op">|&gt;</span> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  kable_classic() <span class="op">|&gt;</span> </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  kableExtra::footnote(general <span class="op">=</span> c(footnote_methods), escape<span class="op">=</span>FALSE)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  kableExtra::footnote(general <span class="op">=</span> footnote_methods, escape<span class="op">=</span>FALSE)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
 Use 'xfun::attr2()' instead.
@@ -404,46 +404,46 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 </tr>
 <tr class="odd">
 <td style="text-align: left;">p-hacking</td>
-<td style="text-align: left;">Y ~ X + C_1<br>
-Y ~ X + C_2<br>
-&amp;vdots;<br>
-Y ~ X + C_k</td>
-<td style="text-align: left;">Covariates that lower the p-value of X are retained in the final model</td>
+<td style="text-align: left;">\(Y \sim X + C_{1}\)<br>
+\(Y \sim X + C_{2}\)<br>
+\(\vdots\)<br>
+\(Y \sim X + C_{k}\)</td>
+<td style="text-align: left;">Covariates that lower the p-value of \(X\) are retained in the final model</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Single covariate linear model without X</td>
-<td style="text-align: left;">Y ~ C_1<br>
-Y ~ C_2<br>
-<u><br>
-Y ~ C_k</u></td>
-<td style="text-align: left;">Significant covariates (p &lt; .05) are retained in the final model</td>
+<td style="text-align: left;">\(Y \sim C_{1}\)<br>
+\(Y \sim C_{2}\)<br>
+\(\vdots\)<br>
+\(Y \sim C_{k}\)</td>
+<td style="text-align: left;">Significant covariates (\(p &lt; .05\)) are retained in the final model</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Single covariate linear model with X</td>
-<td style="text-align: left;">Y ~ X + C_1<br>
-Y ~ X + C_2<br>
-<u><br>
-Y ~ X + C_k</u></td>
-<td style="text-align: left;">Significant covariates (p &lt; .05) when controlling for X are retained in the final model</td>
+<td style="text-align: left;">\(Y \sim X + C_{1}\)<br>
+\(Y \sim X + C_{2}\)<br>
+\(\vdots\)<br>
+\(Y \sim X + C_{k}\)</td>
+<td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for \(X\) are retained in the final model</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">All covariates linear model without X</td>
-<td style="text-align: left;">Y ~ C_1 + C_2 + ... + C_k</td>
-<td style="text-align: left;">Significant covariates (p &lt; .05) when controlling for all other covariates are retained in the final model</td>
+<td style="text-align: left;">\(Y \sim C_{1} + C_{2} + \cdots + C_{k}\)</td>
+<td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for all other covariates are retained in the final model</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">All covariates linear model with X</td>
-<td style="text-align: left;">Y ~ X + C_1 + C_2 + ... + C_k</td>
-<td style="text-align: left;">Significant covariates (p &lt; .05) when controlling for X and all other covariates are retained in the final model</td>
+<td style="text-align: left;">\(Y \sim X + C_{1} + C_{2} + \cdots + C_{k}\)</td>
+<td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for \(X\) and all other covariates are retained in the final model</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">All covariates LASSO without X</td>
-<td style="text-align: left;">Y ~ C_1 + C_2 + ... + C_k w/lambda penalty applied to all covariates</td>
+<td style="text-align: left;">\(Y \sim C_{1} + C_{2} + \cdots + C_{k}\) with \(\lambda\) penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">All covariates LASSO with X</td>
-<td style="text-align: left;">Y ~ X + C_1 + C_2 + ... + C_k w/lambda penalty applied to all covariates</td>
+<td style="text-align: left;">\(Y \sim X + C_{1} + C_{2} + \cdots + C_{k}\) with \(\lambda\) penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
 </tbody><tfoot>
@@ -453,7 +453,7 @@ Y ~ X + C_k</u></td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left; padding: 0;"><sup></sup> Screening models represent symbolic linear models where Y is the outcome, X is the focal independent variable, C is a covariate, and k is the number of covariates.</td>
+<td style="text-align: left; padding: 0;"><sup></sup> Screening models represent symbolic linear models where \(Y\) is the outcome, \(X\) is the focal independent variable, \(C\) is a covariate, and \(k\) is the number of covariates.</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 </tr>
