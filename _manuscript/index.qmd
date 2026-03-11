@@ -112,6 +112,7 @@ corr_matrix <- matrix(.3,
                       nrow = n_good_covs, 
                       ncol = n_good_covs)
 diag(corr_matrix) <- 1
+ 
 sigma[2:(nrow(corr_matrix) + 1), 2:(ncol(corr_matrix) + 1)] <- corr_matrix
 sigma[1, 2:(n_good_covs + 1)] <- rep(r_ycov, n_good_covs)
 sigma[2:(n_good_covs + 1), 1] <- rep(r_ycov, n_good_covs)
@@ -124,14 +125,16 @@ y <- y + b_x * x # <5>
  
 covs <- covs |>  # <6>
     tibble::as_tibble(.name_repair = "minimal")
+  
 names(covs) <- stringr::str_c("c", 1:n_covs)
+  
 df <- tibble::tibble(y = y, x = x) |> 
    dplyr::bind_cols(covs)
 ```
 
 1. Set research context parameters.
 2. Create dichotomous focal predictor (X).
-3. Create variance/covariance matrix. Good predictors have 0.3 correlation with each other.
+3. Create variance/covariance matrix.Good predictors have 0.3 correlation with each other
 4. Generate Y and all covariates using a multivariate normal distribution.
 5. Add in X effect on Y.
 6. Combine into final data tibble.

@@ -52,8 +52,8 @@ lm_methods <- tibble(Method = c("No covariates",
                                             "Y ~ X + C_1, Y ~ X + C_2, ..., Y ~ X + C_k",
                                             "Y ~ C_1 + C_2 + ... + C_k",
                                             "Y ~ X + C_1 + C_2 ... + C_k",
-                                            "Y ~ C_1 + C_2 + ... + C_k with λ penalty applied to all covariates",
-                                            "Y ~ X + C_1 + C_2 ... + C_k with λ penalty applied to all covariates"),
+                                            "Y ~ C_1 + C_2 + ... + C_k with lambda penalty applied to all covariates",
+                                            "Y ~ X + C_1 + C_2 ... + C_k with lambda penalty applied to all covariates"),
                      `Covariate Selection Criteria` = c("No covariates used",
                                                         "All covariates used",
                                                         "Covariates that lower the p-value of X are retained in the final model",
@@ -62,7 +62,7 @@ lm_methods <- tibble(Method = c("No covariates",
                                                         "Covariates that yield a significant effect (P < .05) when controlling for all other covariates are retained in the final model",
                                                         "Covariates that yield a significant effect (P < .05) when controlling for X and all other covariates are retained in the final model",
                                                         "Covariates with non-zero coefficients are retained in the model",
-                                                        "COvariates with non-zero coefficients are retained in the model"))
+                                                        "Covariates with non-zero coefficients are retained in the model"))
 ```
 
 ```{r}
