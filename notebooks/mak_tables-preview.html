@@ -627,11 +627,11 @@ The nine linear regression models and their definition for covariate selection.
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>data_tbl0 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">description =</span> <span class="fu">c</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The population parameter for X&quot;</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The number of observations in the sample&quot;</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The number of covariates&quot;</span>,</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The proportion of </span><span class="sc">\&quot;</span><span class="st">good</span><span class="sc">\&quot;</span><span class="st"> covariates&quot;</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The correlation between Y and good covariates&quot;</span>),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The true population parameter for the focal IV&quot;</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The sample size&quot;</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The number of covariates available&quot;</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The percentage of covariates with non-zero relationships with the outcome&quot;</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The strength of the relationship between the covariates and Y&quot;</span>),</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;0, 0.2, 0.5&quot;</span>,</span>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;50, 100, 150, 200, 300, 400&quot;</span>, </span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;4, 8, 12, 16, 20&quot;</span>, </span>
@@ -643,7 +643,7 @@ The nine linear regression models and their definition for covariate selection.
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>data_tbl0 <span class="sc">|&gt;</span></span>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&quot;Research Context Variable&quot;</span>, <span class="st">&quot;Values&quot;</span>), </span>
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">escape =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), </span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>), </span>
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">width =</span> <span class="st">&quot;15em&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">2</span>, <span class="at">width =</span> <span class="st">&quot;10em&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -659,7 +659,7 @@ Research context variables and values
 </figcaption>
 <div aria-describedby="tbl-dictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
    <th style="text-align:left;"> Research Context Variable </th>
@@ -668,23 +668,23 @@ Research context variables and values
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;width: 15em; "> The population parameter for X </td>
+   <td style="text-align:left;width: 15em; "> The true population parameter for the focal IV </td>
    <td style="text-align:left;width: 10em; "> 0, 0.2, 0.5 </td>
   </tr>
   <tr>
-   <td style="text-align:left;width: 15em; "> The number of observations in the sample </td>
+   <td style="text-align:left;width: 15em; "> The sample size </td>
    <td style="text-align:left;width: 10em; "> 50, 100, 150, 200, 300, 400 </td>
   </tr>
   <tr>
-   <td style="text-align:left;width: 15em; "> The number of covariates </td>
+   <td style="text-align:left;width: 15em; "> The number of covariates available </td>
    <td style="text-align:left;width: 10em; "> 4, 8, 12, 16, 20 </td>
   </tr>
   <tr>
-   <td style="text-align:left;width: 15em; "> The proportion of &quot;good&quot; covariates </td>
+   <td style="text-align:left;width: 15em; "> The percentage of covariates with non-zero relationships with the outcome </td>
    <td style="text-align:left;width: 10em; "> 0.25, 0.50, 0.75 </td>
   </tr>
   <tr>
-   <td style="text-align:left;width: 15em; "> The correlation between Y and good covariates </td>
+   <td style="text-align:left;width: 15em; "> The strength of the relationship between the covariates and Y </td>
    <td style="text-align:left;width: 10em; "> 0.2, 0.5 </td>
   </tr>
 </tbody>
