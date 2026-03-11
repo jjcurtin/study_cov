@@ -29,6 +29,19 @@ path_processed <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_p
 d <- read_csv(here::here(path_processed, "results_tibble.csv"),
               show_col_types = FALSE)
 
+d_full <- read_csv(here::here(path_processed, "results_combined_raw.csv"),
+              show_col_types = FALSE)
+
+d_full <- d_full |> 
+  mutate(method = factor(method, 
+                          levels = c("no_covs", "all_covs","p_hacked",  "r",
+                                      "partial_r", "full_lm_wo_x", "full_lm",  
+                                      "lasso_wo_x", "lasso"),
+                         labels = c("No covariates", "All covariates", "p-hacking", 
+                                    "Single covariate lm", "Single covariate lm with X", 
+                                    "All covariates lm", "All covariates lm with X", 
+                                    "All covariates LASSO", "All covariates LASSO with X")))
+
 options(digits = 3)
 theme_set(theme_classic())
 
@@ -528,4 +541,56 @@ b_x <- d_02 |>
 
 
 
+```{r}
+
+
+est_d_0 <- d_full |> 
+  filter(b_x == 0) |> 
+  filter(estimate > -0.5 & estimate < .5) |> 
+  ggplot(aes(x = estimate, color = method, linetype = method)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(xintercept = 0, linetype = "dotted", color = "black") +
+  scale_x_continuous(limits = c(-0.5, 0.5), breaks = seq(-0.5, 0.5, by = 0.5)) +
+  labs(y = "Density",
+       x = "Estimate") +
+  scale_linetype_manual(values = method_linetypes) +
+  scale_color_manual(values = method_colors) 
+
+est_d_02 <-d_full |> 
+  filter(b_x == 0.2) |> 
+  filter(estimate > -0.3 & estimate < .7) |> 
+  filter(method != "p-hacking") |> 
+  ggplot(aes(x = estimate, color = method, linetype = method)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(xintercept = 0.2, linetype = "dotted") +
+  scale_x_continuous(limits = c(-0.3, 0.7), breaks = c(-0.3, 0.2, 0.7)) +
+  labs(y = "Density",
+       x = "Estimate") +
+  scale_linetype_manual(values = method_linetypes) +
+  scale_color_manual(values = method_colors) +
+  theme(legend.position = "none")
+
+est_d_05 <- d_full |> 
+  filter(b_x == 0.5) |> 
+  filter(estimate > 0 & estimate < 1) |> 
+  filter(method != "p-hacking") |> 
+  ggplot(aes(x = estimate, color = method, linetype = method)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(xintercept = 0.5, linetype = "dotted") +
+  scale_x_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) +
+  labs(y = "Density",
+       x = "Estimate") + 
+  scale_linetype_manual(values = method_linetypes) +
+  scale_color_manual(values = method_colors) +
+  theme(legend.position = "none")
+```
+
+```{r}
+#| label: fig-distribution-bx
+#| fig-cap: "Sampling Distribution for Population Parameter Estimates."
+#| fig-height: 8
+#| code-fold: true
+
+est_d_0 / est_d_02 / est_d_05
+```
 

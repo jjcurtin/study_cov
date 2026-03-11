@@ -183,6 +183,8 @@ When the assumptions of the general linear model are met, parameter estimates ar
 
 {{< embed notebooks/mak_tables.qmd#tbl-est >}}
 
+{{< embed notebooks/mak_figures.qmd#fig-distribution-bx >}}
+
 
 # Discussion
 
