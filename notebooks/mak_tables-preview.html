@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
     <meta name="author" content="Lauren Khoury and Kendra Wyant">
-    <meta name="dcterms.date" content="2026-03-11">
+    <meta name="dcterms.date" content="2026-03-13">
 
     <title>Make Tables for Main Manuscript</title>
     <style>
@@ -446,7 +446,7 @@ border: 0;
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">March 11, 2026</p>
+              <p class="date">March 13, 2026</p>
             </div>
           </div>
           
@@ -675,7 +675,7 @@ The nine linear regression models and their definition for covariate selection.
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;50, 100, 150, 200, 300, 400&quot;</span>, </span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;4, 8, 12, 16, 20&quot;</span>, </span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;0.25, 0.50, 0.75&quot;</span>,</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;0.2, 0.5&quot;</span> </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>             <span class="st">&quot;0.3, 0.5&quot;</span> </span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>             )</span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
@@ -724,7 +724,7 @@ Research context variables and values
   </tr>
   <tr>
    <td style="text-align:left;width: 15em; "> The strength of the relationship between the covariates and Y </td>
-   <td style="text-align:left;width: 10em; "> 0.2, 0.5 </td>
+   <td style="text-align:left;width: 10em; "> 0.3, 0.5 </td>
   </tr>
 </tbody>
 </table>
@@ -736,31 +736,113 @@ Research context variables and values
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>table <span class="sc">|&gt;</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Method =</span> method, </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">No effect (b = 0)</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0</span><span class="st">`</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">b = .2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0.2</span><span class="st">`</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">b = .5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0.5</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="fu">factor</span>(Method, </span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;No covariates&quot;</span>, <span class="st">&quot;All covariates&quot;</span>, <span class="st">&quot;p-hacking&quot;</span>, </span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;Single covariate lm&quot;</span>, <span class="st">&quot;Single covariate lm with X&quot;</span>, </span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates lm&quot;</span>, <span class="st">&quot;All covariates lm with X&quot;</span>, </span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates LASSO&quot;</span>, <span class="st">&quot;All covariates LASSO with X&quot;</span>),</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No covariates&quot;</span>, <span class="st">&quot;All covariates&quot;</span>, <span class="st">&quot;p-hacking&quot;</span>, </span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;Single covariate lm without X&quot;</span>, </span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;Single covariate lm with X&quot;</span>, </span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates lm without X&quot;</span>, </span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates lm with X&quot;</span>, </span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates LASSO without X&quot;</span>, </span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates LASSO with X&quot;</span>)),</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">No effect (b = 0)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.3f&quot;</span>, <span class="fu">abs</span>(<span class="st">`</span><span class="at">No effect (b = 0)</span><span class="st">`</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Method) <span class="sc">|&gt;</span> </span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">Method =</span> <span class="st">&quot;A priori selection&quot;</span>, <span class="at">.before =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">Method =</span> <span class="st">&quot;Data-driven selection&quot;</span>, <span class="at">.after =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pack_rows</span>(<span class="cn">NULL</span>, <span class="dv">2</span>, <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pack_rows</span>(<span class="cn">NULL</span>, <span class="dv">5</span>, <span class="dv">11</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.5</span>, <span class="fl">1.0</span>, <span class="fl">0.3</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>), <span class="at">nrow =</span> <span class="dv">5</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sigma) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;$Y$&quot;</span>, <span class="st">&quot;$C_1$&quot;</span>, <span class="st">&quot;$C_2$&quot;</span>, <span class="st">&quot;$C_3$&quot;</span>, <span class="st">&quot;$C_4$&quot;</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sigma) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;$Y$&quot;</span>, <span class="st">&quot;$C_1$&quot;</span>, <span class="st">&quot;$C_2$&quot;</span>, <span class="st">&quot;$C_3$&quot;</span>, <span class="st">&quot;$C_4$&quot;</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>sigma <span class="sc">|&gt;</span> </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kbl</span>(<span class="at">escape =</span> <span class="cn">FALSE</span>, <span class="at">format =</span> <span class="st">&quot;html&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="tbl-sigma" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+<div aria-describedby="tbl-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> $Y$ </th>
+   <th style="text-align:right;"> $C_1$ </th>
+   <th style="text-align:right;"> $C_2$ </th>
+   <th style="text-align:right;"> $C_3$ </th>
+   <th style="text-align:right;"> $C_4$ </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> $Y$ </td>
+   <td style="text-align:right;"> 1.0 </td>
+   <td style="text-align:right;"> 0.5 </td>
+   <td style="text-align:right;"> 0.5 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> $C_1$ </td>
+   <td style="text-align:right;"> 0.5 </td>
+   <td style="text-align:right;"> 1.0 </td>
+   <td style="text-align:right;"> 0.3 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> $C_2$ </td>
+   <td style="text-align:right;"> 0.5 </td>
+   <td style="text-align:right;"> 0.3 </td>
+   <td style="text-align:right;"> 1.0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> $C_3$ </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> $C_4$ </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</figure>
+</div></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>table <span class="sc">|&gt;</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Method =</span> method, </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">No effect (b = 0)</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0</span><span class="st">`</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">b = .2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0.2</span><span class="st">`</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">b = .5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0.5</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="fu">factor</span>(Method, </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;no_covs&quot;</span>, <span class="st">&quot;all_covs&quot;</span>, <span class="st">&quot;p_hacked&quot;</span>, </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;r&quot;</span>, <span class="st">&quot;partial_r&quot;</span>, </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;full_lm_wo_x&quot;</span>, <span class="st">&quot;full_lm&quot;</span>, </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;lasso_wo_x&quot;</span>, <span class="st">&quot;lasso&quot;</span>),</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;No covariates&quot;</span>, <span class="st">&quot;All covariates&quot;</span>, <span class="st">&quot;p-hacking&quot;</span>, </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;Single covariate lm without X&quot;</span>, </span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;Single covariate lm with X&quot;</span>, </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates lm without X&quot;</span>, </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates lm with X&quot;</span>, </span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates LASSO without X&quot;</span>, </span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates LASSO with X&quot;</span>)),</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">No effect (b = 0)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.3f&quot;</span>, <span class="fu">abs</span>(<span class="st">`</span><span class="at">No effect (b = 0)</span><span class="st">`</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Method) <span class="sc">|&gt;</span> </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">Method =</span> <span class="st">&quot;A priori selection&quot;</span>, <span class="at">.before =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">Method =</span> <span class="st">&quot;Data-driven selection&quot;</span>, <span class="at">.after =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pack_rows</span>(<span class="cn">NULL</span>, <span class="dv">2</span>, <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pack_rows</span>(<span class="cn">NULL</span>, <span class="dv">5</span>, <span class="dv">11</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in attr(x, &quot;align&quot;): &#39;xfun::attr()&#39; is deprecated.
 Use &#39;xfun::attr2()&#39; instead.
@@ -769,7 +851,7 @@ Warning in attr(x, &quot;align&quot;): &#39;xfun::attr()&#39; is deprecated.
 Use &#39;xfun::attr2()&#39; instead.
 See help(&quot;Deprecated&quot;)</code></pre>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="tbl-est" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="tbl-est" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Mean estimates of effect size by method and true effect size
@@ -794,13 +876,13 @@ Mean estimates of effect size by method and true effect size
   </tr>
   <tr grouplength="2"><td colspan="4" style="border-bottom: 0;"><strong></strong></td></tr>
 <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1">  </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> No covariates </td>
    <td style="text-align:left;"> 0.000 </td>
    <td style="text-align:right;"> 0.200 </td>
    <td style="text-align:right;"> 0.500 </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1">  </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates </td>
    <td style="text-align:left;"> 0.000 </td>
    <td style="text-align:right;"> 0.200 </td>
    <td style="text-align:right;"> 0.500 </td>
@@ -813,46 +895,46 @@ Mean estimates of effect size by method and true effect size
   </tr>
   <tr grouplength="7"><td colspan="4" style="border-bottom: 0;"><strong></strong></td></tr>
 <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1">  </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.192 </td>
-   <td style="text-align:right;"> 0.479 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1">  </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.200 </td>
-   <td style="text-align:right;"> 0.500 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1">  </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.195 </td>
-   <td style="text-align:right;"> 0.487 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1">  </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.200 </td>
-   <td style="text-align:right;"> 0.500 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1">  </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> p-hacking </td>
    <td style="text-align:left;"> 0.000 </td>
    <td style="text-align:right;"> 0.262 </td>
    <td style="text-align:right;"> 0.563 </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1">  </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Single covariate lm without X </td>
+   <td style="text-align:left;"> 0.000 </td>
+   <td style="text-align:right;"> 0.198 </td>
+   <td style="text-align:right;"> 0.495 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Single covariate lm with X </td>
    <td style="text-align:left;"> 0.000 </td>
    <td style="text-align:right;"> 0.200 </td>
    <td style="text-align:right;"> 0.500 </td>
   </tr>
   <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1">  </td>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates lm without X </td>
    <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.198 </td>
-   <td style="text-align:right;"> 0.495 </td>
+   <td style="text-align:right;"> 0.192 </td>
+   <td style="text-align:right;"> 0.479 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates lm with X </td>
+   <td style="text-align:left;"> 0.000 </td>
+   <td style="text-align:right;"> 0.200 </td>
+   <td style="text-align:right;"> 0.500 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates LASSO without X </td>
+   <td style="text-align:left;"> 0.000 </td>
+   <td style="text-align:right;"> 0.195 </td>
+   <td style="text-align:right;"> 0.487 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates LASSO with X </td>
+   <td style="text-align:left;"> 0.000 </td>
+   <td style="text-align:right;"> 0.200 </td>
+   <td style="text-align:right;"> 0.500 </td>
   </tr>
 </tbody>
 </table>
