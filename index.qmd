@@ -43,46 +43,53 @@ Plos One
 -->
 # Introduction
 
-Research in Psychology is often uses experimental manipulations as a means of establishing causal relationships between a focal independent variable (IV) and a psychological outcome. For example, participants may be randomly assigned to receive a moderate dose of alcohol or placebo to evaluate the effect of alcohol consumption on response to a laboratory stressor (INSERT A COUPLE OF REFS TO OUR STUDIES).  [Markus, can you provide a simple second example that focuses on an IV manipulation that is social psych relevant?)
+Research in Psychology is often uses experimental manipulations to establish causal relationships between a focal independent variable (IV) and a psychological outcome. For example, participants may be randomly assigned to receive a moderate dose of alcohol or placebo to evaluate the effect of alcohol consumption on response to a laboratory stressor (INSERT A COUPLE OF REFS TO OUR STUDIES).  [Markus, can you provide a simple second example that focuses on an IV manipulation that is social psych relevant?)
 
-A valid test of the effect of an IV requires adequate statistical power (i.e., low probability of a type II error) [@cohenStatisticalPowerAnalysis1988; @cohenPowerPrimer1992]. By definition, low statistical power is associated with a high probability of a type II error (i.e., failure to reject a false null hypothesis).  Furthermore, significant effects detected by low-powered studies may not replicate (due to low positive predictive value) and estimates of their effect size may be positively biased (due to publication bias).  For all these reasons, methods to increase statistical power are critically important for a robust scientific literature [@cohenStatisticalPowerAbnormalsocial1962; @buttonPowerFailureWhy2013]. 
+A valid test of the effect of an IV requires adequate statistical power [@cohenStatisticalPowerAnalysis1988; @cohenPowerPrimer1992]. By definition, low statistical power is associated with a high probability of a type II error (i.e., failure to reject a false null hypothesis).  Furthermore, significant effects detected by low-powered studies may not replicate (due to low positive predictive value) and estimates of their effect size may be positively biased (due to publication bias).  For all these reasons, methods to increase statistical power are critically important for a robust scientific literature [@cohenStatisticalPowerAbnormalsocial1962; @buttonPowerFailureWhy2013]. 
 
-The use of covariates that are measured at baseline (i.e., prior to random assignment/manipulation of the focal IV) has been shown to increase statistical power and reduce Type II errors by accounting for unexplained variance in the outcome that would otherwise be treated as noise in the analysis [@thompsonCovariateAdjustmentHad2015; @hernandezCovariateAdjustmentRandomized2004; @hernandezRandomizedControlledTrials2006; @kahanRisksRewardsCovariate2014; @vanbreukelenANCOVAChangeBaseline2006; @egbewaleBiasPrecisionStatistical2014]. For example, in the previously described test of the effect of alcohol on stress response, baseline measures of both trait anxiety and fearfulness could be included as covariates.  These measures would be expected to correlate with laboratory stress response and therefore reduce variance in stress response that is unrelated to the manipulation to increase statistical power. 
+The use of covariates that are measured at baseline (i.e., prior to random assignment/manipulation of the focal IV) has been shown to increase statistical power and reduce Type II errors by accounting for unexplained variance in the outcome that would otherwise be treated as noise in the analysis [@thompsonCovariateAdjustmentHad2015; @hernandezCovariateAdjustmentRandomized2004; @hernandezRandomizedControlledTrials2006; @kahanRisksRewardsCovariate2014; @vanbreukelenANCOVAChangeBaseline2006; @egbewaleBiasPrecisionStatistical2014]. For example, in the previously described test of the effect of alcohol on stress response, baseline measures of both trait anxiety and fearfulness could be included as covariates.  These measures would not be systematically correlated with the IV because they are collected prior to random assignment.  They would also be expected to correlate with laboratory stress response based on prior research. Given this, the addition of these measures as covariates in the analysis could reduce variance in stress response that is unrelated to the manipulation to increase statistical power to test the IV effect.
 
 However, selection of the optimal covariates to include to increase statistical power is not straightforward. Historically, researchers often iterated over a large set of available covariates and included only those covariates that lowered the p-value for the test of their focal IV.  Today, we recognize that this approach, known as p-hacking [@simonsohnPcurveKeyFiledrawer2014], seriously undermines the statistical validity of the analyses by substantially increasing the probability of type I errors (i.e., rejecting the null hypothesis when it is not false [@simmonsFalsepositivePsychologyUndisclosed2011; @ioannidisWhyMostPublished2005; @schelchterPosthocSelectionCovariates1985; @beachChoosingCovariatesAnalysis1989]). Statistically valid analyses require both low probability of type II errors and control of type I errors at the specified value of alpha (e.g., 0.05).  
 
-Given that p-hacking compromises statistical validity, we are left with questions about appropriate covariate selection strategies that both minimize type II errors and control type I errors.  A priori, the researcher could decide to avoid the use of covariates altogether with no risk to type I error control.  But statistical power would likely be lost by this decision.  At the other extreme, the researcher could plan to include all available covariates that are reasonably believed to account for unexplained variance in the outcome in the statistical analysis. This decision, if made a priori, would also not be expected to inflate the type I error rate. However, this approach may not yield optimal statistical power because a subset of these covariates may not manifest strong, or any, relationship with the outcome in any particular study if they have not been previously well-established as robust predictors.  Furthermore, available covariates are often correlated with each other (e.g., trait anxiety and fearfulness from the previous example), which reduces their potential benefit in reducing noise relative to their cost to degrees of freedom in the analysis.  
+Given that p-hacking compromises statistical validity, we are left with questions about appropriate covariate selection approaches that both minimize type II errors and control type I errors at alpha.  A priori, the researcher could decide to avoid the use of covariates altogether with no risk to type I error control.  But statistical power would likely be lost by this decision.  At the other extreme, the researcher could plan to include all available covariates that are reasonably believed to account for unexplained variance in the outcome in the statistical analysis. This decision, if made a priori, would also not be expected to inflate the type I error rate. However, this approach may not yield optimal statistical power because a subset of these covariates may not manifest strong, or any, relationship with the outcome in any particular study if they have not been previously well-established as robust predictors.  Furthermore, available covariates are often correlated with each other (e.g., trait anxiety and fearfulness from the previous example), which reduces their potential benefit in reducing noise relative to their cost to degrees of freedom in the analysis.  
 
-Given these previous options, it may be that a data-driven approach to covariate selection could improve statistical validity relative to the a priori all or no covariate approaches.  An optimal data-driven covariate selection method may be able to select the covariates that provide the greatest increase in power (e.g., covariates highly correlated with the outcome [@kahanRisksRewardsCovariate2014]) with the lowest cost to degrees of freedom (e.g., by including only covariates that contribute to unique reductions in variance). Of course, statistically valid data-driven approaches must also not nominally inflate the Type I error rate, as occurs with *p*-hacking. 
+Given these possibly sub-optimal previous options, it may be that a data-driven approach to covariate selection could improve statistical validity relative to the a priori all or no covariate approaches.  An optimal data-driven covariate selection method may be able to select the covariates that provide the greatest increase in power (e.g., covariates highly correlated with the outcome [@kahanRisksRewardsCovariate2014]) with the lowest cost to degrees of freedom (e.g., by including only covariates that contribute to unique reductions in variance). Of course, statistically valid data-driven approaches must also not meaningfully inflate the Type I error rate, as occurs with *p*-hacking. 
 
-In this study, we use simulation methods to evaluate six data-driven approaches to select an optimal set of covariates when testing the effect of a focal manipulated IV.  For each approach, we select covariates that display significant relationships with the outcome variable in covariate "screening models" that are used to identify which covariates to include in the subsequent primary analysis that tests the focal IV.  Across these screening models, we consider three modeling approaches (i.e., bivariate regression models that screen each covariate in its own model, multiple regression models that screen all covariates in a single model, and LASSO [INSERT REF] models that screen all covariates in a single model).  Across these modeling approaches, we also either include or exclude the focal IV in the screening models for a total of six data-driven approaches.  We benchmark these data-driven approaches against the a priori "all covariates" and "no covariates" approaches as well as the p-hacking approach.  For all approaches we quantify the probability of type I and type II errors across a variety of research contexts that vary by sample size, number of available covariates, strength of covariate effects, effect size for the IV and other relevant context characteristics.  We use results from these simulations to provide clear and accessible guidance about how best to select an optimal set of covariates to increase statistical power when testing the effect of a manipulated IV.  
+In this study, we use simulation methods to evaluate candidate six data-driven approaches to select an optimal set of covariates when testing the effect of a focal manipulated IV.  For each approach, we select covariates that display significant relationships with the outcome variable in covariate "screening models" that are used to identify which covariates to include in the subsequent primary analysis that tests the focal IV.  Across these screening models, we consider three modeling approaches (i.e., regression models that screen each covariate in its own model, regression models that screen all covariates in a single model, and LASSO [INSERT REF] models that screen all covariates in a single model).  Across these modeling approaches, we also either include or exclude the focal IV in the screening models for a total of six candidate data-driven approaches.  We benchmark these candidate data-driven approaches against a priori "all covariates" and "no covariates" approaches as well as the p-hacking approach (a statistically invalid data-driven approach).  For all approaches we quantify the probability of type I and type II errors across a variety of research contexts that vary by sample size, number of available covariates, strength of covariate effects, effect size for the IV and other relevant context characteristics.  We use results from these simulations to provide clear and accessible guidance about how best to select an optimal set of covariates to increase statistical power when testing the effect of a manipulated IV.  
 
 
 # Methods
 
 ## Covariate Selection Approaches
 
-As described above, we evaluated nine approaches to select covariates to use when testing the effect of a focal dichotomous IV.   linear regression models with varying levels and methods of covariate selection. Two models did not use any covariate selection: a linear regression model that used no covariates and a linear regression model that used all available covariates. One model used a statistically invalid method of selecting covariates based on whether they lower the regression p-value (i.e., p-hacking). The remaining six models used three systematic covariate selection methods, selection based on a single covariate linear model, all covariates linear model, and all covariates LASSO, controlling for the focal manipulation (i.e., *X*) and without controlling for *X*. A summary of the nine models is presented in @tbl-methods.<!--how select?   Need to make distinction that focuses on covs not X-->
+As described above, we evaluated six candidate data-driven and three benchmark (p-hacking, all covariates, no-covariates) approaches to select covariates to use in a primary analysis that tested the effect of a focal dichotomous IV (notated as X).  A summary of these nine approaches is presented in @tbl-methods.
 
-<!-- table that shows code for the models?-->
+For the six candidate data-driven approaches, we selected covariates for the primary analysis of X by fitting preliminary covariate screening models that used either the general linear model (i.e., ordinary least squares regression) or LASSO. Across these approaches we considered screening models that either included or did not include X in the screening model.  
 
+For the candidate approaches that used general linear models for screening, we considered approaches where all covariates were screened simultaneously in one model or where the covariates were screened one at a time in separate models. Across these approaches, a covariate was selected to be included in the primary analysis if the p-value for that covariate was less than 0.05 in the screening model that evaluated it. The p-value for X was not used and X was only included to partial its variance from Y when evaluating the covariates.  
+
+For the candidate approaches that used LASSO (with and without X) for screening, the screening model simultaneously included all covariates. Also, for the LASSO screening model that included X, the regularization penalty for X was set to 0 so that X was always retained in the screening model.  Covariates were selected to be included in the primary analysis if they were retained by LASSO in the screening model (i.e., did not have their parameter estimate set to 0).
+
+We benchmarked these six candidate data-driven approaches against a statistically invalid data-driven approach (p-hacking) and two a priori selection approaches that did not use the data to screen and select covariates.  The p-hacking approach used separate screening models for each covariate and each of these models also included X.  Covariates were selected to be included in the primary analysis if the p-value for X was reduced (relative to its bivariate relationship with Y) in the screening model that included that covariate. The all covariates approach and the no covariates approach did not use screening models but instead used either all or none of the available covariates in the specific research context in the primary analysis of X. 
+
+ 
 {{< embed notebooks/mak_tables.qmd#tbl-methods >}}
 
 
 ## Research Contexts
-We manipulated several characteristics designed to mimic varying research contexts that psychology researchers might encounter in their studies. We crossed all levels of each characteristic to create a total of 540 unique research contexts to allow results from our simulations to generalize across the diversity of contexts within which psychology studies are situated. A summary of these contexts is presented in @tbl-dictionary. The variables include:
+We manipulated several characteristics designed to mimic a range of research contexts that researchers in Psychology might encounter in their studies. We crossed all levels of each characteristic to create a total of 540 unique research contexts to allow results from our simulations to generalize across the diversity of contexts within which psychology studies are situated. A summary of these characteristics is presented in @tbl-dictionary. They include:
 
-1. The true population parameter for the focal IV. We selected values that represent null ($b_{iv} = 0$), small ($b_{iv} = 0.2$) and medium ($b_{iv} = 0.5$) effects for the IV. Given that the variance of the outcome variable was set to 1 in all simulations, these parameter values correspond to null, small, and medium Cohen's d effect sizes (INSERT COHEN 1991 ref).
-<!--bIV or bX-->
-2. The sample size. We chose values for the number of observations that pertain to common sample sizes in experimental research: 50, 100, 150, 200, 300, and 400 observations.
+<!--This should be Beta_x.  Not sure what the beta abbreviation is-->
+1. **The population parameter for the focal IV ($b_x$)**. We selected values that represent null ($b_{x} = 0$), small ($b_{x} = 0.2$) and medium ($b_{x} = 0.5$) effect sizes for the IV. Given that the standard deviation of the outcome variable was set to 1 in all simulations, these parameter values correspond to null, small, and medium Cohen's d effect sizes (INSERT COHEN 1991 ref).
 
-3. The number of covariates available. We selected a wide range of possible scenarios: 4, 8, 12, 16, or 20 available covariates.
+2. **The sample size ($N$)**. We chose values for the number of observations that pertain to common sample sizes in experimental research in Psychology: 50, 100, 150, 200, 300, and 400 observations.
 
-<!-- percentage or proportion-->
-4. The percentage of covariates with non-zero relationships with the outcome. We simulated research contexts where 25%, 50% or 75% of the available covariates were related to the outcome to represent realities where a researcher has many available covariates, but only some may be useful given their relationship with the outcome.
+3. **The number of covariates available($N_{cov}$)**. We selected a wide range of possible scenarios: 4, 8, 12, 16, or 20 available covariates.
 
-5. The strength of the relationship between the covariates and Y. All non-zero covariates (see characteristic 4) were given a moderate or large relationship to the outcome Y (i.e., correlations of 0.3 and 0.5), respectively. Since these covariates are all correlated with the outcome, it is likely they are also correlated with each other. Therefore, we assigned a moderate 0.3 correlation for all relationships among these non-zero covariates. 
-<!--combine with 4 at least in the description here??-->
+<!--Kendra - there is an issue with the math equation for percent cov on the  next line.  Can you figure it out or as Susan?  I wanted to use %_{cov} but it didnt work. I didnt bold the topic name yet because of this-->
+4. **The percentage of covariates with non-zero correlations with the outcome ($Percent_{cov}$)**. We simulated research contexts where 25%, 50% or 75% of the available covariates had non-zero correlations with the outcome in the population.  This allowed us to model situations where the researcher has an exploratory vs. more well-established set of covariates at their disposal. 
+
+5. **The magnitude of the correlation between the covariates and Y ($r_{cov}$)**. All non-zero covariates (see characteristic 4) were given a moderate or large relationship to the outcome Y (i.e., $r_{cov}$ = 0.3 or 0.5, respectively). Given that these covariates are all correlated with the outcome, it is expected that they would typically also be correlated with each other. Therefore, we assigned a moderate 0.3 correlation among each of these non-zero covariates. 
 
 
 {{< embed notebooks/mak_tables.qmd#tbl-dictionary >}}
@@ -90,52 +97,50 @@ We manipulated several characteristics designed to mimic varying research contex
 
 ## Data Analytic Plan
 
-All data analyses were done in R. <!--Maybe also cite RStudio and tidyverse-->Simulations were run using high-throughput computing resources provided by the University of Wisconsin-Madison Center for High Throughput Computing [@chtc]. 
+All data analyses were done in R using the Tidyverse ecosystem (INSERT REF) and the RStudio IDE (Insert REF). Simulations were run using high-throughput computing resources provided by the University of Wisconsin-Madison Center for High Throughput Computing [@chtc]. 
 
-We ran 40,000 simulations for each research context. Within each simulation we generated a unique dataset that consisted of a dichotomous focal independent variable (*X*), varying numbers of quantitative covariates (*C*), where a subset are correlated with each other and with the outcome (see Research Contexts section), and a quantitative outcome (*Y*) calculated by adding the *X* variable multiplied by the effect size (i.e., population parameter) to the *Y* generated from the correlation matrix with the covariates. We fit models from our nine approaches on each simulated dataset. From each model we saved the parameter estimate for *X*,  the p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05.  
+We simulated 40,000 datasets within each research context. For each simulated dataset, we generated scores for a dichotomous focal independent variable (*X*), varying numbers of quantitative covariates (*C*), and a quantitative outcome (Y).  To generate these datasets, we first created N scores for a set of multivariate normal distributed covariates and Y, with their variances = 1 and the number of covariates, and the covariances among the covariates and with Y dictated with the research context (see points 3-5 above).  Consistent with the manipulation of the IV following measurement of the baseline covariates, the effect of X was ($b_x * X$) was then added into Y.
 
-Below, we demonstrate the covariance matrix and how to generate the multivariate normal dataset using this covariance matrix for a research context with a small true population parameter effect size ($b_{iv} = 0.2$), a sample size of 100, and four covariates, where 50% of the covariates have a 0.50 correlation with the outcome and 0.30 correlations with each other. The covariance matrix (i.e., sigma) for this research context is presented below.
+Below, we display an exemplar covariance matrix and subsequent R code to generate a simulated dataset for a research context with a small population effect size for the IV ($b_{x} = 0.2$), a sample size of 100, and four covariates, where 50% of the covariates have a 0.50 correlation with the outcome and 0.30 correlations with each other  
 
+<!--Kendra, can you add column and row names?-->
+This is the relevant covariance matrix (sigma).
 ```{r}
 #| echo: false
 
 sigma <- matrix(c(
-  1.0, 0.5, 0.5, 0,   0,
-  0.5, 1.0, 0.3, 0,   0,
-  0.5, 0.3, 1.0, 0,   0,
-  0,   0,   0,   1,   0,
-  0,   0,   0,   0,   1
+  1.0, 0.5, 0.5, 0.0, 0.0,
+  0.5, 1.0, 0.3, 0.0, 0.0,
+  0.5, 0.3, 1.0, 0.0, 0.0,
+  0.0, 0.0, 0.0, 1.0, 0.0,
+  0.0, 0.0, 0.0, 0.0, 1.0
 ), nrow = 5, byrow = TRUE)
-
 
 write.table(format(sigma, nsmall = 1), 
             row.names = FALSE, col.names = FALSE, quote = FALSE, sep = " ")
-
 ```
 
 The covariance matrix can then be used to generate a multivariate normal dataset of $Y$ and $C_1...C_4$ for 100 observations where all variables have a mean of 0.
+Following this, the effect of the IV (x) can be added into Y.
 
 ```{r}
 #| echo: true
 
-data <- MASS::mvrnorm(n = 100, mu = c(0, 0, 0, 0, 0), Sigma = sigma) # <1>
+df <- MASS::mvrnorm(n = 100, mu = c(0, 0, 0, 0, 0), Sigma = sigma) # <1>
 
-x <- rep(c(0, 1), each = 50) # <2>
-
-data[, 1] <- data[, 1]+ .2 * x # <3>
+X <- rep(c(-.5, .5), each = 50) # <2>
+df[, 1] <- df[, 1]+ .2 * x # <3>
 ```
 
-1. Generate Y (column 1) and all covariates (columns 2-5) using a multivariate normal distribution with a mean of 0.
-2. Create a dichotomous focal independent variable. 
+1. Generate Y (column 1) and all covariates (columns 2-5) using a multivariate normal distribution with all means of 0 and variances/covariances from sigma displayed above
+2. Create a dichotomous focal independent variable (X). 
 3. Add in X effect on Y.
 
+<!--Kendra, we need to make sure we are consistent throughout both in what we call things and how we capitalize.  Lets discuss -->
 
-<!--add info about going from this to type i and type 2 errros-->
-<!--edit above a bit for clarity-->
-<!--show code to generate Y in paper??-->
+For each simulated dataset in each research context, we use each of the 9 covariate selection approaches to determine which covariates to use in the primary analysis to test the effect of X on Y. For example,  $lm(Y ~ X + C1 + C4, data = df$,  if covariates 1 and 4 were selected by the current selection approach.  From each primary analysis, we saved the research context characteristics, the covariate selection approach used, and the parameter estimate for *X*, p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05 from the primary analysis.  
 
-For research contexts where the population parameter for *X* is 0 (i.e., *X* has no effect on *Y*), we report the Type I error rate for each method both across and within research contexts. For research contexts where the population parameter for *X* is 0.2 or 0.5 (i.e., *X* has an effect on *Y*), we report the Type II error rate for each method across and within research contexts. We also provide sampling distributions of the parameter estimate for *X* across research contexts for each method, separately by true effect size (0, 0.2, and 0.5). An interactive detailed dashboard of average error rates for all combinations of research context variables is accessible through our OSF page ([https://osf.io/zh5gn/](https://osf.io/zh5gn/)).<!--KW: Just put this last sentence in here as a placeholder for shiny table for now-->
-<!--edit above-->
+For research contexts where the population parameter for *X* is 0 (i.e., *X* has no effect on *Y*), we assess and report the Type I error rates associated with each covariate selection approach by research context characteristics. For research contexts where the population parameter for *X* is 0.2 or 0.5 (i.e., *X* has an effect on *Y*), we assess and report the Type II error rate for each covariate selection method by research context characteristics.  We also provide descriptive statistics and sampling distributions (from the 40,000 simulations) of the parameter estimate for *X* across research contexts for each covariate selection approach, separately by true effect size for X (0, 0.2, and 0.5). An interactive detailed dashboard of average error rates for all combinations of research context variables is accessible through our OSF page ([https://osf.io/zh5gn/](https://osf.io/zh5gn/)).<!--KW: Just put this last sentence in here as a placeholder for shiny table for now-->
 
 # Results
 
