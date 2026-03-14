@@ -34,37 +34,6 @@ table <- read_csv(here::here(path_processed, "estimate_tibble.csv"),
 ```
 
 ```{r}
-# footnote_methods <- "Screening models represent symbolic linear models where Y is the outcome, X is the focal independent variable, C is a covariate, and k is the number of covariates."
-# 
-# lm_methods <- tibble(Method = c("No covariates", 
-#                                 "All covariates", 
-#                                 "p-hacking",
-#                                 "Single covariate linear model without X", 
-#                                 "Single covariate linear model with X",
-#                                 "All covariates linear model without X", 
-#                                 "All covariates linear model with X",
-#                                 "All covariates LASSO without X", 
-#                                 "All covariates LASSO with X"),
-#                      `Screening Models` = c("No screening models",
-#                                             "No screening models",
-#                                             "Y ~ X + C_1 <br>Y ~ X + C_2 <br>⋮ <br>Y ~ X + C_k",
-#                                             "Y ~ C_1 <br>Y ~ C_2 <br>⋮ <br>Y ~ C_k",
-#                                             "Y ~ X + C_1 <br>Y ~ X + C_2 <br>⋮ <br>Y ~ X + C_k",
-#                                             "Y ~ C_1 + C_2 + ... + C_k",
-#                                             "Y ~ X + C_1 + C_2 + ... + C_k",
-#                                             "Y ~ C_1 + C_2 + ... + C_k w/lambda penalty applied to all covariates",
-#                                             "Y ~ X + C_1 + C_2 + ... + C_k w/lambda penalty applied to all covariates"),
-#                      `Covariate Selection Criteria` = c("No covariates used",
-#                                                         "All covariates used",
-#                                                         "Covariates that lower the p-value of X are retained in the final model",
-#                                                         "Significant covariates (p < .05) are retained in the final model",
-#                                                         "Significant covariates (p < .05) when controlling for X are retained in the final model",
-#                                                         "Significant covariates (p < .05) when controlling for all other covariates are retained in the final model",
-#                                                         "Significant covariates (p < .05) when controlling for X and all other covariates are retained in the final model",
-#                                                         "Covariates with non-zero coefficients are retained in the model",
-#                                                         "Covariates with non-zero coefficients are retained in the model"))
-
-
 footnote_methods <- "Screening models represent symbolic linear models where \\(Y\\) is the outcome, \\(X\\) is the focal independent variable, \\(C\\) is a covariate, and \\(k\\) is the number of covariates."
 
 lm_methods <- tibble(
@@ -123,11 +92,11 @@ lm_methods |>
 
 data_tbl0 <- tibble(
   description = c(
-    "The true population parameter for the focal IV",
+    "The population parameter for the focal IV",
     "The sample size",
     "The number of covariates available",
-    "The percentage of covariates with non-zero relationships with the outcome",
-    "The strength of the relationship between the covariates and Y"),
+    "The percentage of covariates with non-zero correlations with the outcome",
+    "The magnitude of the correlation between the covariates and Y"),
   values = c("0, 0.2, 0.5",
              "50, 100, 150, 200, 300, 400", 
              "4, 8, 12, 16, 20", 
@@ -138,36 +107,14 @@ data_tbl0 <- tibble(
 
 data_tbl0 |>
   kbl(col.names = c("Research Context Variable", "Values"), 
-      escape = FALSE) |>
+      escape = FALSE,
+      format = "html") |>
   kable_styling(bootstrap_options = c("striped"), 
                 full_width = FALSE) |>
   column_spec(1, width = "15em") |>
   column_spec(2, width = "10em")
 
 ```
-
-```{r}
-#| label: tbl-sigma
-
-
-sigma <- matrix(c(
-  1.0, 0.5, 0.5, 0.0, 0.0,
-  0.5, 1.0, 0.3, 0.0, 0.0,
-  0.5, 0.3, 1.0, 0.0, 0.0,
-  0.0, 0.0, 0.0, 1.0, 0.0,
-  0.0, 0.0, 0.0, 0.0, 1.0
-), nrow = 5, byrow = TRUE)
-
-rownames(sigma) <- c("$Y$", "$C_1$", "$C_2$", "$C_3$", "$C_4$")
-colnames(sigma) <- c("$Y$", "$C_1$", "$C_2$", "$C_3$", "$C_4$")
-
-sigma |> 
-  kableExtra::kbl(escape = FALSE, format = "html") |>
-  kableExtra::kable_classic() |> 
-  suppressWarnings()
-```
-
-
 
 
 ```{r}
@@ -177,26 +124,30 @@ sigma |>
 
 table |> 
   rename(Method = method, 
-         `No effect (b = 0)` = `0`,
-         `b = .2` = `0.2`,
-         `b = .5` = `0.5`) |> 
-  mutate(Method = factor(Method, 
-                         levels = c("no_covs", "all_covs", "p_hacked", 
-                                    "r", "partial_r", 
-                                    "full_lm_wo_x", "full_lm", 
-                                    "lasso_wo_x", "lasso"),
-                         labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Single covariate lm without X", 
-                                    "Single covariate lm with X", 
-                                    "All covariates lm without X", 
-                                    "All covariates lm with X", 
-                                    "All covariates LASSO without X", 
-                                    "All covariates LASSO with X")),
-         `No effect (b = 0)` = sprintf("%.3f", abs(`No effect (b = 0)`))) |> 
+         `No effect ($\\beta_{x}=0$)` = `0`,
+         `$\\beta_{x}=0.2$` = `0.2`,
+         `$\\beta_{x}=0.5$` = `0.5`) |> 
+  mutate(
+    Method = factor(
+      Method,
+      levels = c("no_covs", "all_covs", "p_hacked", 
+                 "r", "partial_r", 
+                 "full_lm_wo_x", "full_lm", 
+                 "lasso_wo_x", "lasso"),
+      labels = c("No covariates", "All covariates", "p-hacking", 
+                 "Single covariate lm without X", 
+                 "Single covariate lm with X", 
+                 "All covariates lm without X", 
+                 "All covariates lm with X", 
+                 "All covariates LASSO without X", 
+                 "All covariates LASSO with X")
+    )
+  ) |> 
+  mutate(across(-Method, ~sprintf("%.3f", abs(.)))) |> 
   arrange(Method) |> 
   add_row(Method = "A priori selection", .before = 1) |> 
   add_row(Method = "Data-driven selection", .after = 3) |> 
-  kable() |> 
+  kable(escape = FALSE) |> 
   kable_classic() |> 
   pack_rows(NULL, 2, 3) |> 
   pack_rows(NULL, 5, 11)
