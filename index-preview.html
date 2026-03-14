@@ -955,29 +955,33 @@ Figure&nbsp;4: Type II error by method and research context. Plots are paneled b
 <div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>table <span class="op">|&gt;</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  rename(Method <span class="op">=</span> method, </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         `No effect ($\\beta_{x}$ <span class="op">=</span> <span class="dv">0</span>)` <span class="op">=</span> `<span class="dv">0</span>`,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         `$\\beta_{x}$ <span class="op">=</span> <span class="fl">.2</span>` <span class="op">=</span> `<span class="fl">0.2</span>`,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         `$\\beta_{x}$ <span class="op">=</span> <span class="fl">.5</span>` <span class="op">=</span> `<span class="fl">0.5</span>`) <span class="op">|&gt;</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  mutate(Method <span class="op">=</span> factor(Method, </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                         levels <span class="op">=</span> c(<span class="st">"no_covs"</span>, <span class="st">"all_covs"</span>, <span class="st">"p_hacked"</span>, </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"r"</span>, <span class="st">"partial_r"</span>, </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"full_lm_wo_x"</span>, <span class="st">"full_lm"</span>, </span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"lasso_wo_x"</span>, <span class="st">"lasso"</span>),</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                         labels <span class="op">=</span> c(<span class="st">"No covariates"</span>, <span class="st">"All covariates"</span>, <span class="st">"p-hacking"</span>, </span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Single covariate lm without X"</span>, </span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Single covariate lm with X"</span>, </span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"All covariates lm without X"</span>, </span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"All covariates lm with X"</span>, </span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"All covariates LASSO without X"</span>, </span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"All covariates LASSO with X"</span>)),</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>         `No effect ($\\beta_{x}$ <span class="op">=</span> <span class="dv">0</span>)` <span class="op">=</span> sprintf(<span class="st">"</span><span class="sc">%.3f</span><span class="st">"</span>, <span class="bu">abs</span>(`No effect ($\\beta_{x}$ <span class="op">=</span> <span class="dv">0</span>)`))) <span class="op">|&gt;</span> </span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  arrange(Method) <span class="op">|&gt;</span> </span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  add_row(Method <span class="op">=</span> <span class="st">"A priori selection"</span>, .before <span class="op">=</span> <span class="dv">1</span>) <span class="op">|&gt;</span> </span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  add_row(Method <span class="op">=</span> <span class="st">"Data-driven selection"</span>, .after <span class="op">=</span> <span class="dv">3</span>) <span class="op">|&gt;</span> </span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  kable(escape <span class="op">=</span> FALSE) <span class="op">|&gt;</span> </span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  kable_classic() <span class="op">|&gt;</span> </span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  pack_rows(NULL, <span class="dv">2</span>, <span class="dv">3</span>) <span class="op">|&gt;</span> </span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  pack_rows(NULL, <span class="dv">5</span>, <span class="dv">11</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         `No effect ($\\beta_{x}<span class="op">=</span><span class="dv">0</span>$)` <span class="op">=</span> `<span class="dv">0</span>`,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         `$\\beta_{x}<span class="op">=</span><span class="fl">0.2</span>$` <span class="op">=</span> `<span class="fl">0.2</span>`,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         `$\\beta_{x}<span class="op">=</span><span class="fl">0.5</span>$` <span class="op">=</span> `<span class="fl">0.5</span>`) <span class="op">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  mutate(</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    Method <span class="op">=</span> factor(</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>      Method,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>      levels <span class="op">=</span> c(<span class="st">"no_covs"</span>, <span class="st">"all_covs"</span>, <span class="st">"p_hacked"</span>, </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"r"</span>, <span class="st">"partial_r"</span>, </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"full_lm_wo_x"</span>, <span class="st">"full_lm"</span>, </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"lasso_wo_x"</span>, <span class="st">"lasso"</span>),</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      labels <span class="op">=</span> c(<span class="st">"No covariates"</span>, <span class="st">"All covariates"</span>, <span class="st">"p-hacking"</span>, </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"Single covariate lm without X"</span>, </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"Single covariate lm with X"</span>, </span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"All covariates lm without X"</span>, </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"All covariates lm with X"</span>, </span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"All covariates LASSO without X"</span>, </span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"All covariates LASSO with X"</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">|&gt;</span> </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  mutate(across(<span class="op">-</span>Method, <span class="op">~</span>sprintf(<span class="st">"</span><span class="sc">%.3f</span><span class="st">"</span>, <span class="bu">abs</span>(.)))) <span class="op">|&gt;</span> </span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  arrange(Method) <span class="op">|&gt;</span> </span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  add_row(Method <span class="op">=</span> <span class="st">"A priori selection"</span>, .before <span class="op">=</span> <span class="dv">1</span>) <span class="op">|&gt;</span> </span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  add_row(Method <span class="op">=</span> <span class="st">"Data-driven selection"</span>, .after <span class="op">=</span> <span class="dv">3</span>) <span class="op">|&gt;</span> </span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  kable(escape <span class="op">=</span> FALSE) <span class="op">|&gt;</span> </span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  kable_classic() <span class="op">|&gt;</span> </span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  pack_rows(NULL, <span class="dv">2</span>, <span class="dv">3</span>) <span class="op">|&gt;</span> </span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  pack_rows(NULL, <span class="dv">5</span>, <span class="dv">11</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
 Use 'xfun::attr2()' instead.
@@ -997,17 +1001,17 @@ Table&nbsp;4: Mean estimates of effect size by method and true effect size
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">No effect ($\beta_{x}$ = 0)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$\beta_{x}$ = .2</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$\beta_{x}$ = .5</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">No effect ($\beta_{x}=0$)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">$\beta_{x}=0.2$</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">$\beta_{x}=0.5$</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">A priori selection</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
 </tr>
 <tr class="even" data-grouplength="2">
 <td colspan="4" style="text-align: left; border-bottom: 0;"><strong></strong></td>
@@ -1015,20 +1019,20 @@ Table&nbsp;4: Mean estimates of effect size by method and true effect size
 <tr class="odd">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">No covariates</td>
 <td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.200</td>
-<td style="text-align: right;">0.500</td>
+<td style="text-align: left;">0.200</td>
+<td style="text-align: left;">0.500</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates</td>
 <td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.200</td>
-<td style="text-align: right;">0.500</td>
+<td style="text-align: left;">0.200</td>
+<td style="text-align: left;">0.500</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Data-driven selection</td>
 <td style="text-align: left;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
 </tr>
 <tr class="even" data-grouplength="7">
 <td colspan="4" style="text-align: left; border-bottom: 0;"><strong></strong></td>
@@ -1036,44 +1040,44 @@ Table&nbsp;4: Mean estimates of effect size by method and true effect size
 <tr class="odd">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">p-hacking</td>
 <td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.262</td>
-<td style="text-align: right;">0.563</td>
+<td style="text-align: left;">0.262</td>
+<td style="text-align: left;">0.563</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm without X</td>
 <td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.198</td>
-<td style="text-align: right;">0.495</td>
+<td style="text-align: left;">0.198</td>
+<td style="text-align: left;">0.495</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm with X</td>
 <td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.200</td>
-<td style="text-align: right;">0.500</td>
+<td style="text-align: left;">0.200</td>
+<td style="text-align: left;">0.500</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm without X</td>
 <td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.192</td>
-<td style="text-align: right;">0.479</td>
+<td style="text-align: left;">0.192</td>
+<td style="text-align: left;">0.479</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm with X</td>
 <td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.200</td>
-<td style="text-align: right;">0.500</td>
+<td style="text-align: left;">0.200</td>
+<td style="text-align: left;">0.500</td>
 </tr>
 <tr class="even">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO without X</td>
 <td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.195</td>
-<td style="text-align: right;">0.487</td>
+<td style="text-align: left;">0.195</td>
+<td style="text-align: left;">0.487</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO with X</td>
 <td style="text-align: left;">0.000</td>
-<td style="text-align: right;">0.200</td>
-<td style="text-align: right;">0.500</td>
+<td style="text-align: left;">0.200</td>
+<td style="text-align: left;">0.500</td>
 </tr>
 </tbody>
 </table>
