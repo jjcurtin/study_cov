@@ -559,7 +559,6 @@ est_d_0 <- d_full |>
 est_d_02 <-d_full |> 
   filter(b_x == 0.2) |> 
   filter(estimate > -0.3 & estimate < .7) |> 
-  filter(method != "p-hacking") |> 
   ggplot(aes(x = estimate, color = method, linetype = method)) +
   geom_density(alpha = 0.5) +
   geom_vline(xintercept = 0.2, linetype = "dotted") +
@@ -573,7 +572,6 @@ est_d_02 <-d_full |>
 est_d_05 <- d_full |> 
   filter(b_x == 0.5) |> 
   filter(estimate > 0 & estimate < 1) |> 
-  filter(method != "p-hacking") |> 
   ggplot(aes(x = estimate, color = method, linetype = method)) +
   geom_density(alpha = 0.5) +
   geom_vline(xintercept = 0.5, linetype = "dotted") +
