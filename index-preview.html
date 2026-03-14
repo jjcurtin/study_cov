@@ -487,11 +487,11 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 <div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data_tbl0 <span class="op">&lt;-</span> tibble(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> c(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The true population parameter for the focal IV"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The sample size"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The number of covariates available"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The percentage of covariates with non-zero relationships with the outcome"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The strength of the relationship between the covariates and Y"</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The population parameter for the focal IV ($</span><span class="ch">\\</span><span class="st">beta_x$)"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The sample size ($N$)"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The number of covariates available ($N_</span><span class="sc">{cov}</span><span class="st">$)"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The percentage of covariates with non-zero correlations with the outcome ($</span><span class="ch">\\</span><span class="st">%_</span><span class="sc">{cov}</span><span class="st">$)"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The magnitude of the correlation between the covariates and $Y$ ($r_</span><span class="sc">{cov}</span><span class="st">$)"</span>),</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  values <span class="op">=</span> c(<span class="st">"0, 0.2, 0.5"</span>,</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>             <span class="st">"50, 100, 150, 200, 300, 400"</span>, </span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>             <span class="st">"4, 8, 12, 16, 20"</span>, </span>
@@ -528,23 +528,23 @@ Table&nbsp;2: Research context variables and values
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left; width: 15em;">The true population parameter for the focal IV</td>
+<td style="text-align: left; width: 15em;">The population parameter for the focal IV ($\beta_x$)</td>
 <td style="text-align: left; width: 10em;">0, 0.2, 0.5</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; width: 15em;">The sample size</td>
+<td style="text-align: left; width: 15em;">The sample size ($N$)</td>
 <td style="text-align: left; width: 10em;">50, 100, 150, 200, 300, 400</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; width: 15em;">The number of covariates available</td>
+<td style="text-align: left; width: 15em;">The number of covariates available ($N_{cov}$)</td>
 <td style="text-align: left; width: 10em;">4, 8, 12, 16, 20</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; width: 15em;">The percentage of covariates with non-zero relationships with the outcome</td>
+<td style="text-align: left; width: 15em;">The percentage of covariates with non-zero correlations with the outcome ($\%_{cov}$)</td>
 <td style="text-align: left; width: 10em;">0.25, 0.50, 0.75</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; width: 15em;">The strength of the relationship between the covariates and Y</td>
+<td style="text-align: left; width: 15em;">The magnitude of the correlation between the covariates and $Y$ ($r_{cov}$)</td>
 <td style="text-align: left; width: 10em;">0.3, 0.5</td>
 </tr>
 </tbody>
@@ -678,7 +678,7 @@ Table&nbsp;3
 </dl>
 </div>
 </div></div>
-<p>For each simulated dataset in each research context, we use each of the 9 covariate selection approaches to determine which covariates to use in the primary analysis to test the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. For example, <span class="math inline">\(lm(Y ~ X + C1 + C4, data = df\)</span>, if covariates 1 and 4 were selected by the current selection approach. From each primary analysis, we saved the research context characteristics, the covariate selection approach used, and the parameter estimate for <span class="math inline">\(X\)</span>, p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05 from the primary analysis.</p>
+<p>For each simulated dataset in each research context, we use each of the 9 covariate selection approaches to determine which covariates to use in the primary analysis to test the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. For example, <span class="math inline">\(lm(Y \sim X + C_1 + C_4, \text{data} = \text{df}\)</span>, if covariates 1 and 4 were selected by the current selection approach. From each primary analysis, we saved the research context characteristics, the covariate selection approach used, and the parameter estimate for <span class="math inline">\(X\)</span>, p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05 from the primary analysis.</p>
 <p>For research contexts where the population parameter for <span class="math inline">\(X\)</span> is 0 (i.e., <span class="math inline">\(X\)</span> has no effect on <span class="math inline">\(Y\)</span>), we assess and report the Type I error rates associated with each covariate selection approach by research context characteristics. For research contexts where the population parameter for <span class="math inline">\(X\)</span> is 0.2 or 0.5 (i.e., <span class="math inline">\(X\)</span> has an effect on <span class="math inline">\(Y\)</span>), we assess and report the Type II error rate for each covariate selection method by research context characteristics. We also provide descriptive statistics and sampling distributions (from the 40,000 simulations) of the parameter estimate for <span class="math inline">\(X\)</span> across research contexts for each covariate selection approach, separately by true effect size for <span class="math inline">\(X\)</span> (0, 0.2, and 0.5). An interactive detailed dashboard of average error rates for all combinations of research context variables is accessible through our OSF page (<a href="https://osf.io/zh5gn/">https://osf.io/zh5gn/</a>).<!--shiny link now on OSF, nothing else on OSF yet--></p>
 </section>
 </section>
