@@ -575,14 +575,15 @@ Table&nbsp;2: Research context variables and values
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sigma) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"C1"</span>, <span class="st">"C2"</span>, <span class="st">"C3"</span>, <span class="st">"C4"</span>)</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sigma) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"C1"</span>, <span class="st">"C2"</span>, <span class="st">"C3"</span>, <span class="st">"C4"</span>)</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>sigma</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">formatC</span>(sigma, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">1</span>), <span class="at">quote =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     Y  C1  C2 C3 C4
-Y  1.0 0.5 0.5  0  0
-C1 0.5 1.0 0.3  0  0
-C2 0.5 0.3 1.0  0  0
-C3 0.0 0.0 0.0  1  0
-C4 0.0 0.0 0.0  0  1</code></pre>
+<pre><code>   Y   C1  C2  C3  C4 
+Y  1.0 0.5 0.5 0.0 0.0
+C1 0.5 1.0 0.3 0.0 0.0
+C2 0.5 0.3 1.0 0.0 0.0
+C3 0.0 0.0 0.0 1.0 0.0
+C4 0.0 0.0 0.0 0.0 1.0</code></pre>
 </div>
 </div></div>
 <p>The covariance matrix can then be used to generate a multivariate normal dataset of <span class="math inline">\(Y\)</span> and <span class="math inline">\(C_1...C_4\)</span> for 100 observations where all variables have a mean of 0. Following this, the effect of the IV (<span class="math inline">\(X\)</span>) can be added into <span class="math inline">\(Y\)</span>.</p>

@@ -116,7 +116,8 @@ sigma <- matrix(c(
 rownames(sigma) <- c("Y", "C1", "C2", "C3", "C4")
 colnames(sigma) <- c("Y", "C1", "C2", "C3", "C4")
 
-sigma
+
+print(formatC(sigma, format = "f", digits = 1), quote = FALSE)
 ```
 
 The covariance matrix can then be used to generate a multivariate normal dataset of $Y$ and $C_1...C_4$ for 100 observations where all variables have a mean of 0.
