@@ -748,15 +748,16 @@ Research context variables and values
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sigma) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;$Y$&quot;</span>, <span class="st">&quot;$C_1$&quot;</span>, <span class="st">&quot;$C_2$&quot;</span>, <span class="st">&quot;$C_3$&quot;</span>, <span class="st">&quot;$C_4$&quot;</span>)</span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>sigma <span class="sc">|&gt;</span> </span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kbl</span>(<span class="at">escape =</span> <span class="cn">FALSE</span>, <span class="at">format =</span> <span class="st">&quot;html&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kbl</span>(<span class="at">escape =</span> <span class="cn">FALSE</span>, <span class="at">format =</span> <span class="st">&quot;html&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="tbl-sigma" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 <div aria-describedby="tbl-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table>
+<table class="lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
    <th style="text-align:left;">   </th>
