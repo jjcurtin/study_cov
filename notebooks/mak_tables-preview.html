@@ -595,68 +595,88 @@ The nine linear regression models and their definition for covariate selection.
 </figcaption>
 <div aria-describedby="tbl-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;border-bottom: 0;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Method </th>
-   <th style="text-align:left;"> Screening Models </th>
-   <th style="text-align:left;"> Covariate Selection Criteria </th>
-  </tr>
- </thead>
+<table class="lightable-classic do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Screening Models</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Covariate Selection Criteria</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> No covariates </td>
-   <td style="text-align:left;"> No screening models </td>
-   <td style="text-align:left;"> No covariates used </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> All covariates </td>
-   <td style="text-align:left;"> No screening models </td>
-   <td style="text-align:left;"> All covariates used </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p-hacking </td>
-   <td style="text-align:left;"> \(Y \sim X + C_{1}\) <br> \(Y \sim X + C_{2}\) <br> \(\vdots\) <br> \(Y \sim X + C_{k}\) </td>
-   <td style="text-align:left;"> Covariates that lower the p-value of \(X\) are retained in the final model </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Single covariate linear model without X </td>
-   <td style="text-align:left;"> \(Y \sim C_{1}\) <br> \(Y \sim C_{2}\) <br> \(\vdots\) <br> \(Y \sim C_{k}\) </td>
-   <td style="text-align:left;"> Significant covariates (\(p &lt; .05\)) are retained in the final model </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Single covariate linear model with X </td>
-   <td style="text-align:left;"> \(Y \sim X + C_{1}\) <br> \(Y \sim X + C_{2}\) <br> \(\vdots\) <br> \(Y \sim X + C_{k}\) </td>
-   <td style="text-align:left;"> Significant covariates (\(p &lt; .05\)) when controlling for \(X\) are retained in the final model </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> All covariates linear model without X </td>
-   <td style="text-align:left;"> \(Y \sim C_{1} + C_{2} + \cdots + C_{k}\) </td>
-   <td style="text-align:left;"> Significant covariates (\(p &lt; .05\)) when controlling for all other covariates are retained in the final model </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> All covariates linear model with X </td>
-   <td style="text-align:left;"> \(Y \sim X + C_{1} + C_{2} + \cdots + C_{k}\) </td>
-   <td style="text-align:left;"> Significant covariates (\(p &lt; .05\)) when controlling for \(X\) and all other covariates are retained in the final model </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> All covariates LASSO without X </td>
-   <td style="text-align:left;"> \(Y \sim C_{1} + C_{2} + \cdots + C_{k}\) with \(\lambda\) penalty applied to all covariates </td>
-   <td style="text-align:left;"> Covariates with non-zero coefficients are retained in the model </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> All covariates LASSO with X </td>
-   <td style="text-align:left;"> \(Y \sim X + C_{1} + C_{2} + \cdots + C_{k}\) with \(\lambda\) penalty applied to all covariates </td>
-   <td style="text-align:left;"> Covariates with non-zero coefficients are retained in the model </td>
-  </tr>
-</tbody>
-<tfoot>
-<tr><td style="padding: 0; " colspan="100%"><span style="font-style: italic;">Note: </span></td></tr>
-<tr><td style="padding: 0; " colspan="100%">
-<sup></sup> Screening models represent symbolic linear models where \(Y\) is the outcome, \(X\) is the focal independent variable, \(C\) is a covariate, and \(k\) is the number of covariates.</td></tr>
+<tr class="odd">
+<td style="text-align: left;">No covariates</td>
+<td style="text-align: left;">No screening models</td>
+<td style="text-align: left;">No covariates used</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All covariates</td>
+<td style="text-align: left;">No screening models</td>
+<td style="text-align: left;">All covariates used</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p-hacking</td>
+<td style="text-align: left;">\(Y \sim X + C_{1}\)<br>
+\(Y \sim X + C_{2}\)<br>
+\(\vdots\)<br>
+\(Y \sim X + C_{k}\)</td>
+<td style="text-align: left;">Covariates that lower the p-value of \(X\) are retained in the final model</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Single covariate linear model without X</td>
+<td style="text-align: left;">\(Y \sim C_{1}\)<br>
+\(Y \sim C_{2}\)<br>
+\(\vdots\)<br>
+\(Y \sim C_{k}\)</td>
+<td style="text-align: left;">Significant covariates (\(p &lt; .05\)) are retained in the final model</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Single covariate linear model with X</td>
+<td style="text-align: left;">\(Y \sim X + C_{1}\)<br>
+\(Y \sim X + C_{2}\)<br>
+\(\vdots\)<br>
+\(Y \sim X + C_{k}\)</td>
+<td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for \(X\) are retained in the final model</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All covariates linear model without X</td>
+<td style="text-align: left;">\(Y \sim C_{1} + C_{2} + \cdots + C_{k}\)</td>
+<td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for all other covariates are retained in the final model</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All covariates linear model with X</td>
+<td style="text-align: left;">\(Y \sim X + C_{1} + C_{2} + \cdots + C_{k}\)</td>
+<td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for \(X\) and all other covariates are retained in the final model</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All covariates LASSO without X</td>
+<td style="text-align: left;">\(Y \sim C_{1} + C_{2} + \cdots + C_{k}\) with \(\lambda\) penalty applied to all covariates</td>
+<td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All covariates LASSO with X</td>
+<td style="text-align: left;">\(Y \sim X + C_{1} + C_{2} + \cdots + C_{k}\) with \(\lambda\) penalty applied to all covariates</td>
+<td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0;"><span style="font-style: italic;">Note: </span></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0;"><sup></sup> Screening models represent symbolic linear models where \(Y\) is the outcome, \(X\) is the focal independent variable, \(C\) is a covariate, and \(k\) is the number of covariates.</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
 </tfoot>
-</table>
 
+</table>
 </div>
 </div>
 </figure>
@@ -698,37 +718,36 @@ Research context variables and values
 </figcaption>
 <div aria-describedby="tbl-dictionary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Research Context Variable </th>
-   <th style="text-align:left;"> Values </th>
-  </tr>
- </thead>
+<table class="table table-striped do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Research Context Variable</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Values</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;width: 15em; "> The true population parameter for the focal IV </td>
-   <td style="text-align:left;width: 10em; "> 0, 0.2, 0.5 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;width: 15em; "> The sample size </td>
-   <td style="text-align:left;width: 10em; "> 50, 100, 150, 200, 300, 400 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;width: 15em; "> The number of covariates available </td>
-   <td style="text-align:left;width: 10em; "> 4, 8, 12, 16, 20 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;width: 15em; "> The percentage of covariates with non-zero relationships with the outcome </td>
-   <td style="text-align:left;width: 10em; "> 0.25, 0.50, 0.75 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;width: 15em; "> The strength of the relationship between the covariates and Y </td>
-   <td style="text-align:left;width: 10em; "> 0.3, 0.5 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left; width: 15em;">The true population parameter for the focal IV</td>
+<td style="text-align: left; width: 10em;">0, 0.2, 0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; width: 15em;">The sample size</td>
+<td style="text-align: left; width: 10em;">50, 100, 150, 200, 300, 400</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; width: 15em;">The number of covariates available</td>
+<td style="text-align: left; width: 10em;">4, 8, 12, 16, 20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; width: 15em;">The percentage of covariates with non-zero relationships with the outcome</td>
+<td style="text-align: left; width: 10em;">0.25, 0.50, 0.75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; width: 15em;">The strength of the relationship between the covariates and Y</td>
+<td style="text-align: left; width: 10em;">0.3, 0.5</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
 </figure>
@@ -757,61 +776,60 @@ Research context variables and values
 </figcaption>
 <div aria-describedby="tbl-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:right;"> $Y$ </th>
-   <th style="text-align:right;"> $C_1$ </th>
-   <th style="text-align:right;"> $C_2$ </th>
-   <th style="text-align:right;"> $C_3$ </th>
-   <th style="text-align:right;"> $C_4$ </th>
-  </tr>
- </thead>
+<table class="lightable-classic do-not-create-environment caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$Y$</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$C_1$</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$C_2$</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$C_3$</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$C_4$</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> $Y$ </td>
-   <td style="text-align:right;"> 1.0 </td>
-   <td style="text-align:right;"> 0.5 </td>
-   <td style="text-align:right;"> 0.5 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> $C_1$ </td>
-   <td style="text-align:right;"> 0.5 </td>
-   <td style="text-align:right;"> 1.0 </td>
-   <td style="text-align:right;"> 0.3 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> $C_2$ </td>
-   <td style="text-align:right;"> 0.5 </td>
-   <td style="text-align:right;"> 0.3 </td>
-   <td style="text-align:right;"> 1.0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> $C_3$ </td>
-   <td style="text-align:right;"> 0.0 </td>
-   <td style="text-align:right;"> 0.0 </td>
-   <td style="text-align:right;"> 0.0 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> $C_4$ </td>
-   <td style="text-align:right;"> 0.0 </td>
-   <td style="text-align:right;"> 0.0 </td>
-   <td style="text-align:right;"> 0.0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">$Y$</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$C_1$</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$C_2$</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$C_3$</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$C_4$</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
 </figure>
@@ -821,9 +839,9 @@ Research context variables and values
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>table <span class="sc">|&gt;</span> </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Method =</span> method, </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">No effect (b = 0)</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0</span><span class="st">`</span>,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">b = .2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0.2</span><span class="st">`</span>,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">b = .5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0.5</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">No effect ($</span><span class="sc">\\</span><span class="at">beta_{x}$ = 0)</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0</span><span class="st">`</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">beta_{x}$ = .2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0.2</span><span class="st">`</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">beta_{x}$ = .5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">0.5</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Method =</span> <span class="fu">factor</span>(Method, </span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;no_covs&quot;</span>, <span class="st">&quot;all_covs&quot;</span>, <span class="st">&quot;p_hacked&quot;</span>, </span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;r&quot;</span>, <span class="st">&quot;partial_r&quot;</span>, </span>
@@ -836,7 +854,7 @@ Research context variables and values
 <span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates lm with X&quot;</span>, </span>
 <span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates LASSO without X&quot;</span>, </span>
 <span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">&quot;All covariates LASSO with X&quot;</span>)),</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">No effect (b = 0)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.3f&quot;</span>, <span class="fu">abs</span>(<span class="st">`</span><span class="at">No effect (b = 0)</span><span class="st">`</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">No effect ($</span><span class="sc">\\</span><span class="at">beta_{x}$ = 0)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.3f&quot;</span>, <span class="fu">abs</span>(<span class="st">`</span><span class="at">No effect ($</span><span class="sc">\\</span><span class="at">beta_{x}$ = 0)</span><span class="st">`</span>))) <span class="sc">|&gt;</span> </span>
 <span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Method) <span class="sc">|&gt;</span> </span>
 <span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">Method =</span> <span class="st">&quot;A priori selection&quot;</span>, <span class="at">.before =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">Method =</span> <span class="st">&quot;Data-driven selection&quot;</span>, <span class="at">.after =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
@@ -859,87 +877,90 @@ Mean estimates of effect size by method and true effect size
 </figcaption>
 <div aria-describedby="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Method </th>
-   <th style="text-align:left;"> No effect (b = 0) </th>
-   <th style="text-align:right;"> b = .2 </th>
-   <th style="text-align:right;"> b = .5 </th>
-  </tr>
- </thead>
+<table class="lightable-classic do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">No effect ($\beta_{x}$ = 0)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$\beta_{x}$ = .2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">$\beta_{x}$ = .5</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> A priori selection </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr grouplength="2"><td colspan="4" style="border-bottom: 0;"><strong></strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> No covariates </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.200 </td>
-   <td style="text-align:right;"> 0.500 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.200 </td>
-   <td style="text-align:right;"> 0.500 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Data-driven selection </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;">  </td>
-  </tr>
-  <tr grouplength="7"><td colspan="4" style="border-bottom: 0;"><strong></strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> p-hacking </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.262 </td>
-   <td style="text-align:right;"> 0.563 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Single covariate lm without X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.198 </td>
-   <td style="text-align:right;"> 0.495 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Single covariate lm with X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.200 </td>
-   <td style="text-align:right;"> 0.500 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates lm without X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.192 </td>
-   <td style="text-align:right;"> 0.479 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates lm with X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.200 </td>
-   <td style="text-align:right;"> 0.500 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates LASSO without X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.195 </td>
-   <td style="text-align:right;"> 0.487 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> All covariates LASSO with X </td>
-   <td style="text-align:left;"> 0.000 </td>
-   <td style="text-align:right;"> 0.200 </td>
-   <td style="text-align:right;"> 0.500 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">A priori selection</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even" data-grouplength="2">
+<td colspan="4" style="text-align: left; border-bottom: 0;"><strong></strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">No covariates</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data-driven selection</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even" data-grouplength="7">
+<td colspan="4" style="text-align: left; border-bottom: 0;"><strong></strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">p-hacking</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.262</td>
+<td style="text-align: right;">0.563</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm without X</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.198</td>
+<td style="text-align: right;">0.495</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm with X</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm without X</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.192</td>
+<td style="text-align: right;">0.479</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm with X</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.500</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO without X</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.195</td>
+<td style="text-align: right;">0.487</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO with X</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.500</td>
+</tr>
 </tbody>
 </table>
-
 </div>
 </div>
 </figure>
