@@ -570,94 +570,23 @@ Table&nbsp;2: Research context variables and values
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>,</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>), <span class="at">nrow =</span> <span class="dv">5</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div></div>
-<div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_tables.qmd" data-notebook-title="Make Tables for Main Manuscript" data-notebook-cellid="cell-tbl-sigma">
-<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">&lt;-</span> matrix(c(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.5</span>, <span class="fl">1.0</span>, <span class="fl">0.3</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>), nrow <span class="op">=</span> <span class="dv">5</span>, byrow <span class="op">=</span> TRUE)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>rownames(sigma) <span class="op">&lt;-</span> c(<span class="st">"$Y$"</span>, <span class="st">"$C_1$"</span>, <span class="st">"$C_2$"</span>, <span class="st">"$C_3$"</span>, <span class="st">"$C_4$"</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>colnames(sigma) <span class="op">&lt;-</span> c(<span class="st">"$Y$"</span>, <span class="st">"$C_1$"</span>, <span class="st">"$C_2$"</span>, <span class="st">"$C_3$"</span>, <span class="st">"$C_4$"</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">|&gt;</span> </span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  kable(<span class="bu">format</span> <span class="op">=</span> <span class="st">"html"</span>, escape <span class="op">=</span> FALSE) <span class="op">|&gt;</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  kableExtra::kable_classic() <span class="op">|&gt;</span> </span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  suppressWarnings()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="tbl-sigma" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3
-</figcaption>
-<div aria-describedby="tbl-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display">
-<table class="lightable-classic do-not-create-environment caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$Y$</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$C_1$</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$C_2$</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$C_3$</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$C_4$</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">$Y$</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">$C_1$</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">$C_2$</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">$C_3$</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">$C_4$</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>), <span class="at">nrow =</span> <span class="dv">5</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sigma) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"C1"</span>, <span class="st">"C2"</span>, <span class="st">"C3"</span>, <span class="st">"C4"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sigma) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"C1"</span>, <span class="st">"C2"</span>, <span class="st">"C3"</span>, <span class="st">"C4"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>sigma</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Y  C1  C2 C3 C4
+Y  1.0 0.5 0.5  0  0
+C1 0.5 1.0 0.3  0  0
+C2 0.5 0.3 1.0  0  0
+C3 0.0 0.0 0.0  1  0
+C4 0.0 0.0 0.0  0  1</code></pre>
 </div>
-</div>
-</figure>
 </div></div>
-</div></div>
-</div>
 <p>The covariance matrix can then be used to generate a multivariate normal dataset of <span class="math inline">\(Y\)</span> and <span class="math inline">\(C_1...C_4\)</span> for 100 observations where all variables have a mean of 0. Following this, the effect of the IV (<span class="math inline">\(X\)</span>) can be added into <span class="math inline">\(Y\)</span>.</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();" href="">1</a><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="at">Sigma =</span> sigma)</span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a></span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();" href="">2</a><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">each =</span> <span class="dv">50</span>)</span>
@@ -679,7 +608,7 @@ Table&nbsp;3
 </dl>
 </div>
 </div></div>
-<p>For each simulated dataset in each research context, we use each of the 9 covariate selection approaches to determine which covariates to use in the primary analysis to test the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. For example, <span class="math inline">\(lm(Y \sim X + C_1 + C_4, \text{data} = \text{df}\)</span>, if covariates 1 and 4 were selected by the current selection approach. From each primary analysis, we saved the research context characteristics, the covariate selection approach used, and the parameter estimate for <span class="math inline">\(X\)</span>, p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05 from the primary analysis.</p>
+<p>For each simulated dataset in each research context, we use each of the 9 covariate selection approaches to determine which covariates to use in the primary analysis to test the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. For example, <span class="math inline">\(lm(Y \sim X + C_1 + C_4, \text{data} = \text{df})\)</span>, if covariates 1 and 4 were selected by the current selection approach. From each primary analysis, we saved the research context characteristics, the covariate selection approach used, and the parameter estimate for <span class="math inline">\(X\)</span>, p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05 from the primary analysis.</p>
 <p>For research contexts where the population parameter for <span class="math inline">\(X\)</span> is 0 (i.e., <span class="math inline">\(X\)</span> has no effect on <span class="math inline">\(Y\)</span>), we assess and report the Type I error rates associated with each covariate selection approach by research context characteristics. For research contexts where the population parameter for <span class="math inline">\(X\)</span> is 0.2 or 0.5 (i.e., <span class="math inline">\(X\)</span> has an effect on <span class="math inline">\(Y\)</span>), we assess and report the Type II error rate for each covariate selection method by research context characteristics. We also provide descriptive statistics and sampling distributions (from the 40,000 simulations) of the parameter estimate for <span class="math inline">\(X\)</span> across research contexts for each covariate selection approach, separately by true effect size for <span class="math inline">\(X\)</span> (0, 0.2, and 0.5). An interactive detailed dashboard of average error rates for all combinations of research context variables is accessible through our OSF page (<a href="https://osf.io/zh5gn/">https://osf.io/zh5gn/</a>).<!--shiny link now on OSF, nothing else on OSF yet--></p>
 </section>
 </section>
@@ -689,7 +618,7 @@ Table&nbsp;3
 <h2 class="anchored" data-anchor-id="type-i-error">Type I Error</h2>
 <p>Given our use of simulated datasets, we were able to set the true population parameter for <span class="math inline">\(X\)</span> to be zero (i.e., <span class="math inline">\(\beta_x = 0\)</span>). Therefore, any significant result was a Type I error. <a href="#fig-bar-1" class="quarto-xref">Figure&nbsp;1</a> shows the average Type I error rate across all research contexts for each approach. The p-hacking approach for selecting covariates, unsurprisingly led to a highly inflated mean Type I error rate across contexts, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives. The other approaches were at or near the expected error rate of alpha = .05 across the relatively broad range of research context characteristics we considered. Specifically, the two a priori selection approaches and the data-driven selection approaches that did not include <span class="math inline">\(X\)</span> in the screening model displayed average Type I error rates of exactly .05. The data-driven approaches that did include <span class="math inline">\(X\)</span> in the screening model displayed slightly increased (&lt;= .06) average Type I error rates across contexts.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-bar-1">
-<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-fig-bar-1" class="cell" data-fig-width="8.75">
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-bar-1" class="cell" data-fig-width="8.75">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Parameters</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>gap_after_idx <span class="op">&lt;-</span> c(<span class="dv">2</span>,  <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>)  </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>gap_size <span class="op">&lt;-</span> <span class="fl">0.2</span>                </span>
@@ -789,7 +718,7 @@ Figure&nbsp;1: Type I Error by Method. Average type I error rate across all rese
 <p>We next assessed how Type I error rates varied by specific dimensions of our research contexts and noted several patterns (<a href="#fig-type1-panel" class="quarto-xref">Figure&nbsp;2</a>). First, the magnitude of Type I error rate inflation for the p-hacking approach was substantially increased with increasing number of available covariates, larger correlations between the covariates and <span class="math inline">\(Y\)</span> (i.e., <span class="math inline">\(r_{cov-Y}\)</span> = 0.5), higher proportion of available covariates with non-zero correlations with <span class="math inline">\(Y\)</span>, and smaller sample sizes. The Type I error rate for p-hacking reached XXXXX in the worst case context (N = 50, 20 available covariates with <span class="math inline">\(r_{cov-Y}\)</span> = 0.5 for 75% of the covariate set; SEE SUPPLEMENTAL TABLE XX).</p>
 <p>In contrast, to the p-hacking approach, the Type I error rates remained constant at .05 across all research context dimensions for the a prior approaches and the data-driven approaches that did not include <span class="math inline">\(X\)</span>. Among the data driven approaches that did include <span class="math inline">\(X\)</span>, small increases in Type I error rates were observed as the sample size decreased and the number of available covariates increased. However, Type I error rate inflation remained modest for these approaches even at the extremes of these two dimensions (up to XX at N = 50 and up to XX with 20 covariates). And in the worst case context at the intersection of these dimensions error rates only reached XX for XX, XX for XX and XX for XX. Neither the magnitude <span class="math inline">\(r_{cov-Y}\)</span> nor the proportion of available covariates with non-zero correlations with <span class="math inline">\(Y\)</span> appears to have any systematic impact on the Type I error rates for the data-driven approaches that included <span class="math inline">\(X\)</span>.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-type1-panel">
-<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-fig-type1-panel" class="cell" data-fig-height="6" data-fig-width="8">
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-fig-type1-panel" class="cell" data-fig-height="6" data-fig-width="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(observations <span class="op">+</span> covs)<span class="op">/</span>(good_covs <span class="op">+</span> ycor) <span class="op">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  plot_layout(guides <span class="op">=</span> <span class="st">"collect"</span>) <span class="op">&amp;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  theme(legend.position <span class="op">=</span> <span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -813,7 +742,7 @@ Figure&nbsp;2: Type I error by method and research context. Plots are paneled by
 <p>We simulated datasets with two possible population parameters for the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> (<span class="math inline">\(\beta_x = 0.2\)</span>, <span class="math inline">\(\beta_x = 0.5\)</span>). Given that we set the standard deviation of <span class="math inline">\(Y\)</span> to equal 1, these represented contexts where <span class="math inline">\(X\)</span> had a small (Cohen’s d = .2) or moderate (Cohen’s d = .5) effect on <span class="math inline">\(Y\)</span>. In these simulations, non-significant effects for <span class="math inline">\(X\)</span> were, by definition, Type II errors. Given the substantial problems with Type I error rate inflation noted above, we do not consider the p-hacking approach to be viable and therefore did not evaluate Type II error rates for this approach.</p>
 <p><a href="#fig-bar-2" class="quarto-xref">Figure&nbsp;3</a> shows the average Type II error rate across all research contexts for each approach. The a priori no covariates approach displayed the highest average Type II error, which reinforces the value of using covariates to increase statistical power to detect true effects. Among the approaches that used covariates, the data-driven approaches generally produced modestly lower average Type II error rates than the a priori all covariates approach. Furthermore, the data-driven approaches that included <span class="math inline">\(X\)</span> displayed modestly lower average Type II error rates than the comparable approach that did not include <span class="math inline">\(X\)</span> in the screening model.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-bar-2">
-<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-bar-2" class="cell" data-fig-width="8.75">
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-fig-bar-2" class="cell" data-fig-width="8.75">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>type_II_summary <span class="op">&lt;-</span> d_02 <span class="op">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  bind_rows(d_05) <span class="op">|&gt;</span> </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">filter</span>(method <span class="op">!=</span> <span class="st">"p-hacking"</span>) <span class="op">|&gt;</span> </span>
@@ -929,7 +858,7 @@ Figure&nbsp;3: Type II Error by Method. Average type II error rate across all re
 </div>
 <p>We also assessed Type II error by individual research context (<a href="#fig-panel-2" class="quarto-xref">Figure&nbsp;4</a>). Across all research context, using no covariates was associated with higher Type II error. Using all available covariates or selection methods that do not control for <span class="math inline">\(X\)</span> performed had higher Type II error rates compared to the other methods when sample sizes were low. This pattern was especially notable for using all covariates and an all covariates linear model without <span class="math inline">\(X\)</span>. As sample size increased, the methods performed comparably with respect to Type II error. Using all covariates or an all covariates linear model without <span class="math inline">\(X\)</span> for selection produced higher Type II error rates compared to other methods when there was a larger number of covariates available. The all covariates linear model without <span class="math inline">\(X\)</span> also produced higher Type II error rates, compared to other methods when the proportion of good covariates was higher.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-panel-2">
-<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-fig-panel-2" class="cell" data-fig-height="9" data-fig-width="7.5">
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-fig-panel-2" class="cell" data-fig-height="9" data-fig-width="7.5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  (observations_2 <span class="op">+</span> covs_2)<span class="op">/</span>(good_covs_2 <span class="op">+</span> ycor_2)<span class="op">/</span>(b_x <span class="op">+</span> plot_spacer()) <span class="op">+</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  plot_layout(guides <span class="op">=</span> <span class="st">"collect"</span>) <span class="op">&amp;</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  theme(legend.position <span class="op">=</span> <span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -950,9 +879,9 @@ Figure&nbsp;4: Type II error by method and research context. Plots are paneled b
 </section>
 <section id="parameter-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="parameter-estimates">Parameter Estimates</h2>
-<p>When the assumptions of the general linear model are met, parameter estimates are unbiased and the sampling distribution for these parameter estimates follow the t-distribution. <a href="#tbl-est" class="quarto-xref">Table&nbsp;4</a> shows the mean parameter estimate of <span class="math inline">\(X\)</span> for all approaches separately by effect size (<span class="math inline">\(\beta_x = 0\)</span>, <span class="math inline">\(\beta_x = 0.2\)</span>, <span class="math inline">\(\beta_x = 0.5\)</span>). We present sampling distributions for the parameter estimates in the supplement. All approaches yielded unbiased estimates when the true effect size is 0 but the shape of the sampling distribution for the p-hacking approach was distorted (bi-modal). When there is a true non-zero effect, the a priori approaches and the data-driven approaches that include <span class="math inline">\(X\)</span> yielded unbiased parameter estimates, whereas there was slight conservative (under-estimation) bias in the parameter estimates for the data-driven approaches that do not include <span class="math inline">\(X\)</span>. In contrast, p-hacking yielded more substantial optimistic (over-estimation) bias in the parameter estimates when there is a non-zero effect.</p>
+<p>When the assumptions of the general linear model are met, parameter estimates are unbiased and the sampling distribution for these parameter estimates follow the t-distribution. <a href="#tbl-est" class="quarto-xref">Table&nbsp;3</a> shows the mean parameter estimate of <span class="math inline">\(X\)</span> for all approaches separately by effect size (<span class="math inline">\(\beta_x = 0\)</span>, <span class="math inline">\(\beta_x = 0.2\)</span>, <span class="math inline">\(\beta_x = 0.5\)</span>). We present sampling distributions for the parameter estimates in the supplement. All approaches yielded unbiased estimates when the true effect size is 0 but the shape of the sampling distribution for the p-hacking approach was distorted (bi-modal). When there is a true non-zero effect, the a priori approaches and the data-driven approaches that include <span class="math inline">\(X\)</span> yielded unbiased parameter estimates, whereas there was slight conservative (under-estimation) bias in the parameter estimates for the data-driven approaches that do not include <span class="math inline">\(X\)</span>. In contrast, p-hacking yielded more substantial optimistic (over-estimation) bias in the parameter estimates when there is a non-zero effect.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_tables.qmd" data-notebook-title="Make Tables for Main Manuscript" data-notebook-cellid="cell-tbl-est">
-<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>table <span class="op">|&gt;</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  rename(Method <span class="op">=</span> method, </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         `No effect ($\\beta_{x}<span class="op">=</span><span class="dv">0</span>$)` <span class="op">=</span> `<span class="dv">0</span>`,</span>
@@ -990,10 +919,10 @@ Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
 Use 'xfun::attr2()' instead.
 See help("Deprecated")</code></pre>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="tbl-est" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="tbl-est" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4: Mean estimates of effect size by method and true effect size
+Table&nbsp;3: Mean estimates of effect size by method and true effect size
 </figcaption>
 <div aria-describedby="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display">
@@ -1088,7 +1017,7 @@ Table&nbsp;4: Mean estimates of effect size by method and true effect size
 </div></div>
 </div>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-distribution-bx">
-<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-fig-distribution-bx" class="cell" data-fig-height="8">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-fig-distribution-bx" class="cell" data-fig-height="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>est_d_0 <span class="op">/</span> est_d_02 <span class="op">/</span> est_d_05</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

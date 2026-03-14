@@ -112,9 +112,12 @@ sigma <- matrix(c(
   0.0, 0.0, 0.0, 1.0, 0.0,
   0.0, 0.0, 0.0, 0.0, 1.0
 ), nrow = 5, byrow = TRUE)
-```
 
-{{< embed notebooks/mak_tables.qmd#tbl-sigma >}}
+rownames(sigma) <- c("Y", "C1", "C2", "C3", "C4")
+colnames(sigma) <- c("Y", "C1", "C2", "C3", "C4")
+
+sigma
+```
 
 The covariance matrix can then be used to generate a multivariate normal dataset of $Y$ and $C_1...C_4$ for 100 observations where all variables have a mean of 0.
 Following this, the effect of the IV ($X$) can be added into $Y$.
@@ -132,7 +135,7 @@ df[, 1] <- df[, 1]+ .2 * x # <3>
 2. Create a dichotomous focal independent variable ($X$). 
 3. Add in $X$ effect on $Y$.
 
-For each simulated dataset in each research context, we use each of the 9 covariate selection approaches to determine which covariates to use in the primary analysis to test the effect of $X$ on $Y$. For example,  $lm(Y \sim X + C_1 + C_4, \text{data} = \text{df}$, if covariates 1 and 4 were selected by the current selection approach.  From each primary analysis, we saved the research context characteristics, the covariate selection approach used, and the parameter estimate for $X$, p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05 from the primary analysis.  
+For each simulated dataset in each research context, we use each of the 9 covariate selection approaches to determine which covariates to use in the primary analysis to test the effect of $X$ on $Y$. For example,  $lm(Y \sim X + C_1 + C_4, \text{data} = \text{df})$, if covariates 1 and 4 were selected by the current selection approach.  From each primary analysis, we saved the research context characteristics, the covariate selection approach used, and the parameter estimate for $X$, p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05 from the primary analysis.  
 
 For research contexts where the population parameter for $X$ is 0 (i.e., $X$ has no effect on $Y$), we assess and report the Type I error rates associated with each covariate selection approach by research context characteristics. For research contexts where the population parameter for $X$ is 0.2 or 0.5 (i.e., $X$ has an effect on $Y$), we assess and report the Type II error rate for each covariate selection method by research context characteristics.  We also provide descriptive statistics and sampling distributions (from the 40,000 simulations) of the parameter estimate for $X$ across research contexts for each covariate selection approach, separately by true effect size for $X$ (0, 0.2, and 0.5). An interactive detailed dashboard of average error rates for all combinations of research context variables is accessible through our OSF page ([https://osf.io/zh5gn/](https://osf.io/zh5gn/)).<!--shiny link now on OSF, nothing else on OSF yet-->
 

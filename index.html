@@ -465,73 +465,14 @@ Table&nbsp;2: Research context variables and values
 <p>We simulated 40,000 datasets within each research context. For each simulated dataset, we generated scores for a dichotomous focal independent variable (<span class="math inline">\(X\)</span>), varying numbers of quantitative covariates (<span class="math inline">\(C\)</span>), and a quantitative outcome (<span class="math inline">\(Y\)</span>). To generate these datasets, we first created <span class="math inline">\(N\)</span> scores for a set of multivariate normal distributed covariates and <span class="math inline">\(Y\)</span>, with their variances = 1 and the number of covariates, and the covariances among the covariates and with <span class="math inline">\(Y\)</span> dictated with the research context (see points 3-5 above). Consistent with the manipulation of the IV following measurement of the baseline covariates, the effect of <span class="math inline">\(X\)</span> was (<span class="math inline">\(\beta_x * X\)</span>) was then added into <span class="math inline">\(Y\)</span>.</p>
 <p>Below, we display an exemplar covariance matrix and subsequent R code to generate a simulated dataset for a research context with a small population effect size for the IV (<span class="math inline">\(\beta_{x} = 0.2\)</span>), a sample size of 100, and four covariates, where 50% of the covariates have a 0.50 correlation with the outcome and 0.30 correlations with each other</p>
 <p>This is the relevant covariance matrix (sigma).</p>
-<div class="quarto-embed-nb-cell">
 <div class="cell">
-<div id="tbl-sigma" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3
-</figcaption>
-<div aria-describedby="tbl-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display">
-<table class="lightable-classic do-not-create-environment caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$Y$</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$C_1$</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$C_2$</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$C_3$</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">$C_4$</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">$Y$</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">$C_1$</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">$C_2$</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">1.0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">$C_3$</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">$C_4$</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0.0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</figure>
-</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Y  C1  C2 C3 C4
+Y  1.0 0.5 0.5  0  0
+C1 0.5 1.0 0.3  0  0
+C2 0.5 0.3 1.0  0  0
+C3 0.0 0.0 0.0  1  0
+C4 0.0 0.0 0.0  0  1</code></pre>
 </div>
 </div>
 <p>The covariance matrix can then be used to generate a multivariate normal dataset of <span class="math inline">\(Y\)</span> and <span class="math inline">\(C_1...C_4\)</span> for 100 observations where all variables have a mean of 0. Following this, the effect of the IV (<span class="math inline">\(X\)</span>) can be added into <span class="math inline">\(Y\)</span>.</p>
@@ -557,7 +498,7 @@ Table&nbsp;3
 </dl>
 </div>
 </div>
-<p>For each simulated dataset in each research context, we use each of the 9 covariate selection approaches to determine which covariates to use in the primary analysis to test the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. For example, <span class="math inline">\(lm(Y \sim X + C_1 + C_4, \text{data} = \text{df}\)</span>, if covariates 1 and 4 were selected by the current selection approach. From each primary analysis, we saved the research context characteristics, the covariate selection approach used, and the parameter estimate for <span class="math inline">\(X\)</span>, p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05 from the primary analysis.</p>
+<p>For each simulated dataset in each research context, we use each of the 9 covariate selection approaches to determine which covariates to use in the primary analysis to test the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. For example, <span class="math inline">\(lm(Y \sim X + C_1 + C_4, \text{data} = \text{df})\)</span>, if covariates 1 and 4 were selected by the current selection approach. From each primary analysis, we saved the research context characteristics, the covariate selection approach used, and the parameter estimate for <span class="math inline">\(X\)</span>, p-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05 from the primary analysis.</p>
 <p>For research contexts where the population parameter for <span class="math inline">\(X\)</span> is 0 (i.e., <span class="math inline">\(X\)</span> has no effect on <span class="math inline">\(Y\)</span>), we assess and report the Type I error rates associated with each covariate selection approach by research context characteristics. For research contexts where the population parameter for <span class="math inline">\(X\)</span> is 0.2 or 0.5 (i.e., <span class="math inline">\(X\)</span> has an effect on <span class="math inline">\(Y\)</span>), we assess and report the Type II error rate for each covariate selection method by research context characteristics. We also provide descriptive statistics and sampling distributions (from the 40,000 simulations) of the parameter estimate for <span class="math inline">\(X\)</span> across research contexts for each covariate selection approach, separately by true effect size for <span class="math inline">\(X\)</span> (0, 0.2, and 0.5). An interactive detailed dashboard of average error rates for all combinations of research context variables is accessible through our OSF page (<a href="https://osf.io/zh5gn/">https://osf.io/zh5gn/</a>).<!--shiny link now on OSF, nothing else on OSF yet--></p>
 </section>
 </section>
@@ -641,13 +582,13 @@ Figure&nbsp;4: Type II error by method and research context. Plots are paneled b
 </section>
 <section id="parameter-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="parameter-estimates">Parameter Estimates</h2>
-<p>When the assumptions of the general linear model are met, parameter estimates are unbiased and the sampling distribution for these parameter estimates follow the t-distribution. <a href="#tbl-est" class="quarto-xref">Table&nbsp;4</a> shows the mean parameter estimate of <span class="math inline">\(X\)</span> for all approaches separately by effect size (<span class="math inline">\(\beta_x = 0\)</span>, <span class="math inline">\(\beta_x = 0.2\)</span>, <span class="math inline">\(\beta_x = 0.5\)</span>). We present sampling distributions for the parameter estimates in the supplement. All approaches yielded unbiased estimates when the true effect size is 0 but the shape of the sampling distribution for the p-hacking approach was distorted (bi-modal). When there is a true non-zero effect, the a priori approaches and the data-driven approaches that include <span class="math inline">\(X\)</span> yielded unbiased parameter estimates, whereas there was slight conservative (under-estimation) bias in the parameter estimates for the data-driven approaches that do not include <span class="math inline">\(X\)</span>. In contrast, p-hacking yielded more substantial optimistic (over-estimation) bias in the parameter estimates when there is a non-zero effect.</p>
+<p>When the assumptions of the general linear model are met, parameter estimates are unbiased and the sampling distribution for these parameter estimates follow the t-distribution. <a href="#tbl-est" class="quarto-xref">Table&nbsp;3</a> shows the mean parameter estimate of <span class="math inline">\(X\)</span> for all approaches separately by effect size (<span class="math inline">\(\beta_x = 0\)</span>, <span class="math inline">\(\beta_x = 0.2\)</span>, <span class="math inline">\(\beta_x = 0.5\)</span>). We present sampling distributions for the parameter estimates in the supplement. All approaches yielded unbiased estimates when the true effect size is 0 but the shape of the sampling distribution for the p-hacking approach was distorted (bi-modal). When there is a true non-zero effect, the a priori approaches and the data-driven approaches that include <span class="math inline">\(X\)</span> yielded unbiased parameter estimates, whereas there was slight conservative (under-estimation) bias in the parameter estimates for the data-driven approaches that do not include <span class="math inline">\(X\)</span>. In contrast, p-hacking yielded more substantial optimistic (over-estimation) bias in the parameter estimates when there is a non-zero effect.</p>
 <div class="quarto-embed-nb-cell">
 <div class="cell">
 <div id="tbl-est" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4: Mean estimates of effect size by method and true effect size
+Table&nbsp;3: Mean estimates of effect size by method and true effect size
 </figcaption>
 <div aria-describedby="tbl-est-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display">
