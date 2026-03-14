@@ -748,7 +748,7 @@ Research context variables and values
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sigma) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;$Y$&quot;</span>, <span class="st">&quot;$C_1$&quot;</span>, <span class="st">&quot;$C_2$&quot;</span>, <span class="st">&quot;$C_3$&quot;</span>, <span class="st">&quot;$C_4$&quot;</span>)</span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>sigma <span class="sc">|&gt;</span> </span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kbl</span>(<span class="at">escape =</span> <span class="cn">FALSE</span>, <span class="at">format =</span> <span class="st">&quot;html&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">escape =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="tbl-sigma" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -760,7 +760,7 @@ Research context variables and values
 <table class="lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;">   </th>
+   <th style="text-align:left;">  </th>
    <th style="text-align:right;"> $Y$ </th>
    <th style="text-align:right;"> $C_1$ </th>
    <th style="text-align:right;"> $C_2$ </th>
@@ -840,7 +840,7 @@ Research context variables and values
 <span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Method) <span class="sc">|&gt;</span> </span>
 <span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">Method =</span> <span class="st">&quot;A priori selection&quot;</span>, <span class="at">.before =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">Method =</span> <span class="st">&quot;Data-driven selection&quot;</span>, <span class="at">.after =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">escape =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pack_rows</span>(<span class="cn">NULL</span>, <span class="dv">2</span>, <span class="dv">3</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pack_rows</span>(<span class="cn">NULL</span>, <span class="dv">5</span>, <span class="dv">11</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
