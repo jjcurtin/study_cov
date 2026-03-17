@@ -38,9 +38,9 @@ d_full <- d_full |>
                                       "partial_r", "full_lm_wo_x", "full_lm",  
                                       "lasso_wo_x", "lasso"),
                          labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Single covariate lm", "Single covariate lm with X", 
-                                    "All covariates lm", "All covariates lm with X", 
-                                    "All covariates LASSO", "All covariates LASSO with X")))
+                                    "Separate covariate lm", "Separate covariate lm with X", 
+                                    "Simultaneous covariate lm", "Simulataneouis covariate lm with X", 
+                                    "Simultaneous covariate LASSO", "Simultaneous covariate LASSO with X")))
 
 options(digits = 3)
 theme_set(theme_classic())
@@ -49,43 +49,43 @@ theme_set(theme_classic())
 method_colors <- c("No covariates" = "#FF7D00",
                    "All covariates" = "#9E5900",
                    "p-hacking" = "#C92C04",
-                   "Single covariate lm" = "#5489BA",
-                   "Single covariate lm with X" = "#5489BA",
-                   "All covariates lm" = "#664896",
-                   "All covariates lm with X" = "#664896",
-                   "All covariates LASSO" = "#4A7C59",
-                   "All covariates LASSO with X" = "#4A7C59")
+                   "Separate covariate lm" = "#5489BA",
+                   "Separate covariate lm with X" = "#5489BA",
+                   "Simultaneous covariate lm" = "#664896",
+                   "Simultaneous covariate lm with X" = "#664896",
+                   "Simultaneous covariate LASSO" = "#4A7C59",
+                   "Simultaneous covariate LASSO with X" = "#4A7C59")
 
 
 method_linetypes <- c("No covariates" = "solid",
                      "All covariates" = "solid",
                      "p-hacking" = "solid",
-                     "Single covariate lm" = "dashed",
-                     "Single covariate lm with X" = "solid",
-                     "All covariates lm" = "dashed",
-                     "All covariates lm with X" = "solid",
-                     "All covariates LASSO" = "dashed",
-                     "All covariates LASSO with X" = "solid")
+                     "Separate covariate lm" = "dashed",
+                     "Separate covariate lm with X" = "solid",
+                     "Simultaneous covariate lm" = "dashed",
+                     "Simultaneous covariate lm with X" = "solid",
+                     "Simultaneous covariate LASSO" = "dashed",
+                     "Simultaneous covariate LASSO with X" = "solid")
 
 method_linewidths <- c("No covariates" = .75,
                      "All covariates" = .75,
                      "p-hacking" = .5,
-                     "Single covariate lm" = .5,
-                     "Single covariate lm with X" = .5,
-                     "All covariates lm" = .5,
-                     "All covariates lm with X" = .5,
-                     "All covariates LASSO" = .5,
-                     "All covariates LASSO with X" = .5)
+                     "Separate covariate lm" = .5,
+                     "Separate covariate lm with X" = .5,
+                     "Simultaneous covariate lm" = .5,
+                     "Simultaneous covariate lm with X" = .5,
+                     "Simultaneous covariate LASSO" = .5,
+                     "Simultaneous covariate LASSO with X" = .5)
 
 method_patterns <- c("No covariates" = "none",
                      "All covariates" = "none",
                      "p-hacking" = "none",
-                     "Single covariate lm" = "stripe",
-                     "Single covariate lm with X" = "none",
-                     "All covariates lm" = "stripe",
-                     "All covariates lm with X" = "none",
-                     "All covariates LASSO" = "stripe",
-                     "All covariates LASSO with X" = "none")
+                     "Separate covariate lm" = "stripe",
+                     "Separate covariate lm with X" = "none",
+                     "Simultaneous covariate lm" = "stripe",
+                     "Simultaneous covariate lm with X" = "none",
+                     "Simultaneous covariate LASSO" = "stripe",
+                     "Simultaneous covariate LASSO with X" = "none")
 ```
 
 
@@ -97,9 +97,9 @@ d <- d |>
                                             "partial_r", "full_lm_wo_x", "full_lm",  
                                            "lasso_wo_x", "lasso"),
                          labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Single covariate lm", "Single covariate lm with X", 
-                                    "All covariates lm", "All covariates lm with X", 
-                                    "All covariates LASSO", "All covariates LASSO with X")))
+                                    "Separate covariate lm", "Separate covariate lm with X", 
+                                    "Simultaneous covariate lm", "Simultaneous covariate lm with X", 
+                                    "Simultaneous covariate LASSO", "Simultaneous covariate LASSO with X")))
 
 d_0 <- d |> 
   filter(b_x == 0) 
@@ -121,12 +121,12 @@ type_I_summary <- d_0 |>
                             "p-hacking" ~ "p-hacking",
                             "No covariates" ~ "No selection",
                             "All covariates" ~ "No selection",
-                            "Single covariate lm" ~ "Single covariate lm",
-                            "Single covariate lm with X" ~ "Single covariate lm",
-                            "All covariates lm" ~ "All covariates lm",
-                            "All covariates lm with X" ~ "All covariates lm",
-                            "All covariates LASSO" ~ "All covariates LASSO",
-                            "All covariates LASSO with X" ~ "All covariates LASSO"))
+                            "Separate covariate lm" ~ "Separate covariate lm",
+                            "Separate covariate lm with X" ~ "Separate covariate lm",
+                            "Simultaneous covariate lm" ~ "Simultaneous covariate lm",
+                            "Simultaneous covariate lm with X" ~ "Simultaneous covariate lm",
+                            "Simultaneous covariate LASSO" ~ "Simultaneous covariate LASSO",
+                            "Simultaneous covariate LASSO with X" ~ "Simultaneous covariate LASSO"))
 
 ```
 
@@ -172,7 +172,7 @@ segment_labels <- tibble::tibble(
         mean(c(6.2, 8.0)),
         mean(c(8.4, 10.2))),
   y = c(.22, .22, .08, .08, .08) + 0.015,   
-  label = c("A priori selection", "Data-driven selection", "Single covariate lm", "All covariates lm", "All covariates LASSO")
+  label = c("A priori selection", "Candidate data-driven selection", "Separate covariate lm", "Simultaneous covariate lm", "Simultaneous covariate LASSO")
 )
 
 ggplot(
@@ -212,7 +212,7 @@ ggplot(
   scale_x_continuous(
     breaks = x_breaks,
     labels = x_labels,
-    expand = expansion(mult = c(0.02, 0.05))  # trim extra margin if you like
+    expand = expansion(mult = c(0.02, 0.05)) 
   ) +
   scale_pattern_manual(values = method_patterns) +
   scale_fill_manual(values = method_colors) +
@@ -269,12 +269,12 @@ good_covs <- d_0 |>
   ggplot(aes(x = p_good_covs, y = prop_sig, color = method, linetype = method, 
              linewidth = method)) + 
   geom_line() +
-  scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
+  scale_x_continuous(breaks = c(0.25, 0.50, 0.75), labels = c(25, 50, 75)) +
   scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, .25, .30), 
                      limits = c(.03, .30)) +
   labs(y = "Type I Error",
        x = NULL,
-       subtitle = "Proportion of Good Covariates") +
+       subtitle = "Percentage of Good Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) +
   scale_linewidth_manual(values = method_linewidths) +
@@ -304,7 +304,7 @@ ycor <- d_0 |>
 
 ```{r}
 #| label: fig-type1-panel
-#| fig-cap: "Type I error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."
+#| fig-cap: "Type I error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, percentage of good covariates (i.e., covariates with non-zero correlations with Y), and Y-covariate correlation strength). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."
 #| fig-height: 6
 #| fig-width: 8
 
@@ -329,12 +329,12 @@ type_II_summary <- d_02 |>
                             "p-hacking" ~ "p-hacking",
                             "No covariates" ~ "No selection",
                             "All covariates" ~ "No selection",
-                            "Single covariate lm" ~ "Single covariate lm",
-                            "Single covariate lm with X" ~ "Single covariate lm",
-                            "All covariates lm" ~ "All covariates lm",
-                            "All covariates lm with X" ~ "All covariates lm",
-                            "All covariates LASSO" ~ "All covariates LASSO",
-                            "All covariates LASSO with X" ~ "All covariates LASSO"))
+                            "Separate covariate lm" ~ "Separate covariate lm",
+                            "Separate covariate lm with X" ~ "Separate covariate lm",
+                            "Simultaneous covariate lm" ~ "Simultaneous covariate lm",
+                            "Simultaneous covariate lm with X" ~ "Simultaneous covariate lm",
+                            "Simultaneous covariate LASSO" ~ "Simultaneous covariate LASSO",
+                            "Simultaneous covariate LASSO with X" ~ "Simultaneous covariate LASSO"))
 
 # ---- Parameters
 gap_after_idx <- c(2, 4, 6)  
@@ -371,7 +371,7 @@ segment_labels <- tibble::tibble(
         mean(c(5, 6.8)),
         mean(c(7.2, 9))),
   y = c(.50, .50, .40, .40, .40) + 0.015,   
-  label = c("A priori selection", "Data-driven selection", "Single covariate lm", "All covariates lm", "All covariates LASSO")
+  label = c("A priori selection", "Candidate data-driven selection", "Separate covariate lm", "Simultaneous covariate lm", "Simultaneous covariate LASSO")
 )
 
 
@@ -412,7 +412,7 @@ ggplot(
   scale_x_continuous(
     breaks = x_breaks,
     labels = x_labels,
-    expand = expansion(mult = c(0.02, 0.05))  # trim extra margin if you like
+    expand = expansion(mult = c(0.02, 0.05))  
   ) +
   scale_pattern_manual(values = method_patterns) +
   scale_fill_manual(values = method_colors) +
@@ -451,8 +451,8 @@ covs_2 <- d_02 |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(4, 8, 12, 16, 20)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50),
-                    limits = c(0.02, .50)) +
+  scale_y_continuous(breaks = c(0.20, .30, .40, .50),
+                    limits = c(0.2, .50)) +
   labs(y = NULL,
        x = NULL,
        subtitle = "Number of Covariates") +
@@ -470,12 +470,12 @@ good_covs_2 <-d_02 |>
   ggplot(aes(x = p_good_covs, y = prop_not_sig, color = method, linetype = method,
              linewidth = method)) + 
   geom_line() +
-  scale_x_continuous(breaks = c(0.25, 0.50, 0.75)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50 ),
-                    limits = c(0.02, .50)) +
+  scale_x_continuous(breaks = c(0.25, 0.50, 0.75), labels = c(25, 50, 75)) +
+  scale_y_continuous(breaks = c(0.20, .30, .40, .50 ),
+                    limits = c(0.2, .50)) +
   labs(y = "Type II Error",
        x = NULL,
-       subtitle = "Proportion of Good Covariates") +
+       subtitle = "Percentage of Good Covariates") +
   scale_linetype_manual(values = method_linetypes) +
   scale_color_manual(values = method_colors) +
   scale_linewidth_manual(values = method_linewidths) +
@@ -491,8 +491,8 @@ ycor_2 <- d_02 |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50),
-                    limits = c(0.02, .52)) +
+  scale_y_continuous(breaks = c(0.20, .30, .40, .50),
+                    limits = c(0.2, .52)) +
   labs(y = NULL,
        x = NULL,
        subtitle = "Y-Covariate Correlation Strength") +
@@ -528,7 +528,7 @@ b_x <- d_02 |>
 
 ```{r}
 #| label: fig-panel-2
-#| fig-cap: "Type II error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, proportion of good covariates, and Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."
+#| fig-cap: "Type II error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, percentage of good covariates covariates (i.e., covariates with non-zero correlations with Y), and Y-covariate correlation strength), and Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."
 #| fig-height: 9
 #| fig-width: 7.5
 
