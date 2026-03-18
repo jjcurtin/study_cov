@@ -1,0 +1,222 @@
+---
+title: Evaluating Methods for Covariate Selection in Experimental Designs
+author:
+  - name: Kendra Wyant
+    corresponding: false
+    affiliations:
+      - Department of Psychology, University of Wisconsin-Madison
+  - name: Lauren Khoury
+    corresponding: false
+    affiliations:
+      - Department of Psychology, University of Wisconsin-Madison
+  - name: Markus Brauer
+    corresponding: false
+    affiliations:
+      - Department of Psychology, University of Wisconsin-Madison
+  - name: John J. Curtin 
+    corresponding: true
+    email: jjcurtin@wisc.edu
+    affiliations:
+      - Department of Psychology, University of Wisconsin-Madison 
+abstract: |
+  Abstract of paper goes here and can span several lines.
+date: last-modified
+bibliography: references.bib
+bibliographystyle: apa
+number-sections: false 
+editor_options: 
+  chunk_output_type: console
+---
+
+<!-- Outlets:
+Psychological Science (first choice)
+- 2,000 word limit for intro/discussion/notes/acknowledgements/appendices
+- No word count for Methods and Results, but they encourage no more than 2,500 words 
+- No figure/table limit
+- 40 reference limit
+- Open access option ($1000 extra)
+
+Plos One
+- No word count or figure limit
+- Open access journal ($2000 - $3000)
+
+??Psych Methods??
+-->
+# Introduction
+
+Research in Psychology often uses experimental manipulations to establish causal relationships between a focal independent variable (IV) and a psychological outcome. For example, participants may be randomly assigned to receive a moderate dose of alcohol or placebo to evaluate the effect of alcohol consumption on response to a laboratory stressor [@bradfordHowBadCould2013; @hefnerAlcoholStressResponse2013].  [Markus, can you provide a simple second example that focuses on an IV manipulation that is social psych relevant?)
+
+A valid test of the effect of an IV requires adequate statistical power [@cohenStatisticalPowerAnalysis1988; @cohenPowerPrimer1992]. By definition, low statistical power is associated with a high probability of a Type II error (i.e., failure to reject a false null hypothesis).  Furthermore, significant effects detected by low-powered studies may not replicate (due to low positive predictive value) and estimates of their effect size may be positively biased (due to publication bias).  For all these reasons, methods to increase statistical power are critically important for a robust scientific literature [@cohenStatisticalPowerAbnormalsocial1962; @buttonPowerFailureWhy2013]. 
+
+The use of covariates that are measured at baseline (i.e., prior to random assignment/manipulation of the focal IV) has been shown to increase statistical power and reduce Type II errors by accounting for unexplained variance in the outcome that would otherwise be treated as noise in the analysis [@thompsonCovariateAdjustmentHad2015; @hernandezCovariateAdjustmentRandomized2004; @hernandezRandomizedControlledTrials2006; @kahanRisksRewardsCovariate2014; @vanbreukelenANCOVAChangeBaseline2006; @egbewaleBiasPrecisionStatistical2014]. For example, in the previously described test of the effect of alcohol on stress response, baseline measures of both trait anxiety and fearfulness could be included as covariates.  These measures would not be systematically correlated with the IV because they are collected prior to random assignment.  They would also be expected to correlate with laboratory stress response based on prior research. Given this, the addition of these measures as covariates in the analysis could reduce variance in stress response that is unrelated to the manipulation to increase statistical power to test the IV effect.
+
+However, selection of the optimal covariates to include to increase statistical power is not straightforward. Historically, researchers often iterated over a large set of available covariates and included only those covariates that lowered the *p*-value for the test of their focal IV.  Today, we recognize that this approach, known as *p*-hacking [@simonsohnPcurveKeyFiledrawer2014], seriously undermines the statistical validity of the analyses by substantially increasing the probability of Type I errors (i.e., rejecting the null hypothesis when it is not false [@simmonsFalsepositivePsychologyUndisclosed2011; @ioannidisWhyMostPublished2005; @schelchterPosthocSelectionCovariates1985; @beachChoosingCovariatesAnalysis1989]). Statistically valid analyses require both low probability of Type II errors and control of Type I errors at the specified value of alpha (e.g., 0.05).  
+
+Given that *p*-hacking compromises statistical validity, we are left with questions about appropriate covariate selection approaches that both minimize Type II errors and control Type I errors at alpha.  A priori, the researcher could decide to avoid the use of covariates altogether with no risk to Type I error control.  But statistical power would likely be lost by this decision.  At the other extreme, the researcher could plan to include all available covariates that are reasonably believed to account for unexplained variance in the outcome in the statistical analysis. This decision, if made a priori, would also not be expected to inflate the Type I error rate. However, this approach may not yield optimal statistical power because a subset of these covariates may not manifest strong, or any, relationship with the outcome in any particular study if they have not been previously well-established as robust predictors.  Furthermore, available covariates are often correlated with each other (e.g., trait anxiety and fearfulness from the previous example), which reduces their potential benefit in reducing noise relative to their cost to degrees of freedom in the analysis.  
+
+Given these possibly sub-optimal previous options, it may be that a data-driven approach to covariate selection could improve statistical validity relative to the a priori all or no covariate approaches.  An optimal data-driven covariate selection method may be able to select the covariates that provide the greatest increase in power (e.g., covariates highly correlated with the outcome [@kahanRisksRewardsCovariate2014]) with the lowest cost to degrees of freedom (e.g., by including only covariates that contribute to unique reductions in variance). Of course, statistically valid data-driven approaches must also not meaningfully inflate the Type I error rate, as occurs with *p*-hacking. 
+
+In this study, we use simulation methods to evaluate six candidate data-driven approaches to select an optimal set of covariates when testing the effect of a focal manipulated IV.  For each approach, we use covariate "screening models" to identify which covariates display significant relationships with the outcome variable and will be included in the subsequent primary analysis that tests the focal IV. Across these screening models, we consider three modeling approaches (i.e., linear models that screen each covariate separately in its own model, linear models that screen all covariates simultaneously in a single model, and LASSO [@tibshiraniRegressionShrinkageSelection1996a] models that screen all covariates simultaneously in a single model).  Across these modeling approaches, we also either include or exclude the focal IV in the screening models for a total of six candidate data-driven approaches.  We benchmark these candidate data-driven approaches against a priori "all covariates" and "no covariates" approaches as well as the *p*-hacking approach (a statistically invalid data-driven approach).  For all approaches we quantify the probability of Type I and Type II errors across a variety of research contexts that vary by sample size, number of available covariates, strength of covariate effects, effect size for the IV and other relevant context characteristics.  We use results from these simulations to provide clear and accessible guidance about how best to select an optimal set of covariates to increase statistical power when testing the effect of a manipulated IV in various research contexts.
+
+
+# Methods
+
+## Covariate Selection Approaches
+
+As described above, we evaluated six candidate data-driven and three benchmark (*p*-hacking, all covariates, no covariates) approaches to select covariates to use in a primary analysis that tested the effect of a focal dichotomous IV (notated as $X$).  A summary of these nine approaches is presented in @tbl-methods.
+
+For the six candidate data-driven approaches, we selected covariates for the primary analysis of $X$ by fitting preliminary covariate screening models that used either the linear model (i.e., ordinary least squares regression) or LASSO. Across these approaches we considered screening models that either included or did not include $X$ in the screening model.  
+
+For the candidate approaches that used general linear models for screening, we considered approaches where all covariates were screened simultaneously in one model or where the covariates were screened one at a time in separate models. Across these approaches, a covariate was selected to be included in the primary analysis if the *p*-value for that covariate was less than 0.05 in the screening model that evaluated it. The *p*-value for $X$ was not used and $X$ was only included to parse its variance from $Y$ when evaluating the covariates.  
+
+For the candidate approaches that used LASSO (with and without $X$) for screening, the screening model simultaneously included all covariates. Also, for the LASSO screening model that included $X$, the regularization penalty (lambda) for $X$ was set to 0 so that $X$ was always retained in the screening model.  Covariates were selected to be included in the primary analysis if they were retained by LASSO in the screening model (i.e., did not have their parameter estimate set to 0).
+
+We benchmarked these six candidate data-driven approaches against a statistically invalid data-driven approach (*p*-hacking) and two a priori selection approaches that did not use the data to screen and select covariates.  The *p*-hacking approach used separate screening models for each covariate and each of these models also included $X$.  Covariates were selected to be included in the primary analysis if the *p*-value for $X$ was reduced (relative to its bivariate relationship with $Y$) in the screening model that included that covariate. The all covariates approach and the no covariates approach did not use screening models but instead used either all or none of the available covariates in the specific research context in the primary analysis of $X$. 
+
+ 
+{{< embed notebooks/mak_tables.qmd#tbl-methods >}}
+
+
+## Research Contexts
+We manipulated several characteristics designed to mimic a range of research contexts that researchers in psychology might encounter in their studies. We crossed all levels of each characteristic to create a total of 540 unique research contexts to allow results from our simulations to generalize across the diversity of contexts within which psychology studies are situated. A summary of these characteristics is presented in @tbl-dictionary. They include:
+
+1. **The population parameter for the focal IV** ($\beta_X$). We selected values that represent null ($\beta_{X} = 0$), small ($\beta_{X} = 0.2$) and medium ($\beta_{X} = 0.5$) effect sizes for the IV. Given that the standard deviation of the outcome variable was set to 1 in all simulations, these parameter values correspond to null, small, and medium Cohen's d effect sizes [@cohenStatisticalPowerAnalysis1988].
+
+2. **The sample size** ($N$). We chose values for the number of observations that pertain to common sample sizes in experimental research in psychology: 50, 100, 150, 200, 300, and 400 observations.
+
+3. **The number of covariates available** ($N_{cov}$). We selected a wide range of possible scenarios: 4, 8, 12, 16, or 20 available covariates.
+
+4. **The percentage of covariates with non-zero correlations with the outcome** ($\%_{cov}$). We simulated research contexts where 25%, 50% or 75% of the available covariates had non-zero correlations with the outcome in the population.  This allowed us to model situations where the researcher has an exploratory vs. more well-established set of covariates at their disposal. 
+
+5. **The magnitude of the correlation between the covariates and $Y$** ($r_{cov-Y}$). All non-zero covariates (see characteristic 4) were given a moderate or large relationship to the outcome $Y$ (i.e., $r_{cov-Y}$ = 0.3 or 0.5, respectively). Given that these covariates are all correlated with the outcome, it is expected that they would typically also be correlated with each other. Therefore, we assigned a moderate 0.3 correlation among each of these non-zero covariates. 
+
+
+{{< embed notebooks/mak_tables.qmd#tbl-dictionary >}}
+
+
+## Data Analytic Plan
+
+All data analyses were done in R using the Tidyverse ecosystem [@kuhnTidymodelsCollectionPackages2020] and the RStudio IDE [@rstudioteamRStudioIntegratedDevelopment2020]. Simulations were run using high-throughput computing resources provided by the University of Wisconsin-Madison Center for High Throughput Computing [@chtc]. 
+
+We simulated 40,000 datasets within each research context. For each simulated dataset, we generated scores for a dichotomous focal IV ($X$), varying numbers of quantitative covariates ($C$), and a quantitative outcome ($Y$).  To generate these datasets, we first created $N$ scores for a set of multivariate normal distributed covariates and $Y$, with their variances = 1 and the number of covariates, and the covariances among the covariates and with $Y$ dictated with the research context (see points 3-5 above).  Consistent with the manipulation of the IV following measurement of the baseline covariates, the effect of $X$ was ($\beta_X * X$) was then added into $Y$.
+
+Below, we display an exemplar covariance matrix and subsequent R code to generate a single simulated dataset for a research context with a small population effect size for the IV ($\beta_{X} = 0.2$), a sample size of 100, and four covariates, where 50% of the covariates have a 0.50 correlation with the outcome and 0.30 correlations with each other.
+
+This is the relevant covariance matrix (sigma).
+```{r}
+#| echo: false
+
+sigma <- matrix(c(
+  1.0, 0.5, 0.5, 0.0, 0.0,
+  0.5, 1.0, 0.3, 0.0, 0.0,
+  0.5, 0.3, 1.0, 0.0, 0.0,
+  0.0, 0.0, 0.0, 1.0, 0.0,
+  0.0, 0.0, 0.0, 0.0, 1.0
+), nrow = 5, byrow = TRUE)
+
+rownames(sigma) <- c("Y", "C1", "C2", "C3", "C4")
+colnames(sigma) <- c("Y", "C1", "C2", "C3", "C4")
+
+
+print(formatC(sigma, format = "f", digits = 1), quote = FALSE)
+```
+
+The covariance matrix can then be used to generate a multivariate normal dataset of $Y$ and $C_1...C_4$ for 100 observations where all variables have a mean of 0.
+Following this, the effect of the IV ($X$) can be added into $Y$.
+
+```{r}
+#| echo: true
+
+df <- MASS::mvrnorm(n = 100, mu = c(0, 0, 0, 0, 0), Sigma = sigma) # <1>
+
+x <- rep(c(-.5, .5), each = 50) # <2>
+df[, 1] <- df[, 1]+ .2 * x # <3>
+```
+
+1. Generate $Y$ and all covariates using a multivariate normal distribution with all means of 0 and variances/covariances from sigma displayed above.
+2. Create a dichotomous focal IV($X$). 
+3. Add in $X$ effect on $Y$.
+
+For each simulated dataset in each research context, we used each of the 9 covariate selection approaches to determine which covariates to use in the primary analysis to test the effect of $X$ on $Y$. For example, if the selection approach selected covariates 1 and 4, the primary analysis would be $lm(Y \sim X + C_1 + C_4, \text{data} = \text{df})$.  From each primary analysis, we saved the research context characteristics, the covariate selection approach used, and the parameter estimate for $X$, *p*-value for its statistical test against 0, and the conclusion (reject or fail to reject) using alpha = 0.05.  
+
+For research contexts where the population parameter for $X$ was 0 (i.e., $X$ has no effect on $Y$), we assessed and reported the Type I error rates associated with each covariate selection approach by research context characteristics. For research contexts where the population parameter for $X$ was 0.2 or 0.5 (i.e., $X$ has an effect on $Y$), we assessed and reported the Type II error rate for each covariate selection method by research context characteristics.  We also provided descriptive statistics and sampling distributions (from the 40,000 simulations) of the parameter estimate for $X$ across research contexts for each covariate selection approach, separately by true effect size for $X$ (0, 0.2, and 0.5). An interactive shiny dashboard of mean error rates for all combinations of research context variables is accessible through our OSF page ([https://osf.io/zh5gn/](https://osf.io/zh5gn/)).
+
+# Results
+
+## Type I Error
+
+Given our use of simulated datasets, we were able to set the true population parameter for $X$ to be zero (i.e., $\beta_X = 0$). Therefore, any significant result was a Type I error. @fig-bar-1 shows the average Type I error rate across all research contexts for each approach. The *p*-hacking approach for selecting covariates, unsurprisingly led to a highly inflated mean Type I error rate across contexts, consistent with the extant research published in the last several years on the connection between researcher degrees of freedom and false positives<!--kendra Insert refs-->}. The other approaches were at or near the expected error rate of alpha = .05 across the relatively broad range of research context characteristics we considered. Specifically,  the two a priori selection approaches and the data-driven selection approaches that did not include $X$ in the screening model displayed mean Type I error rates of exactly .05.  The data-driven approaches that did include $X$ in the screening model displayed slightly increased (<= .06) mean Type I error rates across contexts.  
+
+
+{{< embed notebooks/mak_figures.qmd#fig-bar-1 >}}
+
+
+We next assessed how Type I error rates varied by specific dimensions of our research contexts and noted several patterns (@fig-type1-panel). First, the magnitude of Type I error rate inflation for the *p*-hacking approach substantially increased with increasing number of available covariates, larger correlations between the covariates and $Y$ (i.e., $r_{cov-Y}$ = 0.5), higher percentage of available covariates with non-zero correlations with $Y$, and smaller sample sizes.  The Type I error rate for *p*-hacking reached 0.462 in the worst case context ($N$ = 50, 20 available covariates with $r_{cov-Y}$ = 0.5 for 75% of the covariate set; see Shiny dashboard for other contexts).  
+
+In contrast, to the *p*-hacking approach, the Type I error rates remained constant at 0.05 across all research context dimensions for the a priori approaches and the data-driven approaches that did not include $X$.  Among the data-driven approaches that did include $X$, small increases in Type I error rates were observed as the sample size decreased and the number of available covariates increased.  However, Type I error rate inflation remained modest for these approaches even at the extremes of these two dimensions (up to 0.074 at $N$=50 and up to 0.066 with 20 covariates in the simultaneous linear model approach). And in the worst case context at the intersection of all dimensions, error rates for these screening approaches that included $X$ only reached 0.072 for separate linear models, 0.096 with a simultaneous linear model and 0.089 with a simultaneous LASSO.  Neither the magnitude $r_{cov-Y}$ nor the percentage of available covariates with non-zero correlations with $Y$ appeared to have any systematic impact on the Type I error rates for the data-driven approaches that included $X$. 
+
+
+{{< embed notebooks/mak_figures.qmd#fig-type1-panel >}}
+
+
+## Type II Error
+
+We simulated datasets with two possible non-zero population parameters for the effect of $X$ on $Y$ ($\beta_X = 0.2$, $\beta_X = 0.5$). Given that we set the standard deviation of $Y$ to equal 1, these represented contexts where $X$ had a small (Cohen's d = 0.2) or moderate (Cohen's d = 0.5) effect on $Y$.  In these simulations, non-significant effects for $X$ were, by definition, Type II errors. Given the substantial problems with Type I error rate inflation noted above, we do not consider the *p*-hacking approach to be viable and therefore did not evaluate Type II error rates for this approach.  
+
+@fig-bar-2 shows the mean Type II error rate across all research contexts for each approach. The a priori no covariates approach displayed the highest average Type II error (0.449), which reinforces the value of using covariates to increase statistical power to detect true effects.  Among the approaches that used covariates, the candidate data-driven approaches generally produced modestly lower average Type II error rates than the a priori all covariates approach.  Furthermore, the data-driven approaches that included $X$ displayed modestly lower mean Type II error rates than the comparable approaches that did not include $X$ in the screening model.  
+
+
+{{< embed notebooks/mak_figures.qmd#fig-bar-2 >}}
+
+
+We next assessed how Type II error rates varied by specific dimensions of our research contexts and noted several patterns (@fig-panel-2). First, it is clear that the no covariates approach was always associated with the highest Type II error rates across all values of all dimensions of the research contexts. Second, the a priori all covariates approach tended to under-perform (i.e., higher Type II error rates) relative to the candidate data-driven approaches when the sample size was low, the number of available covariates was high, or the percentage of available covariates with non-zero correlations with $Y$ was low.  Similarly, the data-driven approaches that did not include $X$ tended to under-perform relative to the matched approaches that did include $X$ in these same contexts (low $N$, high number of covariates, low percentage of available covariates with non-zero correlations with $Y$).
+
+
+<!--Kendra, can we consider truncating the y axis too?  Starting at a value great than 0 would allow it to be easier to tell the lines apart.  Can we see those graphs?--><!--updated for us to look at-->
+{{< embed notebooks/mak_figures.qmd#fig-panel-2 >}}
+
+
+## Parameter Estimates
+
+When the assumptions of the linear model are met, parameter estimates are unbiased (i.e. the mean of the parameter estimate's sampling distribution equals the value of the population parameter) and their sampling distributions follow the t-distribution. To evaluate the impact of the screening approaches on the parameter estimate (i.e., $b_X$), @tbl-est shows the mean parameter estimate from our primary analysis for each covariate screening approach across research contexts (with 40,000 sample parameter estimates per context), separately by population effect size ($\beta_X = 0$, $\beta_X = 0.2$, $\beta_X = 0.5$). 
+
+
+{{< embed notebooks/mak_tables.qmd#tbl-est >}}
+
+
+We also display the associated sampling distributions for these parameter estimates for each approach and population effect size in @fig-panel-2.  
+
+
+{{< embed notebooks/mak_figures.qmd#fig-distribution-bx >}}
+
+
+<!--need to consider what to report here.  Should we only report the patterns or also the explanations for why?  Explanations could be moved to discussion but that would cost us words there!-->
+First, we considered contexts where the population effect size was 0 ($\beta_X$ = 0).  In these contexts, all approaches yielded unbiased estimates.  However, the shape of the sampling distribution for the *p*-hacking approach was clearly distorted (bi-modal). This distortion results from this approach selecting covariates that magnify the effect of $X$ in any specific sample.  When sampling error produces a negative $b_X$ in a sample, covariates that make that parameter estimate more negative will be selected, and when sampling error produces a positive $b_X$ in a sample, covariates that make that parameter estimate more positive will be selected.  This is what produces the intolerably high Type I error rates associated with that approach.
+
+Next, we considered contexts where there was a non-zero population effect for $X$.  In these contexts, *p*-hacking yielded substantial optimistic (over-estimation) bias in the parameter estimates as seen in both the mean $b_X$ and the rightward shift of the sampling distribution.  In this instance, the sample $b_X$ was typically positive to start (given the positive population parameter) and covariates were selected only if they made that parameter estimate even more positive.
+
+Of course, the a priori approaches (no covariates, all covariates) produced unbiased $b_X$ because the linear model in the primary analysis that tested the effect of $X$ was used without any prior screening of covariates in separate analyses.  The candidate data-driven approaches that included $X$ also yielded unbiased $b_X$ because the covariates were selected only based on their unique (partial) relationship with $Y$ after removing any modest correlation between the covariates and $X$ due to sampling error (remember that any correlation between $X$ and a covariate in a specific sample is due to noise in that sample because covariates are measured prior to IV manipulation).  Given this, when selected covariates were included in the primary analysis, they did not systematically increase or decrease $b_X$.
+
+In contrast, when the screening model did not include $X$, covariates that are positively correlated with $X$ in the sample (due to noise) are selected at a slightly higher rate because this spurious correlation further increased their positive correlation with $Y$ (given that $\beta_X$ was also positive).  When these covariates are subsequently included in the primary analysis of $X$, they systematically remove some of the true causal effect $X$ on $Y$ and result in a pessimistic (under-estimation) bias in the estimate of $\beta_X$.  
+
+
+# Discussion
+
+Our findings reinforce the cautionary warning by Simmons and colleagues [@simmonsFalsepositivePsychologyUndisclosed2011]: *p*-hacking can severely inflate Type I error rate. Simmons et al. observed a mean Type I error rate of 0.117 for the test of an IV when selecting between two potential covariates ($N$=40) using a *p*-hacking approach. Across our closest research contexts that included 4 covariates with N=50, we observed a comparable mean Type I error rate (0.103).  However, our simulations clarify that this estimate may meaningfully underestimate the potential magnitude of the *p*-hacking problem in common research contexts.  For example, researchers often can choose from among many more available covariates. With just a modest increase in the pool of available covariates (i.e., 8-12 covariates), our simulations show that mean Type I error rate for the *p*-hacking approach increased to 0.191.  And if the size of the pool is increased further (i.e., 16-20 covariates), the mean Type I error rate is increased nearly 3-fold (0.295) from what was reported by Simmons et al., even when aggregated across contexts that include sample sizes up to $N$=400.
+
+When no covariates were used (i.e., a priori no covariates approach), the primary analysis of $X$ had a mean Type I error rate of 0.05 and provided an unbiased estimate of $\beta_X$ as expected given this traditional use of a linear model with its assumptions met. However, decisions regarding statistical validity must also consider an approach's Type II error rate and the no covariates approach had a meaningfully higher Type II error rate compared to the other approaches. This should not be surprising. The use of covariates that are correlated with the outcome and uncorrelated with $X$ will account for additional variance in the outcome, thus increasing power (and decreasing Type II error rate).  Of course, the relative cost to not use covariates (vs. other approaches) is higher when there are more covariates available and a higher percentage of them (e.g., 75%) have stronger relationships with $Y$ (e.g., $r_{cov-Y}$ = 0.5).  In addition, the costs of ignoring available covariates are higher when the effect size for $X$ is smaller but also when the sample size is larger (such that the proportional reduction of degrees of freedom is smaller when covariate are added).  We hope these results motivate increased use of covariates in experimental research.
+
+Next, it should be acknowledged that the all covariates approach is a reasonable option in many research contexts.  Like the no covariates approach, it had a mean Type I error rate of 0.05 and yielded an unbiased estimate of $\beta_X$. Yet across the range of values for all research dimensions (and almost all intersections that define specific research contexts), the Type II error rate for the all covariates approach was lower than the no covariates approach, confirming its superiority.  Furthermore, the mean Type II error rate (aggregated across all research contexts) for the all covariates approach was only 0.015 - 0.020 higher than some of the best performing data-driven selection approaches while also being the easiest approach to implement computationally because it eliminates the need for screening models and selection. 
+ 
+Nonetheless, the candidate data-driven covariate selection approaches are not difficult to implement (see examples of R code for each method shared on OSF <!--Kendra, lets talk about this-->) and it may never be wise to give up any improvements in power, even if modest.  Moreover, the relative benefits of the best data-driven approaches are more substantial in some specific research contexts (e.g., small $N$, large number of more exploratory covariates available). In the best case example ($N$=50, $N_{cov}$=20, $r_{cov-Y}$=0.5, $\%_{cov}$=0.25 and $\beta_X$=0.5), the Type II error rate for the simultaneous LASSO with $X$ approach was 0.204 lower than the all covariates approach!  
+
+There are several issues to consider when comparing among the several top candidate data-driven approaches.  The approach with the lowest mean Type II error rate (0.337) was the simultaneous LASSO with $X$. This approach also provided an unbiased estimate of $\beta_X$.  However, it had a slightly inflated Type I error rate (0.057) and the implementation of LASSO may be less familiar to some researchers (but see example code on OSF to implement it). Screening with separate covariate linear models with $X$ may feel easier, or more familiar to some researchers. This method yielded an unbiased estimate of $\beta_X$ with slightly worse Type II error rate (0.341) but better Type I error rate (0.052) than simultaneous LASSO with $X$. Finally, if perfect control of Type I error rate at the nominal alpha is desired, screening with separate covariate linear models without $X$ may be preferred.  However, this approach introduced modest pessimistic bias into the estimate of $\beta_X$, and further increased mean Type II error rate (0.347) than the previous two approaches.  
+
+There are several additional considerations worth noting when evaluating and implementing any covariate selection method.  First, although some of the data-driven approaches (that include $X$) introduced slight inflation of mean Type I error rate, this increase is likely no greater than what occurs with common modest violations of model assumptions (e.g., some heterogeneity in variance of residuals across $hat{Y}$). Similarly, although some data-driven approaches (that do not include $X$) introduced slight bias into the estimate of $\beta_X$, this bias is also likely no greater than what is typical when the assumption of no measurement error in model $X$s is routinely violated in many analyses.  
+
+Second, we use these simulation results to strongly advocate for the use of covariates in experimental research that tests the effects of IVs.  However, given that we are now providing researchers with yet another researcher degree of freedom (choice of covariate selection approach), it is critical that this decision be made and pre-registered prior to data collection to avoid undermining the statistical validity (and your peers confidence) in the reported results.  And of course, if the all covariates approach is used, the specific covariates that will be used should also be pre-registered.
+
+Finally, this simulation study evaluated the benefits of using covariates in experimental research where covariates are measured at baseline, prior to manipulation of the IV, and therefore uncorrelated with the IV.  In such instances, covariates are a powerful yet simple tool to increase statistical power without adding any complexity to the interpretation of the effect of the IV.  However, in some areas of Psychology (e.g., clinical), covariates are routinely used for a different goal - to control for baseline differences across groups when participants were not randomly assigned to groups. In these instances, covariates should be selected using other approaches not considered in this paper (e.g., based on theory and/or putative causal structure among $X$ and covariates).  Furthermore, researchers should carefully consider if the interpretative complexity introduced by this alternative use of correlated covariates is warranted and meets their goals [@millerMisunderstandingAnalysisCovariance2001].  Nonetheless, we believe our paper provides strong evidence to support the clear benefits of using baseline covariates.  We hope that we have also clarified the relative costs and benefits of key approaches to selecting them in experimental research. 
+
+
+# References
