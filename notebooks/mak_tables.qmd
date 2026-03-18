@@ -41,12 +41,12 @@ lm_methods <- tibble(
     "No covariates",
     "All covariates",
     "p-hacking",
-    "Single covariate linear model without X",
-    "Single covariate linear model with X",
-    "All covariates linear model without X",
-    "All covariates linear model with X",
-    "All covariates LASSO without X",
-    "All covariates LASSO with X"
+    "Separate covariate linear model without X",
+    "Separate covariate linear model with X",
+    "Simultaneous covariate linear model without X",
+    "Simultaneous covariate linear model with X",
+    "Simultaneous covariate LASSO without X",
+    "Simultaneous covariate LASSO with X"
   ),
   `Screening Models` = c(
     "No screening models",
@@ -135,12 +135,12 @@ table |>
                  "full_lm_wo_x", "full_lm", 
                  "lasso_wo_x", "lasso"),
       labels = c("No covariates", "All covariates", "p-hacking", 
-                 "Single covariate lm without X", 
-                 "Single covariate lm with X", 
-                 "All covariates lm without X", 
-                 "All covariates lm with X", 
-                 "All covariates LASSO without X", 
-                 "All covariates LASSO with X")
+                 "Separate covariate lm without X", 
+                 "Separate covariate lm with X", 
+                 "Simultaneous covariate lm without X", 
+                 "Simultaneous covariate lm with X", 
+                 "Simultaneous covariate LASSO without X", 
+                 "Simultaneous covariate LASSO with X")
     )
   ) |> 
   mutate(across(-Method, ~sprintf("%.3f", abs(.)))) |> 
