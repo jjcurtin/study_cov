@@ -351,7 +351,7 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 <td style="text-align: left;">Covariates that lower the p-value of \(X\) are retained in the final model</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Single covariate linear model without X</td>
+<td style="text-align: left;">Separate covariate linear model without X</td>
 <td style="text-align: left;">\(Y \sim C_{1}\)<br>
 \(Y \sim C_{2}\)<br>
 \(\vdots\)<br>
@@ -359,7 +359,7 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 <td style="text-align: left;">Significant covariates (\(p &lt; .05\)) are retained in the final model</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Single covariate linear model with X</td>
+<td style="text-align: left;">Separate covariate linear model with X</td>
 <td style="text-align: left;">\(Y \sim X + C_{1}\)<br>
 \(Y \sim X + C_{2}\)<br>
 \(\vdots\)<br>
@@ -367,22 +367,22 @@ Table&nbsp;1: The nine linear regression models and their definition for covaria
 <td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for \(X\) are retained in the final model</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">All covariates linear model without X</td>
+<td style="text-align: left;">Simultaneous covariate linear model without X</td>
 <td style="text-align: left;">\(Y \sim C_{1} + C_{2} + \cdots + C_{k}\)</td>
 <td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for all other covariates are retained in the final model</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">All covariates linear model with X</td>
+<td style="text-align: left;">Simultaneous covariate linear model with X</td>
 <td style="text-align: left;">\(Y \sim X + C_{1} + C_{2} + \cdots + C_{k}\)</td>
 <td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for \(X\) and all other covariates are retained in the final model</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">All covariates LASSO without X</td>
+<td style="text-align: left;">Simultaneous covariate LASSO without X</td>
 <td style="text-align: left;">\(Y \sim C_{1} + C_{2} + \cdots + C_{k}\) with \(\lambda\) penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">All covariates LASSO with X</td>
+<td style="text-align: left;">Simultaneous covariate LASSO with X</td>
 <td style="text-align: left;">\(Y \sim X + C_{1} + C_{2} + \cdots + C_{k}\) with \(\lambda\) penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are retained in the model</td>
 </tr>
@@ -645,37 +645,37 @@ Table&nbsp;3: Mean estimates of effect size by method and true effect size
 <td style="text-align: left;">0.563</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm without X</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Separate covariate lm without X</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: left;">0.198</td>
 <td style="text-align: left;">0.495</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Single covariate lm with X</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Separate covariate lm with X</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: left;">0.200</td>
 <td style="text-align: left;">0.500</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm without X</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Simultaneous covariate lm without X</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: left;">0.192</td>
 <td style="text-align: left;">0.479</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates lm with X</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Simultaneous covariate lm with X</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: left;">0.200</td>
 <td style="text-align: left;">0.500</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO without X</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Simultaneous covariate LASSO without X</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: left;">0.195</td>
 <td style="text-align: left;">0.487</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">All covariates LASSO with X</td>
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Simultaneous covariate LASSO with X</td>
 <td style="text-align: left;">0.000</td>
 <td style="text-align: left;">0.200</td>
 <td style="text-align: left;">0.500</td>
