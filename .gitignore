@@ -9,3 +9,4 @@ study_cov.Rproj
 /.quarto/
 
 **/*.quarto_ipynb
+.positai
