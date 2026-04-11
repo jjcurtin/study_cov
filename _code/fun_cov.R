@@ -132,10 +132,10 @@ fit_p_hacked <- function(d) {
   
   # making base model
   lm_base <- lm(y ~ x, data = d) 
-  p_base <- lm_base |> 
+  b_base <- lm_base |> 
     broom::tidy() |> 
     dplyr::filter(term == "x") |> 
-    dplyr::pull(p.value)
+    dplyr::pull(estimate)
   
   # empty vector of covariates added to model
   covs_added <- character(0) 
@@ -149,12 +149,13 @@ fit_p_hacked <- function(d) {
     ci <- grep("^c", names(d), value = TRUE)[i]
     formula_1cov <- reformulate(termlabels = c("x", ci), response = "y")
     lm_1cov <- lm(formula = formula_1cov, data = d)
-    p_1cov <- lm_1cov |> 
+    b_1cov <- lm_1cov |> 
       broom::tidy() |> 
       dplyr::filter(term == "x") |> 
-      dplyr::pull(p.value)
-    
-    if(p_1cov < p_base) {
+      dplyr::pull(estimate)
+   
+    # select cov if it makes bx more positive 
+    if(b_1cov > b_base) {
       covs_added <- c(covs_added, ci)
     }
   }
