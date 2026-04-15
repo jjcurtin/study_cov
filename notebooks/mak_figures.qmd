@@ -34,13 +34,13 @@ d_full <- read_csv(here::here(path_processed, "results_combined_raw.csv"),
 
 d_full <- d_full |> 
   mutate(method = factor(method, 
-                          levels = c("no_covs", "all_covs","p_hacked",  "r",
-                                      "partial_r", "full_lm_wo_x", "full_lm",  
-                                      "lasso_wo_x", "lasso"),
+                          levels = c("no_covs", "all_covs","p_hacked",  "partial_r",  "r",
+                                      "full_lm",  "full_lm_wo_x", 
+                                      "lasso", "lasso_wo_x"),
                          labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Separate cov lm", "Separate cov lm with X", 
-                                    "Simultaneous cov lm", "Simultaneous cov lm with X", 
-                                    "Simultaneous cov LASSO", "Simultaneous cov LASSO with X")))
+                                    "Separate cov lm with X", "Separate cov lm w/o X", 
+                                    "Simultaneous cov lm with X", "Simultaneous cov lm w/o X", 
+                                    "Simultaneous cov LASSO with X", "Simultaneous cov LASSO w/o X")))
 
 options(digits = 3)
 theme_set(theme_classic())
@@ -49,42 +49,42 @@ theme_set(theme_classic())
 method_colors <- c("No covariates" = "#FF7D00",
                    "All covariates" = "#9E5900",
                    "p-hacking" = "#C92C04",
-                   "Separate cov lm" = "#5489BA",
                    "Separate cov lm with X" = "#5489BA",
-                   "Simultaneous cov lm" = "#664896",
+                   "Separate cov lm w/o X" = "#5489BA",
                    "Simultaneous cov lm with X" = "#664896",
-                   "Simultaneous cov LASSO" = "#4A7C59",
-                   "Simultaneous cov LASSO with X" = "#4A7C59")
+                   "Simultaneous cov lm w/o X" = "#664896",
+                   "Simultaneous cov LASSO with X" = "#4A7C59",
+                   "Simultaneous cov LASSO w/o X" = "#4A7C59")
 
 
 method_linetypes <- c("No covariates" = "solid",
                      "All covariates" = "solid",
                      "p-hacking" = "solid",
-                     "Separate cov lm" = "dashed",
+                     "Separate cov lm w/o" = "dashed",
                      "Separate cov lm with X" = "solid",
-                     "Simultaneous cov lm" = "dashed",
+                     "Simultaneous cov lm w/o" = "dashed",
                      "Simultaneous cov lm with X" = "solid",
-                     "Simultaneous cov LASSO" = "dashed",
+                     "Simultaneous cov LASSO w/o X" = "dashed",
                      "Simultaneous cov LASSO with X" = "solid")
 
 method_linewidths <- c("No covariates" = .75,
                      "All covariates" = .75,
                      "p-hacking" = .5,
-                     "Separate cov lm" = .5,
+                     "Separate cov lm w/o X" = .5,
                      "Separate cov lm with X" = .5,
-                     "Simultaneous cov lm" = .5,
+                     "Simultaneous cov lm w/o X" = .5,
                      "Simultaneous cov lm with X" = .5,
-                     "Simultaneous cov LASSO" = .5,
+                     "Simultaneous cov LASSO w/o X" = .5,
                      "Simultaneous cov LASSO with X" = .5)
 
 method_patterns <- c("No covariates" = "none",
                      "All covariates" = "none",
                      "p-hacking" = "none",
-                     "Separate cov lm" = "stripe",
+                     "Separate cov lm w/o X" = "stripe",
                      "Separate cov lm with X" = "none",
-                     "Simultaneous cov lm" = "stripe",
+                     "Simultaneous cov lm w/o X" = "stripe",
                      "Simultaneous cov lm with X" = "none",
-                     "Simultaneous cov LASSO" = "stripe",
+                     "Simultaneous cov LASSO w/o X" = "stripe",
                      "Simultaneous cov LASSO with X" = "none")
 ```
 
@@ -93,13 +93,14 @@ method_patterns <- c("No covariates" = "none",
 ```{r}
 d <- d |> 
    mutate(method = factor(method, 
-                          levels = c("no_covs", "all_covs","p_hacked",  "r",
-                                            "partial_r", "full_lm_wo_x", "full_lm",  
-                                           "lasso_wo_x", "lasso"),
+                          levels = c("no_covs", "all_covs","p_hacked",  
+                                      "partial_r", "r",
+                                     "full_lm",   "full_lm_wo_x",
+                                     "lasso", "lasso_wo_x"),
                          labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Separate cov lm", "Separate cov lm with X", 
-                                    "Simultaneous cov lm", "Simultaneous cov lm with X", 
-                                    "Simultaneous cov LASSO", "Simultaneous cov LASSO with X")))
+                                    "Separate cov lm with X", "Separate cov lm w/o X", 
+                                    "Simultaneous cov lm with X", "Simultaneous cov lm w/o X", 
+                                    "Simultaneous cov LASSO with X", "Simultaneous cov LASSO w/o X")))
 
 d_0 <- d |> 
   filter(b_x == 0) 
@@ -133,7 +134,7 @@ type_I_summary <- d_0 |>
 
 ```{r}
 #| label: fig-bar-1
-#| fig-cap: "Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
+#| fig-cap: "Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Traditional selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
 #| fig-width: 8.75
 
 
@@ -161,9 +162,9 @@ plot_df <- df |>
 
 x_breaks <- plot_df$x_pos
 x_labels <- c("No covariates", "All covariates", "p-hacking", 
-              "Without X", "With X",
-              "Without X", "With X",
-              "Without X", "With X")
+              "With X", "W/o X",
+              "With X", "W/o X",
+              "With X", "W/o X")
 
 segment_labels <- tibble::tibble(
   x = c(mean(c(0.5, 2.6)),
@@ -172,7 +173,7 @@ segment_labels <- tibble::tibble(
         mean(c(6.2, 8.0)),
         mean(c(8.4, 10.2))),
   y = c(.22, .22, .08, .08, .08) + 0.015,   
-  label = c("A priori selection", "Data-driven selection", "Separate cov lm", "Simultaneous cov lm", "Simultaneous cov LASSO")
+  label = c("Traditional selection", "Data-driven selection", "Separate cov lm", "Simultaneous cov lm", "Simultaneous cov LASSO")
 )
 
 ggplot(
@@ -304,7 +305,7 @@ ycor <- d_0 |>
 
 ```{r}
 #| label: fig-type1-panel
-#| fig-cap: "Type I error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, percentage of good covariates (i.e., covariates with non-zero correlations with Y), and Y-covariate correlation strength). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."
+#| fig-cap: "Type I error by method and research context. Plots are paneled by aspects of the research context: number of observations, number of covariates, percentage of good covariates (i.e., covariates with non-zero correlations with Y), and Y-covariate correlation strength. Methods are displayed separately by color. Data-driven selection methods that do not control for X are depicted as dashed lines."
 #| fig-height: 6
 #| fig-width: 8
 
@@ -317,7 +318,7 @@ ycor <- d_0 |>
 
 ```{r}
 #| label: fig-bar-2
-#| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. A priori selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
+#| fig-cap: "Type II Error by Method. Average type II error rate across all research settings is displayed for each method separately by color. Traditional selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."
 #| fig-width: 8.75
 
 type_II_summary <- d_02 |>
@@ -360,9 +361,9 @@ plot_df <- df |>
 
 x_breaks <- plot_df$x_pos
 x_labels <- c("No covariates", "All covariates",
-              "Without X", "With X",
-              "Without X", "With X",
-              "Without X", "With X")
+              "With X", "W/o X",
+              "With X", "W/o X",
+              "With X", "W/o X")
 
 segment_labels <- tibble::tibble(
   x = c(mean(c(0.6, 2.6)),
@@ -371,7 +372,7 @@ segment_labels <- tibble::tibble(
         mean(c(5, 6.8)),
         mean(c(7.2, 9))),
   y = c(.50, .50, .40, .40, .40) + 0.015,   
-  label = c("A priori selection", "Data-driven selection", "Separate cov lm", "Simultaneous cov lm", "Simultaneous cov LASSO")
+  label = c("Traditional selection", "Data-driven selection", "Separate cov lm", "Simultaneous cov lm", "Simultaneous cov LASSO")
 )
 
 
@@ -528,7 +529,7 @@ b_x <- d_02 |>
 
 ```{r}
 #| label: fig-panel-2
-#| fig-cap: "Type II error by method and research context. Plots are paneled by aspects of the research context (number of observations, number of covariates, percentage of good covariates covariates (i.e., covariates with non-zero correlations with Y), and Y-covariate correlation strength), and Y-covariate correlation strength, and population parameter for X). Methods are displayed separately by color. Data-driven correlation selection methods that control for X are depicted as dashed lines."
+#| fig-cap: "Type II error by method and research context. Plots are paneled by aspects of the research context: number of observations, number of covariates, percentage of good covariates covariates (i.e., covariates with non-zero correlations with Y), and Y-covariate correlation strength, and population parameter for X. Methods are displayed separately by color. Data-driven selection methods that do not control for X are depicted as dashed lines."
 #| fig-height: 9
 #| fig-width: 7.5
 
@@ -585,7 +586,7 @@ est_d_05 <- d_full |>
 
 ```{r}
 #| label: fig-distribution-bx
-#| fig-cap: "Sampling Distribution for Population Parameter Estimates."
+#| fig-cap: "Sampling distributions for population parameter estimates displayed separately by selection method and population parameter. Selection methods that do not control for X are displayed as dashed lines."
 #| fig-height: 8
 #| code-fold: true
 

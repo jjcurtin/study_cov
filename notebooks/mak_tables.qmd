@@ -18,8 +18,6 @@ html-table-processing: none
 ---
 
 ```{r}
-library(skimr)
-library(cowplot)
 library(tidyverse)
 library(kableExtra, exclude = ("group_rows"))
 
@@ -41,34 +39,34 @@ lm_methods <- tibble(
     "No covariates",
     "All covariates",
     "p-hacking",
-    "Separate covariate linear model without X",
-    "Separate covariate linear model with X",
-    "Simultaneous covariate linear model without X",
-    "Simultaneous covariate linear model with X",
-    "Simultaneous covariate LASSO without X",
-    "Simultaneous covariate LASSO with X"
+    "Separate cov lm with X",
+    "Separate cov lm w/o X",
+    "Simultaneous cov lm with X",
+    "Simultaneous cov lm w/o X",
+    "Simultaneous cov LASSO with X",
+    "Simultaneous cov LASSO w/o X"
   ),
   `Screening Models` = c(
     "No screening models",
     "No screening models",
     "\\(Y \\sim X + C_{1}\\) <br> \\(Y \\sim X + C_{2}\\) <br> \\(\\vdots\\) <br> \\(Y \\sim X + C_{k}\\)",
-    "\\(Y \\sim C_{1}\\) <br> \\(Y \\sim C_{2}\\) <br> \\(\\vdots\\) <br> \\(Y \\sim C_{k}\\)",
     "\\(Y \\sim X + C_{1}\\) <br> \\(Y \\sim X + C_{2}\\) <br> \\(\\vdots\\) <br> \\(Y \\sim X + C_{k}\\)",
-    "\\(Y \\sim C_{1} + C_{2} + \\cdots + C_{k}\\)",
+    "\\(Y \\sim C_{1}\\) <br> \\(Y \\sim C_{2}\\) <br> \\(\\vdots\\) <br> \\(Y \\sim C_{k}\\)",
     "\\(Y \\sim X + C_{1} + C_{2} + \\cdots + C_{k}\\)",
-    "\\(Y \\sim C_{1} + C_{2} + \\cdots + C_{k}\\) with \\(\\lambda\\) penalty applied to all covariates",
-    "\\(Y \\sim X + C_{1} + C_{2} + \\cdots + C_{k}\\) with \\(\\lambda\\) penalty applied to all covariates"
+    "\\(Y \\sim C_{1} + C_{2} + \\cdots + C_{k}\\)",
+    "\\(Y \\sim X + C_{1} + C_{2} + \\cdots + C_{k}\\) with \\(\\lambda\\) penalty applied to all covariates",
+    "\\(Y \\sim C_{1} + C_{2} + \\cdots + C_{k}\\) with \\(\\lambda\\) penalty applied to all covariates"
   ),
   `Covariate Selection Criteria` = c(
     "No covariates used",
     "All covariates used",
-    "Covariates that lower the p-value of \\(X\\) are retained in the final model",
-    "Significant covariates (\\(p < .05\\)) are retained in the final model",
-    "Significant covariates (\\(p < .05\\)) when controlling for \\(X\\) are retained in the final model",
-    "Significant covariates (\\(p < .05\\)) when controlling for all other covariates are retained in the final model",
+    "Covariates that increase the effect of \\(X\\) are included in the final model",
+    "Significant covariates (\\(p < .05\\)) when controlling for \\(X\\) are included in the final model",
+    "Significant covariates (\\(p < .05\\)) are included in the final model",
     "Significant covariates (\\(p < .05\\)) when controlling for \\(X\\) and all other covariates are retained in the final model",
-    "Covariates with non-zero coefficients are retained in the model",
-    "Covariates with non-zero coefficients are retained in the model"
+    "Significant covariates (\\(p < .05\\)) when controlling for all other covariates are included in the final model",
+    "Covariates with non-zero coefficients are included in the model",
+    "Covariates with non-zero coefficients are included in the model"
   )
 )
 
@@ -76,7 +74,7 @@ lm_methods <- tibble(
 
 ```{r}
 #| label: tbl-methods
-#| tbl-cap: The nine linear regression models and their definition for covariate selection.
+#| tbl-cap: The nine covariate selection models and their definition for covariate selection.
 
 lm_methods |> 
   kbl(escape = FALSE, format = "html") |> 
@@ -119,7 +117,7 @@ data_tbl0 |>
 
 ```{r}
 #| label: tbl-est
-#| tbl-cap: "Mean estimates of effect size by method and true effect size"
+#| tbl-cap: "Mean estimates of effect size by method and population parameter."
 #| warning: false
 
 table |> 
@@ -132,24 +130,102 @@ table |>
       Method,
       levels = c("no_covs", "all_covs", "p_hacked", 
                  "r", "partial_r", 
-                 "full_lm_wo_x", "full_lm", 
-                 "lasso_wo_x", "lasso"),
+                   "full_lm_wo_x", "full_lm",
+                 "lasso",  "lasso_wo_x"),
       labels = c("No covariates", "All covariates", "p-hacking", 
-                 "Separate covariate lm without X", 
-                 "Separate covariate lm with X", 
-                 "Simultaneous covariate lm without X", 
-                 "Simultaneous covariate lm with X", 
-                 "Simultaneous covariate LASSO without X", 
-                 "Simultaneous covariate LASSO with X")
+                 "Separate cov lm with X", 
+                 "Separate cov lm w/o X", 
+                 "Simultaneous cov lm with X", 
+                 "Simultaneous cov lm w/o X", 
+                 "Simultaneous cov LASSO with X", 
+                 "Simultaneous cov LASSO w/o X")
     )
   ) |> 
   mutate(across(-Method, ~sprintf("%.3f", abs(.)))) |> 
   arrange(Method) |> 
-  add_row(Method = "A priori selection", .before = 1) |> 
-  add_row(Method = "Data-driven selection", .after = 3) |> 
+  add_row(Method = "Traditional Selection", .before = 1) |> 
+  add_row(Method = "Data-driven Selection", .after = 3) |> 
   kable(escape = FALSE) |> 
   kable_classic() |> 
   pack_rows(NULL, 2, 3) |> 
   pack_rows(NULL, 5, 11)
 ```
+
+
+```{r}
+#| label: tbl-rec
+#| tbl-cap: "Summary of selection methods, evaluation of bias and Type I and II error rates, and recommendations."
+#| warning: false
+
+tibble(
+  Method = c(
+    "No covariates",
+    "All covariates",
+    "p-hacking",
+    "Separate cov lm with X",
+    "Separate cov lm w/o X",
+    "Simultaneous cov lm with X",
+    "Simultaneous cov lm w/o X",
+    "Simultaneous cov LASSO with X",
+    "Simultaneous cov LASSO w/o X"
+  ),
+  `Bias` = c(
+    "none",
+    "none",
+    "unacceptable",
+    "none",
+    "acceptable",
+    "none",
+    "acceptable",
+    "none",
+    "acceptable"
+  ),
+  `Type I error` = c(
+    "0.050",
+    "0.050",
+    "0.198",
+    "0.052",
+    "0.050",
+    "0.060",
+    "0.050",
+    "0.057",
+    "0.050"
+  ),
+  `Type II error` = c(
+    "0.449",
+    " ",
+    "0.358",
+    "0.341",
+    "0.347",
+    "0.345",
+    "0.368",
+    "0.337",
+    "0.352",
+  ),
+  `Recommendation` = c(
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ),
+  `Notes` = c(
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  )
+)
+```
+
+
 
