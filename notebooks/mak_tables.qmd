@@ -75,6 +75,7 @@ lm_methods <- tibble(
 ```{r}
 #| label: tbl-methods
 #| tbl-cap: The nine covariate selection models and their definition for covariate selection.
+#| warning: false
 
 lm_methods |> 
   kbl(escape = FALSE, format = "html") |> 
@@ -87,6 +88,7 @@ lm_methods |>
 ```{r}
 #| label: tbl-dictionary
 #| tbl-cap: "Research context variables and values"
+#| warning: false
 
 data_tbl0 <- tibble(
   description = c(
@@ -193,14 +195,14 @@ tibble(
   ),
   `Type II error` = c(
     "0.449",
-    " ",
+    "",
     "0.358",
     "0.341",
     "0.347",
     "0.345",
     "0.368",
     "0.337",
-    "0.352",
+    "0.352"
   ),
   `Recommendation` = c(
     "",
@@ -224,7 +226,9 @@ tibble(
     "",
     ""
   )
-)
+) |> 
+  kbl(escape = FALSE, format = "html") |> 
+  kable_classic() 
 ```
 
 
