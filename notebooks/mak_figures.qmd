@@ -60,9 +60,9 @@ method_colors <- c("No covariates" = "#FF7D00",
 method_linetypes <- c("No covariates" = "solid",
                      "All covariates" = "solid",
                      "p-hacking" = "solid",
-                     "Separate cov lm w/o" = "dashed",
+                     "Separate cov lm w/o X" = "dashed",
                      "Separate cov lm with X" = "solid",
-                     "Simultaneous cov lm w/o" = "dashed",
+                     "Simultaneous cov lm w/o X" = "dashed",
                      "Simultaneous cov lm with X" = "solid",
                      "Simultaneous cov LASSO w/o X" = "dashed",
                      "Simultaneous cov LASSO with X" = "solid")
@@ -122,11 +122,11 @@ type_I_summary <- d_0 |>
                             "p-hacking" ~ "p-hacking",
                             "No covariates" ~ "No selection",
                             "All covariates" ~ "No selection",
-                            "Separate cov lm" ~ "Separate cov lm",
+                            "Separate cov lm w/o X" ~ "Separate cov lm",
                             "Separate cov lm with X" ~ "Separate cov lm",
-                            "Simultaneous cov lm" ~ "Simultaneous cov lm",
+                            "Simultaneous cov lm w/o X" ~ "Simultaneous cov lm",
                             "Simultaneous cov lm with X" ~ "Simultaneous cov lm",
-                            "Simultaneous cov LASSO" ~ "Simultaneous cov LASSO",
+                            "Simultaneous cov LASSO w/o X" ~ "Simultaneous cov LASSO",
                             "Simultaneous cov LASSO with X" ~ "Simultaneous cov LASSO"))
 
 ```
@@ -330,11 +330,11 @@ type_II_summary <- d_02 |>
                             "p-hacking" ~ "p-hacking",
                             "No covariates" ~ "No selection",
                             "All covariates" ~ "No selection",
-                            "Separate cov lm" ~ "Separate cov lm",
+                            "Separate cov lm w/o X" ~ "Separate cov lm",
                             "Separate cov lm with X" ~ "Separate cov lm",
-                            "Simultaneous cov lm" ~ "Simultaneous cov lm",
+                            "Simultaneous cov lm w/o X" ~ "Simultaneous cov lm",
                             "Simultaneous cov lm with X" ~ "Simultaneous cov lm",
-                            "Simultaneous cov LASSO" ~ "Simultaneous cov LASSO",
+                            "Simultaneous cov LASSO w/o X" ~ "Simultaneous cov LASSO",
                             "Simultaneous cov LASSO with X" ~ "Simultaneous cov LASSO"))
 
 # ---- Parameters
@@ -432,8 +432,8 @@ observations_2 <- d_02 |>
   ggplot(aes(x = n_obs, y = prop_not_sig, color = method, linetype = method, linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70, .80),
-                    limits = c(0.02, .80)) +
+  scale_y_continuous(breaks = c(0.10, .30,  .50,  .70),
+                    limits = c(0.1, .75)) +
   labs(y = "Type II Error",
        subtitle = "Number of Observations",
        x = NULL) +
@@ -452,8 +452,8 @@ covs_2 <- d_02 |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(4, 8, 12, 16, 20)) +
-  scale_y_continuous(breaks = c(0.20, .30, .40, .50),
-                    limits = c(0.2, .50)) +
+  scale_y_continuous(breaks = c(.30, .40, .50),
+                    limits = c(0.3, .50)) +
   labs(y = NULL,
        x = NULL,
        subtitle = "Number of Covariates") +
@@ -472,8 +472,8 @@ good_covs_2 <-d_02 |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.25, 0.50, 0.75), labels = c(25, 50, 75)) +
-  scale_y_continuous(breaks = c(0.20, .30, .40, .50 ),
-                    limits = c(0.2, .50)) +
+  scale_y_continuous(breaks = c( .30, .40, .50 ),
+                    limits = c(0.3, .50)) +
   labs(y = "Type II Error",
        x = NULL,
        subtitle = "Percentage of Good Covariates") +
@@ -492,8 +492,8 @@ ycor_2 <- d_02 |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
-  scale_y_continuous(breaks = c(0.20, .30, .40, .50),
-                    limits = c(0.2, .52)) +
+  scale_y_continuous(breaks = c( .30, .40, .50),
+                    limits = c(0.27, .52)) +
   labs(y = NULL,
        x = NULL,
        subtitle = "Y-Covariate Correlation Strength") +
@@ -512,8 +512,8 @@ b_x <- d_02 |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.2, 0.5)) +
-  scale_y_continuous(breaks = c(0.10, 0.20, .30, .40, .50, .60, .70, .80), 
-                     limits = c(0.02, .80)) +
+  scale_y_continuous(breaks = c(0.10, .30,  .50,  .70), 
+                     limits = c(0.1, .75)) +
   labs(y = "Type II Error",
        x = NULL,
        subtitle = "Population Parameter for X") +
