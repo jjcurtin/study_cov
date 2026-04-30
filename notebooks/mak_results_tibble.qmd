@@ -1,5 +1,6 @@
 ---
 title: "Make results tibble"
+author: "Kendra Wyant"
 date: last-modified
 number-sections: true
 format: 
@@ -13,7 +14,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-This script makes `results_tibble.csv` and `estimate_tibble.csv`
+This script makes combined data frame (`results_combined_raw.csv`), a summary table of results for figures (`results_tibble.csv`) and a parameter estimate table (`estimate_tibble.csv`).
 
 
 ```{r}
@@ -25,43 +26,14 @@ library(tidyverse)
 path_raw <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_raw"
 path_processed <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_processed"
 
-d_0 <- data.table::fread(here::here(path_raw, "batch_results_new_method_0.csv"))
-d_05 <- data.table::fread(here::here(path_raw, "batch_results_new_method_05.csv"))
+d_0 <- data.table::fread(here::here(path_raw, "batch_results_0_seed0.csv")) |> 
+  bind_rows(data.table::fread(here::here(path_raw, "batch_results_0_seed1.csv")))
 
-d_20_covs <- data.table::fread(here::here(path_raw, "batch_results_20_covs.csv"))
-d_n50 <- data.table::fread(here::here(path_raw, "batch_results_n50.csv"))
+d_02 <- data.table::fread(here::here(path_raw, "batch_results_02_seed0.csv")) |> 
+  bind_rows(data.table::fread(here::here(path_raw, "batch_results_02_seed1.csv")))
 
-d2_0 <- data.table::fread(here::here(path_raw, "batch_results_new_20K_0.csv"))
-d2_05 <- data.table::fread(here::here(path_raw, "batch_results_new_20K_05.csv"))
-
-d_wo_x_0 <- data.table::fread(here::here(path_raw, "batch_results_methods_wo_x_seed0.csv"))
-d_wo_x_1 <- data.table::fread(here::here(path_raw, "batch_results_methods_wo_x_seed1.csv"))
-
-d_02_0 <- data.table::fread(here::here(path_raw, "batch_results_02_seed0.csv"))
-d_02_1 <- data.table::fread(here::here(path_raw, "batch_results_02_seed1.csv"))
-
-```
-
-```{r}
-d_0 <- d_0 |> 
-  bind_rows(subset(d_20_covs, b_x == 0)) |> 
-  bind_rows(subset(d_n50, b_x == 0)) |> 
-  bind_rows(subset(d_wo_x_0, b_x == 0)) |> 
-  bind_rows(subset(d_wo_x_1, b_x == 0)) |> 
-  bind_rows(d2_0)
-
-d_05 <- d_05 |> 
-  bind_rows(subset(d_20_covs, b_x == 0.5)) |> 
-  bind_rows(subset(d_n50, b_x == 0.5)) |> 
-  bind_rows(subset(d_wo_x_0, b_x == 0.5)) |> 
-  bind_rows(subset(d_wo_x_1, b_x == 0.5)) |> 
-  bind_rows(d2_05)
-  
-d_02 <- d_02_0 |> 
-  bind_rows(d_02_1)
-
-
-rm(d_20_covs, d_n50, d2_0, d2_05, d_02_0, d_02_1, d_wo_x_0, d_wo_x_1)
+d_05 <- data.table::fread(here::here(path_raw, "batch_results_05_seed0.csv")) |> 
+  bind_rows(data.table::fread(here::here(path_raw, "batch_results_05_seed1.csv")))
 ```
 
 
