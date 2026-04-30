@@ -1,4 +1,4 @@
-# This script fits linear models using our five covariate 
+# This script fits linear models using our covariate 
 #   selection methods in a simulated data set that varies characteristics of the research 
 #   setting (e.g., sample size, number of covariates, effect size for x; see below)
 

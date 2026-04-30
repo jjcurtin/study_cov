@@ -13,7 +13,11 @@
 #   fit_no_covs(d)
 #   fit_all_covs(d)
 #   fit_p_hacked(d)
+#   fit_r(d)
 #   fit_partial_r(d)
+#   fit_full_lm_wo_x(d)
+#   fit_full_lm(d)
+#   fit_lasso_wo_x(d)
 #   fit_lasso(d)
 
 ################################################################################
@@ -293,7 +297,7 @@ fit_lasso_wo_x <- function(d) {
   fits_lasso <-
     parsnip::linear_reg(penalty = tune(), mixture = 1) |> # lasso model
     parsnip::set_engine("glmnet",
-                        penalty.factor = c(rep(1, n_covs))) |> 
+                        penalty.factor = c(rep(1, n_covs))) |>  # used in next function to not penalize x
     tune::tune_grid(preprocessor = recipes::recipe(formula = formula_1, data = d),
                     resamples = splits_boot, 
                     grid = grid_penalty, 
