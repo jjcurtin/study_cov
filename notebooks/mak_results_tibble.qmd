@@ -1,0 +1,85 @@
+---
+title: "Make results tibble"
+author: "Kendra Wyant"
+date: last-modified
+number-sections: true
+format: 
+  html: 
+    embed-resources: true
+    toc: true 
+    toc_depth: 5
+execute:
+  echo: false
+editor_options: 
+  chunk_output_type: console
+---
+
+This script makes combined data frame (`results_combined_raw.csv`), a summary table of results for figures (`results_tibble.csv`) and a parameter estimate table (`estimate_tibble.csv`).
+
+
+```{r}
+#| label: read in data
+#| code-fold: true
+
+library(tidyverse)
+
+path_raw <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_raw"
+path_processed <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_processed"
+
+d_0 <- data.table::fread(here::here(path_raw, "batch_results_0_seed0.csv")) |> 
+  bind_rows(data.table::fread(here::here(path_raw, "batch_results_0_seed1.csv")))
+
+d_02 <- data.table::fread(here::here(path_raw, "batch_results_02_seed0.csv")) |> 
+  bind_rows(data.table::fread(here::here(path_raw, "batch_results_02_seed1.csv")))
+
+d_05 <- data.table::fread(here::here(path_raw, "batch_results_05_seed0.csv")) |> 
+  bind_rows(data.table::fread(here::here(path_raw, "batch_results_05_seed1.csv")))
+```
+
+
+Combine and save out combined data
+```{r}
+d_all <- d_0 |> 
+  rbind(d_02, d_05) |> 
+  glimpse()
+
+d_all |> 
+  write_csv(here::here(path_processed, "results_combined_raw.csv"))
+```
+
+
+### Calculate type 1 and type 2 error
+
+Calculate error rates
+```{r}
+d_tibble <- d_all |> 
+  group_by(method, n_obs, n_covs, r_ycov, p_good_covs, b_x) |> 
+  summarise(type_I = mean(p_value < 0.05),
+            type_II = mean(p_value >= 0.05),
+            .groups = "drop")
+
+d_tibble <- d_tibble|> 
+  mutate(type_I = if_else(b_x != 0.0, NA_real_, type_I),
+         type_II = if_else(b_x == 0.0, NA_real_, type_II))
+```
+
+Save out tibble
+```{r}
+d_tibble |> 
+  write_csv(here::here(path_processed, "results_tibble.csv"))
+```
+
+### Create Parameter Estimate summary table
+
+```{r}
+d_param <- d_all |> 
+  group_by(method, b_x) |> 
+  summarise(mean = mean(estimate), .groups = "drop") |> 
+  pivot_wider(names_from = b_x, values_from = mean)  |> 
+  glimpse()
+
+d_param |> 
+  write_csv(here::here(path_processed, "estimate_tibble.csv"))
+```
+
+

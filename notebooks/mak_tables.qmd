@@ -18,61 +18,86 @@ html-table-processing: none
 ---
 
 ```{r}
-library(skimr)
-library(cowplot)
 library(tidyverse)
 library(kableExtra, exclude = ("group_rows"))
 
 options(digits = 3)
 options(knitr.kable.NA = '')
 
-devtools::source_url("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true") |> suppressMessages()
+path_processed <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_processed"
 
-rdrive_path <- format_path("cov/raw_data")
-table <- read_csv(here::here(rdrive_path, "estimate_table.csv"),
+table <- read_csv(here::here(path_processed, "estimate_tibble.csv"),
                   show_col_types = FALSE)
 
 ```
 
 ```{r}
-lm_methods <- tibble(Method = c("No covariates", "All covariates", "P-hacking",
-                  "Bivariate correlation", "Partial correlation",
-                  "Full linear model", "Full linear model with X",
-                  "LASSO", "LASSO with X"),
-       Definition = c("Y is regressed on X without any covariates.",
-                      "All available covariates are included in the regression model.",
-                      "Unsystematically adding covariates based on whether they lower the p-value of the main effect of X on Y.",
-                      "Pearson correlation coefficient (r) of covariates on Y. Covariates are considered one at a time and included in the final model if they yield a significant effect on Y (p < .05).",
-                      "Pearson correlation coefficient (r) of covariates on Y while controlling for X. Covariates are considered one at a time and included in the final model if they yield a significant effect on Y (p < .05).",
-                      "A full linear model that regresses Y on all available covariates. Covariates that have a statistically significant effect on Y (p < .05) are retained.",
-                      "A full linear model that regresses Y on all available covariates and X. Covariates that have a statistically significant effect on Y (p < .05) when controlling for X are retained.",
-                      "A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates, potentially dropping them altogether (i.e., coefficient of 0). Covariates with non-zero coefficients were retained.",
-                      "A linear model that regresses Y on all available covariates and applies a penalty to shrink coefficients for less important covariates. We assigned a 0 penalty to X to retain it in the model. Covariates with non-zero coefficients when controlling for X were retained."))
+footnote_methods <- "Screening models represent symbolic linear models where \\(Y\\) is the outcome, \\(X\\) is the focal independent variable, \\(C\\) is a covariate, and \\(k\\) is the number of covariates."
+
+lm_methods <- tibble(
+  Method = c(
+    "No covariates",
+    "All covariates",
+    "p-hacking",
+    "Separate cov lm with X",
+    "Separate cov lm w/o X",
+    "Simultaneous cov lm with X",
+    "Simultaneous cov lm w/o X",
+    "Simultaneous cov LASSO with X",
+    "Simultaneous cov LASSO w/o X"
+  ),
+  `Screening Models` = c(
+    "No screening models",
+    "No screening models",
+    "\\(Y \\sim X + C_{1}\\) <br> \\(Y \\sim X + C_{2}\\) <br> \\(\\vdots\\) <br> \\(Y \\sim X + C_{k}\\)",
+    "\\(Y \\sim X + C_{1}\\) <br> \\(Y \\sim X + C_{2}\\) <br> \\(\\vdots\\) <br> \\(Y \\sim X + C_{k}\\)",
+    "\\(Y \\sim C_{1}\\) <br> \\(Y \\sim C_{2}\\) <br> \\(\\vdots\\) <br> \\(Y \\sim C_{k}\\)",
+    "\\(Y \\sim X + C_{1} + C_{2} + \\cdots + C_{k}\\)",
+    "\\(Y \\sim C_{1} + C_{2} + \\cdots + C_{k}\\)",
+    "\\(Y \\sim X + C_{1} + C_{2} + \\cdots + C_{k}\\) with \\(\\lambda\\) penalty applied to all covariates",
+    "\\(Y \\sim C_{1} + C_{2} + \\cdots + C_{k}\\) with \\(\\lambda\\) penalty applied to all covariates"
+  ),
+  `Covariate Selection Criteria` = c(
+    "No covariates used",
+    "All covariates used",
+    "Covariates that increase the effect of \\(X\\) are included in the final model",
+    "Significant covariates (\\(p < .05\\)) when controlling for \\(X\\) are included in the final model",
+    "Significant covariates (\\(p < .05\\)) are included in the final model",
+    "Significant covariates (\\(p < .05\\)) when controlling for \\(X\\) and all other covariates are retained in the final model",
+    "Significant covariates (\\(p < .05\\)) when controlling for all other covariates are included in the final model",
+    "Covariates with non-zero coefficients are included in the model",
+    "Covariates with non-zero coefficients are included in the model"
+  )
+)
+
 ```
 
 ```{r}
 #| label: tbl-methods
-#| tbl-cap: The nine linear regression models and their definition for covariate selection.
+#| tbl-cap: The nine covariate selection models and their definition for covariate selection.
+#| warning: false
 
 lm_methods |> 
-  kbl(escape = FALSE) |> 
-  kable_classic()
+  kbl(escape = FALSE, format = "html") |> 
+  kable_classic() |> 
+  kableExtra::footnote(general = footnote_methods, escape=FALSE)
 ```
 
 
 
 ```{r}
 #| label: tbl-dictionary
-#| tbl-cap: "Research setting variables and values"
+#| tbl-cap: "Research context variables and values"
+#| warning: false
 
 data_tbl0 <- tibble(
   description = c(
-    "The population parameter for X",
-    "The number of observations in the sample",
-    "The number of covariates",
-    "The proportion of \"good\" covariates",
-    "The correlation between Y and good covariates"),
-  values = c("0, 0.3, 0.5",
+    "The population parameter for the focal IV",
+    "The sample size",
+    "The number of covariates available",
+    "The percentage of covariates with non-zero correlations with the outcome",
+    "The magnitude of the correlation between the covariates and Y"),
+  values = c("0, 0.2, 0.5",
              "50, 100, 150, 200, 300, 400", 
              "4, 8, 12, 16, 20", 
              "0.25, 0.50, 0.75",
@@ -81,9 +106,10 @@ data_tbl0 <- tibble(
 )
 
 data_tbl0 |>
-  kbl(col.names = c("Research Setting Variable", "Values"), 
-      escape = FALSE) |>
-  kable_styling(bootstrap_options = c("striped", "hover"), 
+  kbl(col.names = c("Research Context Variable", "Values"), 
+      escape = FALSE,
+      format = "html") |>
+  kable_styling(bootstrap_options = c("striped"), 
                 full_width = FALSE) |>
   column_spec(1, width = "15em") |>
   column_spec(2, width = "10em")
@@ -91,36 +117,119 @@ data_tbl0 |>
 ```
 
 
-
 ```{r}
 #| label: tbl-est
-#| tbl-cap: "Mean estimates of effect size by method and true effect size"
+#| tbl-cap: "Mean estimates of effect size by method and population parameter."
 #| warning: false
 
 table |> 
   rename(Method = method, 
-         `No effect` = `b_x = 0`,
-         `d = .3` = `b_x = .3`,
-         `d = .5` = `b_x = .5`) |> 
-  mutate(Method = factor(Method, 
-                         levels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Single covariate lm", "Single covariate lm with X", 
-                                    "All covariates lm", "All covariates lm with X", 
-                                    "All covariates LASSO", "All covariates LASSO with X"),
-                         labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Single covariate lm without X", 
-                                    "Single covariate lm with X", 
-                                    "All covariates lm without X", 
-                                    "All covariates lm with X", 
-                                    "All covariates LASSO without X", 
-                                    "All covariates LASSO with X")),
-         `No effect` = sprintf("%.3f", `No effect`)) |> 
+         `No effect ($\\beta_{x}=0$)` = `0`,
+         `$\\beta_{x}=0.2$` = `0.2`,
+         `$\\beta_{x}=0.5$` = `0.5`) |> 
+  mutate(
+    Method = factor(
+      Method,
+      levels = c("no_covs", "all_covs", "p_hacked", 
+                 "r", "partial_r", 
+                   "full_lm_wo_x", "full_lm",
+                 "lasso",  "lasso_wo_x"),
+      labels = c("No covariates", "All covariates", "p-hacking", 
+                 "Separate cov lm with X", 
+                 "Separate cov lm w/o X", 
+                 "Simultaneous cov lm with X", 
+                 "Simultaneous cov lm w/o X", 
+                 "Simultaneous cov LASSO with X", 
+                 "Simultaneous cov LASSO w/o X")
+    )
+  ) |> 
+  mutate(across(-Method, ~sprintf("%.3f", abs(.)))) |> 
   arrange(Method) |> 
-  add_row(Method = "Researcher selection", .before = 1) |> 
-  add_row(Method = "Data-driven selection", .after = 3) |> 
-  kable() |> 
+  add_row(Method = "Traditional Selection", .before = 1) |> 
+  add_row(Method = "Data-driven Selection", .after = 3) |> 
+  kable(escape = FALSE) |> 
   kable_classic() |> 
   pack_rows(NULL, 2, 3) |> 
   pack_rows(NULL, 5, 11)
 ```
+
+
+```{r}
+#| label: tbl-rec
+#| tbl-cap: "Summary of selection methods, evaluation of bias and Type I and II error rates, and recommendations."
+#| warning: false
+
+tibble(
+  Method = c(
+    "No covariates",
+    "All covariates",
+    "p-hacking",
+    "Separate cov lm with X",
+    "Separate cov lm w/o X",
+    "Simultaneous cov lm with X",
+    "Simultaneous cov lm w/o X",
+    "Simultaneous cov LASSO with X",
+    "Simultaneous cov LASSO w/o X"
+  ),
+  `Bias` = c(
+    "none",
+    "none",
+    "unacceptable",
+    "none",
+    "acceptable",
+    "none",
+    "acceptable",
+    "none",
+    "acceptable"
+  ),
+  `Type I error` = c(
+    "0.050",
+    "0.050",
+    "0.198",
+    "0.052",
+    "0.050",
+    "0.060",
+    "0.050",
+    "0.057",
+    "0.050"
+  ),
+  `Type II error` = c(
+    "0.449",
+    "",
+    "0.358",
+    "0.341",
+    "0.347",
+    "0.345",
+    "0.368",
+    "0.337",
+    "0.352"
+  ),
+  `Recommendation` = c(
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ),
+  `Notes` = c(
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  )
+) |> 
+  kbl(escape = FALSE, format = "html") |> 
+  kable_classic() 
+```
+
+
 

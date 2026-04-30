@@ -1,0 +1,71 @@
+---
+title: "Calculate summary stats"
+author: "Kendra Wyant"
+date: "`r lubridate::today()`"
+number-sections: true
+output: 
+  html_document:
+    toc: true 
+    toc_depth: 4
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-depth: 4
+editor_options: 
+  chunk_output_type: console
+execute:
+  echo: false
+html-table-processing: none
+---
+
+```{r}
+
+library(tidyverse)
+
+path_processed <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_processed"
+
+d <- read_csv(here::here(path_processed, "results_tibble.csv"),
+              show_col_types = FALSE)
+
+options(digits = 3)
+```
+
+
+
+
+### P-Hacking stats 
+
+Simmons comparison (N = 50, n-covs = 4)
+```{r}
+d |> 
+  filter(b_x == 0 & method == "p_hacked" & n_obs == 50 & n_covs == 4)  |> 
+  summarise(mean(type_I),
+            min(type_I),
+            max(type_I))
+```
+
+
+8-12 covs
+```{r}
+d_0 |> 
+  filter(method == "p-hacking" & n_obs == 50 & n_covs %in% c(8, 12))  |> 
+  group_by(simulation_id, n_covs) |> 
+  summarise(type_I = mean(p_value < 0.05), .groups = "drop") |> 
+  summarise(mean(type_I),
+            min(type_I),
+            max(type_I))
+```
+
+16-20 covs
+```{r}
+d_0 |> 
+  filter(method == "p-hacking" & n_obs == 50 & n_covs %in% c(16, 20))  |> 
+  group_by(simulation_id, n_covs) |> 
+  summarise(type_I = mean(p_value < 0.05), .groups = "drop") |> 
+  summarise(mean(type_I),
+            min(type_I),
+            max(type_I))
+```
+
+
