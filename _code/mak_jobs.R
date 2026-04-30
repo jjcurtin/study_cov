@@ -1,6 +1,8 @@
 # R script to write jobs csv for CHTC
-
 library(tidyverse)
+source("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true")
+
+path_chtc <- format_path(str_c("cov/chtc/batch_", Sys.Date()))
 
 n_obs_lvls <- c(50, 100, 150, 200, 300, 400)
 n_covs_lvls <- c(4, 8, 12, 16, 20)
@@ -22,7 +24,19 @@ jobs <- expand_grid(n_sims = 500,
   mutate(job_num = row_number()) |> 
   relocate(job_num)
 
+nrow(jobs) * 500 / 540 # 40,000
 
-jobs |> write_csv("_chtc/jobs.csv", col_names = FALSE)
+# make new directory
+dir.create(here::here(path_chtc))
+dir.create(here::here(path_chtc, "input"))
+dir.create(here::here(path_chtc, "output"))
 
-jobs |> select(-job_num) |> distinct() |> nrow()
+# write jobs to input
+jobs |> write_csv(here::here(path_chtc, "input", "jobs.csv"), 
+                  col_names = FALSE)
+
+# copy other files
+file.copy("_code/cov.sh", here::here(path_chtc, "input"))
+file.copy("_code/cov.sub", here::here(path_chtc, "input"))
+file.copy("_code/fit_cov.R", here::here(path_chtc, "input"))
+file.copy("_code/fun_cov.R", here::here(path_chtc, "input"))
