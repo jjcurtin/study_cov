@@ -884,11 +884,18 @@ Figure&nbsp;1: Sampling distributions for population parameter estimates display
 <span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>  theme(</span>
 <span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>    legend.position <span class="op">=</span> <span class="st">"none"</span></span>
 <span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 9 rows containing missing values or values outside the scale range
+(`geom_segment()`).
+Removed 9 rows containing missing values or values outside the scale range
+(`geom_segment()`).Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_text()`).</code></pre>
+</div>
 <div class="cell-output cell-output-display">
 <div id="fig-bar-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Traditional selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-1.png" width="840" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Traditional selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X."><img src="index_files/figure-html/notebooks-mak_figures-fig-bar-1-output-2.png" width="840" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Type I Error by Method. Average type I error rate across all research contexts is displayed for each method separately by color. Traditional selection methods are on the left, data-driven selection methods are on the right. Striped shading indicates data-driven selection methods that do not control for X.
@@ -902,9 +909,9 @@ Figure&nbsp;2: Type I Error by Method. Average type I error rate across all rese
 <p>In contrast, to the <em>p</em>-hacking approach, the Type I error rates remained constant at 0.05 across all research context dimensions for the traditional approaches and the data-driven approaches that did not include <span class="math inline">\(X\)</span>. Among the other data-driven approaches that did include <span class="math inline">\(X\)</span>, small increases in Type I error rates were observed as the sample size decreased and the number of available covariates increased. However, Type I error rate inflation remained modest for these approaches even at the extremes of these two dimensions (up to 0.074 at <span class="math inline">\(N\)</span>=50 and up to 0.066 with 20 covariates in the simultaneous linear model approach). And in the worst case context at the intersection of all dimensions, error rates for these screening approaches that included <span class="math inline">\(X\)</span> only reached 0.072 for separate linear models, 0.096 with a simultaneous linear model and 0.089 with a simultaneous LASSO. Neither the magnitude <span class="math inline">\(r_{cov-Y}\)</span> nor the percentage of available covariates with non-zero correlations with <span class="math inline">\(Y\)</span> appeared to have any systematic impact on the Type I error rates for the data-driven approaches that included <span class="math inline">\(X\)</span>.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-type1-panel">
 <div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-type1-panel" class="cell" data-fig-height="6" data-fig-width="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(observations <span class="op">+</span> covs)<span class="op">/</span>(good_covs <span class="op">+</span> ycor) <span class="op">+</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  plot_layout(guides <span class="op">=</span> <span class="st">"collect"</span>) <span class="op">&amp;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  theme(legend.position <span class="op">=</span> <span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(observations <span class="op">+</span> covs)<span class="op">/</span>(good_covs <span class="op">+</span> ycor) <span class="op">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  plot_layout(guides <span class="op">=</span> <span class="st">"collect"</span>) <span class="op">&amp;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  theme(legend.position <span class="op">=</span> <span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="fig-type1-panel" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -926,105 +933,105 @@ Figure&nbsp;3: Type I error by method and research context. Plots are paneled by
 <p><a href="#fig-bar-2" class="quarto-xref">Figure&nbsp;4</a> shows the mean Type II error rate across all research contexts for each approach. The traditional no covariates approach displayed the highest average Type II error (0.449), which reinforces the value of using covariates to increase statistical power to detect true effects. Among the approaches that used covariates, the data-driven approaches generally produced modestly lower average Type II error rates than the traditional all covariates approach. Furthermore, the data-driven approaches that included <span class="math inline">\(X\)</span> displayed modestly lower mean Type II error rates than the comparable approaches that did not include <span class="math inline">\(X\)</span> in the screening model.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-bar-2">
 <div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-fig-bar-2" class="cell" data-fig-width="8.75">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>type_II_summary <span class="op">&lt;-</span> d_02 <span class="op">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  bind_rows(d_05) <span class="op">|&gt;</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">filter</span>(method <span class="op">!=</span> <span class="st">"p-hacking"</span>) <span class="op">|&gt;</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  group_by(method) <span class="op">|&gt;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  summarise(type_II <span class="op">=</span> mean(type_II, .groups <span class="op">=</span> <span class="st">"drop"</span>)) <span class="op">|&gt;</span> </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  mutate(group <span class="op">=</span> case_match(method,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"p-hacking"</span> <span class="op">~</span> <span class="st">"p-hacking"</span>,</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"No covariates"</span> <span class="op">~</span> <span class="st">"No selection"</span>,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"All covariates"</span> <span class="op">~</span> <span class="st">"No selection"</span>,</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Separate cov lm w/o X"</span> <span class="op">~</span> <span class="st">"Separate cov lm"</span>,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Separate cov lm with X"</span> <span class="op">~</span> <span class="st">"Separate cov lm"</span>,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Simultaneous cov lm w/o X"</span> <span class="op">~</span> <span class="st">"Simultaneous cov lm"</span>,</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Simultaneous cov lm with X"</span> <span class="op">~</span> <span class="st">"Simultaneous cov lm"</span>,</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Simultaneous cov LASSO w/o X"</span> <span class="op">~</span> <span class="st">"Simultaneous cov LASSO"</span>,</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Simultaneous cov LASSO with X"</span> <span class="op">~</span> <span class="st">"Simultaneous cov LASSO"</span>))</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Parameters</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>gap_after_idx <span class="op">&lt;-</span> c(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>)  </span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>gap_size <span class="op">&lt;-</span> <span class="fl">0.2</span>                </span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>bar_width <span class="op">&lt;-</span> <span class="fl">0.9</span>                </span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>df <span class="op">&lt;-</span> type_II_summary <span class="op">|&gt;</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  mutate(method_chr <span class="op">=</span> <span class="im">as</span>.character(method))</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>n <span class="op">&lt;-</span> nrow(df)</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>base_pos <span class="op">&lt;-</span> seq_len(n)  </span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="co"># compute how many gaps precede each bar</span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>gap_count_before <span class="op">&lt;-</span> sapply(base_pos, function(i) <span class="bu">sum</span>(gap_after_idx <span class="op">&lt;</span> i))</span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="co"># add the total gap length before each bar</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>x_pos <span class="op">&lt;-</span> base_pos <span class="op">+</span> gap_count_before <span class="op">*</span> gap_size</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>plot_df <span class="op">&lt;-</span> df <span class="op">|&gt;</span></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>  mutate(x_pos <span class="op">=</span> x_pos)</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>x_breaks <span class="op">&lt;-</span> plot_df$x_pos</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>x_labels <span class="op">&lt;-</span> c(<span class="st">"No covariates"</span>, <span class="st">"All covariates"</span>,</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>              <span class="st">"With X"</span>, <span class="st">"W/o X"</span>,</span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>              <span class="st">"With X"</span>, <span class="st">"W/o X"</span>,</span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>              <span class="st">"With X"</span>, <span class="st">"W/o X"</span>)</span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>segment_labels <span class="op">&lt;-</span> tibble::tibble(</span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> c(mean(c(<span class="fl">0.6</span>, <span class="fl">2.6</span>)),</span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>        mean(c(<span class="fl">2.8</span>, <span class="fl">9.2</span>)),</span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>        mean(c(<span class="fl">2.8</span>, <span class="fl">4.6</span>)),</span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>        mean(c(<span class="dv">5</span>, <span class="fl">6.8</span>)),</span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>        mean(c(<span class="fl">7.2</span>, <span class="dv">9</span>))),</span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> c(<span class="fl">.50</span>, <span class="fl">.50</span>, <span class="fl">.40</span>, <span class="fl">.40</span>, <span class="fl">.40</span>) <span class="op">+</span> <span class="fl">0.015</span>,   </span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>  label <span class="op">=</span> c(<span class="st">"Traditional selection"</span>, <span class="st">"Data-driven selection"</span>, <span class="st">"Separate cov lm"</span>, <span class="st">"Simultaneous cov lm"</span>, <span class="st">"Simultaneous cov LASSO"</span>)</span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>ggplot(</span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>  plot_df,</span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>  aes(x <span class="op">=</span> x_pos, y <span class="op">=</span> type_II, fill <span class="op">=</span> method, pattern <span class="op">=</span> method)</span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>) <span class="op">+</span></span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>   geom_bar_pattern(</span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>    stat <span class="op">=</span> <span class="st">"identity"</span>,</span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> bar_width,</span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>    pattern_colour <span class="op">=</span> <span class="st">"white"</span>,</span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>    pattern_fill <span class="op">=</span> <span class="st">"white"</span>,</span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>    pattern_angle <span class="op">=</span> <span class="dv">45</span>,</span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>    pattern_density <span class="op">=</span> <span class="fl">0.6</span>,</span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>    pattern_spacing <span class="op">=</span> <span class="fl">0.02</span>,</span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> <span class="st">"black"</span></span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>  geom_segment(aes(y <span class="op">=</span> <span class="fl">.50</span>, x <span class="op">=</span> <span class="fl">.6</span>, xend <span class="op">=</span> <span class="fl">2.6</span>)) <span class="op">+</span></span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>  geom_segment(aes(y <span class="op">=</span> <span class="fl">.50</span>, x <span class="op">=</span> <span class="fl">2.8</span>, xend <span class="op">=</span> <span class="fl">9.2</span>)) <span class="op">+</span></span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>  geom_segment(aes(y <span class="op">=</span> <span class="fl">.40</span>, x <span class="op">=</span> <span class="fl">2.8</span>, xend <span class="op">=</span> <span class="fl">4.6</span>)) <span class="op">+</span></span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>  geom_segment(aes(y <span class="op">=</span> <span class="fl">.40</span>, x <span class="op">=</span> <span class="dv">5</span>, xend <span class="op">=</span> <span class="fl">6.8</span>)) <span class="op">+</span></span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>  geom_segment(aes(y <span class="op">=</span> <span class="fl">.40</span>, x <span class="op">=</span> <span class="fl">7.2</span>, xend <span class="op">=</span> <span class="dv">9</span>)) <span class="op">+</span></span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>  geom_text(</span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>    aes(label <span class="op">=</span> sprintf(<span class="st">"</span><span class="sc">%.3f</span><span class="st">"</span>, type_II)),</span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>    vjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>  geom_text(</span>
-<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> segment_labels,</span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>    aes(x <span class="op">=</span> x, y <span class="op">=</span> y, label <span class="op">=</span> label),</span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>    inherit.aes <span class="op">=</span> FALSE</span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>  labs(x <span class="op">=</span> NULL, y <span class="op">=</span> <span class="st">"Type II Error"</span>) <span class="op">+</span></span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(</span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>    limits <span class="op">=</span> c(<span class="dv">0</span>, <span class="bu">max</span>(type_II_summary$type_II) <span class="op">*</span> <span class="fl">1.2</span>),</span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>    breaks <span class="op">=</span> seq(<span class="dv">0</span>, <span class="bu">max</span>(type_II_summary$type_II) <span class="op">*</span> <span class="fl">1.2</span>, by <span class="op">=</span> <span class="fl">0.05</span>)</span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>  <span class="co"># numeric x with custom breaks/labels; gaps are just extra space between positions</span></span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>  scale_x_continuous(</span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>    breaks <span class="op">=</span> x_breaks,</span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> x_labels,</span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>    expand <span class="op">=</span> expansion(mult <span class="op">=</span> c(<span class="fl">0.02</span>, <span class="fl">0.05</span>))  </span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>  scale_pattern_manual(values <span class="op">=</span> method_patterns) <span class="op">+</span></span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>  scale_fill_manual(values <span class="op">=</span> method_colors) <span class="op">+</span></span>
-<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>  theme(</span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>    legend.position <span class="op">=</span> <span class="st">"none"</span></span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>type_II_summary <span class="op">&lt;-</span> d_02 <span class="op">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  bind_rows(d_05) <span class="op">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">filter</span>(method <span class="op">!=</span> <span class="st">"p-hacking"</span>) <span class="op">|&gt;</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  group_by(method) <span class="op">|&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  summarise(type_II <span class="op">=</span> mean(type_II, .groups <span class="op">=</span> <span class="st">"drop"</span>)) <span class="op">|&gt;</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  mutate(group <span class="op">=</span> case_match(method,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"p-hacking"</span> <span class="op">~</span> <span class="st">"p-hacking"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"No covariates"</span> <span class="op">~</span> <span class="st">"No selection"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"All covariates"</span> <span class="op">~</span> <span class="st">"No selection"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Separate cov lm w/o X"</span> <span class="op">~</span> <span class="st">"Separate cov lm"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Separate cov lm with X"</span> <span class="op">~</span> <span class="st">"Separate cov lm"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Simultaneous cov lm w/o X"</span> <span class="op">~</span> <span class="st">"Simultaneous cov lm"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Simultaneous cov lm with X"</span> <span class="op">~</span> <span class="st">"Simultaneous cov lm"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Simultaneous cov LASSO w/o X"</span> <span class="op">~</span> <span class="st">"Simultaneous cov LASSO"</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Simultaneous cov LASSO with X"</span> <span class="op">~</span> <span class="st">"Simultaneous cov LASSO"</span>))</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co"># ---- Parameters</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>gap_after_idx <span class="op">&lt;-</span> c(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>)  </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>gap_size <span class="op">&lt;-</span> <span class="fl">0.2</span>                </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>bar_width <span class="op">&lt;-</span> <span class="fl">0.9</span>                </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>df <span class="op">&lt;-</span> type_II_summary <span class="op">|&gt;</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  mutate(method_chr <span class="op">=</span> <span class="im">as</span>.character(method))</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>n <span class="op">&lt;-</span> nrow(df)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>base_pos <span class="op">&lt;-</span> seq_len(n)  </span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co"># compute how many gaps precede each bar</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>gap_count_before <span class="op">&lt;-</span> sapply(base_pos, function(i) <span class="bu">sum</span>(gap_after_idx <span class="op">&lt;</span> i))</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co"># add the total gap length before each bar</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>x_pos <span class="op">&lt;-</span> base_pos <span class="op">+</span> gap_count_before <span class="op">*</span> gap_size</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>plot_df <span class="op">&lt;-</span> df <span class="op">|&gt;</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  mutate(x_pos <span class="op">=</span> x_pos)</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>x_breaks <span class="op">&lt;-</span> plot_df$x_pos</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>x_labels <span class="op">&lt;-</span> c(<span class="st">"No covariates"</span>, <span class="st">"All covariates"</span>,</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>              <span class="st">"With X"</span>, <span class="st">"W/o X"</span>,</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>              <span class="st">"With X"</span>, <span class="st">"W/o X"</span>,</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>              <span class="st">"With X"</span>, <span class="st">"W/o X"</span>)</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>segment_labels <span class="op">&lt;-</span> tibble::tibble(</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> c(mean(c(<span class="fl">0.6</span>, <span class="fl">2.6</span>)),</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>        mean(c(<span class="fl">2.8</span>, <span class="fl">9.2</span>)),</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>        mean(c(<span class="fl">2.8</span>, <span class="fl">4.6</span>)),</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>        mean(c(<span class="dv">5</span>, <span class="fl">6.8</span>)),</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>        mean(c(<span class="fl">7.2</span>, <span class="dv">9</span>))),</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> c(<span class="fl">.50</span>, <span class="fl">.50</span>, <span class="fl">.40</span>, <span class="fl">.40</span>, <span class="fl">.40</span>) <span class="op">+</span> <span class="fl">0.015</span>,   </span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>  label <span class="op">=</span> c(<span class="st">"Traditional selection"</span>, <span class="st">"Data-driven selection"</span>, <span class="st">"Separate cov lm"</span>, <span class="st">"Simultaneous cov lm"</span>, <span class="st">"Simultaneous cov LASSO"</span>)</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>ggplot(</span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>  plot_df,</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>  aes(x <span class="op">=</span> x_pos, y <span class="op">=</span> type_II, fill <span class="op">=</span> method, pattern <span class="op">=</span> method)</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>) <span class="op">+</span></span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>   geom_bar_pattern(</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>    stat <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> bar_width,</span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>    pattern_colour <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>    pattern_fill <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>    pattern_angle <span class="op">=</span> <span class="dv">45</span>,</span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>    pattern_density <span class="op">=</span> <span class="fl">0.6</span>,</span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>    pattern_spacing <span class="op">=</span> <span class="fl">0.02</span>,</span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> <span class="st">"black"</span></span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a>  geom_segment(aes(y <span class="op">=</span> <span class="fl">.50</span>, x <span class="op">=</span> <span class="fl">.6</span>, xend <span class="op">=</span> <span class="fl">2.6</span>)) <span class="op">+</span></span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a>  geom_segment(aes(y <span class="op">=</span> <span class="fl">.50</span>, x <span class="op">=</span> <span class="fl">2.8</span>, xend <span class="op">=</span> <span class="fl">9.2</span>)) <span class="op">+</span></span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a>  geom_segment(aes(y <span class="op">=</span> <span class="fl">.40</span>, x <span class="op">=</span> <span class="fl">2.8</span>, xend <span class="op">=</span> <span class="fl">4.6</span>)) <span class="op">+</span></span>
+<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>  geom_segment(aes(y <span class="op">=</span> <span class="fl">.40</span>, x <span class="op">=</span> <span class="dv">5</span>, xend <span class="op">=</span> <span class="fl">6.8</span>)) <span class="op">+</span></span>
+<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a>  geom_segment(aes(y <span class="op">=</span> <span class="fl">.40</span>, x <span class="op">=</span> <span class="fl">7.2</span>, xend <span class="op">=</span> <span class="dv">9</span>)) <span class="op">+</span></span>
+<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a>  geom_text(</span>
+<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a>    aes(label <span class="op">=</span> sprintf(<span class="st">"</span><span class="sc">%.3f</span><span class="st">"</span>, type_II)),</span>
+<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a>    vjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span></span>
+<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
+<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a>  geom_text(</span>
+<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> segment_labels,</span>
+<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a>    aes(x <span class="op">=</span> x, y <span class="op">=</span> y, label <span class="op">=</span> label),</span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a>    inherit.aes <span class="op">=</span> FALSE</span>
+<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
+<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a>  labs(x <span class="op">=</span> NULL, y <span class="op">=</span> <span class="st">"Type II Error"</span>) <span class="op">+</span></span>
+<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(</span>
+<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a>    limits <span class="op">=</span> c(<span class="dv">0</span>, <span class="bu">max</span>(type_II_summary$type_II) <span class="op">*</span> <span class="fl">1.2</span>),</span>
+<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a>    breaks <span class="op">=</span> seq(<span class="dv">0</span>, <span class="bu">max</span>(type_II_summary$type_II) <span class="op">*</span> <span class="fl">1.2</span>, by <span class="op">=</span> <span class="fl">0.05</span>)</span>
+<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
+<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a>  <span class="co"># numeric x with custom breaks/labels; gaps are just extra space between positions</span></span>
+<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a>  scale_x_continuous(</span>
+<span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a>    breaks <span class="op">=</span> x_breaks,</span>
+<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> x_labels,</span>
+<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a>    expand <span class="op">=</span> expansion(mult <span class="op">=</span> c(<span class="fl">0.02</span>, <span class="fl">0.05</span>))  </span>
+<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
+<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a>  scale_pattern_manual(values <span class="op">=</span> method_patterns) <span class="op">+</span></span>
+<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a>  scale_fill_manual(values <span class="op">=</span> method_colors) <span class="op">+</span></span>
+<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a>  theme(</span>
+<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a>    legend.position <span class="op">=</span> <span class="st">"none"</span></span>
+<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="fig-bar-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1044,9 +1051,9 @@ Figure&nbsp;4: Type II Error by Method. Average type II error rate across all re
 <!--updated for us to look at-->
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_figures.qmd" data-notebook-title="Make Figures for Main Manuscript" data-notebook-cellid="cell-fig-panel-2">
 <div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-fig-panel-2" class="cell" data-fig-height="9" data-fig-width="7.5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>  (observations_2 <span class="op">+</span> covs_2)<span class="op">/</span>(good_covs_2 <span class="op">+</span> ycor_2)<span class="op">/</span>(b_x <span class="op">+</span> plot_spacer()) <span class="op">+</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  plot_layout(guides <span class="op">=</span> <span class="st">"collect"</span>) <span class="op">&amp;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  theme(legend.position <span class="op">=</span> <span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>  (observations_2 <span class="op">+</span> covs_2)<span class="op">/</span>(good_covs_2 <span class="op">+</span> ycor_2)<span class="op">/</span>(b_x <span class="op">+</span> plot_spacer()) <span class="op">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  plot_layout(guides <span class="op">=</span> <span class="st">"collect"</span>) <span class="op">&amp;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  theme(legend.position <span class="op">=</span> <span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="fig-panel-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1076,76 +1083,76 @@ Figure&nbsp;5: Type II error by method and research context. Plots are paneled b
 <!--KW: just a placeholder table for now. We might consider using acceptable/unacceptable to describe error rates to make more of a judgment call and way that doesn't just repeat what was in results. We could also use term as lowest, low, high, highest. We could also consider reporting bias in a numeric format if we stick with numeric values for error.-->
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_cov\notebooks\mak_tables.qmd" data-notebook-title="Make Tables for Main Manuscript" data-notebook-cellid="cell-tbl-rec">
 <div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tibble(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  Method <span class="op">=</span> c(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"No covariates"</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"All covariates"</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p-hacking"</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Separate cov lm with X"</span>,</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Separate cov lm w/o X"</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Simultaneous cov lm with X"</span>,</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Simultaneous cov lm w/o X"</span>,</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Simultaneous cov LASSO with X"</span>,</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Simultaneous cov LASSO w/o X"</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  `Bias` <span class="op">=</span> c(</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"none"</span>,</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"none"</span>,</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"unacceptable"</span>,</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"none"</span>,</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceptable"</span>,</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"none"</span>,</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceptable"</span>,</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"none"</span>,</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceptable"</span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  `Type I error` <span class="op">=</span> c(</span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.050"</span>,</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.050"</span>,</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.198"</span>,</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.052"</span>,</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.050"</span>,</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.060"</span>,</span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.050"</span>,</span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.057"</span>,</span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.050"</span></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>  `Type II error` <span class="op">=</span> c(</span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.449"</span>,</span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.358"</span>,</span>
-<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.341"</span>,</span>
-<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.347"</span>,</span>
-<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.345"</span>,</span>
-<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.368"</span>,</span>
-<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.337"</span>,</span>
-<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.352"</span></span>
-<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>  `Recommendation` <span class="op">=</span> c(</span>
-<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span></span>
-<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>  `Notes` <span class="op">=</span> c(</span>
-<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
-<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span></span>
-<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>) <span class="op">|&gt;</span> </span>
-<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>  kbl(escape <span class="op">=</span> FALSE, <span class="bu">format</span> <span class="op">=</span> <span class="st">"html"</span>) <span class="op">|&gt;</span> </span>
-<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>  kable_classic() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tibble(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  Method <span class="op">=</span> c(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"No covariates"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"All covariates"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"p-hacking"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Separate cov lm with X"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Separate cov lm w/o X"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Simultaneous cov lm with X"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Simultaneous cov lm w/o X"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Simultaneous cov LASSO with X"</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Simultaneous cov LASSO w/o X"</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  `Bias` <span class="op">=</span> c(</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"none"</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"none"</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"unacceptable"</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"none"</span>,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceptable"</span>,</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"none"</span>,</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceptable"</span>,</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"none"</span>,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceptable"</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  `Type I error` <span class="op">=</span> c(</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.050"</span>,</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.050"</span>,</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.198"</span>,</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.052"</span>,</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.050"</span>,</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.060"</span>,</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.050"</span>,</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.057"</span>,</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.050"</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  `Type II error` <span class="op">=</span> c(</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.449"</span>,</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.358"</span>,</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.341"</span>,</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.347"</span>,</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.345"</span>,</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.368"</span>,</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.337"</span>,</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"0.352"</span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>  `Recommendation` <span class="op">=</span> c(</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>  `Notes` <span class="op">=</span> c(</span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span></span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a>) <span class="op">|&gt;</span> </span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a>  kbl(escape <span class="op">=</span> FALSE, <span class="bu">format</span> <span class="op">=</span> <span class="st">"html"</span>) <span class="op">|&gt;</span> </span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>  kable_classic() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
 Use 'xfun::attr2()' instead.
