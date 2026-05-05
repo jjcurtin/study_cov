@@ -29,7 +29,7 @@ path_processed <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_p
 d <- read_csv(here::here(path_processed, "results_tibble.csv"),
               show_col_types = FALSE)
 
-d_full <- read_csv(here::here(path_processed, "results_combined_raw.csv"),
+d_full <- read_csv(here::here(path_processed, "results.csv"),
               show_col_types = FALSE)
 
 d_full <- d_full |> 
@@ -172,7 +172,7 @@ segment_labels <- tibble::tibble(
         mean(c(4.0, 5.8)),
         mean(c(6.2, 8.0)),
         mean(c(8.4, 10.2))),
-  y = c(.22, .22, .08, .08, .08) + 0.015,   
+  y = c(.13, .13, .08, .08, .08) + 0.015,   
   label = c("Traditional selection", "Data-driven selection", "Separate cov lm", "Simultaneous cov lm", "Simultaneous cov LASSO")
 )
 
@@ -190,8 +190,8 @@ ggplot(
     pattern_spacing = 0.02,
     color = "black"
   ) +
-  geom_segment(aes(y = .22, x = .5, xend = 2.6)) +
-  geom_segment(aes(y = .22, x = 2.8, xend = 10.2)) +
+  geom_segment(aes(y = .13, x = .5, xend = 2.6)) +
+  geom_segment(aes(y = .13, x = 2.8, xend = 10.2)) +
   geom_segment(aes(y = .08, x = 4.0, xend = 5.8)) +
   geom_segment(aes(y = .08, x = 6.2, xend = 8.0)) +
   geom_segment(aes(y = .08, x = 8.4, xend = 10.2)) +
@@ -206,8 +206,8 @@ ggplot(
   ) +
   labs(x = NULL, y = "Type I Error") +
   scale_y_continuous(
-    limits = c(0, max(type_I_summary$type_I) * 1.2),
-    breaks = seq(0, max(type_I_summary$type_I) * 1.2, by = 0.05)
+    limits = c(0, .15),
+    breaks = seq(0, .15, by = 0.05)
   ) +
   # numeric x with custom breaks/labels; gaps are just extra space between positions
   scale_x_continuous(
@@ -234,8 +234,8 @@ observations <- d_0 |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(50, 100, 150, 200, 300, 400)) +
-  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, .25, .30),
-                     limits = c(0.03, .30)) +
+  scale_y_continuous(breaks = c(0.05, 0.07, 0.09, 0.11, 0.13),
+                     limits = c(0.045, .13)) +
   labs(x = NULL,
        subtitle = "Number of Observations",
        y = "Type I Error") +
@@ -253,8 +253,8 @@ covs <- d_0 |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(4, 8, 12, 16, 20)) +
-  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25, .30),
-                     limits = c(.03, .30)) +
+  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20),
+                     limits = c(.045, .20)) +
   labs(y = NULL,
        x = NULL,
        subtitle = "Number of Covariates") +
@@ -271,8 +271,8 @@ good_covs <- d_0 |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.25, 0.50, 0.75), labels = c(25, 50, 75)) +
-  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, .25, .30), 
-                     limits = c(.03, .30)) +
+  scale_y_continuous(breaks = c(0.05, 0.07, 0.09, 0.11, 0.13), 
+                     limits = c(.045, .135)) +
   labs(y = "Type I Error",
        x = NULL,
        subtitle = "Percentage of Good Covariates") +
@@ -289,8 +289,8 @@ ycor <- d_0 |>
              linewidth = method)) + 
   geom_line() +
   scale_x_continuous(breaks = c(0.3, 0.5)) +
-  scale_y_continuous(breaks = c(0.05, 0.10, 0.15, 0.20, 0.25, 0.30), 
-                     limits = c(.03, .30)) +
+  scale_y_continuous(breaks = c(0.05, 0.07, 0.09, 0.11, 0.13, 0.15), 
+                     limits = c(.045, .15)) +
   labs(y = NULL,
        x = NULL,
        subtitle = "Y-Covariate Correlation Strength") +

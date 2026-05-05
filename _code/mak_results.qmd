@@ -14,7 +14,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-This script makes combined data frame (`results_combined_raw.csv`), a summary table of results for figures (`results_tibble.csv`) and a parameter estimate table (`estimate_tibble.csv`).
+This script makes a raw data set of all results (`results.csv`), a summary table of results for figures (`results_tibble.csv`) and a parameter estimate table (`estimate_tibble.csv`).
 
 
 ```{r}
@@ -23,28 +23,17 @@ This script makes combined data frame (`results_combined_raw.csv`), a summary ta
 
 library(tidyverse)
 
-path_raw <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_raw"
+path_chtc <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\chtc\\batch_2026-04-30\\output"
 path_processed <- "\\\\research.drive.wisc.edu\\jjcurtin\\studydata\\cov\\data_processed"
 
-d_0 <- data.table::fread(here::here(path_raw, "batch_results_0_seed0.csv")) |> 
-  bind_rows(data.table::fread(here::here(path_raw, "batch_results_0_seed1.csv")))
-
-d_02 <- data.table::fread(here::here(path_raw, "batch_results_02_seed0.csv")) |> 
-  bind_rows(data.table::fread(here::here(path_raw, "batch_results_02_seed1.csv")))
-
-d_05 <- data.table::fread(here::here(path_raw, "batch_results_05_seed0.csv")) |> 
-  bind_rows(data.table::fread(here::here(path_raw, "batch_results_05_seed1.csv")))
+d <- data.table::fread(here::here(path_chtc, "batch_results.csv"))
 ```
 
 
-Combine and save out combined data
+Save out data to `data_processed`
 ```{r}
-d_all <- d_0 |> 
-  rbind(d_02, d_05) |> 
-  glimpse()
-
-d_all |> 
-  write_csv(here::here(path_processed, "results_combined_raw.csv"))
+d |> 
+  write_csv(here::here(path_processed, "results.csv"))
 ```
 
 
@@ -52,7 +41,7 @@ d_all |>
 
 Calculate error rates
 ```{r}
-d_tibble <- d_all |> 
+d_tibble <- d |> 
   group_by(method, n_obs, n_covs, r_ycov, p_good_covs, b_x) |> 
   summarise(type_I = mean(p_value < 0.05),
             type_II = mean(p_value >= 0.05),
@@ -72,7 +61,7 @@ d_tibble |>
 ### Create Parameter Estimate summary table
 
 ```{r}
-d_param <- d_all |> 
+d_param <- d |> 
   group_by(method, b_x) |> 
   summarise(mean = mean(estimate), .groups = "drop") |> 
   pivot_wider(names_from = b_x, values_from = mean)  |> 
