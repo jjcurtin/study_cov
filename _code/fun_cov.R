@@ -13,7 +13,11 @@
 #   fit_no_covs(d)
 #   fit_all_covs(d)
 #   fit_p_hacked(d)
+#   fit_r(d)
 #   fit_partial_r(d)
+#   fit_full_lm_wo_x(d)
+#   fit_full_lm(d)
+#   fit_lasso_wo_x(d)
 #   fit_lasso(d)
 
 ################################################################################
@@ -231,6 +235,25 @@ fit_partial_r <- function(d, alpha = 0.05) {
   lm(formula = formula_final, data = d)
 }
 
+# fit full_lm without x
+# Fits linear model with covariates that are significant on y, without controlling for x 
+# while controlling all other covariates.
+fit_full_lm_wo_x <- function(d, alpha = 0.05) {
+  
+  # build lm formula with covariates only (no x)
+  formula_1 <- reformulate(termlabels = grep("^c", names(d), value = TRUE), response = "y")
+  
+  # get vector of sig covs from full model without x and with all covs 
+  covs_added <- lm(formula = formula_1, data = d) |>  
+    broom::tidy() |> 
+    dplyr::filter(stringr::str_starts(term, "c")) |> 
+    dplyr::filter(p.value < .05) |>
+    dplyr::pull(term)
+  
+  # fit model with selected covariates 
+  formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
+  lm(formula = formula_final, data = d)
+}
 
 # fit full_lm 
 # Fits linear model with covariates that are significant on y, controlling for x 
@@ -245,6 +268,57 @@ fit_full_lm <- function(d, alpha = 0.05) {
     dplyr::pull(term)
   
   # fit model with selected covariates 
+  formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
+  lm(formula = formula_final, data = d)
+}
+
+# fit LASSO model
+# Fits linear model with covariates selected by LASSO.  Tunes (across 100 bootstraps) 
+#   and fits a best LASSO model without using x and using all covariates.  
+# Selects those covariates that had non-zero coefficients 
+#   in the best LASSO model and includes them in final linear model without x
+fit_lasso_wo_x <- function(d) {
+  
+  # calculate n_covs from data 
+  n_covs <- names(d) |> 
+    stringr::str_subset("^c") |> 
+    length()
+  
+  splits_boot <- d |> rsample::bootstraps(times = 100)
+  
+  # use a very wide set of penalties/lambda
+  grid_penalty <- tidyr::expand_grid(penalty = exp(seq(-8, 8, length.out = 1000)))
+  
+  # build lm formula with covariates only (no x)
+  formula_1 <- reformulate(termlabels = grep("^c", names(d), value = TRUE), response = "y")
+  
+  # tune lasso
+  # no need to standardize covariates because all have same variance 
+  fits_lasso <-
+    parsnip::linear_reg(penalty = tune(), mixture = 1) |> # lasso model
+    parsnip::set_engine("glmnet",
+                        penalty.factor = c(rep(1, n_covs))) |>  # used in next function to not penalize x
+    tune::tune_grid(preprocessor = recipes::recipe(formula = formula_1, data = d),
+                    resamples = splits_boot, 
+                    grid = grid_penalty, 
+                    metrics = yardstick::metric_set(yardstick::rmse))
+  
+  # select best lasso
+  fit_best_lasso <-
+    parsnip::linear_reg(penalty = tune::select_best(fits_lasso, metric = "rmse")$penalty, 
+                        mixture = 1) |> 
+    parsnip::set_engine("glmnet",
+                        penalty.factor = c(rep(1, n_covs))) |> 
+    parsnip::fit(formula = formula_1, data = d)
+  
+  # select nonzero covariates
+  covs_added <- fit_best_lasso |> 
+    broom::tidy() |> 
+    dplyr::filter(estimate != 0) |> 
+    dplyr::filter(stringr::str_starts(term, "c")) |> 
+    dplyr::pull(term)
+  
+  # fit model with selected covariates
   formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
   lm(formula = formula_final, data = d)
 }

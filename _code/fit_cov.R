@@ -1,4 +1,4 @@
-# This script fits linear models using our five covariate 
+# This script fits linear models using our covariate 
 #   selection methods in a simulated data set that varies characteristics of the research 
 #   setting (e.g., sample size, number of covariates, effect size for x; see below)
 
@@ -72,8 +72,16 @@ for(i in 1:n_sims) {
                                    method = "partial_r", 
                                    n_covs, p_good_covs,
                                    sim = i),
+                       get_results(model = fit_full_lm_wo_x(di), 
+                                   method = "full_lm_wo_x", 
+                                   n_covs, p_good_covs,
+                                   sim = i),
                        get_results(model = fit_full_lm(di), 
                                    method = "full_lm", 
+                                   n_covs, p_good_covs,
+                                   sim = i),
+                       get_results(model = fit_lasso_wo_x(di), 
+                                   method = "lasso_wo_x", 
                                    n_covs, p_good_covs,
                                    sim = i),
                        get_results(model = fit_lasso(di), 
