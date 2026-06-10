@@ -34,13 +34,17 @@ d_full <- read_csv(here::here(path_processed, "results.csv"),
 
 d_full <- d_full |> 
   mutate(method = factor(method, 
-                          levels = c("no_covs", "all_covs","p_hacked",  "partial_r",  "r",
-                                      "full_lm",  "full_lm_wo_x", 
-                                      "lasso", "lasso_wo_x"),
+                          levels = c("no_covs", "all_covs","p_hacked",  
+                                     "r", "partial_r",  
+                                      "full_lm_wo_x", "full_lm",  
+                                      "lasso_wo_x", "lasso"),
                          labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Separate cov lm with X", "Separate cov lm w/o X", 
-                                    "Simultaneous cov lm with X", "Simultaneous cov lm w/o X", 
-                                    "Simultaneous cov LASSO with X", "Simultaneous cov LASSO w/o X")))
+                                    "Separate cov lm w/o X", 
+                                    "Separate cov lm with X",
+                                    "Simultaneous cov lm w/o X", 
+                                    "Simultaneous cov lm with X", 
+                                    "Simultaneous cov LASSO w/o X",
+                                    "Simultaneous cov LASSO with X")))
 
 options(digits = 3)
 theme_set(theme_classic())
@@ -94,13 +98,16 @@ method_patterns <- c("No covariates" = "none",
 d <- d |> 
    mutate(method = factor(method, 
                           levels = c("no_covs", "all_covs","p_hacked",  
-                                      "partial_r", "r",
-                                     "full_lm",   "full_lm_wo_x",
-                                     "lasso", "lasso_wo_x"),
+                                       "r", "partial_r",
+                                     "full_lm_wo_x", "full_lm",  
+                                     "lasso_wo_x", "lasso"),
                          labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Separate cov lm with X", "Separate cov lm w/o X", 
-                                    "Simultaneous cov lm with X", "Simultaneous cov lm w/o X", 
-                                    "Simultaneous cov LASSO with X", "Simultaneous cov LASSO w/o X")))
+                                    "Separate cov lm w/o X", 
+                                    "Separate cov lm with X",
+                                    "Simultaneous cov lm w/o X", 
+                                    "Simultaneous cov lm with X", 
+                                    "Simultaneous cov LASSO w/o X",
+                                    "Simultaneous cov LASSO with X")))
 
 d_0 <- d |> 
   filter(b_x == 0) 
@@ -162,9 +169,9 @@ plot_df <- df |>
 
 x_breaks <- plot_df$x_pos
 x_labels <- c("No covariates", "All covariates", "p-hacking", 
-              "With X", "W/o X",
-              "With X", "W/o X",
-              "With X", "W/o X")
+              "W/o X", "With X",
+              "W/o X", "With X",
+              "W/o X", "With X")
 
 segment_labels <- tibble::tibble(
   x = c(mean(c(0.5, 2.6)),
@@ -361,9 +368,9 @@ plot_df <- df |>
 
 x_breaks <- plot_df$x_pos
 x_labels <- c("No covariates", "All covariates",
-              "With X", "W/o X",
-              "With X", "W/o X",
-              "With X", "W/o X")
+              "W/o X", "With X",
+              "W/o X", "With X",
+              "W/o X", "With X")
 
 segment_labels <- tibble::tibble(
   x = c(mean(c(0.6, 2.6)),
