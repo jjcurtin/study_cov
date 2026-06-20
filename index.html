@@ -360,7 +360,7 @@ Table&nbsp;1: The nine covariate selection models and their definition for covar
 <td style="text-align: left;">Covariates that increase the effect of \(X\) are included in the final model</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Separate cov lm w/o X</td>
+<td style="text-align: left;">Separate lm w/o X</td>
 <td style="text-align: left;">\(Y \sim C_{1}\)<br>
 \(Y \sim C_{2}\)<br>
 \(\vdots\)<br>
@@ -368,7 +368,7 @@ Table&nbsp;1: The nine covariate selection models and their definition for covar
 <td style="text-align: left;">Significant covariates (\(p &lt; .05\)) are included in the final model</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Separate cov lm with X</td>
+<td style="text-align: left;">Separate lm with X</td>
 <td style="text-align: left;">\(Y \sim X + C_{1}\)<br>
 \(Y \sim X + C_{2}\)<br>
 \(\vdots\)<br>
@@ -376,22 +376,22 @@ Table&nbsp;1: The nine covariate selection models and their definition for covar
 <td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for \(X\) are included in the final model</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Simultaneous cov lm w/o X</td>
+<td style="text-align: left;">Simultaneous lm w/o X</td>
 <td style="text-align: left;">\(Y \sim C_{1} + C_{2} + \cdots + C_{k}\)</td>
 <td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for all other covariates are included in the final model</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Simultaneous cov lm with X</td>
+<td style="text-align: left;">Simultaneous lm with X</td>
 <td style="text-align: left;">\(Y \sim X + C_{1} + C_{2} + \cdots + C_{k}\)</td>
 <td style="text-align: left;">Significant covariates (\(p &lt; .05\)) when controlling for \(X\) and all other covariates are retained in the final model</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Simultaneous cov LASSO w/o X</td>
+<td style="text-align: left;">Simultaneous LASSO w/o X</td>
 <td style="text-align: left;">\(Y \sim C_{1} + C_{2} + \cdots + C_{k}\) with \(\lambda\) penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are included in the model</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Simultaneous cov LASSO with X</td>
+<td style="text-align: left;">Simultaneous LASSO with X</td>
 <td style="text-align: left;">\(Y \sim X + C_{1} + C_{2} + \cdots + C_{k}\) with \(\lambda\) penalty applied to all covariates</td>
 <td style="text-align: left;">Covariates with non-zero coefficients are included in the model</td>
 </tr>
