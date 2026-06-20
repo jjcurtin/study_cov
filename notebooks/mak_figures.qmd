@@ -39,12 +39,12 @@ d_full <- d_full |>
                                       "full_lm_wo_x", "full_lm",  
                                       "lasso_wo_x", "lasso"),
                          labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Separate cov lm w/o X", 
-                                    "Separate cov lm with X",
-                                    "Simultaneous cov lm w/o X", 
-                                    "Simultaneous cov lm with X", 
-                                    "Simultaneous cov LASSO w/o X",
-                                    "Simultaneous cov LASSO with X")))
+                                    "Separate lm w/o X", 
+                                    "Separate lm with X",
+                                    "Simultaneous lm w/o X", 
+                                    "Simultaneous lm with X", 
+                                    "Simultaneous LASSO w/o X",
+                                    "Simultaneous LASSO with X")))
 
 options(digits = 3)
 theme_set(theme_classic())
@@ -53,43 +53,43 @@ theme_set(theme_classic())
 method_colors <- c("No covariates" = "#FF7D00",
                    "All covariates" = "#9E5900",
                    "p-hacking" = "#C92C04",
-                   "Separate cov lm with X" = "#5489BA",
-                   "Separate cov lm w/o X" = "#5489BA",
-                   "Simultaneous cov lm with X" = "#664896",
-                   "Simultaneous cov lm w/o X" = "#664896",
-                   "Simultaneous cov LASSO with X" = "#4A7C59",
-                   "Simultaneous cov LASSO w/o X" = "#4A7C59")
+                   "Separate lm with X" = "#5489BA",
+                   "Separate lm w/o X" = "#5489BA",
+                   "Simultaneous lm with X" = "#664896",
+                   "Simultaneous lm w/o X" = "#664896",
+                   "Simultaneous LASSO with X" = "#4A7C59",
+                   "Simultaneous LASSO w/o X" = "#4A7C59")
 
 
 method_linetypes <- c("No covariates" = "solid",
                      "All covariates" = "solid",
                      "p-hacking" = "solid",
-                     "Separate cov lm w/o X" = "dashed",
-                     "Separate cov lm with X" = "solid",
-                     "Simultaneous cov lm w/o X" = "dashed",
-                     "Simultaneous cov lm with X" = "solid",
-                     "Simultaneous cov LASSO w/o X" = "dashed",
-                     "Simultaneous cov LASSO with X" = "solid")
+                     "Separate lm w/o X" = "dashed",
+                     "Separate lm with X" = "solid",
+                     "Simultaneous lm w/o X" = "dashed",
+                     "Simultaneous lm with X" = "solid",
+                     "Simultaneous LASSO w/o X" = "dashed",
+                     "Simultaneous LASSO with X" = "solid")
 
 method_linewidths <- c("No covariates" = .75,
                      "All covariates" = .75,
                      "p-hacking" = .5,
-                     "Separate cov lm w/o X" = .5,
-                     "Separate cov lm with X" = .5,
-                     "Simultaneous cov lm w/o X" = .5,
-                     "Simultaneous cov lm with X" = .5,
-                     "Simultaneous cov LASSO w/o X" = .5,
-                     "Simultaneous cov LASSO with X" = .5)
+                     "Separate lm w/o X" = .5,
+                     "Separate lm with X" = .5,
+                     "Simultaneous lm w/o X" = .5,
+                     "Simultaneous lm with X" = .5,
+                     "Simultaneous LASSO w/o X" = .5,
+                     "Simultaneous LASSO with X" = .5)
 
 method_patterns <- c("No covariates" = "none",
                      "All covariates" = "none",
                      "p-hacking" = "none",
-                     "Separate cov lm w/o X" = "stripe",
-                     "Separate cov lm with X" = "none",
-                     "Simultaneous cov lm w/o X" = "stripe",
-                     "Simultaneous cov lm with X" = "none",
-                     "Simultaneous cov LASSO w/o X" = "stripe",
-                     "Simultaneous cov LASSO with X" = "none")
+                     "Separate lm w/o X" = "stripe",
+                     "Separate lm with X" = "none",
+                     "Simultaneous lm w/o X" = "stripe",
+                     "Simultaneous lm with X" = "none",
+                     "Simultaneous LASSO w/o X" = "stripe",
+                     "Simultaneous LASSO with X" = "none")
 ```
 
 
@@ -102,12 +102,12 @@ d <- d |>
                                      "full_lm_wo_x", "full_lm",  
                                      "lasso_wo_x", "lasso"),
                          labels = c("No covariates", "All covariates", "p-hacking", 
-                                    "Separate cov lm w/o X", 
-                                    "Separate cov lm with X",
-                                    "Simultaneous cov lm w/o X", 
-                                    "Simultaneous cov lm with X", 
-                                    "Simultaneous cov LASSO w/o X",
-                                    "Simultaneous cov LASSO with X")))
+                                    "Separate lm w/o X", 
+                                    "Separate lm with X",
+                                    "Simultaneous lm w/o X", 
+                                    "Simultaneous lm with X", 
+                                    "Simultaneous LASSO w/o X",
+                                    "Simultaneous LASSO with X")))
 
 d_0 <- d |> 
   filter(b_x == 0) 
@@ -129,12 +129,12 @@ type_I_summary <- d_0 |>
                             "p-hacking" ~ "p-hacking",
                             "No covariates" ~ "No selection",
                             "All covariates" ~ "No selection",
-                            "Separate cov lm w/o X" ~ "Separate cov lm",
-                            "Separate cov lm with X" ~ "Separate cov lm",
-                            "Simultaneous cov lm w/o X" ~ "Simultaneous cov lm",
-                            "Simultaneous cov lm with X" ~ "Simultaneous cov lm",
-                            "Simultaneous cov LASSO w/o X" ~ "Simultaneous cov LASSO",
-                            "Simultaneous cov LASSO with X" ~ "Simultaneous cov LASSO"))
+                            "Separate lm w/o X" ~ "Separate lm",
+                            "Separate lm with X" ~ "Separate lm",
+                            "Simultaneous lm w/o X" ~ "Simultaneous lm",
+                            "Simultaneous lm with X" ~ "Simultaneous lm",
+                            "Simultaneous LASSO w/o X" ~ "Simultaneous LASSO",
+                            "Simultaneous LASSO with X" ~ "Simultaneous LASSO"))
 
 ```
 
@@ -180,7 +180,7 @@ segment_labels <- tibble::tibble(
         mean(c(6.2, 8.0)),
         mean(c(8.4, 10.2))),
   y = c(.13, .13, .08, .08, .08) + 0.015,   
-  label = c("Traditional selection", "Data-driven selection", "Separate cov lm", "Simultaneous cov lm", "Simultaneous cov LASSO")
+  label = c("Traditional selection", "Data-driven selection", "Separate lm", "Simultaneous lm", "Simultaneous LASSO")
 )
 
 ggplot(
@@ -337,12 +337,12 @@ type_II_summary <- d_02 |>
                             "p-hacking" ~ "p-hacking",
                             "No covariates" ~ "No selection",
                             "All covariates" ~ "No selection",
-                            "Separate cov lm w/o X" ~ "Separate cov lm",
-                            "Separate cov lm with X" ~ "Separate cov lm",
-                            "Simultaneous cov lm w/o X" ~ "Simultaneous cov lm",
-                            "Simultaneous cov lm with X" ~ "Simultaneous cov lm",
-                            "Simultaneous cov LASSO w/o X" ~ "Simultaneous cov LASSO",
-                            "Simultaneous cov LASSO with X" ~ "Simultaneous cov LASSO"))
+                            "Separate lm w/o X" ~ "Separate lm",
+                            "Separate lm with X" ~ "Separate lm",
+                            "Simultaneous lm w/o X" ~ "Simultaneous lm",
+                            "Simultaneous lm with X" ~ "Simultaneous lm",
+                            "Simultaneous LASSO w/o X" ~ "Simultaneous LASSO",
+                            "Simultaneous LASSO with X" ~ "Simultaneous LASSO"))
 
 # ---- Parameters
 gap_after_idx <- c(2, 4, 6)  
@@ -379,7 +379,7 @@ segment_labels <- tibble::tibble(
         mean(c(5, 6.8)),
         mean(c(7.2, 9))),
   y = c(.50, .50, .40, .40, .40) + 0.015,   
-  label = c("Traditional selection", "Data-driven selection", "Separate cov lm", "Simultaneous cov lm", "Simultaneous cov LASSO")
+  label = c("Traditional selection", "Data-driven selection", "Separate lm", "Simultaneous lm", "Simultaneous LASSO")
 )
 
 
