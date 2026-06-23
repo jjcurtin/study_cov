@@ -24,7 +24,7 @@ abstract: |
   In this simulation study, we evaluated nine covariate selection approaches that include the two traditional approaches (no covariates, all covariates) and seven data-driven approaches that use screening models to identify optimal covariates.  We compared these approaches on their Type I and Type II errors rates and evidence of parameter estimate bias within 40,000 simulated datasets across 540 research contexts varying in effect size, sample size, number of covariates, and covariate-outcome relationships.  Simulation results confirm the benefits of using covariates generally, the risks of p-hacking, and the incremental increase in statical power associated with several data-driven covariate selection approaches.
 date: last-modified
 bibliography: references.bib
-bibliographystyle: apa
+csl: apa.csl
 number-sections: false 
 editor_options: 
   chunk_output_type: console
