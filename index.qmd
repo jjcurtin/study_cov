@@ -58,7 +58,12 @@ Given these possibly sub-optimal options, it may be that a data-driven approach 
 In this study, we use simulation methods to evaluate two traditional ("no covariates" and "all covariates") and seven data-driven approaches to select an optimal set of covariates when testing the effect of a focal manipulated IV.  For each data-driven approach, we use covariate "screening models" to determine which covariates to include in the subsequent primary analysis that tests the focal IV. These data-driven approaches include a "*p*-hacking approach and six additional approaches that vary by the modeling approach (i.e., separate linear models vs. simultaneous linear model vs. LASSO[@tibshiraniRegressionShrinkageSelection1996a]) for the screening model and whether $X$ was included in the screening model.  For all of the approaches we quantify the probability of Type I and Type II errors across a variety of research contexts that vary by sample size, number of available covariates, strength of covariate effects, effect size for the IV and other relevant context characteristics.  We use results from these simulations to provide clear and accessible guidance about how best to select an optimal set of covariates to decrease Type II error rate while controlling Type I error rate when testing the effect of a manipulated IV in various research contexts.
 
 # Research Transparency Statement
-All authors declare they have no conflicts of interest. This research received no funding. No artificial intelligence assisted technologies were used in this research or the creation of this article. This research did not require ethics approval because no human participants were involved. No aspects of this study were preregistered. Sharing of materials is not applicable. All primary data and analysis scripts are publicly available [https://osf.io/zh5gn/](https://osf.io/zh5gn/).
+
+## General Disclosures
+Conflicts of interest: All authors declare they have no conflicts of interest. Funding: This research received no funding. Artificial intelligence: No artificial intelligence assisted technologies were used in this research or the creation of this article. Ethics: This research did not require ethics approval because no human participants involved.
+
+## Study 1 Disclosures
+Preregistration: No aspects of this study were preregistered. Materials: Not applicable. Data: All primary data are publicly available [https://osf.io/zh5gn/](https://osf.io/zh5gn/). Analysis scripts: All analysis scripts are publicly available [https://osf.io/zh5gn/](https://osf.io/zh5gn/).
 
 # Methods
 
