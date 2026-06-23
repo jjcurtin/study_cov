@@ -1,0 +1,81 @@
+---
+title: "Simultaneous LASSO with X"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+
+**This script demonstrates how to use a simultaneous lasso with X covariate screening model for selecting covariates.**
+
+
+### 1. Read in simulated data set. 
+
+```{r}
+data <- readr::read_csv("./simulated_data.csv", show_col_types = FALSE) 
+```
+
+Get number of covariates in data.
+```{r}
+  n_covs <- names(data) |> 
+    stringr::str_subset("^c") |> 
+    length()
+```
+
+
+
+### 2. Tune LASSO model.
+
+Tune (across 100 bootstraps) and fit a best LASSO model using x and all covariates with no penalty applied to x (so it is never dropped).
+```{r}
+# create bootstrap splits
+set.seed(102030)
+splits_boot <- data |> rsample::bootstraps(times = 100)
+  
+# create hyperparameter tuning grid for penalty/lambda values
+grid_penalty <- tidyr::expand_grid(penalty = exp(seq(-8, 8, length.out = 1000)))
+  
+# Fit LASSO models. No need to standardize covariates because all have same variance and penalty will not be applied to x
+fits_lasso <- parsnip::linear_reg(penalty = tune(), mixture = 1) |> 
+  parsnip::set_engine("glmnet",
+                      penalty.factor = c(0, rep(1, n_covs))) |>
+  tune::tune_grid(preprocessor = recipes::recipe(y ~ ., data = data),
+                  resamples = splits_boot, 
+                  grid = grid_penalty, 
+                  metrics = yardstick::metric_set(yardstick::rmse))
+```
+
+### 3. Fit best LASSO model on all data.
+
+```{r}
+fit_best_lasso <-
+  parsnip::linear_reg(penalty = tune::select_best(fits_lasso, metric = "rmse")$penalty, 
+                      mixture = 1) |> 
+  parsnip::set_engine("glmnet",
+                      penalty.factor = c(0, rep(1, n_covs))) |> 
+  parsnip::fit(y ~ ., data = data)
+```
+
+
+
+### 4. Select covariates that had non-zero coefficients in the best LASSO model.
+
+```{r}
+covs_added <- fit_best_lasso |> 
+  broom::tidy() |> 
+  dplyr::filter(estimate != 0) |> 
+  dplyr::filter(stringr::str_starts(term, "c")) |> 
+  dplyr::pull(term)
+
+covs_added
+```
+
+
+### 5. Fit linear model with covariates selected by LASSO. 
+
+```{r}
+formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
+  
+lm(formula = formula_final, data = data)
+```
+

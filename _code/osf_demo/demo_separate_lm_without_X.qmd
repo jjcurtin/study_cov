@@ -1,0 +1,62 @@
+---
+title: "Separate LM without X"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+
+**This script demonstrates how to use separate linear models without X as covariate screening models for selecting covariates.**
+
+
+### 1. Read in simulated data set. 
+
+```{r}
+data <- readr::read_csv("./simulated_data.csv", show_col_types = FALSE) 
+```
+
+Get number of covariates in data.
+```{r}
+n_covs <- names(data) |> 
+  stringr::str_subset("^c") |> 
+  length()
+```
+
+
+
+### 2. Select covariates.
+
+These screening models select covariates that are significant on y. They consider each covariate one at at a time and includes it in the final model only if it is significant.
+
+```{r}
+# empty vector of covariates that are significant on y, controlling x
+covs_added <- character(0) 
+
+# loop through all covariates and test significance when controlling for X
+for(i in 1:n_covs) {
+  ci <- grep("^c", names(data), value = TRUE)[i]
+  formula_1cov <- reformulate(termlabels = c(ci), response = "y")
+  lm_1cov <- lm(formula = formula_1cov, data = data)
+  p_1cov <- lm_1cov |> 
+    broom::tidy() |> 
+    dplyr::filter(term == ci) |> 
+    dplyr::pull(p.value)
+    
+  if(p_1cov < .05) {
+    covs_added <- c(covs_added, ci)
+  }
+}
+
+covs_added
+```
+
+
+
+### 3. Fit final linear model with covariates selected by separate lm without X. 
+
+```{r}
+formula_final <- reformulate(termlabels = c("x", covs_added), response = "y")
+
+lm(formula = formula_final, data = data)
+```
+
